@@ -17,9 +17,11 @@ module.exports = {
     ],
     extends: [
         "eslint",
+        "plugin:eslint-comments/recommended",
         "plugin:eslint-plugin/recommended"
     ],
     rules: {
+        "eslint-comments/no-unused-disable": "error",
         "eslint-plugin/consistent-output": "error",
         "eslint-plugin/no-deprecated-context-methods": "error",
         "eslint-plugin/prefer-output-null": "error",
