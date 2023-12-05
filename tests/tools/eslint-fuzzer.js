@@ -14,7 +14,7 @@ const configRule = require("../../tools/config-rule");
 // Tests
 //------------------------------------------------------------------------------
 
-describe("eslint-fuzzer", function() {
+describe("eslint-fuzzer", function () {
     let fuzz;
 
     /*
@@ -112,7 +112,6 @@ describe("eslint-fuzzer", function() {
 
         describe("when a rule's autofix produces valid syntax", () => {
             it("does not report any errors", () => {
-
                 // Replaces programs that start with "foo" with "bar"
                 linter.defineRule("test-fuzzer-rule", {
                     meta: { fixable: "code" },
@@ -147,7 +146,6 @@ describe("eslint-fuzzer", function() {
 
         describe("when a rule's autofix produces invalid syntax on the first pass", () => {
             it("reports an autofix error with a minimal config", () => {
-
                 // Replaces programs that start with "foo" with invalid syntax
                 linter.defineRule("test-fuzzer-rule", {
                     meta: { fixable: "code" },
@@ -241,7 +239,6 @@ describe("eslint-fuzzer", function() {
 
         describe("when a rule crashes on the second autofix pass", () => {
             it("reports a crash error with a minimal config", () => {
-
                 // Replaces programs that start with "foo" with invalid syntax
                 linter.defineRule("test-fuzzer-rule", {
                     meta: { fixable: "code" },

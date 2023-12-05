@@ -22,25 +22,26 @@ const rule = require("../../../lib/rules/no-sequences"),
  * @private
  */
 function errors(column) {
-    return [{
-        messageId: "unexpectedCommaExpression",
-        type: "SequenceExpression",
-        line: 1,
-        column
-    }];
+    return [
+        {
+            messageId: "unexpectedCommaExpression",
+            type: "SequenceExpression",
+            line: 1,
+            column
+        }
+    ];
 }
 
 const ruleTester = new RuleTester();
 
 ruleTester.run("no-sequences", rule, {
-
     // Examples of code that should not trigger the rule
     valid: [
         "var arr = [1, 2];",
         "var obj = {a: 1, b: 2};",
         "var a = 1, b = 2;",
         "var foo = (1, 2);",
-        "(0,eval)(\"foo()\");",
+        '(0,eval)("foo()");',
         "for (i = 1, j = 2;; i++, j++);",
         "foo(a, (b, c), d);",
         "do {} while ((doSomething(), !!test));",
@@ -70,14 +71,16 @@ ruleTester.run("no-sequences", rule, {
     invalid: [
         {
             code: "1, 2;",
-            errors: [{
-                messageId: "unexpectedCommaExpression",
-                type: "SequenceExpression",
-                line: 1,
-                column: 2,
-                endLine: 1,
-                endColumn: 3
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedCommaExpression",
+                    type: "SequenceExpression",
+                    line: 1,
+                    column: 2,
+                    endLine: 1,
+                    endColumn: 3
+                }
+            ]
         },
         { code: "a = 1, 2", errors: errors(6) },
         { code: "do {} while (doSomething(), !!test);", errors: errors(27) },
@@ -93,7 +96,7 @@ ruleTester.run("no-sequences", rule, {
 
         // option "allowInParentheses": do not allow sequence in parentheses
         { code: "var foo = (1, 2);", options: [{ allowInParentheses: false }], errors: errors(13) },
-        { code: "(0,eval)(\"foo()\");", options: [{ allowInParentheses: false }], errors: errors(3) },
+        { code: '(0,eval)("foo()");', options: [{ allowInParentheses: false }], errors: errors(3) },
         { code: "foo(a, (b, c), d);", options: [{ allowInParentheses: false }], errors: errors(10) },
         { code: "do {} while ((doSomething(), !!test));", options: [{ allowInParentheses: false }], errors: errors(28) },
         { code: "for (; (doSomething(), !!test); );", options: [{ allowInParentheses: false }], errors: errors(22) },

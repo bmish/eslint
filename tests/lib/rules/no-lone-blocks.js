@@ -71,31 +71,39 @@ ruleTester.run("no-lone-blocks", rule, {
     invalid: [
         {
             code: "{}",
-            errors: [{
-                messageId: "redundantBlock",
-                type: "BlockStatement"
-            }]
+            errors: [
+                {
+                    messageId: "redundantBlock",
+                    type: "BlockStatement"
+                }
+            ]
         },
         {
             code: "{var x = 1;}",
-            errors: [{
-                messageId: "redundantBlock",
-                type: "BlockStatement"
-            }]
+            errors: [
+                {
+                    messageId: "redundantBlock",
+                    type: "BlockStatement"
+                }
+            ]
         },
         {
             code: "foo(); {} bar();",
-            errors: [{
-                messageId: "redundantBlock",
-                type: "BlockStatement"
-            }]
+            errors: [
+                {
+                    messageId: "redundantBlock",
+                    type: "BlockStatement"
+                }
+            ]
         },
         {
             code: "if (foo) { bar(); {} baz(); }",
-            errors: [{
-                messageId: "redundantNestedBlock",
-                type: "BlockStatement"
-            }]
+            errors: [
+                {
+                    messageId: "redundantNestedBlock",
+                    type: "BlockStatement"
+                }
+            ]
         },
         {
             code: "{ \n{ } }",
@@ -114,54 +122,66 @@ ruleTester.run("no-lone-blocks", rule, {
         },
         {
             code: "function foo() { bar(); {} baz(); }",
-            errors: [{
-                messageId: "redundantNestedBlock",
-                type: "BlockStatement"
-            }]
+            errors: [
+                {
+                    messageId: "redundantNestedBlock",
+                    type: "BlockStatement"
+                }
+            ]
         },
         {
             code: "while (foo) { {} }",
-            errors: [{
-                messageId: "redundantNestedBlock",
-                type: "BlockStatement"
-            }]
+            errors: [
+                {
+                    messageId: "redundantNestedBlock",
+                    type: "BlockStatement"
+                }
+            ]
         },
 
         // Non-block-level bindings, even in ES6
         {
             code: "{ function bar() {} }",
             parserOptions: { ecmaVersion: 6 },
-            errors: [{
-                messageId: "redundantBlock",
-                type: "BlockStatement"
-            }]
+            errors: [
+                {
+                    messageId: "redundantBlock",
+                    type: "BlockStatement"
+                }
+            ]
         },
         {
             code: "{var x = 1;}",
             parserOptions: { ecmaVersion: 6 },
-            errors: [{
-                messageId: "redundantBlock",
-                type: "BlockStatement"
-            }]
+            errors: [
+                {
+                    messageId: "redundantBlock",
+                    type: "BlockStatement"
+                }
+            ]
         },
 
         {
             code: "{ \n{var x = 1;}\n let y = 2; } {let z = 1;}",
             parserOptions: { ecmaVersion: 6 },
-            errors: [{
-                messageId: "redundantNestedBlock",
-                type: "BlockStatement",
-                line: 2
-            }]
+            errors: [
+                {
+                    messageId: "redundantNestedBlock",
+                    type: "BlockStatement",
+                    line: 2
+                }
+            ]
         },
         {
             code: "{ \n{let x = 1;}\n var y = 2; } {let z = 1;}",
             parserOptions: { ecmaVersion: 6 },
-            errors: [{
-                messageId: "redundantBlock",
-                type: "BlockStatement",
-                line: 1
-            }]
+            errors: [
+                {
+                    messageId: "redundantBlock",
+                    type: "BlockStatement",
+                    line: 1
+                }
+            ]
         },
         {
             code: "{ \n{var x = 1;}\n var y = 2; }\n {var z = 1;}",
@@ -194,11 +214,13 @@ ruleTester.run("no-lone-blocks", rule, {
                     }
               }
             `,
-            errors: [{
-                messageId: "redundantBlock",
-                type: "BlockStatement",
-                line: 5
-            }]
+            errors: [
+                {
+                    messageId: "redundantBlock",
+                    type: "BlockStatement",
+                    line: 5
+                }
+            ]
         },
         {
             code: `
@@ -210,11 +232,13 @@ ruleTester.run("no-lone-blocks", rule, {
                 foo();
               }
             `,
-            errors: [{
-                messageId: "redundantBlock",
-                type: "BlockStatement",
-                line: 4
-            }]
+            errors: [
+                {
+                    messageId: "redundantBlock",
+                    type: "BlockStatement",
+                    line: 4
+                }
+            ]
         },
         {
             code: `
@@ -225,11 +249,13 @@ ruleTester.run("no-lone-blocks", rule, {
               }
             `,
             parserOptions: { ecmaVersion: 6 },
-            errors: [{
-                messageId: "redundantNestedBlock",
-                type: "BlockStatement",
-                line: 3
-            }]
+            errors: [
+                {
+                    messageId: "redundantNestedBlock",
+                    type: "BlockStatement",
+                    line: 3
+                }
+            ]
         },
         {
             code: `
@@ -239,11 +265,13 @@ ruleTester.run("no-lone-blocks", rule, {
                 }
               }
             `,
-            errors: [{
-                messageId: "redundantNestedBlock",
-                type: "BlockStatement",
-                line: 3
-            }]
+            errors: [
+                {
+                    messageId: "redundantNestedBlock",
+                    type: "BlockStatement",
+                    line: 3
+                }
+            ]
         },
         {
             code: `
@@ -258,11 +286,13 @@ ruleTester.run("no-lone-blocks", rule, {
               }
             `,
             parserOptions: { ecmaVersion: 2022 },
-            errors: [{
-                messageId: "redundantNestedBlock",
-                type: "BlockStatement",
-                line: 5
-            }]
+            errors: [
+                {
+                    messageId: "redundantNestedBlock",
+                    type: "BlockStatement",
+                    line: 5
+                }
+            ]
         },
         {
             code: `
@@ -278,11 +308,13 @@ ruleTester.run("no-lone-blocks", rule, {
               }
             `,
             parserOptions: { ecmaVersion: 2022 },
-            errors: [{
-                messageId: "redundantNestedBlock",
-                type: "BlockStatement",
-                line: 5
-            }]
+            errors: [
+                {
+                    messageId: "redundantNestedBlock",
+                    type: "BlockStatement",
+                    line: 5
+                }
+            ]
         },
         {
             code: `
@@ -295,11 +327,13 @@ ruleTester.run("no-lone-blocks", rule, {
               }
             `,
             parserOptions: { ecmaVersion: 2022 },
-            errors: [{
-                messageId: "redundantNestedBlock",
-                type: "BlockStatement",
-                line: 4
-            }]
+            errors: [
+                {
+                    messageId: "redundantNestedBlock",
+                    type: "BlockStatement",
+                    line: 4
+                }
+            ]
         },
         {
             code: `
@@ -312,11 +346,13 @@ ruleTester.run("no-lone-blocks", rule, {
               }
             `,
             parserOptions: { ecmaVersion: 2022 },
-            errors: [{
-                messageId: "redundantNestedBlock",
-                type: "BlockStatement",
-                line: 4
-            }]
+            errors: [
+                {
+                    messageId: "redundantNestedBlock",
+                    type: "BlockStatement",
+                    line: 4
+                }
+            ]
         },
         {
             code: `
@@ -329,11 +365,13 @@ ruleTester.run("no-lone-blocks", rule, {
               }
             `,
             parserOptions: { ecmaVersion: 2022 },
-            errors: [{
-                messageId: "redundantNestedBlock",
-                type: "BlockStatement",
-                line: 4
-            }]
+            errors: [
+                {
+                    messageId: "redundantNestedBlock",
+                    type: "BlockStatement",
+                    line: 4
+                }
+            ]
         },
         {
             code: `
@@ -346,11 +384,13 @@ ruleTester.run("no-lone-blocks", rule, {
               }
             `,
             parserOptions: { ecmaVersion: 2022 },
-            errors: [{
-                messageId: "redundantNestedBlock",
-                type: "BlockStatement",
-                line: 4
-            }]
+            errors: [
+                {
+                    messageId: "redundantNestedBlock",
+                    type: "BlockStatement",
+                    line: 4
+                }
+            ]
         },
         {
             code: `
@@ -363,11 +403,13 @@ ruleTester.run("no-lone-blocks", rule, {
               }
             `,
             parserOptions: { ecmaVersion: 2022 },
-            errors: [{
-                messageId: "redundantNestedBlock",
-                type: "BlockStatement",
-                line: 4
-            }]
+            errors: [
+                {
+                    messageId: "redundantNestedBlock",
+                    type: "BlockStatement",
+                    line: 4
+                }
+            ]
         },
         {
             code: `
@@ -381,11 +423,13 @@ ruleTester.run("no-lone-blocks", rule, {
               }
             `,
             parserOptions: { ecmaVersion: 2022 },
-            errors: [{
-                messageId: "redundantNestedBlock",
-                type: "BlockStatement",
-                line: 4
-            }]
+            errors: [
+                {
+                    messageId: "redundantNestedBlock",
+                    type: "BlockStatement",
+                    line: 4
+                }
+            ]
         },
         {
             code: `
@@ -399,11 +443,13 @@ ruleTester.run("no-lone-blocks", rule, {
               }
             `,
             parserOptions: { ecmaVersion: 2022 },
-            errors: [{
-                messageId: "redundantNestedBlock",
-                type: "BlockStatement",
-                line: 5
-            }]
+            errors: [
+                {
+                    messageId: "redundantNestedBlock",
+                    type: "BlockStatement",
+                    line: 5
+                }
+            ]
         },
         {
             code: `
@@ -417,11 +463,13 @@ ruleTester.run("no-lone-blocks", rule, {
               }
             `,
             parserOptions: { ecmaVersion: 2022 },
-            errors: [{
-                messageId: "redundantNestedBlock",
-                type: "BlockStatement",
-                line: 4
-            }]
+            errors: [
+                {
+                    messageId: "redundantNestedBlock",
+                    type: "BlockStatement",
+                    line: 4
+                }
+            ]
         },
         {
             code: `
@@ -435,11 +483,13 @@ ruleTester.run("no-lone-blocks", rule, {
               }
             `,
             parserOptions: { ecmaVersion: 2022 },
-            errors: [{
-                messageId: "redundantNestedBlock",
-                type: "BlockStatement",
-                line: 5
-            }]
+            errors: [
+                {
+                    messageId: "redundantNestedBlock",
+                    type: "BlockStatement",
+                    line: 5
+                }
+            ]
         }
     ]
 });

@@ -39,7 +39,7 @@ describe("safe-emitter", () => {
             const emitter = createEmitter();
             let called = false;
 
-            emitter.on("foo", function() {
+            emitter.on("foo", function () {
                 assert.strictEqual(this, void 0); // eslint-disable-line no-invalid-this -- Checking `this` value
                 called = true;
             });

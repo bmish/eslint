@@ -20,7 +20,6 @@ const ruleTester = new RuleTester();
 
 ruleTester.run("no-dupe-else-if", rule, {
     valid: [
-
         // different test conditions
         "if (a) {} else if (b) {}",
         "if (a); else if (b); else if (c);",
@@ -67,7 +66,6 @@ ruleTester.run("no-dupe-else-if", rule, {
     ],
 
     invalid: [
-
         // basic tests
         {
             code: "if (a) {} else if (a) {}",

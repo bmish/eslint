@@ -9,10 +9,7 @@
 // Requirements
 //-----------------------------------------------------------------------------
 
-const {
-    parseRuleId,
-    getRuleFromConfig
-} = require("../../../lib/config/flat-config-helpers");
+const { parseRuleId, getRuleFromConfig } = require("../../../lib/config/flat-config-helpers");
 const assert = require("chai").assert;
 
 //-----------------------------------------------------------------------------
@@ -20,10 +17,7 @@ const assert = require("chai").assert;
 //-----------------------------------------------------------------------------
 
 describe("Config Helpers", () => {
-
-
     describe("parseRuleId()", () => {
-
         it("should return plugin name and rule name for core rule", () => {
             const result = parseRuleId("foo");
 
@@ -77,7 +71,6 @@ describe("Config Helpers", () => {
             const result = getRuleFromConfig("test/one", config);
 
             assert.strictEqual(result, rule);
-
         });
 
         it("should retrieve rule from core in config", () => {
@@ -95,8 +88,6 @@ describe("Config Helpers", () => {
             const result = getRuleFromConfig("semi", config);
 
             assert.strictEqual(result, rule);
-
         });
     });
-
 });

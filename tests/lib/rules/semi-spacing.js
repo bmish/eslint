@@ -281,45 +281,35 @@ ruleTester.run("semi-spacing", rule, {
             output: "import Foo from 'bar';",
             options: [{ before: false, after: true }],
             parserOptions: { ecmaVersion: 6, sourceType: "module" },
-            errors: [
-                { messageId: "unexpectedWhitespaceBefore", type: "ImportDeclaration", line: 1, column: 22 }
-            ]
+            errors: [{ messageId: "unexpectedWhitespaceBefore", type: "ImportDeclaration", line: 1, column: 22 }]
         },
         {
             code: "import * as foo from 'bar' ;",
             output: "import * as foo from 'bar';",
             options: [{ before: false, after: true }],
             parserOptions: { ecmaVersion: 6, sourceType: "module" },
-            errors: [
-                { messageId: "unexpectedWhitespaceBefore", type: "ImportDeclaration", line: 1, column: 27 }
-            ]
+            errors: [{ messageId: "unexpectedWhitespaceBefore", type: "ImportDeclaration", line: 1, column: 27 }]
         },
         {
             code: "var foo = 0; export {foo} ;",
             output: "var foo = 0; export {foo};",
             options: [{ before: false, after: true }],
             parserOptions: { ecmaVersion: 6, sourceType: "module" },
-            errors: [
-                { messageId: "unexpectedWhitespaceBefore", type: "ExportNamedDeclaration", line: 1, column: 26 }
-            ]
+            errors: [{ messageId: "unexpectedWhitespaceBefore", type: "ExportNamedDeclaration", line: 1, column: 26 }]
         },
         {
             code: "export * from 'foo' ;",
             output: "export * from 'foo';",
             options: [{ before: false, after: true }],
             parserOptions: { ecmaVersion: 6, sourceType: "module" },
-            errors: [
-                { messageId: "unexpectedWhitespaceBefore", type: "ExportAllDeclaration", line: 1, column: 20 }
-            ]
+            errors: [{ messageId: "unexpectedWhitespaceBefore", type: "ExportAllDeclaration", line: 1, column: 20 }]
         },
         {
             code: "export default foo ;",
             output: "export default foo;",
             options: [{ before: false, after: true }],
             parserOptions: { ecmaVersion: 6, sourceType: "module" },
-            errors: [
-                { messageId: "unexpectedWhitespaceBefore", type: "ExportDefaultDeclaration", line: 1, column: 19 }
-            ]
+            errors: [{ messageId: "unexpectedWhitespaceBefore", type: "ExportDefaultDeclaration", line: 1, column: 19 }]
         },
         {
             code: "while(foo) {continue   ;}",
@@ -358,82 +348,91 @@ ruleTester.run("semi-spacing", rule, {
             output: "for(a;; );",
             options: [{ before: false, after: false }],
             parserOptions: { ecmaVersion: 6 },
-            errors: [{
-                type: "ForStatement",
-                messageId: "unexpectedWhitespaceBefore",
-                line: 1,
-                column: 6,
-                endLine: 1,
-                endColumn: 7
-            },
-            {
-                type: "ForStatement",
-                messageId: "unexpectedWhitespaceAfter",
-                line: 1,
-                column: 8,
-                endLine: 1,
-                endColumn: 9
-            }]
+            errors: [
+                {
+                    type: "ForStatement",
+                    messageId: "unexpectedWhitespaceBefore",
+                    line: 1,
+                    column: 6,
+                    endLine: 1,
+                    endColumn: 7
+                },
+                {
+                    type: "ForStatement",
+                    messageId: "unexpectedWhitespaceAfter",
+                    line: 1,
+                    column: 8,
+                    endLine: 1,
+                    endColumn: 9
+                }
+            ]
         },
         {
             code: "for(a ; \n ; );",
             output: "for(a; \n ; );",
             options: [{ before: false, after: false }],
             parserOptions: { ecmaVersion: 6 },
-            errors: [{
-                type: "ForStatement",
-                messageId: "unexpectedWhitespaceBefore",
-                line: 1,
-                column: 6,
-                endLine: 1,
-                endColumn: 7
-            }
+            errors: [
+                {
+                    type: "ForStatement",
+                    messageId: "unexpectedWhitespaceBefore",
+                    line: 1,
+                    column: 6,
+                    endLine: 1,
+                    endColumn: 7
+                }
             ]
         },
         {
             code: "do {} while (true) ;",
             output: "do {} while (true);",
-            errors: [{
-                messageId: "unexpectedWhitespaceBefore",
-                type: "DoWhileStatement",
-                line: 1,
-                column: 19,
-                endLine: 1,
-                endColumn: 20
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedWhitespaceBefore",
+                    type: "DoWhileStatement",
+                    line: 1,
+                    column: 19,
+                    endLine: 1,
+                    endColumn: 20
+                }
+            ]
         },
         {
             code: "do {} while (true);foo",
             output: "do {} while (true); foo",
-            errors: [{
-                messageId: "missingWhitespaceAfter",
-                type: "DoWhileStatement",
-                line: 1,
-                column: 19,
-                endLine: 1,
-                endColumn: 20
-            }]
+            errors: [
+                {
+                    messageId: "missingWhitespaceAfter",
+                    type: "DoWhileStatement",
+                    line: 1,
+                    column: 19,
+                    endLine: 1,
+                    endColumn: 20
+                }
+            ]
         },
         {
             code: "do {} while (true);  foo",
             output: "do {} while (true) ;foo",
             options: [{ before: true, after: false }],
-            errors: [{
-                messageId: "missingWhitespaceBefore",
-                type: "DoWhileStatement",
-                line: 1,
-                column: 19,
-                endLine: 1,
-                endColumn: 20
-            },
-            {
-                messageId: "unexpectedWhitespaceAfter",
-                type: "DoWhileStatement",
-                line: 1,
-                column: 20,
-                endLine: 1,
-                endColumn: 22
-            }]
+            errors: [
+                {
+                    messageId: "missingWhitespaceBefore",
+                    type: "DoWhileStatement",
+                    line: 1,
+                    column: 19,
+                    endLine: 1,
+                    endColumn: 20
+                },
+                {
+                    messageId: "unexpectedWhitespaceAfter",
+                    type: "DoWhileStatement",
+                    line: 1,
+                    column: 20,
+                    endLine: 1,
+                    endColumn: 22
+                }
+            ]
         },
 
         // Class fields
@@ -488,14 +487,16 @@ ruleTester.run("semi-spacing", rule, {
             code: "class C { foo;static {}}",
             output: "class C { foo; static {}}",
             parserOptions: { ecmaVersion: 2022 },
-            errors: [{
-                messageId: "missingWhitespaceAfter",
-                type: "PropertyDefinition",
-                line: 1,
-                column: 14,
-                endLine: 1,
-                endColumn: 15
-            }]
+            errors: [
+                {
+                    messageId: "missingWhitespaceAfter",
+                    type: "PropertyDefinition",
+                    line: 1,
+                    column: 14,
+                    endLine: 1,
+                    endColumn: 15
+                }
+            ]
         }
     ]
 });

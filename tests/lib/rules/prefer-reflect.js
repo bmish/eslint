@@ -20,7 +20,6 @@ const ruleTester = new RuleTester();
 
 ruleTester.run("prefer-reflect", rule, {
     valid: [
-
         // Reflect.apply
         "Reflect.apply(function(){}, null, 1, 2);",
         { code: "Reflect.apply(function(){}, null, 1, 2);", options: [{ exceptions: ["apply"] }] },
@@ -69,7 +68,6 @@ ruleTester.run("prefer-reflect", rule, {
         { code: "delete ({}).foo", options: [{ exceptions: ["delete"] }] }
     ],
     invalid: [
-
         {
             code: "(function(){}).apply(null, [1, 2])",
             errors: [
@@ -280,6 +278,5 @@ ruleTester.run("prefer-reflect", rule, {
                 }
             ]
         }
-
     ]
 });

@@ -381,10 +381,12 @@ class Second {}`,
         }
     }
 }`,
-            errors: [{
-                ...definedError("usedOnlyInTheSecondInnerClass"),
-                line: 2
-            }]
+            errors: [
+                {
+                    ...definedError("usedOnlyInTheSecondInnerClass"),
+                    line: 2
+                }
+            ]
         }
     ]
 });

@@ -48,7 +48,6 @@ function assertErrorMatches(actual, expected) {
  * @returns {void}
  */
 function noop() {
-
     // do nothing.
 }
 
@@ -77,16 +76,15 @@ const ruleTesterTestEmitter = new EventEmitter();
 //------------------------------------------------------------------------------
 
 describe("FlatRuleTester", () => {
-
     let ruleTester;
 
     // Stub `describe()` and `it()` while this test suite.
     before(() => {
-        FlatRuleTester.describe = function(text, method) {
+        FlatRuleTester.describe = function (text, method) {
             ruleTesterTestEmitter.emit("describe", text, method);
             return method.call(this);
         };
-        FlatRuleTester.it = function(text, method) {
+        FlatRuleTester.it = function (text, method) {
             ruleTesterTestEmitter.emit("it", text, method);
             return method.call(this);
         };
@@ -102,7 +100,6 @@ describe("FlatRuleTester", () => {
     });
 
     describe("Default Config", () => {
-
         afterEach(() => {
             FlatRuleTester.resetDefaultConfig();
         });
@@ -111,10 +108,7 @@ describe("FlatRuleTester", () => {
             const config = { languageOptions: { globals: { test: true } } };
 
             FlatRuleTester.setDefaultConfig(config);
-            assert(
-                FlatRuleTester.getDefaultConfig().languageOptions.globals.test,
-                "The default config object is incorrect"
-            );
+            assert(FlatRuleTester.getDefaultConfig().languageOptions.globals.test, "The default config object is incorrect");
         });
 
         it("should correctly reset the global configuration", () => {
@@ -122,15 +116,10 @@ describe("FlatRuleTester", () => {
 
             FlatRuleTester.setDefaultConfig(config);
             FlatRuleTester.resetDefaultConfig();
-            assert.deepStrictEqual(
-                FlatRuleTester.getDefaultConfig(),
-                { rules: {} },
-                "The default configuration has not reset correctly"
-            );
+            assert.deepStrictEqual(FlatRuleTester.getDefaultConfig(), { rules: {} }, "The default configuration has not reset correctly");
         });
 
         it("should enforce the global configuration to be an object", () => {
-
             /**
              * Set the default config for the rules tester
              * @param {Object} config configuration object
@@ -138,7 +127,7 @@ describe("FlatRuleTester", () => {
              * @private
              */
             function setConfig(config) {
-                return function() {
+                return function () {
                     FlatRuleTester.setDefaultConfig(config);
                 };
             }
@@ -159,10 +148,7 @@ describe("FlatRuleTester", () => {
             ruleTester = new FlatRuleTester();
 
             ruleTester.run("no-test-global", require("../../fixtures/testers/rule-tester/no-test-global"), {
-                valid: [
-                    "var test = 'foo'",
-                    "var test2 = test"
-                ],
+                valid: ["var test = 'foo'", "var test2 = test"],
                 invalid: [{ code: "bar", errors: 1, languageOptions: { globals: { foo: true } } }]
             });
         });
@@ -184,7 +170,6 @@ describe("FlatRuleTester", () => {
              */
             const usesStartEndRule = {
                 create() {
-
                     return {
                         CallExpression(node) {
                             noop(node.arguments[1].start);
@@ -200,7 +185,6 @@ describe("FlatRuleTester", () => {
                 });
             }, "Use node.range[0] instead of node.start");
         });
-
     });
 
     describe("only", () => {
@@ -219,10 +203,12 @@ describe("FlatRuleTester", () => {
 
                 it("is called by exclusive tests", () => {
                     ruleTester.run("no-var", require("../../fixtures/testers/rule-tester/no-var"), {
-                        valid: [{
-                            code: "const notVar = 42;",
-                            only: true
-                        }],
+                        valid: [
+                            {
+                                code: "const notVar = 42;",
+                                only: true
+                            }
+                        ],
                         invalid: []
                     });
 
@@ -245,10 +231,12 @@ describe("FlatRuleTester", () => {
 
                 it("is called by tests with `only` set", () => {
                     ruleTester.run("no-var", require("../../fixtures/testers/rule-tester/no-var"), {
-                        valid: [{
-                            code: "const notVar = 42;",
-                            only: true
-                        }],
+                        valid: [
+                            {
+                                code: "const notVar = 42;",
+                                only: true
+                            }
+                        ],
                         invalid: []
                     });
 
@@ -260,7 +248,6 @@ describe("FlatRuleTester", () => {
                 let originalGlobalItOnly;
 
                 before(() => {
-
                     /*
                      * We run tests with `--forbid-only`, so we have to override
                      * `it.only` to prevent the real one from being called.
@@ -279,10 +266,12 @@ describe("FlatRuleTester", () => {
 
                 it("is called by tests with `only` set", () => {
                     ruleTester.run("no-var", require("../../fixtures/testers/rule-tester/no-var"), {
-                        valid: [{
-                            code: "const notVar = 42;",
-                            only: true
-                        }],
+                        valid: [
+                            {
+                                code: "const notVar = 42;",
+                                only: true
+                            }
+                        ],
                         invalid: []
                     });
 
@@ -294,7 +283,6 @@ describe("FlatRuleTester", () => {
                 let originalGlobalItOnly;
 
                 before(() => {
-
                     /*
                      * These tests override `describe` and `it` already, so we
                      * don't need to override them here. We do, however, need to
@@ -314,10 +302,12 @@ describe("FlatRuleTester", () => {
                 it("throws an error recommending overriding `itOnly`", () => {
                     assert.throws(() => {
                         ruleTester.run("no-var", require("../../fixtures/testers/rule-tester/no-var"), {
-                            valid: [{
-                                code: "const notVar = 42;",
-                                only: true
-                            }],
+                            valid: [
+                                {
+                                    code: "const notVar = 42;",
+                                    only: true
+                                }
+                            ],
                             invalid: []
                         });
                     }, "Set `RuleTester.itOnly` to use `only` with a custom test framework.");
@@ -345,7 +335,6 @@ describe("FlatRuleTester", () => {
                     FlatRuleTester.it = void 0;
                 });
                 after(() => {
-
                     // eslint-disable-next-line no-global-assign -- Restore Mocha global
                     it = originalGlobalIt;
                     FlatRuleTester.describe = originalRuleTesterDescribe;
@@ -358,10 +347,12 @@ describe("FlatRuleTester", () => {
                 it("throws an error explaining that the current test framework does not support `only`", () => {
                     assert.throws(() => {
                         ruleTester.run("no-var", require("../../fixtures/testers/rule-tester/no-var"), {
-                            valid: [{
-                                code: "const notVar = 42;",
-                                only: true
-                            }],
+                            valid: [
+                                {
+                                    code: "const notVar = 42;",
+                                    only: true
+                                }
+                            ],
                             invalid: []
                         });
                     }, "The current test framework does not support exclusive tests with `only`.");
@@ -406,7 +397,6 @@ describe("FlatRuleTester", () => {
             });
 
             it("calls it or itOnly for every test case", () => {
-
                 /*
                  * `RuleTester` doesn't implement test case exclusivity itself.
                  * Setting `only: true` just causes `RuleTester` to call
@@ -465,93 +455,65 @@ describe("FlatRuleTester", () => {
 
     it("should not throw an error when everything passes", () => {
         ruleTester.run("no-eval", require("../../fixtures/testers/rule-tester/no-eval"), {
-            valid: [
-                "Eval(foo)"
-            ],
-            invalid: [
-                { code: "eval(foo)", errors: [{ message: "eval sucks.", type: "CallExpression" }] }
-            ]
+            valid: ["Eval(foo)"],
+            invalid: [{ code: "eval(foo)", errors: [{ message: "eval sucks.", type: "CallExpression" }] }]
         });
     });
 
     it("should throw correct error when valid code is invalid and enables other core rule", () => {
-
         assert.throws(() => {
             ruleTester.run("no-eval", require("../../fixtures/testers/rule-tester/no-eval"), {
-                valid: [
-                    "/*eslint semi: 2*/ eval(foo);"
-                ],
-                invalid: [
-                    { code: "eval(foo)", errors: [{ message: "eval sucks.", type: "CallExpression" }] }
-                ]
+                valid: ["/*eslint semi: 2*/ eval(foo);"],
+                invalid: [{ code: "eval(foo)", errors: [{ message: "eval sucks.", type: "CallExpression" }] }]
             });
         }, /Should have no errors but had 1/u);
     });
 
     it("should throw an error when valid code is invalid", () => {
-
         assert.throws(() => {
             ruleTester.run("no-eval", require("../../fixtures/testers/rule-tester/no-eval"), {
-                valid: [
-                    "eval(foo)"
-                ],
-                invalid: [
-                    { code: "eval(foo)", errors: [{ message: "eval sucks.", type: "CallExpression" }] }
-                ]
+                valid: ["eval(foo)"],
+                invalid: [{ code: "eval(foo)", errors: [{ message: "eval sucks.", type: "CallExpression" }] }]
             });
         }, /Should have no errors but had 1/u);
     });
 
     it("should throw an error when valid code is invalid", () => {
-
         assert.throws(() => {
             ruleTester.run("no-eval", require("../../fixtures/testers/rule-tester/no-eval"), {
-                valid: [
-                    { code: "eval(foo)" }
-                ],
-                invalid: [
-                    { code: "eval(foo)", errors: [{ message: "eval sucks.", type: "CallExpression" }] }
-                ]
+                valid: [{ code: "eval(foo)" }],
+                invalid: [{ code: "eval(foo)", errors: [{ message: "eval sucks.", type: "CallExpression" }] }]
             });
         }, /Should have no errors but had 1/u);
     });
 
     it("should throw an error if invalid code is valid", () => {
-
         assert.throws(() => {
             ruleTester.run("no-eval", require("../../fixtures/testers/rule-tester/no-eval"), {
-                valid: [
-                    "Eval(foo)"
-                ],
-                invalid: [
-                    { code: "Eval(foo)", errors: [{ message: "eval sucks.", type: "CallExpression" }] }
-                ]
+                valid: ["Eval(foo)"],
+                invalid: [{ code: "Eval(foo)", errors: [{ message: "eval sucks.", type: "CallExpression" }] }]
             });
         }, /Should have 1 error but had 0/u);
     });
 
     it("should throw an error when the error message is wrong", () => {
-        assert.throws(() => {
-            ruleTester.run("no-var", require("../../fixtures/testers/rule-tester/no-var"), {
-
-                // Only the invalid test matters here
-                valid: [
-                    "bar = baz;"
-                ],
-                invalid: [
-                    { code: "var foo = bar;", errors: [{ message: "Bad error message." }] }
-                ]
-            });
-        }, assertErrorMatches("Bad var.", "Bad error message."));
+        assert.throws(
+            () => {
+                ruleTester.run("no-var", require("../../fixtures/testers/rule-tester/no-var"), {
+                    // Only the invalid test matters here
+                    valid: ["bar = baz;"],
+                    invalid: [{ code: "var foo = bar;", errors: [{ message: "Bad error message." }] }]
+                });
+            },
+            assertErrorMatches("Bad var.", "Bad error message.")
+        );
     });
 
     it("should throw an error when the error message regex does not match", () => {
         assert.throws(() => {
             ruleTester.run("no-var", require("../../fixtures/testers/rule-tester/no-var"), {
                 valid: [],
-                invalid: [
-                    { code: "var foo = bar;", errors: [{ message: /Bad error message/u }] }
-                ]
+                invalid: [{ code: "var foo = bar;", errors: [{ message: /Bad error message/u }] }]
             });
         }, /Expected 'Bad var.' to match \/Bad error message\//u);
     });
@@ -559,14 +521,9 @@ describe("FlatRuleTester", () => {
     it("should throw an error when the error is not a supported type", () => {
         assert.throws(() => {
             ruleTester.run("no-var", require("../../fixtures/testers/rule-tester/no-var"), {
-
                 // Only the invalid test matters here
-                valid: [
-                    "bar = baz;"
-                ],
-                invalid: [
-                    { code: "var foo = bar;", errors: [42] }
-                ]
+                valid: ["bar = baz;"],
+                invalid: [{ code: "var foo = bar;", errors: [42] }]
             });
         }, /Error should be a string, object, or RegExp/u);
     });
@@ -574,77 +531,55 @@ describe("FlatRuleTester", () => {
     it("should throw an error when any of the errors is not a supported type", () => {
         assert.throws(() => {
             ruleTester.run("no-var", require("../../fixtures/testers/rule-tester/no-var"), {
-
                 // Only the invalid test matters here
-                valid: [
-                    "bar = baz;"
-                ],
-                invalid: [
-                    { code: "var foo = bar; var baz = quux", errors: [{ type: "VariableDeclaration" }, null] }
-                ]
+                valid: ["bar = baz;"],
+                invalid: [{ code: "var foo = bar; var baz = quux", errors: [{ type: "VariableDeclaration" }, null] }]
             });
         }, /Error should be a string, object, or RegExp/u);
     });
 
     it("should throw an error when the error is a string and it does not match error message", () => {
-        assert.throws(() => {
-            ruleTester.run("no-var", require("../../fixtures/testers/rule-tester/no-var"), {
-
-                // Only the invalid test matters here
-                valid: [
-                    "bar = baz;"
-                ],
-                invalid: [
-                    { code: "var foo = bar;", errors: ["Bad error message."] }
-                ]
-            });
-        }, assertErrorMatches("Bad var.", "Bad error message."));
+        assert.throws(
+            () => {
+                ruleTester.run("no-var", require("../../fixtures/testers/rule-tester/no-var"), {
+                    // Only the invalid test matters here
+                    valid: ["bar = baz;"],
+                    invalid: [{ code: "var foo = bar;", errors: ["Bad error message."] }]
+                });
+            },
+            assertErrorMatches("Bad var.", "Bad error message.")
+        );
     });
 
     it("should throw an error when the error is a string and it does not match error message", () => {
         assert.throws(() => {
             ruleTester.run("no-var", require("../../fixtures/testers/rule-tester/no-var"), {
-
-                valid: [
-                ],
-                invalid: [
-                    { code: "var foo = bar;", errors: [/Bad error message/u] }
-                ]
+                valid: [],
+                invalid: [{ code: "var foo = bar;", errors: [/Bad error message/u] }]
             });
         }, /Expected 'Bad var.' to match \/Bad error message\//u);
     });
 
     it("should not throw an error when the error is a string and it matches error message", () => {
         ruleTester.run("no-var", require("../../fixtures/testers/rule-tester/no-var"), {
-
             // Only the invalid test matters here
-            valid: [
-                "bar = baz;"
-            ],
-            invalid: [
-                { code: "var foo = bar;", output: " foo = bar;", errors: ["Bad var."] }
-            ]
+            valid: ["bar = baz;"],
+            invalid: [{ code: "var foo = bar;", output: " foo = bar;", errors: ["Bad var."] }]
         });
     });
 
     it("should not throw an error when the error is a regex and it matches error message", () => {
         ruleTester.run("no-var", require("../../fixtures/testers/rule-tester/no-var"), {
             valid: [],
-            invalid: [
-                { code: "var foo = bar;", output: " foo = bar;", errors: [/^Bad var/u] }
-            ]
+            invalid: [{ code: "var foo = bar;", output: " foo = bar;", errors: [/^Bad var/u] }]
         });
     });
 
     it("should throw an error when the error is an object with an unknown property name", () => {
         assert.throws(() => {
             ruleTester.run("no-var", require("../../fixtures/testers/rule-tester/no-var"), {
-                valid: [
-                    "bar = baz;"
-                ],
-                invalid: [
-                    { code: "var foo = bar;", errors: [{ Message: "Bad var." }] }
-                ]
+                valid: ["bar = baz;"],
+                invalid: [{ code: "var foo = bar;", errors: [{ Message: "Bad var." }] }]
             });
         }, /Invalid error property name 'Message'/u);
     });
@@ -652,9 +587,7 @@ describe("FlatRuleTester", () => {
     it("should throw an error when any of the errors is an object with an unknown property name", () => {
         assert.throws(() => {
             ruleTester.run("no-var", require("../../fixtures/testers/rule-tester/no-var"), {
-                valid: [
-                    "bar = baz;"
-                ],
+                valid: ["bar = baz;"],
                 invalid: [
                     {
                         code: "var foo = bar; var baz = quux",
@@ -671,21 +604,15 @@ describe("FlatRuleTester", () => {
     it("should not throw an error when the error is a regex in an object and it matches error message", () => {
         ruleTester.run("no-var", require("../../fixtures/testers/rule-tester/no-var"), {
             valid: [],
-            invalid: [
-                { code: "var foo = bar;", output: " foo = bar;", errors: [{ message: /^Bad var/u }] }
-            ]
+            invalid: [{ code: "var foo = bar;", output: " foo = bar;", errors: [{ message: /^Bad var/u }] }]
         });
     });
 
     it("should throw an error when the expected output doesn't match", () => {
         assert.throws(() => {
             ruleTester.run("no-var", require("../../fixtures/testers/rule-tester/no-var"), {
-                valid: [
-                    "bar = baz;"
-                ],
-                invalid: [
-                    { code: "var foo = bar;", output: "foo = bar", errors: [{ message: "Bad var.", type: "VariableDeclaration" }] }
-                ]
+                valid: ["bar = baz;"],
+                invalid: [{ code: "var foo = bar;", output: "foo = bar", errors: [{ message: "Bad var.", type: "VariableDeclaration" }] }]
             });
         }, /Output is incorrect/u);
     });
@@ -706,17 +633,13 @@ describe("FlatRuleTester", () => {
         // Should not throw.
         ruleTester.run("foo", replaceProgramWith5Rule, {
             valid: [],
-            invalid: [
-                { code: "var foo = bar;", output: "5", errors: 1 }
-            ]
+            invalid: [{ code: "var foo = bar;", output: "5", errors: 1 }]
         });
 
         assert.throws(() => {
             ruleTester.run("foo", replaceProgramWith5Rule, {
                 valid: [],
-                invalid: [
-                    { code: "var foo = bar;", output: 5, errors: 1 }
-                ]
+                invalid: [{ code: "var foo = bar;", output: 5, errors: 1 }]
             });
         }, /Output is incorrect/u);
     });
@@ -724,21 +647,15 @@ describe("FlatRuleTester", () => {
     it("should throw an error when the expected output doesn't match and errors is just a number", () => {
         assert.throws(() => {
             ruleTester.run("no-var", require("../../fixtures/testers/rule-tester/no-var"), {
-                valid: [
-                    "bar = baz;"
-                ],
-                invalid: [
-                    { code: "var foo = bar;", output: "foo = bar", errors: 1 }
-                ]
+                valid: ["bar = baz;"],
+                invalid: [{ code: "var foo = bar;", output: "foo = bar", errors: 1 }]
             });
         }, /Output is incorrect/u);
     });
 
     it("should not throw an error when the expected output is null and no errors produce output", () => {
         ruleTester.run("no-eval", require("../../fixtures/testers/rule-tester/no-eval"), {
-            valid: [
-                "bar = baz;"
-            ],
+            valid: ["bar = baz;"],
             invalid: [
                 { code: "eval(x)", errors: 1, output: null },
                 { code: "eval(x); eval(y);", errors: 2, output: null }
@@ -749,20 +666,14 @@ describe("FlatRuleTester", () => {
     it("should throw an error when the expected output is null and problems produce output", () => {
         assert.throws(() => {
             ruleTester.run("no-var", require("../../fixtures/testers/rule-tester/no-var"), {
-                valid: [
-                    "bar = baz;"
-                ],
-                invalid: [
-                    { code: "var foo = bar;", output: null, errors: 1 }
-                ]
+                valid: ["bar = baz;"],
+                invalid: [{ code: "var foo = bar;", output: null, errors: 1 }]
             });
         }, /Expected no autofixes to be suggested/u);
 
         assert.throws(() => {
             ruleTester.run("no-var", require("../../fixtures/testers/rule-tester/no-var"), {
-                valid: [
-                    "bar = baz;"
-                ],
+                valid: ["bar = baz;"],
                 invalid: [
                     {
                         code: "var foo = bar; var qux = boop;",
@@ -778,9 +689,7 @@ describe("FlatRuleTester", () => {
         assert.throws(() => {
             ruleTester.run("fixes-one-problem", require("../../fixtures/testers/rule-tester/fixes-one-problem"), {
                 valid: [],
-                invalid: [
-                    { code: "foo", output: null, errors: 2 }
-                ]
+                invalid: [{ code: "foo", output: null, errors: 2 }]
             });
         }, /Expected no autofixes to be suggested/u);
     });
@@ -788,12 +697,8 @@ describe("FlatRuleTester", () => {
     it("should throw an error when the expected output isn't specified and problems produce output", () => {
         assert.throws(() => {
             ruleTester.run("no-var", require("../../fixtures/testers/rule-tester/no-var"), {
-                valid: [
-                    "bar = baz;"
-                ],
-                invalid: [
-                    { code: "var foo = bar;", errors: 1 }
-                ]
+                valid: ["bar = baz;"],
+                invalid: [{ code: "var foo = bar;", errors: 1 }]
             });
         }, "The rule fixed the code. Please add 'output' property.");
     });
@@ -801,12 +706,8 @@ describe("FlatRuleTester", () => {
     it("should throw an error if invalid code specifies wrong type", () => {
         assert.throws(() => {
             ruleTester.run("no-eval", require("../../fixtures/testers/rule-tester/no-eval"), {
-                valid: [
-                    "Eval(foo)"
-                ],
-                invalid: [
-                    { code: "eval(foo)", errors: [{ message: "eval sucks.", type: "CallExpression2" }] }
-                ]
+                valid: ["Eval(foo)"],
+                invalid: [{ code: "eval(foo)", errors: [{ message: "eval sucks.", type: "CallExpression2" }] }]
             });
         }, /Error type should be CallExpression2, found CallExpression/u);
     });
@@ -814,12 +715,8 @@ describe("FlatRuleTester", () => {
     it("should throw an error if invalid code specifies wrong line", () => {
         assert.throws(() => {
             ruleTester.run("no-eval", require("../../fixtures/testers/rule-tester/no-eval"), {
-                valid: [
-                    "Eval(foo)"
-                ],
-                invalid: [
-                    { code: "eval(foo)", errors: [{ message: "eval sucks.", type: "CallExpression", line: 5 }] }
-                ]
+                valid: ["Eval(foo)"],
+                invalid: [{ code: "eval(foo)", errors: [{ message: "eval sucks.", type: "CallExpression", line: 5 }] }]
             });
         }, /Error line should be 5/u);
     });
@@ -827,12 +724,8 @@ describe("FlatRuleTester", () => {
     it("should not skip line assertion if line is a falsy value", () => {
         assert.throws(() => {
             ruleTester.run("no-eval", require("../../fixtures/testers/rule-tester/no-eval"), {
-                valid: [
-                    "Eval(foo)"
-                ],
-                invalid: [
-                    { code: "\neval(foo)", errors: [{ message: "eval sucks.", type: "CallExpression", line: 0 }] }
-                ]
+                valid: ["Eval(foo)"],
+                invalid: [{ code: "\neval(foo)", errors: [{ message: "eval sucks.", type: "CallExpression", line: 0 }] }]
             });
         }, /Error line should be 0/u);
     });
@@ -844,13 +737,17 @@ describe("FlatRuleTester", () => {
         assert.throws(() => {
             ruleTester.run("no-eval", require("../../fixtures/testers/rule-tester/no-eval"), {
                 valid: ["Eval(foo)"],
-                invalid: [{
-                    code: "eval(foo)",
-                    errors: [{
-                        message: "eval sucks.",
-                        column: wrongColumn
-                    }]
-                }]
+                invalid: [
+                    {
+                        code: "eval(foo)",
+                        errors: [
+                            {
+                                message: "eval sucks.",
+                                column: wrongColumn
+                            }
+                        ]
+                    }
+                ]
             });
         }, expectedErrorMessage);
     });
@@ -859,30 +756,27 @@ describe("FlatRuleTester", () => {
         assert.throws(() => {
             ruleTester.run("suggestions-messageIds", require("../../fixtures/testers/rule-tester/suggestions").withMessageIds, {
                 valid: [],
-                invalid: [{
-                    code: "var foo;",
-                    errors: []
-                }]
+                invalid: [
+                    {
+                        code: "var foo;",
+                        errors: []
+                    }
+                ]
             });
         }, /Invalid cases must have at least one error/u);
     });
 
     it("should throw error for errors : 0", () => {
         assert.throws(() => {
-            ruleTester.run(
-                "suggestions-messageIds",
-                require("../../fixtures/testers/rule-tester/suggestions")
-                    .withMessageIds,
-                {
-                    valid: [],
-                    invalid: [
-                        {
-                            code: "var foo;",
-                            errors: 0
-                        }
-                    ]
-                }
-            );
+            ruleTester.run("suggestions-messageIds", require("../../fixtures/testers/rule-tester/suggestions").withMessageIds, {
+                valid: [],
+                invalid: [
+                    {
+                        code: "var foo;",
+                        errors: 0
+                    }
+                ]
+            });
         }, /Invalid cases must have 'error' value greater than 0/u);
     });
 
@@ -890,10 +784,12 @@ describe("FlatRuleTester", () => {
         assert.throws(() => {
             ruleTester.run("no-eval", require("../../fixtures/testers/rule-tester/no-eval"), {
                 valid: ["Eval(foo)"],
-                invalid: [{
-                    code: "var foo; eval(foo)",
-                    errors: [{ message: "eval sucks.", column: 0 }]
-                }]
+                invalid: [
+                    {
+                        code: "var foo; eval(foo)",
+                        errors: [{ message: "eval sucks.", column: 0 }]
+                    }
+                ]
             });
         }, /Error column should be 0/u);
     });
@@ -901,12 +797,8 @@ describe("FlatRuleTester", () => {
     it("should throw an error if invalid code specifies wrong endLine", () => {
         assert.throws(() => {
             ruleTester.run("no-var", require("../../fixtures/testers/rule-tester/no-var"), {
-                valid: [
-                    "bar = baz;"
-                ],
-                invalid: [
-                    { code: "var foo = bar;", output: "foo = bar", errors: [{ message: "Bad var.", type: "VariableDeclaration", endLine: 10 }] }
-                ]
+                valid: ["bar = baz;"],
+                invalid: [{ code: "var foo = bar;", output: "foo = bar", errors: [{ message: "Bad var.", type: "VariableDeclaration", endLine: 10 }] }]
             });
         }, "Error endLine should be 10");
     });
@@ -914,12 +806,8 @@ describe("FlatRuleTester", () => {
     it("should throw an error if invalid code specifies wrong endColumn", () => {
         assert.throws(() => {
             ruleTester.run("no-var", require("../../fixtures/testers/rule-tester/no-var"), {
-                valid: [
-                    "bar = baz;"
-                ],
-                invalid: [
-                    { code: "var foo = bar;", output: "foo = bar", errors: [{ message: "Bad var.", type: "VariableDeclaration", endColumn: 10 }] }
-                ]
+                valid: ["bar = baz;"],
+                invalid: [{ code: "var foo = bar;", output: "foo = bar", errors: [{ message: "Bad var.", type: "VariableDeclaration", endColumn: 10 }] }]
             });
         }, "Error endColumn should be 10");
     });
@@ -927,9 +815,7 @@ describe("FlatRuleTester", () => {
     it("should throw an error if invalid code has the wrong number of errors", () => {
         assert.throws(() => {
             ruleTester.run("no-eval", require("../../fixtures/testers/rule-tester/no-eval"), {
-                valid: [
-                    "Eval(foo)"
-                ],
+                valid: ["Eval(foo)"],
                 invalid: [
                     {
                         code: "eval(foo)",
@@ -946,12 +832,8 @@ describe("FlatRuleTester", () => {
     it("should throw an error if invalid code does not have errors", () => {
         assert.throws(() => {
             ruleTester.run("no-eval", require("../../fixtures/testers/rule-tester/no-eval"), {
-                valid: [
-                    "Eval(foo)"
-                ],
-                invalid: [
-                    { code: "eval(foo)" }
-                ]
+                valid: ["Eval(foo)"],
+                invalid: [{ code: "eval(foo)" }]
             });
         }, /Did not specify errors for an invalid test of no-eval/u);
     });
@@ -959,12 +841,8 @@ describe("FlatRuleTester", () => {
     it("should throw an error if invalid code has the wrong explicit number of errors", () => {
         assert.throws(() => {
             ruleTester.run("no-eval", require("../../fixtures/testers/rule-tester/no-eval"), {
-                valid: [
-                    "Eval(foo)"
-                ],
-                invalid: [
-                    { code: "eval(foo)", errors: 2 }
-                ]
+                valid: ["Eval(foo)"],
+                invalid: [{ code: "eval(foo)", errors: 2 }]
             });
         }, /Should have 2 errors but had 1/u);
     });
@@ -972,12 +850,8 @@ describe("FlatRuleTester", () => {
     it("should throw an error if there's a parsing error in a valid test", () => {
         assert.throws(() => {
             ruleTester.run("no-eval", require("../../fixtures/testers/rule-tester/no-eval"), {
-                valid: [
-                    "1eval('foo')"
-                ],
-                invalid: [
-                    { code: "eval('foo')", errors: [{}] }
-                ]
+                valid: ["1eval('foo')"],
+                invalid: [{ code: "eval('foo')", errors: [{}] }]
             });
         }, /fatal parsing error/iu);
     });
@@ -985,12 +859,8 @@ describe("FlatRuleTester", () => {
     it("should throw an error if there's a parsing error in an invalid test", () => {
         assert.throws(() => {
             ruleTester.run("no-eval", require("../../fixtures/testers/rule-tester/no-eval"), {
-                valid: [
-                    "noeval('foo')"
-                ],
-                invalid: [
-                    { code: "1eval('foo')", errors: [{}] }
-                ]
+                valid: ["noeval('foo')"],
+                invalid: [{ code: "1eval('foo')", errors: [{}] }]
             });
         }, /fatal parsing error/iu);
     });
@@ -998,12 +868,8 @@ describe("FlatRuleTester", () => {
     it("should throw an error if there's a parsing error in an invalid test and errors is just a number", () => {
         assert.throws(() => {
             ruleTester.run("no-eval", require("../../fixtures/testers/rule-tester/no-eval"), {
-                valid: [
-                    "noeval('foo')"
-                ],
-                invalid: [
-                    { code: "1eval('foo')", errors: 1 }
-                ]
+                valid: ["noeval('foo')"],
+                invalid: [{ code: "1eval('foo')", errors: 1 }]
             });
         }, /fatal parsing error/iu);
     });
@@ -1013,9 +879,7 @@ describe("FlatRuleTester", () => {
         assert.throws(() => {
             ruleTester.run("no-eval", require("../../fixtures/testers/rule-tester/no-eval"), {
                 valid: [],
-                invalid: [
-                    { code: "eval(`foo`", output: "eval(`foo`);", errors: [{}] }
-                ]
+                invalid: [{ code: "eval(`foo`", output: "eval(`foo`);", errors: [{}] }]
             });
         }, /fatal parsing error/iu);
     });
@@ -1023,10 +887,12 @@ describe("FlatRuleTester", () => {
     it("should not throw an error if invalid code has at least an expected empty error object", () => {
         ruleTester.run("no-eval", require("../../fixtures/testers/rule-tester/no-eval"), {
             valid: ["Eval(foo)"],
-            invalid: [{
-                code: "eval(foo)",
-                errors: [{}]
-            }]
+            invalid: [
+                {
+                    code: "eval(foo)",
+                    errors: [{}]
+                }
+            ]
         });
     });
 
@@ -1084,19 +950,22 @@ describe("FlatRuleTester", () => {
         ruleTester.run("no-test-settings", require("../../fixtures/testers/rule-tester/no-test-settings"), {
             valid: [
                 {
-                    code: "var test = 'bar'", settings: { test: 1 }
+                    code: "var test = 'bar'",
+                    settings: { test: 1 }
                 }
             ],
             invalid: [
                 {
-                    code: "var test = 'bar'", settings: { "no-test": 22 }, errors: 1
+                    code: "var test = 'bar'",
+                    settings: { "no-test": 22 },
+                    errors: 1
                 }
             ]
         });
     });
 
     it("should pass-through the filename to the rule", () => {
-        (function() {
+        (function () {
             ruleTester.run("", require("../../fixtures/testers/rule-tester/no-test-filename"), {
                 valid: [
                     {
@@ -1107,13 +976,11 @@ describe("FlatRuleTester", () => {
                 invalid: [
                     {
                         code: "var foo = 'bar'",
-                        errors: [
-                            { message: "Filename test was not defined." }
-                        ]
+                        errors: [{ message: "Filename test was not defined." }]
                     }
                 ]
             });
-        }());
+        })();
     });
 
     it("should allow setting the filename to a non-JavaScript file", () => {
@@ -1241,7 +1108,6 @@ describe("FlatRuleTester", () => {
     });
 
     describe("Parsers", () => {
-
         it("should pass-through the parser to the rule", () => {
             const spy = sinon.spy(ruleTester.linter, "verify");
             const esprima = require("esprima");
@@ -1266,10 +1132,7 @@ describe("FlatRuleTester", () => {
             const configs = spy.args[1][1];
             const config = configs.getConfig("test.js");
 
-            assert.strictEqual(
-                config.languageOptions.parser[Symbol.for("eslint.RuleTester.parser")],
-                esprima
-            );
+            assert.strictEqual(config.languageOptions.parser[Symbol.for("eslint.RuleTester.parser")], esprima);
         });
 
         it("should pass-through services from parseForESLint to the rule", () => {
@@ -1313,49 +1176,36 @@ describe("FlatRuleTester", () => {
             assert.throws(() => {
                 ruleTester.run("no-eval", require("../../fixtures/testers/rule-tester/no-eval"), {
                     valid: [],
-                    invalid: [{
-                        code: "var foo;",
-                        languageOptions: {
-                            parser: "esprima"
-                        },
-                        errors: 1
-                    }]
+                    invalid: [
+                        {
+                            code: "var foo;",
+                            languageOptions: {
+                                parser: "esprima"
+                            },
+                            errors: 1
+                        }
+                    ]
                 });
             }, /Parser must be an object with a parse\(\) or parseForESLint\(\) method/u);
-
         });
-
     });
-
 
     it("should prevent invalid options schemas", () => {
         assert.throws(() => {
             ruleTester.run("no-invalid-schema", require("../../fixtures/testers/rule-tester/no-invalid-schema"), {
-                valid: [
-                    "var answer = 6 * 7;",
-                    { code: "var answer = 6 * 7;", options: [] }
-                ],
-                invalid: [
-                    { code: "var answer = 6 * 7;", options: ["bar"], errors: [{ message: "Expected nothing." }] }
-                ]
+                valid: ["var answer = 6 * 7;", { code: "var answer = 6 * 7;", options: [] }],
+                invalid: [{ code: "var answer = 6 * 7;", options: ["bar"], errors: [{ message: "Expected nothing." }] }]
             });
         }, "Schema for rule no-invalid-schema is invalid:,\titems: should be object\n\titems[0].enum: should NOT have fewer than 1 items\n\titems: should match some schema in anyOf");
-
     });
 
     it("should prevent schema violations in options", () => {
         assert.throws(() => {
             ruleTester.run("no-schema-violation", require("../../fixtures/testers/rule-tester/no-schema-violation"), {
-                valid: [
-                    "var answer = 6 * 7;",
-                    { code: "var answer = 6 * 7;", options: ["foo"] }
-                ],
-                invalid: [
-                    { code: "var answer = 6 * 7;", options: ["bar"], errors: [{ message: "Expected foo." }] }
-                ]
+                valid: ["var answer = 6 * 7;", { code: "var answer = 6 * 7;", options: ["foo"] }],
+                invalid: [{ code: "var answer = 6 * 7;", options: ["bar"], errors: [{ message: "Expected foo." }] }]
             });
         }, /Value "bar" should be equal to one of the allowed values./u);
-
     });
 
     it("should disallow invalid defaults in rules", () => {
@@ -1398,9 +1248,7 @@ describe("FlatRuleTester", () => {
     it("throw an error when an unknown config option is included", () => {
         assert.throws(() => {
             ruleTester.run("no-eval", require("../../fixtures/testers/rule-tester/no-eval"), {
-                valid: [
-                    { code: "Eval(foo)", foo: "bar" }
-                ],
+                valid: [{ code: "Eval(foo)", foo: "bar" }],
                 invalid: []
             });
         }, /ESLint configuration in rule-tester is invalid./u);
@@ -1409,9 +1257,7 @@ describe("FlatRuleTester", () => {
     it("throw an error when env is included in config", () => {
         assert.throws(() => {
             ruleTester.run("no-eval", require("../../fixtures/testers/rule-tester/no-eval"), {
-                valid: [
-                    { code: "Eval(foo)", env: ["es6"] }
-                ],
+                valid: [{ code: "Eval(foo)", env: ["es6"] }],
                 invalid: []
             });
         }, /Key "env": This appears to be in eslintrc format rather than flat config format/u);
@@ -1425,10 +1271,7 @@ describe("FlatRuleTester", () => {
         });
 
         ruleTester.run("no-test-global", require("../../fixtures/testers/rule-tester/no-test-global"), {
-            valid: [
-                "var test = 'foo'",
-                "var test2 = test"
-            ],
+            valid: ["var test = 'foo'", "var test2 = test"],
             invalid: [{ code: "bar", errors: 1, languageOptions: { globals: { foo: true } } }]
         });
     });
@@ -1436,18 +1279,14 @@ describe("FlatRuleTester", () => {
     it("should throw an error if AST was modified", () => {
         assert.throws(() => {
             ruleTester.run("foo", require("../../fixtures/testers/rule-tester/modify-ast"), {
-                valid: [
-                    "var foo = 0;"
-                ],
+                valid: ["var foo = 0;"],
                 invalid: []
             });
         }, "Rule should not modify AST.");
         assert.throws(() => {
             ruleTester.run("foo", require("../../fixtures/testers/rule-tester/modify-ast"), {
                 valid: [],
-                invalid: [
-                    { code: "var bar = 0;", errors: ["error"] }
-                ]
+                invalid: [{ code: "var bar = 0;", errors: ["error"] }]
             });
         }, "Rule should not modify AST.");
     });
@@ -1468,7 +1307,6 @@ describe("FlatRuleTester", () => {
          */
         const usesStartEndRule = {
             create() {
-
                 return {
                     CallExpression(node) {
                         noop(node.arguments[1].start);
@@ -1488,18 +1326,14 @@ describe("FlatRuleTester", () => {
     it("should throw an error if AST was modified (at Program)", () => {
         assert.throws(() => {
             ruleTester.run("foo", require("../../fixtures/testers/rule-tester/modify-ast-at-first"), {
-                valid: [
-                    "var foo = 0;"
-                ],
+                valid: ["var foo = 0;"],
                 invalid: []
             });
         }, "Rule should not modify AST.");
         assert.throws(() => {
             ruleTester.run("foo", require("../../fixtures/testers/rule-tester/modify-ast-at-first"), {
                 valid: [],
-                invalid: [
-                    { code: "var bar = 0;", errors: ["error"] }
-                ]
+                invalid: [{ code: "var bar = 0;", errors: ["error"] }]
             });
         }, "Rule should not modify AST.");
     });
@@ -1507,18 +1341,14 @@ describe("FlatRuleTester", () => {
     it("should throw an error if AST was modified (at Program:exit)", () => {
         assert.throws(() => {
             ruleTester.run("foo", require("../../fixtures/testers/rule-tester/modify-ast-at-last"), {
-                valid: [
-                    "var foo = 0;"
-                ],
+                valid: ["var foo = 0;"],
                 invalid: []
             });
         }, "Rule should not modify AST.");
         assert.throws(() => {
             ruleTester.run("foo", require("../../fixtures/testers/rule-tester/modify-ast-at-last"), {
                 valid: [],
-                invalid: [
-                    { code: "var bar = 0;", errors: ["error"] }
-                ]
+                invalid: [{ code: "var bar = 0;", errors: ["error"] }]
             });
         }, "Rule should not modify AST.");
     });
@@ -1526,7 +1356,6 @@ describe("FlatRuleTester", () => {
     it("should throw an error if rule uses start and end properties on nodes, tokens or comments", () => {
         const usesStartEndRule = {
             create(context) {
-
                 const sourceCode = context.sourceCode;
 
                 return {
@@ -1758,9 +1587,7 @@ describe("FlatRuleTester", () => {
 
         ruleTester.run("replaceProgramWith5", replaceProgramWith5Rule, {
             valid: [],
-            invalid: [
-                { code: "var foo = bar;", output: "5", errors: 1 }
-            ]
+            invalid: [{ code: "var foo = bar;", output: "5", errors: 1 }]
         });
     });
     it("should throw an error if a new-format rule that doesn't have `meta` produces fixes", () => {
@@ -1777,14 +1604,11 @@ describe("FlatRuleTester", () => {
         assert.throws(() => {
             ruleTester.run("replaceProgramWith5", replaceProgramWith5Rule, {
                 valid: [],
-                invalid: [
-                    { code: "var foo = bar;", output: "5", errors: 1 }
-                ]
+                invalid: [{ code: "var foo = bar;", output: "5", errors: 1 }]
             });
         }, /Fixable rules must set the `meta\.fixable` property/u);
     });
     it("should throw an error if a legacy-format rule produces fixes", () => {
-
         /**
          * Legacy-format rule (a function instead of an object with `create` method).
          * @param {RuleContext} context The ESLint rule context object.
@@ -1801,9 +1625,7 @@ describe("FlatRuleTester", () => {
         assert.throws(() => {
             ruleTester.run("replaceProgramWith5", replaceProgramWith5Rule, {
                 valid: [],
-                invalid: [
-                    { code: "var foo = bar;", output: "5", errors: 1 }
-                ]
+                invalid: [{ code: "var foo = bar;", output: "5", errors: 1 }]
             });
         }, /Fixable rules must set the `meta\.fixable` property/u);
     });
@@ -1811,18 +1633,22 @@ describe("FlatRuleTester", () => {
     describe("suggestions", () => {
         it("should pass with valid suggestions (tested using desc)", () => {
             ruleTester.run("suggestions-basic", require("../../fixtures/testers/rule-tester/suggestions").basic, {
-                valid: [
-                    "var boo;"
-                ],
-                invalid: [{
-                    code: "var foo;",
-                    errors: [{
-                        suggestions: [{
-                            desc: "Rename identifier 'foo' to 'bar'",
-                            output: "var bar;"
-                        }]
-                    }]
-                }]
+                valid: ["var boo;"],
+                invalid: [
+                    {
+                        code: "var foo;",
+                        errors: [
+                            {
+                                suggestions: [
+                                    {
+                                        desc: "Rename identifier 'foo' to 'bar'",
+                                        output: "var bar;"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
             });
         });
 
@@ -1832,17 +1658,24 @@ describe("FlatRuleTester", () => {
                 invalid: [
                     {
                         code: "function foo() {\n  var foo = 1;\n}",
-                        errors: [{
-                            suggestions: [{
-                                desc: "Rename identifier 'foo' to 'bar'",
-                                output: "function bar() {\n  var foo = 1;\n}"
-                            }]
-                        }, {
-                            suggestions: [{
-                                desc: "Rename identifier 'foo' to 'bar'",
-                                output: "function foo() {\n  var bar = 1;\n}"
-                            }]
-                        }]
+                        errors: [
+                            {
+                                suggestions: [
+                                    {
+                                        desc: "Rename identifier 'foo' to 'bar'",
+                                        output: "function bar() {\n  var foo = 1;\n}"
+                                    }
+                                ]
+                            },
+                            {
+                                suggestions: [
+                                    {
+                                        desc: "Rename identifier 'foo' to 'bar'",
+                                        output: "function foo() {\n  var bar = 1;\n}"
+                                    }
+                                ]
+                            }
+                        ]
                     }
                 ]
             });
@@ -1851,107 +1684,145 @@ describe("FlatRuleTester", () => {
         it("should pass with valid suggestions (tested using messageIds)", () => {
             ruleTester.run("suggestions-messageIds", require("../../fixtures/testers/rule-tester/suggestions").withMessageIds, {
                 valid: [],
-                invalid: [{
-                    code: "var foo;",
-                    errors: [{
-                        suggestions: [{
-                            messageId: "renameFoo",
-                            output: "var bar;"
-                        }, {
-                            messageId: "renameFoo",
-                            output: "var baz;"
-                        }]
-                    }]
-                }]
+                invalid: [
+                    {
+                        code: "var foo;",
+                        errors: [
+                            {
+                                suggestions: [
+                                    {
+                                        messageId: "renameFoo",
+                                        output: "var bar;"
+                                    },
+                                    {
+                                        messageId: "renameFoo",
+                                        output: "var baz;"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
             });
         });
 
         it("should pass with valid suggestions (one tested using messageIds, the other using desc)", () => {
             ruleTester.run("suggestions-messageIds", require("../../fixtures/testers/rule-tester/suggestions").withMessageIds, {
                 valid: [],
-                invalid: [{
-                    code: "var foo;",
-                    errors: [{
-                        suggestions: [{
-                            messageId: "renameFoo",
-                            output: "var bar;"
-                        }, {
-                            desc: "Rename identifier 'foo' to 'baz'",
-                            output: "var baz;"
-                        }]
-                    }]
-                }]
+                invalid: [
+                    {
+                        code: "var foo;",
+                        errors: [
+                            {
+                                suggestions: [
+                                    {
+                                        messageId: "renameFoo",
+                                        output: "var bar;"
+                                    },
+                                    {
+                                        desc: "Rename identifier 'foo' to 'baz'",
+                                        output: "var baz;"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
             });
         });
 
         it("should pass with valid suggestions (tested using both desc and messageIds for the same suggestion)", () => {
             ruleTester.run("suggestions-messageIds", require("../../fixtures/testers/rule-tester/suggestions").withMessageIds, {
                 valid: [],
-                invalid: [{
-                    code: "var foo;",
-                    errors: [{
-                        suggestions: [{
-                            desc: "Rename identifier 'foo' to 'bar'",
-                            messageId: "renameFoo",
-                            output: "var bar;"
-                        }, {
-                            desc: "Rename identifier 'foo' to 'baz'",
-                            messageId: "renameFoo",
-                            output: "var baz;"
-                        }]
-                    }]
-                }]
+                invalid: [
+                    {
+                        code: "var foo;",
+                        errors: [
+                            {
+                                suggestions: [
+                                    {
+                                        desc: "Rename identifier 'foo' to 'bar'",
+                                        messageId: "renameFoo",
+                                        output: "var bar;"
+                                    },
+                                    {
+                                        desc: "Rename identifier 'foo' to 'baz'",
+                                        messageId: "renameFoo",
+                                        output: "var baz;"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
             });
         });
 
         it("should pass with valid suggestions (tested using only desc on a rule that utilizes meta.messages)", () => {
             ruleTester.run("suggestions-messageIds", require("../../fixtures/testers/rule-tester/suggestions").withMessageIds, {
                 valid: [],
-                invalid: [{
-                    code: "var foo;",
-                    errors: [{
-                        suggestions: [{
-                            desc: "Rename identifier 'foo' to 'bar'",
-                            output: "var bar;"
-                        }, {
-                            desc: "Rename identifier 'foo' to 'baz'",
-                            output: "var baz;"
-                        }]
-                    }]
-                }]
+                invalid: [
+                    {
+                        code: "var foo;",
+                        errors: [
+                            {
+                                suggestions: [
+                                    {
+                                        desc: "Rename identifier 'foo' to 'bar'",
+                                        output: "var bar;"
+                                    },
+                                    {
+                                        desc: "Rename identifier 'foo' to 'baz'",
+                                        output: "var baz;"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
             });
         });
 
         it("should pass with valid suggestions (tested using messageIds and data)", () => {
             ruleTester.run("suggestions-messageIds", require("../../fixtures/testers/rule-tester/suggestions").withMessageIds, {
                 valid: [],
-                invalid: [{
-                    code: "var foo;",
-                    errors: [{
-                        suggestions: [{
-                            messageId: "renameFoo",
-                            data: { newName: "bar" },
-                            output: "var bar;"
-                        }, {
-                            messageId: "renameFoo",
-                            data: { newName: "baz" },
-                            output: "var baz;"
-                        }]
-                    }]
-                }]
+                invalid: [
+                    {
+                        code: "var foo;",
+                        errors: [
+                            {
+                                suggestions: [
+                                    {
+                                        messageId: "renameFoo",
+                                        data: { newName: "bar" },
+                                        output: "var bar;"
+                                    },
+                                    {
+                                        messageId: "renameFoo",
+                                        data: { newName: "baz" },
+                                        output: "var baz;"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
             });
         });
-
 
         it("should pass when tested using empty suggestion test objects if the array length is correct", () => {
             ruleTester.run("suggestions-messageIds", require("../../fixtures/testers/rule-tester/suggestions").withMessageIds, {
                 valid: [],
-                invalid: [{
-                    code: "var foo;",
-                    errors: [{
-                        suggestions: [{}, {}]
-                    }]
-                }]
+                invalid: [
+                    {
+                        code: "var foo;",
+                        errors: [
+                            {
+                                suggestions: [{}, {}]
+                            }
+                        ]
+                    }
+                ]
             });
         });
 
@@ -1959,12 +1830,16 @@ describe("FlatRuleTester", () => {
             [void 0, null, false, []].forEach(suggestions => {
                 ruleTester.run("suggestions-basic", require("../../fixtures/testers/rule-tester/no-eval"), {
                     valid: [],
-                    invalid: [{
-                        code: "eval('var foo');",
-                        errors: [{
-                            suggestions
-                        }]
-                    }]
+                    invalid: [
+                        {
+                            code: "eval('var foo');",
+                            errors: [
+                                {
+                                    suggestions
+                                }
+                            ]
+                        }
+                    ]
                 });
             });
         });
@@ -1974,12 +1849,16 @@ describe("FlatRuleTester", () => {
                 assert.throws(() => {
                     ruleTester.run("suggestions-basic", require("../../fixtures/testers/rule-tester/suggestions").basic, {
                         valid: [],
-                        invalid: [{
-                            code: "var foo;",
-                            errors: [{
-                                suggestions
-                            }]
-                        }]
+                        invalid: [
+                            {
+                                code: "var foo;",
+                                errors: [
+                                    {
+                                        suggestions
+                                    }
+                                ]
+                            }
+                        ]
                     });
                 }, "Error should have no suggestions on error with message: \"Avoid using identifiers named 'foo'.\"");
             });
@@ -1989,34 +1868,47 @@ describe("FlatRuleTester", () => {
             assert.throws(() => {
                 ruleTester.run("no-var", require("../../fixtures/testers/rule-tester/no-var"), {
                     valid: [],
-                    invalid: [{
-                        code: "var foo;",
-                        errors: [{
-                            suggestions: [{
-                                messageId: "this-does-not-exist"
-                            }]
-                        }]
-                    }]
+                    invalid: [
+                        {
+                            code: "var foo;",
+                            errors: [
+                                {
+                                    suggestions: [
+                                        {
+                                            messageId: "this-does-not-exist"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 });
-            }, "Error should have an array of suggestions. Instead received \"undefined\" on error with message: \"Bad var.\"");
+            }, 'Error should have an array of suggestions. Instead received "undefined" on error with message: "Bad var."');
         });
 
         it("should fail when there are a different number of suggestions", () => {
             assert.throws(() => {
                 ruleTester.run("suggestions-basic", require("../../fixtures/testers/rule-tester/suggestions").basic, {
                     valid: [],
-                    invalid: [{
-                        code: "var foo;",
-                        errors: [{
-                            suggestions: [{
-                                desc: "Rename identifier 'foo' to 'bar'",
-                                output: "var bar;"
-                            }, {
-                                desc: "Rename identifier 'foo' to 'baz'",
-                                output: "var baz;"
-                            }]
-                        }]
-                    }]
+                    invalid: [
+                        {
+                            code: "var foo;",
+                            errors: [
+                                {
+                                    suggestions: [
+                                        {
+                                            desc: "Rename identifier 'foo' to 'bar'",
+                                            output: "var bar;"
+                                        },
+                                        {
+                                            desc: "Rename identifier 'foo' to 'baz'",
+                                            output: "var baz;"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 });
             }, "Error should have 2 suggestions. Instead found 1 suggestions");
         });
@@ -2025,15 +1917,21 @@ describe("FlatRuleTester", () => {
             assert.throws(() => {
                 ruleTester.run("suggestions-basic", require("../../fixtures/testers/rule-tester/suggestions").basic, {
                     valid: [],
-                    invalid: [{
-                        code: "var foo;",
-                        errors: [{
-                            suggestions: [{
-                                desc: "not right",
-                                output: "var baz;"
-                            }]
-                        }]
-                    }]
+                    invalid: [
+                        {
+                            code: "var foo;",
+                            errors: [
+                                {
+                                    suggestions: [
+                                        {
+                                            desc: "not right",
+                                            output: "var baz;"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 });
             }, "Error Suggestion at index 0 : desc should be \"not right\" but got \"Rename identifier 'foo' to 'bar'\" instead.");
         });
@@ -2042,20 +1940,27 @@ describe("FlatRuleTester", () => {
             assert.throws(() => {
                 ruleTester.run("suggestions-messageIds", require("../../fixtures/testers/rule-tester/suggestions").withMessageIds, {
                     valid: [],
-                    invalid: [{
-                        code: "var foo;",
-                        errors: [{
-                            suggestions: [{
-                                desc: "Rename identifier 'foo' to 'bar'",
-                                messageId: "renameFoo",
-                                output: "var bar;"
-                            }, {
-                                desc: "Rename id 'foo' to 'baz'",
-                                messageId: "renameFoo",
-                                output: "var baz;"
-                            }]
-                        }]
-                    }]
+                    invalid: [
+                        {
+                            code: "var foo;",
+                            errors: [
+                                {
+                                    suggestions: [
+                                        {
+                                            desc: "Rename identifier 'foo' to 'bar'",
+                                            messageId: "renameFoo",
+                                            output: "var bar;"
+                                        },
+                                        {
+                                            desc: "Rename id 'foo' to 'baz'",
+                                            messageId: "renameFoo",
+                                            output: "var baz;"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 });
             }, "Error Suggestion at index 1 : desc should be \"Rename id 'foo' to 'baz'\" but got \"Rename identifier 'foo' to 'baz'\" instead.");
         });
@@ -2064,18 +1969,25 @@ describe("FlatRuleTester", () => {
             assert.throws(() => {
                 ruleTester.run("suggestions-messageIds", require("../../fixtures/testers/rule-tester/suggestions").withMessageIds, {
                     valid: [],
-                    invalid: [{
-                        code: "var foo;",
-                        errors: [{
-                            suggestions: [{
-                                messageId: "unused",
-                                output: "var bar;"
-                            }, {
-                                messageId: "renameFoo",
-                                output: "var baz;"
-                            }]
-                        }]
-                    }]
+                    invalid: [
+                        {
+                            code: "var foo;",
+                            errors: [
+                                {
+                                    suggestions: [
+                                        {
+                                            messageId: "unused",
+                                            output: "var bar;"
+                                        },
+                                        {
+                                            messageId: "renameFoo",
+                                            output: "var baz;"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 });
             }, "Error Suggestion at index 0 : messageId should be 'unused' but got 'renameFoo' instead.");
         });
@@ -2084,20 +1996,27 @@ describe("FlatRuleTester", () => {
             assert.throws(() => {
                 ruleTester.run("suggestions-messageIds", require("../../fixtures/testers/rule-tester/suggestions").withMessageIds, {
                     valid: [],
-                    invalid: [{
-                        code: "var foo;",
-                        errors: [{
-                            suggestions: [{
-                                desc: "Rename identifier 'foo' to 'bar'",
-                                messageId: "renameFoo",
-                                output: "var bar;"
-                            }, {
-                                desc: "Rename identifier 'foo' to 'baz'",
-                                messageId: "avoidFoo",
-                                output: "var baz;"
-                            }]
-                        }]
-                    }]
+                    invalid: [
+                        {
+                            code: "var foo;",
+                            errors: [
+                                {
+                                    suggestions: [
+                                        {
+                                            desc: "Rename identifier 'foo' to 'bar'",
+                                            messageId: "renameFoo",
+                                            output: "var bar;"
+                                        },
+                                        {
+                                            desc: "Rename identifier 'foo' to 'baz'",
+                                            messageId: "avoidFoo",
+                                            output: "var baz;"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 });
             }, "Error Suggestion at index 1 : messageId should be 'avoidFoo' but got 'renameFoo' instead.");
         });
@@ -2106,15 +2025,21 @@ describe("FlatRuleTester", () => {
             assert.throws(() => {
                 ruleTester.run("suggestions-basic", require("../../fixtures/testers/rule-tester/suggestions").basic, {
                     valid: [],
-                    invalid: [{
-                        code: "var foo;",
-                        errors: [{
-                            suggestions: [{
-                                messageId: "renameFoo",
-                                output: "var bar;"
-                            }]
-                        }]
-                    }]
+                    invalid: [
+                        {
+                            code: "var foo;",
+                            errors: [
+                                {
+                                    suggestions: [
+                                        {
+                                            messageId: "renameFoo",
+                                            output: "var bar;"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 });
             }, "Error Suggestion at index 0 : Test can not use 'messageId' if rule under test doesn't define 'meta.messages'.");
         });
@@ -2123,18 +2048,25 @@ describe("FlatRuleTester", () => {
             assert.throws(() => {
                 ruleTester.run("suggestions-messageIds", require("../../fixtures/testers/rule-tester/suggestions").withMessageIds, {
                     valid: [],
-                    invalid: [{
-                        code: "var foo;",
-                        errors: [{
-                            suggestions: [{
-                                messageId: "renameFoo",
-                                output: "var bar;"
-                            }, {
-                                messageId: "removeFoo",
-                                output: "var baz;"
-                            }]
-                        }]
-                    }]
+                    invalid: [
+                        {
+                            code: "var foo;",
+                            errors: [
+                                {
+                                    suggestions: [
+                                        {
+                                            messageId: "renameFoo",
+                                            output: "var bar;"
+                                        },
+                                        {
+                                            messageId: "removeFoo",
+                                            output: "var baz;"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 });
             }, "Error Suggestion at index 1 : Test has invalid messageId 'removeFoo', the rule under test allows only one of ['avoidFoo', 'unused', 'renameFoo'].");
         });
@@ -2143,20 +2075,27 @@ describe("FlatRuleTester", () => {
             assert.throws(() => {
                 ruleTester.run("suggestions-messageIds", require("../../fixtures/testers/rule-tester/suggestions").withMessageIds, {
                     valid: [],
-                    invalid: [{
-                        code: "var foo;",
-                        errors: [{
-                            suggestions: [{
-                                messageId: "renameFoo",
-                                data: { newName: "car" },
-                                output: "var bar;"
-                            }, {
-                                messageId: "renameFoo",
-                                data: { newName: "baz" },
-                                output: "var baz;"
-                            }]
-                        }]
-                    }]
+                    invalid: [
+                        {
+                            code: "var foo;",
+                            errors: [
+                                {
+                                    suggestions: [
+                                        {
+                                            messageId: "renameFoo",
+                                            data: { newName: "car" },
+                                            output: "var bar;"
+                                        },
+                                        {
+                                            messageId: "renameFoo",
+                                            data: { newName: "baz" },
+                                            output: "var baz;"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 });
             }, "Error Suggestion at index 0 : Hydrated test desc \"Rename identifier 'foo' to 'car'\" does not match received desc \"Rename identifier 'foo' to 'bar'\".");
         });
@@ -2165,20 +2104,27 @@ describe("FlatRuleTester", () => {
             assert.throws(() => {
                 ruleTester.run("suggestions-messageIds", require("../../fixtures/testers/rule-tester/suggestions").withMessageIds, {
                     valid: [],
-                    invalid: [{
-                        code: "var foo;",
-                        errors: [{
-                            suggestions: [{
-                                messageId: "renameFoo",
-                                data: { newName: "bar" },
-                                output: "var bar;"
-                            }, {
-                                messageId: "renameFoo",
-                                data: { name: "baz" },
-                                output: "var baz;"
-                            }]
-                        }]
-                    }]
+                    invalid: [
+                        {
+                            code: "var foo;",
+                            errors: [
+                                {
+                                    suggestions: [
+                                        {
+                                            messageId: "renameFoo",
+                                            data: { newName: "bar" },
+                                            output: "var bar;"
+                                        },
+                                        {
+                                            messageId: "renameFoo",
+                                            data: { name: "baz" },
+                                            output: "var baz;"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 });
             }, "Error Suggestion at index 1 : Hydrated test desc \"Rename identifier 'foo' to '{{ newName }}'\" does not match received desc \"Rename identifier 'foo' to 'baz'\".");
         });
@@ -2187,21 +2133,28 @@ describe("FlatRuleTester", () => {
             assert.throws(() => {
                 ruleTester.run("suggestions-messageIds", require("../../fixtures/testers/rule-tester/suggestions").withMessageIds, {
                     valid: [],
-                    invalid: [{
-                        code: "var foo;",
-                        errors: [{
-                            suggestions: [{
-                                desc: "Rename identifier 'foo' to 'bar'",
-                                messageId: "renameFoo",
-                                data: { newName: "bar" },
-                                output: "var bar;"
-                            }, {
-                                messageId: "renameFoo",
-                                data: { newName: "baz" },
-                                output: "var baz;"
-                            }]
-                        }]
-                    }]
+                    invalid: [
+                        {
+                            code: "var foo;",
+                            errors: [
+                                {
+                                    suggestions: [
+                                        {
+                                            desc: "Rename identifier 'foo' to 'bar'",
+                                            messageId: "renameFoo",
+                                            data: { newName: "bar" },
+                                            output: "var bar;"
+                                        },
+                                        {
+                                            messageId: "renameFoo",
+                                            data: { newName: "baz" },
+                                            output: "var baz;"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 });
             }, "Error Suggestion at index 0 : Test should not specify both 'desc' and 'data'.");
         });
@@ -2210,19 +2163,26 @@ describe("FlatRuleTester", () => {
             assert.throws(() => {
                 ruleTester.run("suggestions-messageIds", require("../../fixtures/testers/rule-tester/suggestions").withMessageIds, {
                     valid: [],
-                    invalid: [{
-                        code: "var foo;",
-                        errors: [{
-                            suggestions: [{
-                                messageId: "renameFoo",
-                                data: { newName: "bar" },
-                                output: "var bar;"
-                            }, {
-                                data: { newName: "baz" },
-                                output: "var baz;"
-                            }]
-                        }]
-                    }]
+                    invalid: [
+                        {
+                            code: "var foo;",
+                            errors: [
+                                {
+                                    suggestions: [
+                                        {
+                                            messageId: "renameFoo",
+                                            data: { newName: "bar" },
+                                            output: "var bar;"
+                                        },
+                                        {
+                                            data: { newName: "baz" },
+                                            output: "var baz;"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 });
             }, "Error Suggestion at index 1 : Test must specify 'messageId' if 'data' is used.");
         });
@@ -2231,15 +2191,21 @@ describe("FlatRuleTester", () => {
             assert.throws(() => {
                 ruleTester.run("suggestions-basic", require("../../fixtures/testers/rule-tester/suggestions").basic, {
                     valid: [],
-                    invalid: [{
-                        code: "var foo;",
-                        errors: [{
-                            suggestions: [{
-                                desc: "Rename identifier 'foo' to 'bar'",
-                                output: "var baz;"
-                            }]
-                        }]
-                    }]
+                    invalid: [
+                        {
+                            code: "var foo;",
+                            errors: [
+                                {
+                                    suggestions: [
+                                        {
+                                            desc: "Rename identifier 'foo' to 'bar'",
+                                            output: "var baz;"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 });
             }, "Expected the applied suggestion fix to match the test suggestion output");
         });
@@ -2248,30 +2214,38 @@ describe("FlatRuleTester", () => {
             assert.throws(() => {
                 ruleTester.run("suggestions-basic", require("../../fixtures/testers/rule-tester/suggestions").basic, {
                     valid: [],
-                    invalid: [{
-                        code: "var foo;",
-                        errors: [{
-                            suggestions: [null]
-                        }]
-                    }]
+                    invalid: [
+                        {
+                            code: "var foo;",
+                            errors: [
+                                {
+                                    suggestions: [null]
+                                }
+                            ]
+                        }
+                    ]
                 });
             }, "Test suggestion in 'suggestions' array must be an object.");
 
             assert.throws(() => {
                 ruleTester.run("suggestions-messageIds", require("../../fixtures/testers/rule-tester/suggestions").withMessageIds, {
                     valid: [],
-                    invalid: [{
-                        code: "var foo;",
-                        errors: [{
-                            suggestions: [
+                    invalid: [
+                        {
+                            code: "var foo;",
+                            errors: [
                                 {
-                                    messageId: "renameFoo",
-                                    output: "var bar;"
-                                },
-                                "Rename identifier 'foo' to 'baz'"
+                                    suggestions: [
+                                        {
+                                            messageId: "renameFoo",
+                                            output: "var bar;"
+                                        },
+                                        "Rename identifier 'foo' to 'baz'"
+                                    ]
+                                }
                             ]
-                        }]
-                    }]
+                        }
+                    ]
                 });
             }, "Test suggestion in 'suggestions' array must be an object.");
         });
@@ -2279,17 +2253,21 @@ describe("FlatRuleTester", () => {
         it("should fail when the suggestion is an object with an unknown property name", () => {
             assert.throws(() => {
                 ruleTester.run("suggestions-basic", require("../../fixtures/testers/rule-tester/suggestions").basic, {
-                    valid: [
-                        "var boo;"
-                    ],
-                    invalid: [{
-                        code: "var foo;",
-                        errors: [{
-                            suggestions: [{
-                                message: "Rename identifier 'foo' to 'bar'"
-                            }]
-                        }]
-                    }]
+                    valid: ["var boo;"],
+                    invalid: [
+                        {
+                            code: "var foo;",
+                            errors: [
+                                {
+                                    suggestions: [
+                                        {
+                                            message: "Rename identifier 'foo' to 'bar'"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 });
             }, /Invalid suggestion property name 'message'/u);
         });
@@ -2298,30 +2276,39 @@ describe("FlatRuleTester", () => {
             assert.throws(() => {
                 ruleTester.run("suggestions-messageIds", require("../../fixtures/testers/rule-tester/suggestions").withMessageIds, {
                     valid: [],
-                    invalid: [{
-                        code: "var foo;",
-                        errors: [{
-                            suggestions: [{
-                                messageId: "renameFoo",
-                                output: "var bar;"
-                            }, {
-                                messageId: "renameFoo",
-                                outpt: "var baz;"
-                            }]
-                        }]
-                    }]
+                    invalid: [
+                        {
+                            code: "var foo;",
+                            errors: [
+                                {
+                                    suggestions: [
+                                        {
+                                            messageId: "renameFoo",
+                                            output: "var bar;"
+                                        },
+                                        {
+                                            messageId: "renameFoo",
+                                            outpt: "var baz;"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 });
             }, /Invalid suggestion property name 'outpt'/u);
         });
 
         it("should throw an error if a rule that doesn't have `meta.hasSuggestions` enabled produces suggestions", () => {
             assert.throws(() => {
-                ruleTester.run("suggestions-missing-hasSuggestions-property", require("../../fixtures/testers/rule-tester/suggestions").withoutHasSuggestionsProperty, {
-                    valid: [],
-                    invalid: [
-                        { code: "var foo = bar;", output: "5", errors: 1 }
-                    ]
-                });
+                ruleTester.run(
+                    "suggestions-missing-hasSuggestions-property",
+                    require("../../fixtures/testers/rule-tester/suggestions").withoutHasSuggestionsProperty,
+                    {
+                        valid: [],
+                        invalid: [{ code: "var foo = bar;", output: "5", errors: 1 }]
+                    }
+                );
             }, "Rules with suggestions must set the `meta.hasSuggestions` property to `true`.");
         });
     });
@@ -2338,11 +2325,10 @@ describe("FlatRuleTester", () => {
         });
 
         it("should emit a deprecation warning when CodePath#currentSegments is accessed", () => {
-
             const useCurrentSegmentsRule = {
                 create: () => ({
                     onCodePathStart(codePath) {
-                        codePath.currentSegments.forEach(() => { });
+                        codePath.currentSegments.forEach(() => {});
                     }
                 })
             };
@@ -2353,16 +2339,11 @@ describe("FlatRuleTester", () => {
             });
 
             assert.strictEqual(processStub.callCount, 1, "calls `process.emitWarning()` once");
-            assert.deepStrictEqual(
-                processStub.getCall(0).args,
-                [
-                    "\"use-current-segments\" rule uses CodePath#currentSegments and will stop working in ESLint v9. Please read the documentation for how to update your code: https://eslint.org/docs/latest/extend/code-path-analysis#usage-examples",
-                    "DeprecationWarning"
-                ]
-            );
-
+            assert.deepStrictEqual(processStub.getCall(0).args, [
+                '"use-current-segments" rule uses CodePath#currentSegments and will stop working in ESLint v9. Please read the documentation for how to update your code: https://eslint.org/docs/latest/extend/code-path-analysis#usage-examples',
+                "DeprecationWarning"
+            ]);
         });
-
     });
 
     /**
@@ -2386,7 +2367,6 @@ describe("FlatRuleTester", () => {
     }
 
     describe("naming test cases", () => {
-
         it("should use the first argument as the name of the test suite", () => {
             const assertion = assertEmitted(ruleTesterTestEmitter, "describe", "this-is-a-rule-name");
 
@@ -2402,9 +2382,7 @@ describe("FlatRuleTester", () => {
             const assertion = assertEmitted(ruleTesterTestEmitter, "it", "valid(code);");
 
             ruleTester.run("foo", require("../../fixtures/testers/rule-tester/no-var"), {
-                valid: [
-                    "valid(code);"
-                ],
+                valid: ["valid(code);"],
                 invalid: []
             });
 
@@ -2493,7 +2471,6 @@ describe("FlatRuleTester", () => {
             return assertion;
         });
 
-
         it('should use the test code as the name if the "name" property is set to an empty string', () => {
             const assertion = assertEmitted(ruleTesterTestEmitter, "it", "var x = invalid(code);");
 
@@ -2517,7 +2494,6 @@ describe("FlatRuleTester", () => {
                 ruleTester.run("foo", require("../../fixtures/testers/rule-tester/no-var"), {
                     valid: [{ code: "foo", name: 123 }],
                     invalid: [{ code: "foo" }]
-
                 });
             }, /Optional test case property 'name' must be a string/u);
 
@@ -2534,7 +2510,6 @@ describe("FlatRuleTester", () => {
                 ruleTester.run("foo", require("../../fixtures/testers/rule-tester/no-var"), {
                     valid: [{ code: 123 }],
                     invalid: [{ code: "foo" }]
-
                 });
             }, /Test case must specify a string value for 'code'/u);
 
@@ -2542,7 +2517,6 @@ describe("FlatRuleTester", () => {
                 ruleTester.run("foo", require("../../fixtures/testers/rule-tester/no-var"), {
                     valid: [123],
                     invalid: [{ code: "foo" }]
-
                 });
             }, /Test case must specify a string value for 'code'/u);
 
@@ -2557,16 +2531,15 @@ describe("FlatRuleTester", () => {
         it('should throw if "code" property is missing', () => {
             assert.throws(() => {
                 ruleTester.run("foo", require("../../fixtures/testers/rule-tester/no-var"), {
-                    valid: [{ }],
+                    valid: [{}],
                     invalid: [{ code: "foo" }]
-
                 });
             }, /Test case must specify a string value for 'code'/u);
 
             assert.throws(() => {
                 ruleTester.run("foo", require("../../fixtures/testers/rule-tester/no-var"), {
                     valid: ["foo"],
-                    invalid: [{ }]
+                    invalid: [{}]
                 });
             }, /Test case must specify a string value for 'code'/u);
         });
@@ -2662,7 +2635,6 @@ describe("FlatRuleTester", () => {
             });
             sinon.assert.calledWith(spyRuleTesterIt, code);
         });
-
     });
 
     describe("SourceCode#getComments()", () => {
@@ -2689,23 +2661,19 @@ describe("FlatRuleTester", () => {
             assert.throws(() => {
                 ruleTester.run("use-get-comments", useGetCommentsRule, {
                     valid: [],
-                    invalid: [{
-                        code: "",
-                        errors: [{}]
-                    }]
+                    invalid: [
+                        {
+                            code: "",
+                            errors: [{}]
+                        }
+                    ]
                 });
             }, /`SourceCode#getComments\(\)` is deprecated/u);
         });
     });
 
     describe("SourceCode forbidden methods", () => {
-
-        [
-            "applyInlineConfig",
-            "applyLanguageOptions",
-            "finalize"
-        ].forEach(methodName => {
-
+        ["applyInlineConfig", "applyLanguageOptions", "finalize"].forEach(methodName => {
             const useForbiddenMethodRule = {
                 create: context => ({
                     Program() {
@@ -2729,16 +2697,16 @@ describe("FlatRuleTester", () => {
                 assert.throws(() => {
                     ruleTester.run("use-forbidden-method", useForbiddenMethodRule, {
                         valid: [],
-                        invalid: [{
-                            code: "",
-                            errors: [{}]
-                        }]
+                        invalid: [
+                            {
+                                code: "",
+                                errors: [{}]
+                            }
+                        ]
                     });
                 }, `\`SourceCode#${methodName}()\` cannot be called inside a rule.`);
             });
-
         });
-
     });
 
     describe("Subclassing", () => {
@@ -2750,16 +2718,16 @@ describe("FlatRuleTester", () => {
             /**
              * Subclass for testing
              */
-            class RuleTesterSubclass extends FlatRuleTester { }
-            RuleTesterSubclass.describe = function(text, method) {
+            class RuleTesterSubclass extends FlatRuleTester {}
+            RuleTesterSubclass.describe = function (text, method) {
                 ruleTesterTestEmitter.emit("custom describe", text, method);
                 return method.call(this);
             };
-            RuleTesterSubclass.it = function(text, method) {
+            RuleTesterSubclass.it = function (text, method) {
                 ruleTesterTestEmitter.emit("custom it", text, method);
                 return method.call(this);
             };
-            RuleTesterSubclass.itOnly = function(text, method) {
+            RuleTesterSubclass.itOnly = function (text, method) {
                 ruleTesterTestEmitter.emit("custom itOnly", text, method);
                 return method.call(this);
             };
@@ -2777,13 +2745,8 @@ describe("FlatRuleTester", () => {
                 invalid: []
             });
 
-            return Promise.all([
-                assertionDescribe,
-                assertionIt,
-                assertionItOnly
-            ]);
+            return Promise.all([assertionDescribe, assertionIt, assertionItOnly]);
         });
-
     });
 
     describe("Optional Test Suites", () => {

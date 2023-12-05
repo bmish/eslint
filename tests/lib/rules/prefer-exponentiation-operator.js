@@ -45,7 +45,6 @@ const ruleTester = new RuleTester({ parserOptions: { ecmaVersion: 2022 } });
 
 ruleTester.run("prefer-exponentiation-operator", rule, {
     valid: [
-
         // not Math.pow()
         "Object.pow(a, b)",
         "Math.max(a, b)",
@@ -85,7 +84,6 @@ ruleTester.run("prefer-exponentiation-operator", rule, {
     ],
 
     invalid: [
-
         invalid("Math.pow(a, b)", "a**b"),
         invalid("(Math).pow(a, b)", "a**b"),
         invalid("Math['pow'](a, b)", "a**b"),

@@ -20,7 +20,6 @@ const ruleTester = new RuleTester({ parserOptions: { ecmaVersion: 2021 } });
 
 ruleTester.run("constructor-super", rule, {
     valid: [
-
         // non derived classes.
         "class A { }",
         "class A { constructor() { } }",
@@ -77,14 +76,7 @@ ruleTester.run("constructor-super", rule, {
         "class Foo extends Object { constructor(method) { super(); this.method = method || function() {}; } }",
 
         // https://github.com/eslint/eslint/issues/5394
-        [
-            "class A extends Object {",
-            "    constructor() {",
-            "        super();",
-            "        for (let i = 0; i < 0; i++);",
-            "    }",
-            "}"
-        ].join("\n"),
+        ["class A extends Object {", "    constructor() {", "        super();", "        for (let i = 0; i < 0; i++);", "    }", "}"].join("\n"),
 
         // https://github.com/eslint/eslint/issues/8848
         `
@@ -106,7 +98,6 @@ ruleTester.run("constructor-super", rule, {
         "class A extends obj?.prop { constructor() { super(); } }"
     ],
     invalid: [
-
         // inherit from non constructors.
         {
             code: "class A extends null { constructor() { super(); } }",
@@ -133,7 +124,6 @@ ruleTester.run("constructor-super", rule, {
             errors: [{ messageId: "badSuper", type: "CallExpression" }]
         },
         {
-
             // `B &&= 5` evaluates either to a falsy value of `B` (which, then, cannot be a constructor), or to '5'
             code: "class A extends (B &&= 5) { constructor() { super(); } }",
             errors: [{ messageId: "badSuper", type: "CallExpression" }]

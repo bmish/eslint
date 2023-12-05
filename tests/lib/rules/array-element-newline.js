@@ -12,7 +12,6 @@
 const rule = require("../../../lib/rules/array-element-newline");
 const { RuleTester } = require("../../../lib/rule-tester");
 
-
 //------------------------------------------------------------------------------
 // Tests
 //------------------------------------------------------------------------------
@@ -20,9 +19,7 @@ const { RuleTester } = require("../../../lib/rule-tester");
 const ruleTester = new RuleTester();
 
 ruleTester.run("array-element-newline", rule, {
-
     valid: [
-
         /*
          * ArrayExpression
          * "always"
@@ -85,8 +82,14 @@ ruleTester.run("array-element-newline", rule, {
         { code: "var foo = [1,\n(2)\n, 3];", options: ["consistent"] },
         { code: "var foo = [\nfunction foo() {\ndosomething();\n},\nfunction bar() {\ndosomething();\n}\n];", options: ["consistent"] },
         { code: "var foo = [\nfunction foo() {\ndosomething();\n}, function bar() {\ndosomething();\n}\n];", options: ["consistent"] },
-        { code: "var foo = [\nfunction foo() {\ndosomething();\n},\nfunction bar() {\ndosomething();\n},\nfunction bar() {\ndosomething();\n}];", options: ["consistent"] },
-        { code: "var foo = [\nfunction foo() {\ndosomething();\n}, function bar() {\ndosomething();\n}, function bar() {\ndosomething();\n}];", options: ["consistent"] },
+        {
+            code: "var foo = [\nfunction foo() {\ndosomething();\n},\nfunction bar() {\ndosomething();\n},\nfunction bar() {\ndosomething();\n}];",
+            options: ["consistent"]
+        },
+        {
+            code: "var foo = [\nfunction foo() {\ndosomething();\n}, function bar() {\ndosomething();\n}, function bar() {\ndosomething();\n}];",
+            options: ["consistent"]
+        },
         { code: "var foo = [1,\n[\n2,3,\n]\n];", options: ["consistent"] },
         { code: "var foo = [\n1,\n[2\n,3\n,]\n];", options: ["consistent"] },
         { code: "var foo = [\n1,[2,\n3]];", options: ["consistent"] },
@@ -157,7 +160,8 @@ ruleTester.run("array-element-newline", rule, {
          * ArrayExpression & ArrayPattern
          * { ArrayExpression: "always", ArrayPattern: "never" }
          */
-        { code: "var [a, b] = [1,\n2]", options: [{ ArrayExpression: "always", ArrayPattern: "never" }], parserOptions: { ecmaVersion: 6 } }],
+        { code: "var [a, b] = [1,\n2]", options: [{ ArrayExpression: "always", ArrayPattern: "never" }], parserOptions: { ecmaVersion: 6 } }
+    ],
 
     invalid: [
         {
@@ -969,5 +973,4 @@ ruleTester.run("array-element-newline", rule, {
             ]
         }
     ]
-
 });

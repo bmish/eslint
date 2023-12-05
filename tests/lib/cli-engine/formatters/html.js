@@ -41,7 +41,16 @@ function checkHeaderRow($, rowObject, args) {
     assert(row.hasClass(args.bgColor), "Check that background color is correct");
     assert.strictEqual(row.attr("data-group"), args.group, "Check that header group is correct");
     assert.strictEqual(row.find("th span").text(), args.problems, "Check if correct totals");
-    assert.strictEqual(row.find("th").html().trim().match(/ [^<]*/u)[0].trim(), args.file, "Check if correctly displays filePath");
+    assert.strictEqual(
+        row
+            .find("th")
+            .html()
+            .trim()
+            .match(/ [^<]*/u)[0]
+            .trim(),
+        args.file,
+        "Check if correctly displays filePath"
+    );
 }
 
 /**
@@ -86,19 +95,23 @@ describe("formatter:html", () => {
             }
         };
         const code = {
-            results: [{
-                filePath: "foo.js",
-                errorCount: 1,
-                warningCount: 0,
-                messages: [{
-                    message: "Unexpected foo.",
-                    severity: 2,
-                    line: 5,
-                    column: 10,
-                    ruleId: "foo",
-                    source: "foo"
-                }]
-            }],
+            results: [
+                {
+                    filePath: "foo.js",
+                    errorCount: 1,
+                    warningCount: 0,
+                    messages: [
+                        {
+                            message: "Unexpected foo.",
+                            severity: 2,
+                            line: 5,
+                            column: 10,
+                            ruleId: "foo",
+                            source: "foo"
+                        }
+                    ]
+                }
+            ],
             rulesMeta
         };
 
@@ -111,7 +124,7 @@ describe("formatter:html", () => {
 
             // Check rows
             assert.strictEqual($("tr").length, 2, "Check that there are two (1 header, 1 content)");
-            assert.strictEqual($("tr[data-group|=\"f\"]").length, 1, "Check that is 1 header row (implying 1 content row)");
+            assert.strictEqual($('tr[data-group|="f"]').length, 1, "Check that is 1 header row (implying 1 content row)");
             checkHeaderRow($, $("tr")[0], { bgColor: "bg-2", group: "f-0", file: "foo.js", problems: "1 problem (1 error, 0 warnings)" });
             checkContentRow($, $("tr")[1], { group: "f-0", lineCol: "5:10", color: "clr-2", message: "Unexpected foo.", ruleId: "foo" });
         });
@@ -126,7 +139,7 @@ describe("formatter:html", () => {
 
             // Check rows
             assert.strictEqual($("tr").length, 2, "Check that there are two (1 header, 1 content)");
-            assert.strictEqual($("tr[data-group|=\"f\"]").length, 1, "Check that is 1 header row (implying 1 content row)");
+            assert.strictEqual($('tr[data-group|="f"]').length, 1, "Check that is 1 header row (implying 1 content row)");
             checkHeaderRow($, $("tr")[0], { bgColor: "bg-2", group: "f-0", file: "foo.js", problems: "1 problem (1 error, 0 warnings)" });
             checkContentRow($, $("tr")[1], { group: "f-0", lineCol: "5:10", color: "clr-2", message: "Unexpected foo.", ruleId: "foo" });
         });
@@ -152,19 +165,23 @@ describe("formatter:html", () => {
             }
         };
         const code = {
-            results: [{
-                filePath: "foo.js",
-                errorCount: 0,
-                warningCount: 1,
-                messages: [{
-                    message: "Unexpected foo.",
-                    severity: 1,
-                    line: 5,
-                    column: 10,
-                    ruleId: "foo",
-                    source: "foo"
-                }]
-            }],
+            results: [
+                {
+                    filePath: "foo.js",
+                    errorCount: 0,
+                    warningCount: 1,
+                    messages: [
+                        {
+                            message: "Unexpected foo.",
+                            severity: 1,
+                            line: 5,
+                            column: 10,
+                            ruleId: "foo",
+                            source: "foo"
+                        }
+                    ]
+                }
+            ],
             rulesMeta
         };
 
@@ -177,7 +194,7 @@ describe("formatter:html", () => {
 
             // Check rows
             assert.strictEqual($("tr").length, 2, "Check that there are two (1 header, 1 content)");
-            assert.strictEqual($("tr[data-group|=\"f\"]").length, 1, "Check that is 1 header row (implying 1 content row)");
+            assert.strictEqual($('tr[data-group|="f"]').length, 1, "Check that is 1 header row (implying 1 content row)");
             checkHeaderRow($, $("tr")[0], { bgColor: "bg-1", group: "f-0", file: "foo.js", problems: "1 problem (0 errors, 1 warning)" });
             checkContentRow($, $("tr")[1], { group: "f-0", lineCol: "5:10", color: "clr-1", message: "Unexpected foo.", ruleId: "foo" });
         });
@@ -203,19 +220,23 @@ describe("formatter:html", () => {
             }
         };
         const code = {
-            results: [{
-                filePath: "foo.js",
-                errorCount: 1,
-                warningCount: 0,
-                messages: [{
-                    message: "Unexpected foo.",
-                    severity: 2,
-                    line: 5,
-                    column: 10,
-                    ruleId: "foo",
-                    source: "foo"
-                }]
-            }],
+            results: [
+                {
+                    filePath: "foo.js",
+                    errorCount: 1,
+                    warningCount: 0,
+                    messages: [
+                        {
+                            message: "Unexpected foo.",
+                            severity: 2,
+                            line: 5,
+                            column: 10,
+                            ruleId: "foo",
+                            source: "foo"
+                        }
+                    ]
+                }
+            ],
             rulesMeta
         };
 
@@ -228,7 +249,7 @@ describe("formatter:html", () => {
 
             // Check rows
             assert.strictEqual($("tr").length, 2, "Check that there are two (1 header, 1 content)");
-            assert.strictEqual($("tr[data-group|=\"f\"]").length, 1, "Check that is 1 header row (implying 1 content row)");
+            assert.strictEqual($('tr[data-group|="f"]').length, 1, "Check that is 1 header row (implying 1 content row)");
             checkHeaderRow($, $("tr")[0], { bgColor: "bg-2", group: "f-0", file: "foo.js", problems: "1 problem (1 error, 0 warnings)" });
             checkContentRow($, $("tr")[1], { group: "f-0", lineCol: "5:10", color: "clr-2", message: "Unexpected foo.", ruleId: "foo" });
         });
@@ -236,12 +257,14 @@ describe("formatter:html", () => {
 
     describe("when passed no error/warning messages", () => {
         const code = {
-            results: [{
-                filePath: "foo.js",
-                errorCount: 0,
-                warningCount: 0,
-                messages: []
-            }]
+            results: [
+                {
+                    filePath: "foo.js",
+                    errorCount: 0,
+                    warningCount: 0,
+                    messages: []
+                }
+            ]
         };
 
         it("should return a string in HTML format with 0 issues in 1 file and styled accordingly", () => {
@@ -290,26 +313,31 @@ describe("formatter:html", () => {
             }
         };
         const code = {
-            results: [{
-                filePath: "foo.js",
-                errorCount: 1,
-                warningCount: 1,
-                messages: [{
-                    message: "Unexpected foo.",
-                    severity: 2,
-                    line: 5,
-                    column: 10,
-                    ruleId: "foo",
-                    source: "foo"
-                }, {
-                    message: "Unexpected bar.",
-                    severity: 1,
-                    line: 6,
-                    column: 11,
-                    ruleId: "bar",
-                    source: "bar"
-                }]
-            }],
+            results: [
+                {
+                    filePath: "foo.js",
+                    errorCount: 1,
+                    warningCount: 1,
+                    messages: [
+                        {
+                            message: "Unexpected foo.",
+                            severity: 2,
+                            line: 5,
+                            column: 10,
+                            ruleId: "foo",
+                            source: "foo"
+                        },
+                        {
+                            message: "Unexpected bar.",
+                            severity: 1,
+                            line: 6,
+                            column: 11,
+                            ruleId: "bar",
+                            source: "bar"
+                        }
+                    ]
+                }
+            ],
             rulesMeta
         };
 
@@ -322,7 +350,7 @@ describe("formatter:html", () => {
 
             // Check rows
             assert.strictEqual($("tr").length, 3, "Check that there are two (1 header, 2 content)");
-            assert.strictEqual($("tr[data-group|=\"f\"]").length, 1, "Check that is 1 header row (implying 2 content row)");
+            assert.strictEqual($('tr[data-group|="f"]').length, 1, "Check that is 1 header row (implying 2 content row)");
             checkHeaderRow($, $("tr")[0], { bgColor: "bg-2", group: "f-0", file: "foo.js", problems: "2 problems (1 error, 1 warning)" });
             checkContentRow($, $("tr")[1], { group: "f-0", lineCol: "5:10", color: "clr-2", message: "Unexpected foo.", ruleId: "foo" });
             checkContentRow($, $("tr")[2], { group: "f-0", lineCol: "6:11", color: "clr-1", message: "Unexpected bar.", ruleId: "bar" });
@@ -362,31 +390,38 @@ describe("formatter:html", () => {
             }
         };
         const code = {
-            results: [{
-                filePath: "foo.js",
-                errorCount: 1,
-                warningCount: 0,
-                messages: [{
-                    message: "Unexpected foo.",
-                    severity: 2,
-                    line: 5,
-                    column: 10,
-                    ruleId: "foo",
-                    source: "foo"
-                }]
-            }, {
-                filePath: "bar.js",
-                errorCount: 0,
-                warningCount: 1,
-                messages: [{
-                    message: "Unexpected bar.",
-                    severity: 1,
-                    line: 6,
-                    column: 11,
-                    ruleId: "bar",
-                    source: "bar"
-                }]
-            }],
+            results: [
+                {
+                    filePath: "foo.js",
+                    errorCount: 1,
+                    warningCount: 0,
+                    messages: [
+                        {
+                            message: "Unexpected foo.",
+                            severity: 2,
+                            line: 5,
+                            column: 10,
+                            ruleId: "foo",
+                            source: "foo"
+                        }
+                    ]
+                },
+                {
+                    filePath: "bar.js",
+                    errorCount: 0,
+                    warningCount: 1,
+                    messages: [
+                        {
+                            message: "Unexpected bar.",
+                            severity: 1,
+                            line: 6,
+                            column: 11,
+                            ruleId: "bar",
+                            source: "bar"
+                        }
+                    ]
+                }
+            ],
             rulesMeta
         };
 
@@ -399,7 +434,7 @@ describe("formatter:html", () => {
 
             // Check rows
             assert.strictEqual($("tr").length, 4, "Check that there are two (2 header, 2 content)");
-            assert.strictEqual($("tr[data-group|=\"f\"]").length, 2, "Check that is 2 header row (implying 2 content row)");
+            assert.strictEqual($('tr[data-group|="f"]').length, 2, "Check that is 2 header row (implying 2 content row)");
             checkHeaderRow($, $("tr")[0], { bgColor: "bg-2", group: "f-0", file: "foo.js", problems: "1 problem (1 error, 0 warnings)" });
             checkContentRow($, $("tr")[1], { group: "f-0", lineCol: "5:10", color: "clr-2", message: "Unexpected foo.", ruleId: "foo" });
             checkHeaderRow($, $("tr")[2], { bgColor: "bg-1", group: "f-1", file: "bar.js", problems: "1 problem (0 errors, 1 warning)" });
@@ -440,31 +475,38 @@ describe("formatter:html", () => {
             }
         };
         const code = {
-            results: [{
-                filePath: "foo.js",
-                errorCount: 0,
-                warningCount: 1,
-                messages: [{
-                    message: "Unexpected foo.",
-                    severity: 1,
-                    line: 5,
-                    column: 10,
-                    ruleId: "foo",
-                    source: "foo"
-                }]
-            }, {
-                filePath: "bar.js",
-                errorCount: 0,
-                warningCount: 1,
-                messages: [{
-                    message: "Unexpected bar.",
-                    severity: 1,
-                    line: 6,
-                    column: 11,
-                    ruleId: "bar",
-                    source: "bar"
-                }]
-            }],
+            results: [
+                {
+                    filePath: "foo.js",
+                    errorCount: 0,
+                    warningCount: 1,
+                    messages: [
+                        {
+                            message: "Unexpected foo.",
+                            severity: 1,
+                            line: 5,
+                            column: 10,
+                            ruleId: "foo",
+                            source: "foo"
+                        }
+                    ]
+                },
+                {
+                    filePath: "bar.js",
+                    errorCount: 0,
+                    warningCount: 1,
+                    messages: [
+                        {
+                            message: "Unexpected bar.",
+                            severity: 1,
+                            line: 6,
+                            column: 11,
+                            ruleId: "bar",
+                            source: "bar"
+                        }
+                    ]
+                }
+            ],
             rulesMeta
         };
 
@@ -477,7 +519,7 @@ describe("formatter:html", () => {
 
             // Check rows
             assert.strictEqual($("tr").length, 4, "Check that there are two (2 header, 2 content)");
-            assert.strictEqual($("tr[data-group|=\"f\"]").length, 2, "Check that is 2 header row (implying 2 content row)");
+            assert.strictEqual($('tr[data-group|="f"]').length, 2, "Check that is 2 header row (implying 2 content row)");
             checkHeaderRow($, $("tr")[0], { bgColor: "bg-1", group: "f-0", file: "foo.js", problems: "1 problem (0 errors, 1 warning)" });
             checkContentRow($, $("tr")[1], { group: "f-0", lineCol: "5:10", color: "clr-1", message: "Unexpected foo.", ruleId: "foo" });
             checkHeaderRow($, $("tr")[2], { bgColor: "bg-1", group: "f-1", file: "bar.js", problems: "1 problem (0 errors, 1 warning)" });
@@ -505,19 +547,23 @@ describe("formatter:html", () => {
             }
         };
         const code = {
-            results: [{
-                filePath: "foo.js",
-                errorCount: 1,
-                warningCount: 0,
-                messages: [{
-                    message: "Unexpected <&\"'> foo.",
-                    severity: 2,
-                    line: 5,
-                    column: 10,
-                    ruleId: "foo",
-                    source: "foo"
-                }]
-            }],
+            results: [
+                {
+                    filePath: "foo.js",
+                    errorCount: 1,
+                    warningCount: 0,
+                    messages: [
+                        {
+                            message: "Unexpected <&\"'> foo.",
+                            severity: 2,
+                            line: 5,
+                            column: 10,
+                            ruleId: "foo",
+                            source: "foo"
+                        }
+                    ]
+                }
+            ],
             rulesMeta
         };
 
@@ -525,21 +571,31 @@ describe("formatter:html", () => {
             const result = formatter(code.results, { rulesMeta });
             const $ = cheerio.load(result);
 
-            checkContentRow($, $("tr")[1], { group: "f-0", lineCol: "5:10", color: "clr-2", message: "Unexpected &lt;&amp;&quot;&apos;&gt; foo.", ruleId: "foo" });
+            checkContentRow($, $("tr")[1], {
+                group: "f-0",
+                lineCol: "5:10",
+                color: "clr-2",
+                message: "Unexpected &lt;&amp;&quot;&apos;&gt; foo.",
+                ruleId: "foo"
+            });
         });
     });
 
     describe("when passing a single message with no rule id or message", () => {
-        const code = [{
-            filePath: "foo.js",
-            errorCount: 1,
-            warningCount: 0,
-            messages: [{
-                severity: 2,
-                line: 5,
-                column: 10
-            }]
-        }];
+        const code = [
+            {
+                filePath: "foo.js",
+                errorCount: 1,
+                warningCount: 0,
+                messages: [
+                    {
+                        severity: 2,
+                        line: 5,
+                        column: 10
+                    }
+                ]
+            }
+        ];
 
         it("should return a string in HTML format with 1 issue in 1 file", () => {
             const result = formatter(code, {});
@@ -569,17 +625,21 @@ describe("formatter:html", () => {
             }
         };
         const code = {
-            results: [{
-                filePath: "foo.js",
-                errorCount: 1,
-                warningCount: 0,
-                messages: [{
-                    message: "Unexpected foo.",
-                    severity: 2,
-                    ruleId: "foo",
-                    source: "foo"
-                }]
-            }],
+            results: [
+                {
+                    filePath: "foo.js",
+                    errorCount: 1,
+                    warningCount: 0,
+                    messages: [
+                        {
+                            message: "Unexpected foo.",
+                            severity: 2,
+                            ruleId: "foo",
+                            source: "foo"
+                        }
+                    ]
+                }
+            ],
             rulesMeta
         };
 

@@ -19,12 +19,11 @@ const ruleTester = new RuleTester();
 
 ruleTester.run("no-restricted-syntax", rule, {
     valid: [
-
         // string format
         "doSomething();",
         { code: "var foo = 42;", options: ["ConditionalExpression"] },
         { code: "foo += 42;", options: ["VariableDeclaration", "FunctionExpression"] },
-        { code: "foo;", options: ["Identifier[name=\"bar\"]"] },
+        { code: "foo;", options: ['Identifier[name="bar"]'] },
         { code: "() => 5", options: ["ArrowFunctionExpression > BlockStatement"], parserOptions: { ecmaVersion: 6 } },
         { code: "({ foo: 1, bar: 2 })", options: ["Property > Literal.key"] },
         { code: "A: for (;;) break;", options: ["BreakStatement[label]"] },
@@ -42,7 +41,6 @@ ruleTester.run("no-restricted-syntax", rule, {
         { code: "console.log(/a/);", options: ["Literal[regex.flags=/./]"] }
     ],
     invalid: [
-
         // string format
         {
             code: "var foo = 41;",
@@ -66,12 +64,12 @@ ruleTester.run("no-restricted-syntax", rule, {
         },
         {
             code: "bar;",
-            options: ["Identifier[name=\"bar\"]"],
+            options: ['Identifier[name="bar"]'],
             errors: [{ messageId: "restrictedSyntax", data: { message: "Using 'Identifier[name=\"bar\"]' is not allowed." }, type: "Identifier" }]
         },
         {
             code: "bar;",
-            options: ["Identifier", "Identifier[name=\"bar\"]"],
+            options: ["Identifier", 'Identifier[name="bar"]'],
             errors: [
                 { messageId: "restrictedSyntax", data: { message: "Using 'Identifier' is not allowed." }, type: "Identifier" },
                 { messageId: "restrictedSyntax", data: { message: "Using 'Identifier[name=\"bar\"]' is not allowed." }, type: "Identifier" }
@@ -81,7 +79,9 @@ ruleTester.run("no-restricted-syntax", rule, {
             code: "() => {}",
             options: ["ArrowFunctionExpression > BlockStatement"],
             parserOptions: { ecmaVersion: 6 },
-            errors: [{ messageId: "restrictedSyntax", data: { message: "Using 'ArrowFunctionExpression > BlockStatement' is not allowed." }, type: "BlockStatement" }]
+            errors: [
+                { messageId: "restrictedSyntax", data: { message: "Using 'ArrowFunctionExpression > BlockStatement' is not allowed." }, type: "BlockStatement" }
+            ]
         },
         {
             code: "({ foo: 1, 'bar': 2 })",
@@ -96,7 +96,13 @@ ruleTester.run("no-restricted-syntax", rule, {
         {
             code: "function foo(bar, baz, qux) {}",
             options: ["FunctionDeclaration[params.length>2]"],
-            errors: [{ messageId: "restrictedSyntax", data: { message: "Using 'FunctionDeclaration[params.length>2]' is not allowed." }, type: "FunctionDeclaration" }]
+            errors: [
+                {
+                    messageId: "restrictedSyntax",
+                    data: { message: "Using 'FunctionDeclaration[params.length>2]' is not allowed." },
+                    type: "FunctionDeclaration"
+                }
+            ]
         },
 
         // object format
@@ -108,7 +114,13 @@ ruleTester.run("no-restricted-syntax", rule, {
         {
             code: "function foo(bar, baz, qux) {}",
             options: [{ selector: "FunctionDeclaration[params.length>2]" }],
-            errors: [{ messageId: "restrictedSyntax", data: { message: "Using 'FunctionDeclaration[params.length>2]' is not allowed." }, type: "FunctionDeclaration" }]
+            errors: [
+                {
+                    messageId: "restrictedSyntax",
+                    data: { message: "Using 'FunctionDeclaration[params.length>2]' is not allowed." },
+                    type: "FunctionDeclaration"
+                }
+            ]
         },
         {
             code: "function foo(bar, baz, qux) {}",
@@ -152,9 +164,7 @@ ruleTester.run("no-restricted-syntax", rule, {
             code: "a?.b",
             options: [":nth-child(1)"],
             parserOptions: { ecmaVersion: 2020 },
-            errors: [
-                { messageId: "restrictedSyntax", data: { message: "Using ':nth-child(1)' is not allowed." }, type: "ExpressionStatement" }
-            ]
+            errors: [{ messageId: "restrictedSyntax", data: { message: "Using ':nth-child(1)' is not allowed." }, type: "ExpressionStatement" }]
         },
 
         // https://github.com/eslint/eslint/issues/13639#issuecomment-683976062
@@ -162,9 +172,7 @@ ruleTester.run("no-restricted-syntax", rule, {
             code: "const foo = [<div/>, <div/>]",
             options: ["* ~ *"],
             parserOptions: { ecmaVersion: 2020, ecmaFeatures: { jsx: true } },
-            errors: [
-                { messageId: "restrictedSyntax", data: { message: "Using '* ~ *' is not allowed." }, type: "JSXElement" }
-            ]
+            errors: [{ messageId: "restrictedSyntax", data: { message: "Using '* ~ *' is not allowed." }, type: "JSXElement" }]
         }
     ]
 });

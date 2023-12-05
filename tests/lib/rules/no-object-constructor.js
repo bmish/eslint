@@ -35,79 +35,102 @@ ruleTester.run("no-object-constructor", rule, {
     invalid: [
         {
             code: "new Object",
-            errors: [{
-                messageId: "preferLiteral",
-                type: "NewExpression",
-                suggestions: [{
-                    desc: "Replace with '({})'.",
-                    messageId: "useLiteral",
-                    output: "({})"
-                }]
-            }]
+            errors: [
+                {
+                    messageId: "preferLiteral",
+                    type: "NewExpression",
+                    suggestions: [
+                        {
+                            desc: "Replace with '({})'.",
+                            messageId: "useLiteral",
+                            output: "({})"
+                        }
+                    ]
+                }
+            ]
         },
         {
             code: "Object()",
-            errors: [{
-                messageId: "preferLiteral",
-                type: "CallExpression",
-                suggestions: [{
-                    desc: "Replace with '({})'.",
-                    messageId: "useLiteral",
-                    output: "({})"
-                }]
-            }]
+            errors: [
+                {
+                    messageId: "preferLiteral",
+                    type: "CallExpression",
+                    suggestions: [
+                        {
+                            desc: "Replace with '({})'.",
+                            messageId: "useLiteral",
+                            output: "({})"
+                        }
+                    ]
+                }
+            ]
         },
         {
             code: "const fn = () => Object();",
-            errors: [{
-                messageId: "preferLiteral",
-                type: "CallExpression",
-                suggestions: [{
-                    desc: "Replace with '({})'.",
-                    messageId: "useLiteral",
-                    output: "const fn = () => ({});"
-                }]
-            }]
+            errors: [
+                {
+                    messageId: "preferLiteral",
+                    type: "CallExpression",
+                    suggestions: [
+                        {
+                            desc: "Replace with '({})'.",
+                            messageId: "useLiteral",
+                            output: "const fn = () => ({});"
+                        }
+                    ]
+                }
+            ]
         },
         {
             code: "Object() instanceof Object;",
-            errors: [{
-                messageId: "preferLiteral",
-                type: "CallExpression",
-                suggestions: [{
-                    desc: "Replace with '({})'.",
-                    messageId: "useLiteral",
-                    output: "({}) instanceof Object;"
-                }]
-            }]
+            errors: [
+                {
+                    messageId: "preferLiteral",
+                    type: "CallExpression",
+                    suggestions: [
+                        {
+                            desc: "Replace with '({})'.",
+                            messageId: "useLiteral",
+                            output: "({}) instanceof Object;"
+                        }
+                    ]
+                }
+            ]
         },
         {
             code: "const obj = Object?.();",
-            errors: [{
-                messageId: "preferLiteral",
-                type: "CallExpression",
-                suggestions: [{
-                    desc: "Replace with '{}'.",
-                    messageId: "useLiteral",
-                    output: "const obj = {};"
-                }]
-            }]
+            errors: [
+                {
+                    messageId: "preferLiteral",
+                    type: "CallExpression",
+                    suggestions: [
+                        {
+                            desc: "Replace with '{}'.",
+                            messageId: "useLiteral",
+                            output: "const obj = {};"
+                        }
+                    ]
+                }
+            ]
         },
         {
             code: "(new Object() instanceof Object);",
-            errors: [{
-                messageId: "preferLiteral",
-                type: "NewExpression",
-                suggestions: [{
-                    desc: "Replace with '{}'.",
-                    messageId: "useLiteral",
-                    output: "({} instanceof Object);"
-                }]
-            }]
+            errors: [
+                {
+                    messageId: "preferLiteral",
+                    type: "NewExpression",
+                    suggestions: [
+                        {
+                            desc: "Replace with '{}'.",
+                            messageId: "useLiteral",
+                            output: "({} instanceof Object);"
+                        }
+                    ]
+                }
+            ]
         },
 
         ...[
-
             // Semicolon required before `({})` to compensate for ASI
             {
                 code: `
@@ -185,18 +208,21 @@ ruleTester.run("no-object-constructor", rule, {
             }
         ].map(props => ({
             ...props,
-            errors: [{
-                messageId: "preferLiteral",
-                suggestions: [{
-                    desc: "Replace with '({})', add preceding semicolon.",
-                    messageId: "useLiteralAfterSemicolon",
-                    output: props.code.replace(/(new )?Object\(\)/u, ";({})")
-                }]
-            }]
+            errors: [
+                {
+                    messageId: "preferLiteral",
+                    suggestions: [
+                        {
+                            desc: "Replace with '({})', add preceding semicolon.",
+                            messageId: "useLiteralAfterSemicolon",
+                            output: props.code.replace(/(new )?Object\(\)/u, ";({})")
+                        }
+                    ]
+                }
+            ]
         })),
 
         ...[
-
             // No semicolon required before `({})` because ASI does not occur
             { code: "Object()" },
             {
@@ -352,14 +378,18 @@ ruleTester.run("no-object-constructor", rule, {
             }
         ].map(props => ({
             ...props,
-            errors: [{
-                messageId: "preferLiteral",
-                suggestions: [{
-                    desc: "Replace with '({})'.",
-                    messageId: "useLiteral",
-                    output: props.code.replace(/(new )?Object\(\)/u, "({})")
-                }]
-            }]
+            errors: [
+                {
+                    messageId: "preferLiteral",
+                    suggestions: [
+                        {
+                            desc: "Replace with '({})'.",
+                            messageId: "useLiteral",
+                            output: props.code.replace(/(new )?Object\(\)/u, "({})")
+                        }
+                    ]
+                }
+            ]
         }))
     ]
 });

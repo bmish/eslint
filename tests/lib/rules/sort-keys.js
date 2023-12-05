@@ -20,7 +20,6 @@ const ruleTester = new RuleTester();
 
 ruleTester.run("sort-keys", rule, {
     valid: [
-
         // default (asc)
         { code: "var obj = {'':1, [``]:2}", options: [], parserOptions: { ecmaVersion: 6 } },
         { code: "var obj = {[``]:1, '':2}", options: [], parserOptions: { ecmaVersion: 6 } },
@@ -361,7 +360,6 @@ ruleTester.run("sort-keys", rule, {
         }
     ],
     invalid: [
-
         // default (asc)
         {
             code: "var obj = {a:1, '':2} // default",

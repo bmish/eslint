@@ -54,14 +54,11 @@ async function findProblems(filename) {
             const languageTag = codeBlockToken.info;
 
             if (!STANDARD_LANGUAGE_TAGS.has(languageTag)) {
-
                 /*
                  * Missing language tags are also reported by Markdownlint rule MD040 for all code blocks,
                  * but the message we output here is more specific.
                  */
-                const message = `${languageTag
-                    ? `Nonstandard language tag '${languageTag}'`
-                    : "Missing language tag"}: use one of 'javascript', 'js' or 'jsx'`;
+                const message = `${languageTag ? `Nonstandard language tag '${languageTag}'` : "Missing language tag"}: use one of 'javascript', 'js' or 'jsx'`;
 
                 problems.push({
                     fatal: false,
@@ -91,9 +88,7 @@ async function findProblems(filename) {
     });
 
     // Run `markdown-it` to check rule examples in the current file.
-    markdownIt({ html: true })
-        .use(markdownItContainer, "rule-example", ruleExampleOptions)
-        .render(text);
+    markdownIt({ html: true }).use(markdownItContainer, "rule-example", ruleExampleOptions).render(text);
     return problems;
 }
 
@@ -110,11 +105,13 @@ async function checkFile(filename) {
         problems = await findProblems(filename);
     } catch (error) {
         fatalErrorCount = 1;
-        problems = [{
-            fatal: true,
-            severity: 2,
-            message: `Error checking file: ${error.message}`
-        }];
+        problems = [
+            {
+                fatal: true,
+                severity: 2,
+                message: `Error checking file: ${error.message}`
+            }
+        ];
     }
     return {
         filePath: filename,
@@ -131,7 +128,7 @@ async function checkFile(filename) {
 
 const patterns = process.argv.slice(2);
 
-(async function() {
+(async function () {
     const globAsync = promisify(glob);
 
     // determine which files to check
@@ -147,4 +144,4 @@ const patterns = process.argv.slice(2);
 
     console.error(output);
     process.exitCode = 1;
-}());
+})();

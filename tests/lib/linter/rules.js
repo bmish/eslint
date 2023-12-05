@@ -33,7 +33,6 @@ describe("rules", () => {
         });
 
         it("should return the rule as an object with a create() method if the rule was defined as a function", () => {
-
             /**
              * A rule that does nothing
              * @returns {void}
@@ -52,10 +51,8 @@ describe("rules", () => {
         });
     });
 
-
     describe("when a rule is not found", () => {
         it("should report a linting error if the rule is unknown", () => {
-
             const linter = new Linter();
 
             const problems = linter.verify("foo", { rules: { "test-rule": "error" } });
@@ -68,23 +65,18 @@ describe("rules", () => {
             assert.strictEqual(problems[0].endColumn, 2);
         });
 
-
         it("should report a linting error that lists replacements if a rule is known to have been replaced", () => {
             const linter = new Linter();
             const problems = linter.verify("foo", { rules: { "no-arrow-condition": "error" } });
 
             assert.lengthOf(problems, 1);
-            assert.strictEqual(
-                problems[0].message,
-                "Rule 'no-arrow-condition' was removed and replaced by: no-confusing-arrow, no-constant-condition"
-            );
+            assert.strictEqual(problems[0].message, "Rule 'no-arrow-condition' was removed and replaced by: no-confusing-arrow, no-constant-condition");
             assert.strictEqual(problems[0].line, 1);
             assert.strictEqual(problems[0].column, 1);
             assert.strictEqual(problems[0].endLine, 1);
             assert.strictEqual(problems[0].endColumn, 2);
         });
     });
-
 
     describe("when loading all rules", () => {
         it("should iterate all rules", () => {

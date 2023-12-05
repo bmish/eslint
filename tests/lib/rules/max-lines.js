@@ -31,52 +31,23 @@ ruleTester.run("max-lines", rule, {
         { code: "// comment\n", options: [{ max: 0, skipComments: true }] },
         { code: "foo;\n /* comment */\n", options: [{ max: 1, skipComments: true }] },
         {
-            code: [
-                "//a single line comment",
-                "var xy;",
-                "var xy;",
-                " /* a multiline",
-                " really really",
-                " long comment*/ "
-            ].join("\n"),
+            code: ["//a single line comment", "var xy;", "var xy;", " /* a multiline", " really really", " long comment*/ "].join("\n"),
             options: [{ max: 2, skipComments: true }]
         },
         {
-            code: [
-                "var x; /* inline comment",
-                " spanning multiple lines */ var z;"
-            ].join("\n"),
+            code: ["var x; /* inline comment", " spanning multiple lines */ var z;"].join("\n"),
             options: [{ max: 2, skipComments: true }]
         },
         {
-            code: [
-                "var x; /* inline comment",
-                " spanning multiple lines */",
-                "var z;"
-            ].join("\n"),
+            code: ["var x; /* inline comment", " spanning multiple lines */", "var z;"].join("\n"),
             options: [{ max: 2, skipComments: true }]
         },
         {
-            code: [
-                "var x;",
-                "",
-                "\t",
-                "\t  ",
-                "var y;"
-            ].join("\n"),
+            code: ["var x;", "", "\t", "\t  ", "var y;"].join("\n"),
             options: [{ max: 2, skipBlankLines: true }]
         },
         {
-            code: [
-                "//a single line comment",
-                "var xy;",
-                " ",
-                "var xy;",
-                " ",
-                " /* a multiline",
-                " really really",
-                " long comment*/"
-            ].join("\n"),
+            code: ["//a single line comment", "var xy;", " ", "var xy;", " ", " /* a multiline", " really really", " long comment*/"].join("\n"),
             options: [{ max: 2, skipComments: true, skipBlankLines: true }]
         }
     ],
@@ -124,13 +95,7 @@ ruleTester.run("max-lines", rule, {
             ]
         },
         {
-            code: [
-                "var x;",
-                "",
-                "",
-                "",
-                "var y;"
-            ].join("\n"),
+            code: ["var x;", "", "", "", "var y;"].join("\n"),
             options: [{ max: 2 }],
             errors: [
                 {
@@ -144,16 +109,7 @@ ruleTester.run("max-lines", rule, {
             ]
         },
         {
-            code: [
-                "//a single line comment",
-                "var xy;",
-                " ",
-                "var xy;",
-                " ",
-                " /* a multiline",
-                " really really",
-                " long comment*/"
-            ].join("\n"),
+            code: ["//a single line comment", "var xy;", " ", "var xy;", " ", " /* a multiline", " really really", " long comment*/"].join("\n"),
             options: [{ max: 2, skipComments: true }],
             errors: [
                 {
@@ -167,11 +123,7 @@ ruleTester.run("max-lines", rule, {
             ]
         },
         {
-            code: [
-                "var x; // inline comment",
-                "var y;",
-                "var z;"
-            ].join("\n"),
+            code: ["var x; // inline comment", "var y;", "var z;"].join("\n"),
             options: [{ max: 2, skipComments: true }],
             errors: [
                 {
@@ -185,12 +137,7 @@ ruleTester.run("max-lines", rule, {
             ]
         },
         {
-            code: [
-                "var x; /* inline comment",
-                " spanning multiple lines */",
-                "var y;",
-                "var z;"
-            ].join("\n"),
+            code: ["var x; /* inline comment", " spanning multiple lines */", "var y;", "var z;"].join("\n"),
             options: [{ max: 2, skipComments: true }],
             errors: [
                 {
@@ -204,16 +151,7 @@ ruleTester.run("max-lines", rule, {
             ]
         },
         {
-            code: [
-                "//a single line comment",
-                "var xy;",
-                " ",
-                "var xy;",
-                " ",
-                " /* a multiline",
-                " really really",
-                " long comment*/"
-            ].join("\n"),
+            code: ["//a single line comment", "var xy;", " ", "var xy;", " ", " /* a multiline", " really really", " long comment*/"].join("\n"),
             options: [{ max: 2, skipBlankLines: true }],
             errors: [
                 {
@@ -241,7 +179,6 @@ ruleTester.run("max-lines", rule, {
             ]
         },
         {
-
             // Questionable. Makes sense to report this, and makes sense to not report this.
             code: "",
             options: [{ max: 0 }],
@@ -355,9 +292,7 @@ ruleTester.run("max-lines", rule, {
             ]
         },
         {
-            code: ["var a = 'a'; ", "var x", "var c;", "console.log"].join(
-                "\n"
-            ),
+            code: ["var a = 'a'; ", "var x", "var c;", "console.log"].join("\n"),
             options: [{ max: 2 }],
             errors: [
                 {
@@ -413,14 +348,7 @@ ruleTester.run("max-lines", rule, {
             ]
         },
         {
-            code: [
-                "var a = 'a'; ",
-                "var x",
-                "var c;",
-                "console.log",
-                "// some block ",
-                "// comments"
-            ].join("\n"),
+            code: ["var a = 'a'; ", "var x", "var c;", "console.log", "// some block ", "// comments"].join("\n"),
             options: [{ max: 2, skipComments: true }],
             errors: [
                 {
@@ -434,13 +362,7 @@ ruleTester.run("max-lines", rule, {
             ]
         },
         {
-            code: [
-                "var a = 'a'; ",
-                "var x",
-                "var c;",
-                "console.log",
-                "/* block comments */"
-            ].join("\n"),
+            code: ["var a = 'a'; ", "var x", "var c;", "console.log", "/* block comments */"].join("\n"),
             options: [{ max: 2, skipComments: true }],
             errors: [
                 {
@@ -454,13 +376,7 @@ ruleTester.run("max-lines", rule, {
             ]
         },
         {
-            code: [
-                "var a = 'a'; ",
-                "var x",
-                "var c;",
-                "console.log",
-                "/* block comments */\n"
-            ].join("\n"),
+            code: ["var a = 'a'; ", "var x", "var c;", "console.log", "/* block comments */\n"].join("\n"),
             options: [{ max: 2, skipComments: true }],
             errors: [
                 {
@@ -474,13 +390,7 @@ ruleTester.run("max-lines", rule, {
             ]
         },
         {
-            code: [
-                "var a = 'a'; ",
-                "var x",
-                "var c;",
-                "console.log",
-                "/** block \n\n comments */"
-            ].join("\n"),
+            code: ["var a = 'a'; ", "var x", "var c;", "console.log", "/** block \n\n comments */"].join("\n"),
             options: [{ max: 2, skipComments: true }],
             errors: [
                 {
@@ -494,12 +404,7 @@ ruleTester.run("max-lines", rule, {
             ]
         },
         {
-            code: [
-                "var a = 'a'; ",
-                "",
-                "",
-                "// comment"
-            ].join("\n"),
+            code: ["var a = 'a'; ", "", "", "// comment"].join("\n"),
             options: [{ max: 2, skipComments: true }],
             errors: [
                 {
@@ -513,14 +418,7 @@ ruleTester.run("max-lines", rule, {
             ]
         },
         {
-            code: [
-                "var a = 'a'; ",
-                "var x",
-                "\n",
-                "var c;",
-                "console.log",
-                "\n"
-            ].join("\n"),
+            code: ["var a = 'a'; ", "var x", "\n", "var c;", "console.log", "\n"].join("\n"),
             options: [{ max: 2, skipBlankLines: true }],
             errors: [
                 {
@@ -534,14 +432,7 @@ ruleTester.run("max-lines", rule, {
             ]
         },
         {
-            code: [
-                "var a = 'a'; ",
-                "\n",
-                "var x",
-                "var c;",
-                "console.log",
-                "\n"
-            ].join("\n"),
+            code: ["var a = 'a'; ", "\n", "var x", "var c;", "console.log", "\n"].join("\n"),
             options: [{ max: 2, skipBlankLines: true }],
             errors: [
                 {
@@ -555,14 +446,7 @@ ruleTester.run("max-lines", rule, {
             ]
         },
         {
-            code: [
-                "var a = 'a'; ",
-                "//",
-                "var x",
-                "var c;",
-                "console.log",
-                "//"
-            ].join("\n"),
+            code: ["var a = 'a'; ", "//", "var x", "var c;", "console.log", "//"].join("\n"),
             options: [{ max: 2, skipComments: true }],
             errors: [
                 {
@@ -578,28 +462,30 @@ ruleTester.run("max-lines", rule, {
         {
             code: ["// hello world", "/*hello", " world 2 */", "var a,", "b", "// hh", "c,", "e,", "f;"].join("\n"),
             options: [{ max: 2, skipComments: true }],
-            errors: [{
-                data: { max: 2, actual: 5 },
-                messageId: "exceed",
-                line: 7,
-                column: 1,
-                endLine: 9,
-                endColumn: 3
-
-            }]
+            errors: [
+                {
+                    data: { max: 2, actual: 5 },
+                    messageId: "exceed",
+                    line: 7,
+                    column: 1,
+                    endLine: 9,
+                    endColumn: 3
+                }
+            ]
         },
         {
             code: ["", "var x = '';", "", "// comment", "", "var b = '',", "c,", "d,", "e", "", "// comment"].join("\n"),
             options: [{ max: 2, skipComments: true, skipBlankLines: true }],
-            errors: [{
-                data: { max: 2, actual: 5 },
-                messageId: "exceed",
-                line: 7,
-                column: 1,
-                endLine: 11,
-                endColumn: 11
-            }]
+            errors: [
+                {
+                    data: { max: 2, actual: 5 },
+                    messageId: "exceed",
+                    line: 7,
+                    column: 1,
+                    endLine: 11,
+                    endColumn: 11
+                }
+            ]
         }
-
     ]
 });

@@ -19,17 +19,16 @@ const rule = require("../../../lib/rules/no-new"),
 const ruleTester = new RuleTester();
 
 ruleTester.run("no-new", rule, {
-    valid: [
-        "var a = new Date()",
-        "var a; if (a === new Date()) { a = false; }"
-    ],
+    valid: ["var a = new Date()", "var a; if (a === new Date()) { a = false; }"],
     invalid: [
         {
             code: "new Date()",
-            errors: [{
-                messageId: "noNewStatement",
-                type: "ExpressionStatement"
-            }]
+            errors: [
+                {
+                    messageId: "noNewStatement",
+                    type: "ExpressionStatement"
+                }
+            ]
         }
     ]
 });

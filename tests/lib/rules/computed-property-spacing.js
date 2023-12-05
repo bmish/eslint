@@ -18,9 +18,7 @@ const rule = require("../../../lib/rules/computed-property-spacing"),
 const ruleTester = new RuleTester();
 
 ruleTester.run("computed-property-spacing", rule, {
-
     valid: [
-
         // default - never
         "obj[foo]",
         "obj['foo']",
@@ -40,9 +38,9 @@ ruleTester.run("computed-property-spacing", rule, {
         { code: "var foo = obj[ [1, 1] ];", options: ["always"] },
 
         // always - objectLiteralComputedProperties
-        { code: "var x = {[ \"a\" ]: a}", options: ["always"], parserOptions: { ecmaVersion: 6 } },
+        { code: 'var x = {[ "a" ]: a}', options: ["always"], parserOptions: { ecmaVersion: 6 } },
         { code: "var y = {[ x ]: a}", options: ["always"], parserOptions: { ecmaVersion: 6 } },
-        { code: "var x = {[ \"a\" ]() {}}", options: ["always"], parserOptions: { ecmaVersion: 6 } },
+        { code: 'var x = {[ "a" ]() {}}', options: ["always"], parserOptions: { ecmaVersion: 6 } },
         { code: "var y = {[ x ]() {}}", options: ["always"], parserOptions: { ecmaVersion: 6 } },
 
         // always - unrelated cases
@@ -65,9 +63,9 @@ ruleTester.run("computed-property-spacing", rule, {
         { code: "var foo = obj[[ 1, 1 ]];", options: ["never"] },
 
         // never - objectLiteralComputedProperties
-        { code: "var x = {[\"a\"]: a}", options: ["never"], parserOptions: { ecmaVersion: 6 } },
+        { code: 'var x = {["a"]: a}', options: ["never"], parserOptions: { ecmaVersion: 6 } },
         { code: "var y = {[x]: a}", options: ["never"], parserOptions: { ecmaVersion: 6 } },
-        { code: "var x = {[\"a\"]() {}}", options: ["never"], parserOptions: { ecmaVersion: 6 } },
+        { code: 'var x = {["a"]() {}}', options: ["never"], parserOptions: { ecmaVersion: 6 } },
         { code: "var y = {[x]() {}}", options: ["never"], parserOptions: { ecmaVersion: 6 } },
 
         // never - unrelated cases
@@ -186,83 +184,47 @@ ruleTester.run("computed-property-spacing", rule, {
 
         // handling of parens and comments
         {
-            code: [
-                "const foo = {",
-                "  [ (a) ]: 1",
-                "}"
-            ].join("\n"),
+            code: ["const foo = {", "  [ (a) ]: 1", "}"].join("\n"),
             options: ["always"],
             parserOptions: { ecmaVersion: 6 }
         },
         {
-            code: [
-                "const foo = {",
-                "  [ ( a ) ]: 1",
-                "}"
-            ].join("\n"),
+            code: ["const foo = {", "  [ ( a ) ]: 1", "}"].join("\n"),
             options: ["always"],
             parserOptions: { ecmaVersion: 6 }
         },
         {
-            code: [
-                "const foo = {",
-                "  [( a )]: 1",
-                "}"
-            ].join("\n"),
+            code: ["const foo = {", "  [( a )]: 1", "}"].join("\n"),
             options: ["never"],
             parserOptions: { ecmaVersion: 6 }
         },
         {
-            code: [
-                "const foo = {",
-                "  [ /**/ a /**/ ]: 1",
-                "}"
-            ].join("\n"),
+            code: ["const foo = {", "  [ /**/ a /**/ ]: 1", "}"].join("\n"),
             options: ["always"],
             parserOptions: { ecmaVersion: 6 }
         },
         {
-            code: [
-                "const foo = {",
-                "  [/**/ a /**/]: 1",
-                "}"
-            ].join("\n"),
+            code: ["const foo = {", "  [/**/ a /**/]: 1", "}"].join("\n"),
             options: ["never"],
             parserOptions: { ecmaVersion: 6 }
         },
         {
-            code: [
-                "const foo = {",
-                "  [ a[ b ] ]: 1",
-                "}"
-            ].join("\n"),
+            code: ["const foo = {", "  [ a[ b ] ]: 1", "}"].join("\n"),
             options: ["always"],
             parserOptions: { ecmaVersion: 6 }
         },
         {
-            code: [
-                "const foo = {",
-                "  [a[b]]: 1",
-                "}"
-            ].join("\n"),
+            code: ["const foo = {", "  [a[b]]: 1", "}"].join("\n"),
             options: ["never"],
             parserOptions: { ecmaVersion: 6 }
         },
         {
-            code: [
-                "const foo = {",
-                "  [ a[ /**/ b ]/**/ ]: 1",
-                "}"
-            ].join("\n"),
+            code: ["const foo = {", "  [ a[ /**/ b ]/**/ ]: 1", "}"].join("\n"),
             options: ["always"],
             parserOptions: { ecmaVersion: 6 }
         },
         {
-            code: [
-                "const foo = {",
-                "  [/**/a[b /**/] /**/]: 1",
-                "}"
-            ].join("\n"),
+            code: ["const foo = {", "  [/**/a[b /**/] /**/]: 1", "}"].join("\n"),
             options: ["never"],
             parserOptions: { ecmaVersion: 6 }
         },
@@ -288,7 +250,6 @@ ruleTester.run("computed-property-spacing", rule, {
             options: ["always"],
             parserOptions: { ecmaVersion: 6 }
         }
-
     ],
 
     invalid: [
@@ -305,7 +266,6 @@ ruleTester.run("computed-property-spacing", rule, {
                     column: 17,
                     endLine: 1,
                     endColumn: 18
-
                 }
             ]
         },
@@ -1705,16 +1665,8 @@ ruleTester.run("computed-property-spacing", rule, {
 
         // handling of parens and comments
         {
-            code: [
-                "const foo = {",
-                "  [(a)]: 1",
-                "}"
-            ].join("\n"),
-            output: [
-                "const foo = {",
-                "  [ (a) ]: 1",
-                "}"
-            ].join("\n"),
+            code: ["const foo = {", "  [(a)]: 1", "}"].join("\n"),
+            output: ["const foo = {", "  [ (a) ]: 1", "}"].join("\n"),
             options: ["always"],
             parserOptions: { ecmaVersion: 6 },
             errors: [
@@ -1739,16 +1691,8 @@ ruleTester.run("computed-property-spacing", rule, {
             ]
         },
         {
-            code: [
-                "const foo = {",
-                "  [( a )]: 1",
-                "}"
-            ].join("\n"),
-            output: [
-                "const foo = {",
-                "  [ ( a ) ]: 1",
-                "}"
-            ].join("\n"),
+            code: ["const foo = {", "  [( a )]: 1", "}"].join("\n"),
+            output: ["const foo = {", "  [ ( a ) ]: 1", "}"].join("\n"),
             options: ["always"],
             parserOptions: { ecmaVersion: 6 },
             errors: [
@@ -1773,16 +1717,8 @@ ruleTester.run("computed-property-spacing", rule, {
             ]
         },
         {
-            code: [
-                "const foo = {",
-                "  [ ( a ) ]: 1",
-                "}"
-            ].join("\n"),
-            output: [
-                "const foo = {",
-                "  [( a )]: 1",
-                "}"
-            ].join("\n"),
+            code: ["const foo = {", "  [ ( a ) ]: 1", "}"].join("\n"),
+            output: ["const foo = {", "  [( a )]: 1", "}"].join("\n"),
             options: ["never"],
             parserOptions: { ecmaVersion: 6 },
             errors: [
@@ -1807,16 +1743,8 @@ ruleTester.run("computed-property-spacing", rule, {
             ]
         },
         {
-            code: [
-                "const foo = {",
-                "  [/**/ a /**/]: 1",
-                "}"
-            ].join("\n"),
-            output: [
-                "const foo = {",
-                "  [ /**/ a /**/ ]: 1",
-                "}"
-            ].join("\n"),
+            code: ["const foo = {", "  [/**/ a /**/]: 1", "}"].join("\n"),
+            output: ["const foo = {", "  [ /**/ a /**/ ]: 1", "}"].join("\n"),
             options: ["always"],
             parserOptions: { ecmaVersion: 6 },
             errors: [
@@ -1841,16 +1769,8 @@ ruleTester.run("computed-property-spacing", rule, {
             ]
         },
         {
-            code: [
-                "const foo = {",
-                "  [ /**/ a /**/ ]: 1",
-                "}"
-            ].join("\n"),
-            output: [
-                "const foo = {",
-                "  [/**/ a /**/]: 1",
-                "}"
-            ].join("\n"),
+            code: ["const foo = {", "  [ /**/ a /**/ ]: 1", "}"].join("\n"),
+            output: ["const foo = {", "  [/**/ a /**/]: 1", "}"].join("\n"),
             options: ["never"],
             parserOptions: { ecmaVersion: 6 },
             errors: [
@@ -1875,16 +1795,8 @@ ruleTester.run("computed-property-spacing", rule, {
             ]
         },
         {
-            code: [
-                "const foo = {",
-                "  [a[b]]: 1",
-                "}"
-            ].join("\n"),
-            output: [
-                "const foo = {",
-                "  [ a[ b ] ]: 1",
-                "}"
-            ].join("\n"),
+            code: ["const foo = {", "  [a[b]]: 1", "}"].join("\n"),
+            output: ["const foo = {", "  [ a[ b ] ]: 1", "}"].join("\n"),
             options: ["always"],
             parserOptions: { ecmaVersion: 6 },
             errors: [
@@ -1927,16 +1839,8 @@ ruleTester.run("computed-property-spacing", rule, {
             ]
         },
         {
-            code: [
-                "const foo = {",
-                "  [ a[ b ] ]: 1",
-                "}"
-            ].join("\n"),
-            output: [
-                "const foo = {",
-                "  [a[b]]: 1",
-                "}"
-            ].join("\n"),
+            code: ["const foo = {", "  [ a[ b ] ]: 1", "}"].join("\n"),
+            output: ["const foo = {", "  [a[b]]: 1", "}"].join("\n"),
             options: ["never"],
             parserOptions: { ecmaVersion: 6 },
             errors: [
@@ -1979,16 +1883,8 @@ ruleTester.run("computed-property-spacing", rule, {
             ]
         },
         {
-            code: [
-                "const foo = {",
-                "  [a[/**/ b ]/**/]: 1",
-                "}"
-            ].join("\n"),
-            output: [
-                "const foo = {",
-                "  [ a[ /**/ b ]/**/ ]: 1",
-                "}"
-            ].join("\n"),
+            code: ["const foo = {", "  [a[/**/ b ]/**/]: 1", "}"].join("\n"),
+            output: ["const foo = {", "  [ a[ /**/ b ]/**/ ]: 1", "}"].join("\n"),
             options: ["always"],
             parserOptions: { ecmaVersion: 6 },
             errors: [
@@ -2022,16 +1918,8 @@ ruleTester.run("computed-property-spacing", rule, {
             ]
         },
         {
-            code: [
-                "const foo = {",
-                "  [ /**/a[ b /**/ ] /**/]: 1",
-                "}"
-            ].join("\n"),
-            output: [
-                "const foo = {",
-                "  [/**/a[b /**/] /**/]: 1",
-                "}"
-            ].join("\n"),
+            code: ["const foo = {", "  [ /**/a[ b /**/ ] /**/]: 1", "}"].join("\n"),
+            output: ["const foo = {", "  [/**/a[b /**/] /**/]: 1", "}"].join("\n"),
             options: ["never"],
             parserOptions: { ecmaVersion: 6 },
             errors: [
@@ -2093,18 +1981,14 @@ ruleTester.run("computed-property-spacing", rule, {
             output: "const { [a]: someProp } = obj;",
             options: ["never"],
             parserOptions: { ecmaVersion: 2022 },
-            errors: [
-                { messageId: "unexpectedSpaceAfter", data: { tokenValue: "[" } }
-            ]
+            errors: [{ messageId: "unexpectedSpaceAfter", data: { tokenValue: "[" } }]
         },
         {
             code: "const { [a ]: someProp } = obj;",
             output: "const { [a]: someProp } = obj;",
             options: ["never"],
             parserOptions: { ecmaVersion: 2022 },
-            errors: [
-                { messageId: "unexpectedSpaceBefore", data: { tokenValue: "]" } }
-            ]
+            errors: [{ messageId: "unexpectedSpaceBefore", data: { tokenValue: "]" } }]
         },
         {
             code: "const { [ a ]: someProp } = obj;",

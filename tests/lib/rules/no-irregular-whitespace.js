@@ -18,16 +18,20 @@ const rule = require("../../../lib/rules/no-irregular-whitespace"),
 
 const ruleTester = new RuleTester();
 
-const expectedErrors = [{
-    messageId: "noIrregularWhitespace",
-    type: "Program"
-}];
-const expectedCommentErrors = [{
-    messageId: "noIrregularWhitespace",
-    type: "Program",
-    line: 1,
-    column: 4
-}];
+const expectedErrors = [
+    {
+        messageId: "noIrregularWhitespace",
+        type: "Program"
+    }
+];
+const expectedCommentErrors = [
+    {
+        messageId: "noIrregularWhitespace",
+        type: "Program",
+        line: 1,
+        column: 4
+    }
+];
 
 ruleTester.run("no-irregular-whitespace", rule, {
     valid: [

@@ -14,7 +14,6 @@ const { RuleTester } = require("../../../lib/rule-tester");
 const { unIndent } = require("../../_utils");
 const fixtureParser = require("../../fixtures/fixture-parser");
 
-
 //------------------------------------------------------------------------------
 // Tests
 //------------------------------------------------------------------------------
@@ -28,7 +27,6 @@ const EXPECTED_BETWEEN = { messageId: "expectedBetween", type: "Identifier" };
 const ruleTester = new RuleTester({ parserOptions: { ecmaVersion: 6 } });
 
 ruleTester.run("function-paren-newline", rule, {
-
     valid: [
         "new new Foo();",
 
@@ -607,7 +605,6 @@ ruleTester.run("function-paren-newline", rule, {
     ],
 
     invalid: [
-
         // multiline option (default)
         {
             code: `

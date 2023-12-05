@@ -26,7 +26,6 @@ ruleTester.run("no-undef-init", rule, {
 
         // doesn't apply to class fields
         { code: "class C { field = undefined; }", parserOptions: { ecmaVersion: 2022 } }
-
     ],
     invalid: [
         {

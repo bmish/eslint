@@ -52,10 +52,7 @@ describe("ast-utils", () => {
 
     afterEach(() => {
         callCounts.forEach((callCount, func) => {
-            assert(
-                callCount > 0,
-                `Expected ${func.toString()} to be called at least once but it was not called`
-            );
+            assert(callCount > 0, `Expected ${func.toString()} to be called at least once but it was not called`);
         });
     });
 
@@ -73,7 +70,6 @@ describe("ast-utils", () => {
         });
 
         it("should return true if the tokens are on the same line", () => {
-
             linter.defineRule("checker", {
                 create: mustCall(context => ({
                     BlockStatement: mustCall(node => {
@@ -117,7 +113,6 @@ describe("ast-utils", () => {
     });
 
     describe("checkReference", () => {
-
         // catch
         it("should return true if reference is assigned for catch", () => {
             linter.defineRule("checker", {
@@ -194,7 +189,6 @@ describe("ast-utils", () => {
     });
 
     describe("isDirectiveComment", () => {
-
         /**
          * Asserts the node is NOT a directive comment
          * @param {ASTNode} node node to assert
@@ -262,7 +256,7 @@ describe("ast-utils", () => {
             const code = [
                 "/* eslint-disable no-undef */",
                 "/*eslint-enable no-undef*/",
-                "/* eslint-env {\"es6\": true} */",
+                '/* eslint-env {"es6": true} */',
                 "/* eslint foo */",
                 "/*eslint bar*/",
                 "/*global foo*/",
@@ -372,7 +366,6 @@ describe("ast-utils", () => {
     });
 
     describe("isInLoop", () => {
-
         /**
          * Asserts that the unique node of the given type in the code is either
          * in a loop or not in a loop.
@@ -425,32 +418,30 @@ describe("ast-utils", () => {
     });
 
     describe("getStaticStringValue", () => {
-
         /* eslint-disable quote-props -- Make consistent here for readability */
         const expectedResults = {
-
             // string literals
             "''": "",
             "'foo'": "foo",
 
             // boolean literals
-            "false": "false",
-            "true": "true",
+            false: "false",
+            true: "true",
 
             // null literal
-            "null": "null",
+            null: "null",
 
             // number literals
-            "0": "0",
+            0: "0",
             "0.": "0",
             ".0": "0",
-            "1": "1",
+            1: "1",
             "1.": "1",
             ".1": "0.1",
-            "12": "12",
+            12: "12",
             ".12": "0.12",
-            "0.12": "0.12",
-            "12.34": "12.34",
+            0.12: "0.12",
+            12.34: "12.34",
             "12e3": "12000",
             "12e-3": "0.012",
             "12.34e5": "1234000",
@@ -485,9 +476,9 @@ describe("ast-utils", () => {
             "1 + 2": null,
             "[]": null,
             "({})": null,
-            "foo": null,
-            "undefined": null,
-            "this": null,
+            foo: null,
+            undefined: null,
+            this: null,
             "(function () {})": null
         };
         /* eslint-enable quote-props -- Make consistent here for readability */
@@ -829,12 +820,7 @@ describe("ast-utils", () => {
         describe("isDecimalInteger", () => {
             Object.keys(expectedResults).forEach(key => {
                 it(`should return ${expectedResults[key]} for ${key}`, () => {
-                    assert.strictEqual(
-                        astUtils.isDecimalInteger(
-                            espree.parse(key, { ecmaVersion }).body[0].expression
-                        ),
-                        expectedResults[key]
-                    );
+                    assert.strictEqual(astUtils.isDecimalInteger(espree.parse(key, { ecmaVersion }).body[0].expression), expectedResults[key]);
                 });
             });
         });
@@ -842,12 +828,7 @@ describe("ast-utils", () => {
         describe("isDecimalIntegerNumericToken", () => {
             Object.keys(expectedResults).forEach(key => {
                 it(`should return ${expectedResults[key]} for ${key}`, () => {
-                    assert.strictEqual(
-                        astUtils.isDecimalIntegerNumericToken(
-                            espree.tokenize(key, { ecmaVersion })[0]
-                        ),
-                        expectedResults[key]
-                    );
+                    assert.strictEqual(astUtils.isDecimalIntegerNumericToken(espree.tokenize(key, { ecmaVersion })[0]), expectedResults[key]);
                 });
             });
         });
@@ -916,10 +897,7 @@ describe("ast-utils", () => {
                 linter.defineRule("checker", {
                     create: mustCall(() => ({
                         ":function": mustCall(node => {
-                            assert.strictEqual(
-                                astUtils.getFunctionNameWithKind(node),
-                                expectedResults[key]
-                            );
+                            assert.strictEqual(astUtils.getFunctionNameWithKind(node), expectedResults[key]);
                         })
                     }))
                 });
@@ -996,10 +974,7 @@ describe("ast-utils", () => {
                 linter.defineRule("checker", {
                     create: mustCall(() => ({
                         ":function": mustCall(node => {
-                            assert.deepStrictEqual(
-                                astUtils.getFunctionHeadLoc(node, linter.getSourceCode()),
-                                expectedLoc
-                            );
+                            assert.deepStrictEqual(astUtils.getFunctionHeadLoc(node, linter.getSourceCode()), expectedLoc);
                         })
                     }))
                 });
@@ -1044,13 +1019,12 @@ describe("ast-utils", () => {
     });
 
     describe("getNextLocation", () => {
-
         /* eslint-disable quote-props -- Make consistent here for readability */
         const expectedResults = {
             "": [[1, 0], null],
             "\n": [[1, 0], [2, 0], null],
             "\r\n": [[1, 0], [2, 0], null],
-            "foo": [[1, 0], [1, 1], [1, 2], [1, 3], null],
+            foo: [[1, 0], [1, 1], [1, 2], [1, 3], null],
             "foo\n": [[1, 0], [1, 1], [1, 2], [1, 3], [2, 0], null],
             "foo\r\n": [[1, 0], [1, 1], [1, 2], [1, 3], [2, 0], null],
             "foo;\n": [[1, 0], [1, 1], [1, 2], [1, 3], [1, 4], [2, 0], null],
@@ -1077,14 +1051,9 @@ describe("ast-utils", () => {
 
                 for (let i = 0; i < locations.length - 1; i++) {
                     const location = { line: locations[i][0], column: locations[i][1] };
-                    const expectedNextLocation = locations[i + 1]
-                        ? { line: locations[i + 1][0], column: locations[i + 1][1] }
-                        : null;
+                    const expectedNextLocation = locations[i + 1] ? { line: locations[i + 1][0], column: locations[i + 1][1] } : null;
 
-                    assert.deepStrictEqual(
-                        astUtils.getNextLocation(sourceCode, location),
-                        expectedNextLocation
-                    );
+                    assert.deepStrictEqual(astUtils.getNextLocation(sourceCode, location), expectedNextLocation);
                 }
             });
         });
@@ -1538,13 +1507,7 @@ describe("ast-utils", () => {
         });
 
         it("#!/usr/bin/env node, (", () => {
-            assert.strictEqual(
-                astUtils.canTokensBeAdjacent(
-                    { type: "Shebang", value: "#!/usr/bin/env node" },
-                    { type: "Punctuator", value: "(" }
-                ),
-                false
-            );
+            assert.strictEqual(astUtils.canTokensBeAdjacent({ type: "Shebang", value: "#!/usr/bin/env node" }, { type: "Punctuator", value: "(" }), false);
         });
     });
 
@@ -1695,7 +1658,6 @@ describe("ast-utils", () => {
     });
 
     describe("hasOctalOrNonOctalDecimalEscapeSequence", () => {
-
         /* eslint-disable quote-props -- Make consistent here for readability */
         const expectedResults = {
             "\\1": true,
@@ -1755,13 +1717,13 @@ describe("ast-utils", () => {
             "\\\\12": false,
             "\\\\\\0": false,
             "\\0\\\\": false,
-            "0": false,
-            "1": false,
-            "8": false,
+            0: false,
+            1: false,
+            8: false,
             "01": false,
             "08": false,
-            "80": false,
-            "12": false,
+            80: false,
+            12: false,
             "\\a": false,
             "\\n": false,
             "\\\n": false,
@@ -1819,19 +1781,19 @@ describe("ast-utils", () => {
                 }))
             });
 
-            linter.verify("var foo = () => \"use strict\";", { rules: { checker: "error" }, parserOptions: { ecmaVersion: 2022 } });
+            linter.verify('var foo = () => "use strict";', { rules: { checker: "error" }, parserOptions: { ecmaVersion: 2022 } });
         });
 
         const expectedResults = [
-            ["if (foo) { \"use strict\"; }", "\"use strict\";", false],
-            ["{ \"use strict\"; }", "\"use strict\";", false],
-            ["switch (foo) { case bar: \"use strict\"; }", "\"use strict\";", false],
+            ['if (foo) { "use strict"; }', '"use strict";', false],
+            ['{ "use strict"; }', '"use strict";', false],
+            ['switch (foo) { case bar: "use strict"; }', '"use strict";', false],
             ["foo; bar;", "foo;", true],
             ["foo; bar;", "bar;", true],
             ["function foo() { bar; }", "bar;", true],
             ["var foo = function () { foo(); };", "foo();", true],
             ["var foo = () => { 'bar'; }", "'bar';", true],
-            ["\"use strict\"", "\"use strict\"", true],
+            ['"use strict"', '"use strict"', true],
             ["(`use strict`)", "(`use strict`)", true]
         ];
 
@@ -1839,17 +1801,15 @@ describe("ast-utils", () => {
             it(`should return ${expectedRetVal} for \`${nodeText}\` in \`${code}\``, () => {
                 linter.defineRule("checker", {
                     create: mustCall(context => {
-                        const assertForNode = mustCall(
-                            node => assert.strictEqual(astUtils.isTopLevelExpressionStatement(node), expectedRetVal)
-                        );
+                        const assertForNode = mustCall(node => assert.strictEqual(astUtils.isTopLevelExpressionStatement(node), expectedRetVal));
 
-                        return ({
+                        return {
                             ExpressionStatement(node) {
                                 if (context.sourceCode.getText(node) === nodeText) {
                                     assertForNode(node);
                                 }
                             }
-                        });
+                        };
                     })
                 });
 
@@ -1863,7 +1823,7 @@ describe("ast-utils", () => {
             "``": true,
             "`foo`": true,
             "`foo${bar}`": false,
-            "\"foo\"": false,
+            '"foo"': false,
             "foo`bar`": false
         };
 
@@ -1895,24 +1855,21 @@ describe("ast-utils", () => {
             it(`should return ${expectedRetVal} for \`${nodeText}\` in \`${code}\``, () => {
                 linter.defineRule("checker", {
                     create: mustCall(({ sourceCode }) => {
-                        const assertForNode = mustCall(
-                            node => assert.strictEqual(astUtils.isDirective(node), expectedRetVal)
-                        );
+                        const assertForNode = mustCall(node => assert.strictEqual(astUtils.isDirective(node), expectedRetVal));
 
-                        return ({
+                        return {
                             ExpressionStatement(node) {
                                 if (sourceCode.getText(node) === nodeText) {
                                     assertForNode(node);
 
                                     if (!expectedRetVal) {
-
                                         // The flow parser sets `directive` to null on non-directive ExpressionStatement nodes.
                                         node.directive = null;
                                         assertForNode(node);
                                     }
                                 }
                             }
-                        });
+                        };
                     })
                 });
 

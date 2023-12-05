@@ -9,17 +9,7 @@ const tapRenderInstance = new TapRender();
 
 tapRenderInstance.pipe(spot()).pipe(process.stdout);
 
-const skipPatterns = [
-    "https://",
-    "fragment-redirect",
-    "migrating-to",
-    "/blog",
-    "/play",
-    "/team",
-    "/donate",
-    "/docs/latest",
-    'src="null"'
-];
+const skipPatterns = ["https://", "fragment-redirect", "migrating-to", "/blog", "/play", "/team", "/donate", "/docs/latest", 'src="null"'];
 
 /**
  * Filter function to mark tests as skipped.
@@ -28,8 +18,7 @@ const skipPatterns = [
  * @returns {boolean} `true` if the report contains any of `skipPatterns`.
  */
 function skipFilter(report) {
-    return Object.values(report).some(value =>
-        skipPatterns.some(pattern => String(value).includes(pattern)));
+    return Object.values(report).some(value => skipPatterns.some(pattern => String(value).includes(pattern)));
 }
 
 (async () => {

@@ -84,7 +84,6 @@ const valid = [
     "(a) =>\n    0"
 ];
 
-
 const invalid = [
     {
         code: "a=>a",
@@ -279,9 +278,7 @@ const invalid = [
         code: "(a)  =>\n{}",
         output: "(a)  =>{}",
         options: [{ after: false }],
-        errors: [
-            { column: 1, line: 2, type: "Punctuator", messageId: "unexpectedAfter" }
-        ]
+        errors: [{ column: 1, line: 2, type: "Punctuator", messageId: "unexpectedAfter" }]
     },
 
     // https://github.com/eslint/eslint/issues/7079

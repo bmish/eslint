@@ -16,10 +16,12 @@ const { RuleTester } = require("../../../lib/rule-tester");
 // Tests
 //------------------------------------------------------------------------------
 
-const errors = [{
-    messageId: "preferArrowCallback",
-    type: "FunctionExpression"
-}];
+const errors = [
+    {
+        messageId: "preferArrowCallback",
+        type: "FunctionExpression"
+    }
+];
 
 const ruleTester = new RuleTester({ parserOptions: { ecmaVersion: 2020 } });
 

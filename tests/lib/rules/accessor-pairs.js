@@ -20,7 +20,6 @@ const ruleTester = new RuleTester();
 
 ruleTester.run("accessor-pairs", rule, {
     valid: [
-
         //------------------------------------------------------------------------------
         // General
         //------------------------------------------------------------------------------
@@ -601,7 +600,6 @@ ruleTester.run("accessor-pairs", rule, {
     ],
 
     invalid: [
-
         //------------------------------------------------------------------------------
         // Object literals
         //------------------------------------------------------------------------------
@@ -1049,27 +1047,31 @@ ruleTester.run("accessor-pairs", rule, {
         {
             code: "var o = { get a() {} };",
             options: [{ setWithoutGet: true, getWithoutSet: true }],
-            errors: [{
-                message: "Setter is not present for getter 'a'.",
-                type: "Property",
-                line: 1,
-                column: 11,
-                endLine: 1,
-                endColumn: 16
-            }]
+            errors: [
+                {
+                    message: "Setter is not present for getter 'a'.",
+                    type: "Property",
+                    line: 1,
+                    column: 11,
+                    endLine: 1,
+                    endColumn: 16
+                }
+            ]
         },
         {
             code: "var o = {\n  set [\n a](foo) {} };",
             options: [{ setWithoutGet: true, getWithoutSet: true }],
             parserOptions: { ecmaVersion: 2015 },
-            errors: [{
-                message: "Getter is not present for setter.",
-                type: "Property",
-                line: 2,
-                column: 3,
-                endLine: 3,
-                endColumn: 4
-            }]
+            errors: [
+                {
+                    message: "Getter is not present for setter.",
+                    type: "Property",
+                    line: 2,
+                    column: 3,
+                    endLine: 3,
+                    endColumn: 4
+                }
+            ]
         },
 
         //------------------------------------------------------------------------------
@@ -1389,17 +1391,13 @@ ruleTester.run("accessor-pairs", rule, {
             code: "class A { get a() {} set b(foo) {} }",
             options: [{ setWithoutGet: false, getWithoutSet: true, enforceForClassMembers: true }],
             parserOptions: { ecmaVersion: 6 },
-            errors: [
-                { message: "Setter is not present for class getter 'a'.", type: "MethodDefinition", column: 11 }
-            ]
+            errors: [{ message: "Setter is not present for class getter 'a'.", type: "MethodDefinition", column: 11 }]
         },
         {
             code: "class A { get a() {} set b(foo) {} }",
             options: [{ setWithoutGet: true, getWithoutSet: false, enforceForClassMembers: true }],
             parserOptions: { ecmaVersion: 6 },
-            errors: [
-                { message: "Getter is not present for class setter 'b'.", type: "MethodDefinition", column: 22 }
-            ]
+            errors: [{ message: "Getter is not present for class setter 'b'.", type: "MethodDefinition", column: 22 }]
         },
         {
             code: "class A { get 'a '() {} set 'a'(foo) {} }",
@@ -1733,9 +1731,7 @@ ruleTester.run("accessor-pairs", rule, {
             code: "class A { a() {} get b() {} c() {} }",
             options: [{ setWithoutGet: true, getWithoutSet: true, enforceForClassMembers: true }],
             parserOptions: { ecmaVersion: 6 },
-            errors: [
-                { message: "Setter is not present for class getter 'b'.", type: "MethodDefinition", column: 18 }
-            ]
+            errors: [{ message: "Setter is not present for class getter 'b'.", type: "MethodDefinition", column: 18 }]
         },
         {
             code: "A = class { a() {} get b() {} c() {} set d(foo) {} };",
@@ -1750,57 +1746,43 @@ ruleTester.run("accessor-pairs", rule, {
             code: "class A { static a() {} get b() {} static c() {} }",
             options: [{ setWithoutGet: true, getWithoutSet: true, enforceForClassMembers: true }],
             parserOptions: { ecmaVersion: 6 },
-            errors: [
-                { message: "Setter is not present for class getter 'b'.", type: "MethodDefinition", column: 25 }
-            ]
+            errors: [{ message: "Setter is not present for class getter 'b'.", type: "MethodDefinition", column: 25 }]
         },
         {
             code: "class A { a() {} get a() {} }",
             options: [{ setWithoutGet: true, getWithoutSet: true, enforceForClassMembers: true }],
             parserOptions: { ecmaVersion: 6 },
-            errors: [
-                { message: "Setter is not present for class getter 'a'.", type: "MethodDefinition", column: 18 }
-            ]
+            errors: [{ message: "Setter is not present for class getter 'a'.", type: "MethodDefinition", column: 18 }]
         },
         {
             code: "A = class { static a() {} set a(foo) {} };",
             options: [{ setWithoutGet: true, getWithoutSet: true, enforceForClassMembers: true }],
             parserOptions: { ecmaVersion: 6 },
-            errors: [
-                { message: "Getter is not present for class setter 'a'.", type: "MethodDefinition", column: 27 }
-            ]
+            errors: [{ message: "Getter is not present for class setter 'a'.", type: "MethodDefinition", column: 27 }]
         },
         {
             code: "class A { a() {} static get b() {} c() {} }",
             options: [{ setWithoutGet: true, getWithoutSet: true, enforceForClassMembers: true }],
             parserOptions: { ecmaVersion: 6 },
-            errors: [
-                { message: "Setter is not present for class static getter 'b'.", type: "MethodDefinition", column: 18 }
-            ]
+            errors: [{ message: "Setter is not present for class static getter 'b'.", type: "MethodDefinition", column: 18 }]
         },
         {
             code: "A = class { static a() {} static set b(foo) {} static c() {} d() {} };",
             options: [{ setWithoutGet: true, getWithoutSet: true, enforceForClassMembers: true }],
             parserOptions: { ecmaVersion: 6 },
-            errors: [
-                { message: "Getter is not present for class static setter 'b'.", type: "MethodDefinition", column: 27 }
-            ]
+            errors: [{ message: "Getter is not present for class static setter 'b'.", type: "MethodDefinition", column: 27 }]
         },
         {
             code: "class A { a() {} static get a() {} a() {} }",
             options: [{ setWithoutGet: true, getWithoutSet: true, enforceForClassMembers: true }],
             parserOptions: { ecmaVersion: 6 },
-            errors: [
-                { message: "Setter is not present for class static getter 'a'.", type: "MethodDefinition", column: 18 }
-            ]
+            errors: [{ message: "Setter is not present for class static getter 'a'.", type: "MethodDefinition", column: 18 }]
         },
         {
             code: "class A { static set a(foo) {} static a() {} }",
             options: [{ setWithoutGet: true, getWithoutSet: true, enforceForClassMembers: true }],
             parserOptions: { ecmaVersion: 6 },
-            errors: [
-                { message: "Getter is not present for class static setter 'a'.", type: "MethodDefinition", column: 11 }
-            ]
+            errors: [{ message: "Getter is not present for class static setter 'a'.", type: "MethodDefinition", column: 11 }]
         },
 
         // Full location tests
@@ -1808,40 +1790,46 @@ ruleTester.run("accessor-pairs", rule, {
             code: "class A { get a() {} };",
             options: [{ setWithoutGet: true, getWithoutSet: true, enforceForClassMembers: true }],
             parserOptions: { ecmaVersion: 6 },
-            errors: [{
-                message: "Setter is not present for class getter 'a'.",
-                type: "MethodDefinition",
-                line: 1,
-                column: 11,
-                endLine: 1,
-                endColumn: 16
-            }]
+            errors: [
+                {
+                    message: "Setter is not present for class getter 'a'.",
+                    type: "MethodDefinition",
+                    line: 1,
+                    column: 11,
+                    endLine: 1,
+                    endColumn: 16
+                }
+            ]
         },
         {
             code: "A = class {\n  set [\n a](foo) {} };",
             options: [{ setWithoutGet: true, getWithoutSet: true, enforceForClassMembers: true }],
             parserOptions: { ecmaVersion: 6 },
-            errors: [{
-                message: "Getter is not present for class setter.",
-                type: "MethodDefinition",
-                line: 2,
-                column: 3,
-                endLine: 3,
-                endColumn: 4
-            }]
+            errors: [
+                {
+                    message: "Getter is not present for class setter.",
+                    type: "MethodDefinition",
+                    line: 2,
+                    column: 3,
+                    endLine: 3,
+                    endColumn: 4
+                }
+            ]
         },
         {
             code: "class A { static get a() {} };",
             options: [{ setWithoutGet: true, getWithoutSet: true, enforceForClassMembers: true }],
             parserOptions: { ecmaVersion: 6 },
-            errors: [{
-                message: "Setter is not present for class static getter 'a'.",
-                type: "MethodDefinition",
-                line: 1,
-                column: 11,
-                endLine: 1,
-                endColumn: 23
-            }]
+            errors: [
+                {
+                    message: "Setter is not present for class static getter 'a'.",
+                    type: "MethodDefinition",
+                    line: 1,
+                    column: 11,
+                    endLine: 1,
+                    endColumn: 23
+                }
+            ]
         }
     ]
 });

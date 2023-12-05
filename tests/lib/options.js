@@ -28,11 +28,8 @@ const flatOptions = createOptions(true);
  */
 
 describe("options", () => {
-
     describe("Common options", () => {
-
         [eslintrcOptions, flatOptions].forEach(options => {
-
             describe("--help", () => {
                 it("should return true for .help when passed", () => {
                     const currentOptions = options.parse("--help");
@@ -219,7 +216,6 @@ describe("options", () => {
                 });
             });
 
-
             describe("--quiet", () => {
                 it("should return true for .quiet when passed", () => {
                     const currentOptions = options.parse("--quiet");
@@ -319,9 +315,7 @@ describe("options", () => {
                 });
             });
         });
-
     });
-
 
     describe("--ext", () => {
         it("should return an array with one item when passed .jsx", () => {
@@ -428,5 +422,4 @@ describe("options", () => {
             assert.isTrue(currentOptions.warnIgnored);
         });
     });
-
 });

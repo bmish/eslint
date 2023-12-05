@@ -19,9 +19,7 @@ const resolvePath = require("path").resolve,
 const ruleTester = new RuleTester();
 
 ruleTester.run("object-curly-spacing", rule, {
-
     valid: [
-
         // always - object literals
         { code: "var obj = { foo: bar, baz: qux };", options: ["always"] },
         { code: "var obj = { foo: { bar: quxx }, baz: qux };", options: ["always"] },
@@ -144,7 +142,6 @@ ruleTester.run("object-curly-spacing", rule, {
         { code: "import {\nx,\n} from 'foo';", options: ["never"], parserOptions: { ecmaVersion: 6, sourceType: "module" } },
         { code: "export {x,} from 'foo';", options: ["never"], parserOptions: { ecmaVersion: 6, sourceType: "module" } },
         { code: "export {\nx,\n} from 'foo';", options: ["never"], parserOptions: { ecmaVersion: 6, sourceType: "module" } },
-
 
         // never - empty object
         { code: "var foo = {};", options: ["never"] },
@@ -281,7 +278,6 @@ ruleTester.run("object-curly-spacing", rule, {
                     endLine: 1,
                     endColumn: 17
                 }
-
             ]
         },
         {
@@ -350,7 +346,6 @@ ruleTester.run("object-curly-spacing", rule, {
                     endLine: 1,
                     endColumn: 22
                 }
-
             ]
         },
         {
@@ -377,7 +372,6 @@ ruleTester.run("object-curly-spacing", rule, {
                     endLine: 1,
                     endColumn: 16
                 }
-
             ]
         },
         {
@@ -430,7 +424,6 @@ ruleTester.run("object-curly-spacing", rule, {
                     endLine: 1,
                     endColumn: 14
                 }
-
             ]
         },
         {

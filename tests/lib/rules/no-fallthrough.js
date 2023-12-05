@@ -16,10 +16,12 @@ const rule = require("../../../lib/rules/no-fallthrough"),
 // Tests
 //------------------------------------------------------------------------------
 
-const errorsDefault = [{
-    messageId: "default",
-    type: "SwitchCase"
-}];
+const errorsDefault = [
+    {
+        messageId: "default",
+        type: "SwitchCase"
+    }
+];
 
 const ruleTester = new RuleTester();
 
@@ -66,33 +68,43 @@ ruleTester.run("no-fallthrough", rule, {
         "switch (foo) { case 0: a(); \n// eslint-disable-next-line no-fallthrough\n case 1: }",
         {
             code: "switch(foo) { case 0: a(); /* no break */ case 1: b(); }",
-            options: [{
-                commentPattern: "no break"
-            }]
+            options: [
+                {
+                    commentPattern: "no break"
+                }
+            ]
         },
         {
             code: "switch(foo) { case 0: a(); /* no break: need to execute b() */ case 1: b(); }",
-            options: [{
-                commentPattern: "no break:\\s?\\w+"
-            }]
+            options: [
+                {
+                    commentPattern: "no break:\\s?\\w+"
+                }
+            ]
         },
         {
             code: "switch(foo) { case 0: a();\n// need to execute b(), so\n// falling through\n case 1: b(); }",
-            options: [{
-                commentPattern: "falling through"
-            }]
+            options: [
+                {
+                    commentPattern: "falling through"
+                }
+            ]
         },
         {
             code: "switch(foo) { case 0: a(); /* break omitted */ default:  b(); /* comment */ }",
-            options: [{
-                commentPattern: "break omitted"
-            }]
+            options: [
+                {
+                    commentPattern: "break omitted"
+                }
+            ]
         },
         {
             code: "switch(foo) { case 0: a(); /* caution: break is omitted intentionally */ case 1: b(); /* break omitted */ default: c(); }",
-            options: [{
-                commentPattern: "break[\\s\\w]+omitted"
-            }]
+            options: [
+                {
+                    commentPattern: "break[\\s\\w]+omitted"
+                }
+            ]
         },
         {
             code: "switch(foo) { case 0: \n\n\n case 1: b(); }",
@@ -192,9 +204,11 @@ ruleTester.run("no-fallthrough", rule, {
         },
         {
             code: "switch(foo) { case 0: a();\n/* no break */\ncase 1: b(); }",
-            options: [{
-                commentPattern: "break omitted"
-            }],
+            options: [
+                {
+                    commentPattern: "break omitted"
+                }
+            ],
             errors: [
                 {
                     messageId: "case",
@@ -206,9 +220,11 @@ ruleTester.run("no-fallthrough", rule, {
         },
         {
             code: "switch(foo) { case 0: a();\n/* no break */\n/* todo: fix readability */\ndefault: b() }",
-            options: [{
-                commentPattern: "no break"
-            }],
+            options: [
+                {
+                    commentPattern: "no break"
+                }
+            ],
             errors: [
                 {
                     messageId: "default",
@@ -220,9 +236,11 @@ ruleTester.run("no-fallthrough", rule, {
         },
         {
             code: "switch(foo) { case 0: { a();\n/* no break */\n/* todo: fix readability */ }\ndefault: b() }",
-            options: [{
-                commentPattern: "no break"
-            }],
+            options: [
+                {
+                    commentPattern: "no break"
+                }
+            ],
             errors: [
                 {
                     messageId: "default",
@@ -245,9 +263,11 @@ ruleTester.run("no-fallthrough", rule, {
         },
         {
             code: "switch(foo) { case 0:\n\ncase 1: b(); }",
-            options: [{
-                allowEmptyCase: false
-            }],
+            options: [
+                {
+                    allowEmptyCase: false
+                }
+            ],
             errors: [
                 {
                     messageId: "case",

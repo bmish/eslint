@@ -107,9 +107,7 @@ ruleTester.run("no-shadow-restricted-names", rule, {
         {
             code: "var [undefined] = [1]",
             parserOptions: { ecmaVersion: 6 },
-            errors: [
-                { messageId: "shadowingRestrictedName", data: { name: "undefined" }, type: "Identifier" }
-            ]
+            errors: [{ messageId: "shadowingRestrictedName", data: { name: "undefined" }, type: "Identifier" }]
         },
         {
             code: "var {undefined} = obj; var {a: undefined} = obj; var {a: {b: {undefined}}} = obj; var {a, ...undefined} = obj;",
@@ -123,9 +121,7 @@ ruleTester.run("no-shadow-restricted-names", rule, {
         },
         {
             code: "var undefined; undefined = 5;",
-            errors: [
-                { messageId: "shadowingRestrictedName", data: { name: "undefined" }, type: "Identifier" }
-            ]
+            errors: [{ messageId: "shadowingRestrictedName", data: { name: "undefined" }, type: "Identifier" }]
         }
     ]
 });

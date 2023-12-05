@@ -18,7 +18,6 @@ const assert = require("chai").assert,
 //-----------------------------------------------------------------------------
 
 describe("unsupported-api", () => {
-
     it("should have FileEnumerator exposed", () => {
         assert.isFunction(api.FileEnumerator);
     });
@@ -46,5 +45,4 @@ describe("unsupported-api", () => {
     it("should have builtinRules exposed", () => {
         assert.instanceOf(api.builtinRules, LazyLoadingRuleMap);
     });
-
 });

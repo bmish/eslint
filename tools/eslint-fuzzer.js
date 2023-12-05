@@ -126,14 +126,15 @@ function fuzz(options) {
      * @returns {Parser} a parser
      */
     function getParser({ parserOptions }) {
-        return sourceText => espree.parse(sourceText, {
-            ...parserOptions,
-            loc: true,
-            range: true,
-            raw: true,
-            tokens: true,
-            comment: true
-        });
+        return sourceText =>
+            espree.parse(sourceText, {
+                ...parserOptions,
+                loc: true,
+                range: true,
+                raw: true,
+                tokens: true,
+                comment: true
+            });
     }
 
     for (let i = 0; i < options.count; progressCallback(problems.length), i++) {

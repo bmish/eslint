@@ -20,10 +20,10 @@ const ruleTester = new RuleTester();
 
 ruleTester.run("camelcase", rule, {
     valid: [
-        "firstName = \"Nicholas\"",
-        "FIRST_NAME = \"Nicholas\"",
-        "__myPrivateVariable = \"Patrick\"",
-        "myPrivateVariable_ = \"Patrick\"",
+        'firstName = "Nicholas"',
+        'FIRST_NAME = "Nicholas"',
+        '__myPrivateVariable = "Patrick"',
+        'myPrivateVariable_ = "Patrick"',
         "function doSomething(){}",
         "do_something()",
         "new do_something",
@@ -132,31 +132,31 @@ ruleTester.run("camelcase", rule, {
             parserOptions: { ecmaVersion: 6 }
         },
         {
-            code: "import { camelCased } from \"external module\";",
+            code: 'import { camelCased } from "external module";',
             parserOptions: { ecmaVersion: 6, sourceType: "module" }
         },
         {
-            code: "import { _leading } from \"external module\";",
+            code: 'import { _leading } from "external module";',
             parserOptions: { ecmaVersion: 6, sourceType: "module" }
         },
         {
-            code: "import { trailing_ } from \"external module\";",
+            code: 'import { trailing_ } from "external module";',
             parserOptions: { ecmaVersion: 6, sourceType: "module" }
         },
         {
-            code: "import { no_camelcased as camelCased } from \"external-module\";",
+            code: 'import { no_camelcased as camelCased } from "external-module";',
             parserOptions: { ecmaVersion: 6, sourceType: "module" }
         },
         {
-            code: "import { no_camelcased as _leading } from \"external-module\";",
+            code: 'import { no_camelcased as _leading } from "external-module";',
             parserOptions: { ecmaVersion: 6, sourceType: "module" }
         },
         {
-            code: "import { no_camelcased as trailing_ } from \"external-module\";",
+            code: 'import { no_camelcased as trailing_ } from "external-module";',
             parserOptions: { ecmaVersion: 6, sourceType: "module" }
         },
         {
-            code: "import { no_camelcased as camelCased, anotherCamelCased } from \"external-module\";",
+            code: 'import { no_camelcased as camelCased, anotherCamelCased } from "external-module";',
             parserOptions: { ecmaVersion: 6, sourceType: "module" }
         },
         {
@@ -440,7 +440,7 @@ ruleTester.run("camelcase", rule, {
     ],
     invalid: [
         {
-            code: "first_name = \"Nicholas\"",
+            code: 'first_name = "Nicholas"',
             errors: [
                 {
                     messageId: "notCamelCase",
@@ -450,7 +450,7 @@ ruleTester.run("camelcase", rule, {
             ]
         },
         {
-            code: "__private_first_name = \"Patrick\"",
+            code: '__private_first_name = "Patrick"',
             errors: [
                 {
                     messageId: "notCamelCase",
@@ -664,7 +664,7 @@ ruleTester.run("camelcase", rule, {
             ]
         },
         {
-            code: "import no_camelcased from \"external-module\";",
+            code: 'import no_camelcased from "external-module";',
             parserOptions: { ecmaVersion: 6, sourceType: "module" },
             errors: [
                 {
@@ -675,7 +675,7 @@ ruleTester.run("camelcase", rule, {
             ]
         },
         {
-            code: "import * as no_camelcased from \"external-module\";",
+            code: 'import * as no_camelcased from "external-module";',
             parserOptions: { ecmaVersion: 6, sourceType: "module" },
             errors: [
                 {
@@ -686,7 +686,7 @@ ruleTester.run("camelcase", rule, {
             ]
         },
         {
-            code: "import { no_camelcased } from \"external-module\";",
+            code: 'import { no_camelcased } from "external-module";',
             parserOptions: { ecmaVersion: 6, sourceType: "module" },
             errors: [
                 {
@@ -697,7 +697,7 @@ ruleTester.run("camelcase", rule, {
             ]
         },
         {
-            code: "import { no_camelcased as no_camel_cased } from \"external module\";",
+            code: 'import { no_camelcased as no_camel_cased } from "external module";',
             parserOptions: { ecmaVersion: 6, sourceType: "module" },
             errors: [
                 {
@@ -708,7 +708,7 @@ ruleTester.run("camelcase", rule, {
             ]
         },
         {
-            code: "import { camelCased as no_camel_cased } from \"external module\";",
+            code: 'import { camelCased as no_camel_cased } from "external module";',
             parserOptions: { ecmaVersion: 6, sourceType: "module" },
             errors: [
                 {
@@ -742,7 +742,7 @@ ruleTester.run("camelcase", rule, {
             ]
         },
         {
-            code: "import { camelCased, no_camelcased } from \"external-module\";",
+            code: 'import { camelCased, no_camelcased } from "external-module";',
             parserOptions: { ecmaVersion: 6, sourceType: "module" },
             errors: [
                 {
@@ -753,7 +753,7 @@ ruleTester.run("camelcase", rule, {
             ]
         },
         {
-            code: "import { no_camelcased as camelCased, another_no_camelcased } from \"external-module\";",
+            code: 'import { no_camelcased as camelCased, another_no_camelcased } from "external-module";',
             parserOptions: { ecmaVersion: 6, sourceType: "module" },
             errors: [
                 {
@@ -764,7 +764,7 @@ ruleTester.run("camelcase", rule, {
             ]
         },
         {
-            code: "import camelCased, { no_camelcased } from \"external-module\";",
+            code: 'import camelCased, { no_camelcased } from "external-module";',
             parserOptions: { ecmaVersion: 6, sourceType: "module" },
             errors: [
                 {
@@ -775,7 +775,7 @@ ruleTester.run("camelcase", rule, {
             ]
         },
         {
-            code: "import no_camelcased, { another_no_camelcased as camelCased } from \"external-module\";",
+            code: 'import no_camelcased, { another_no_camelcased as camelCased } from "external-module";',
             parserOptions: { ecmaVersion: 6, sourceType: "module" },
             errors: [
                 {

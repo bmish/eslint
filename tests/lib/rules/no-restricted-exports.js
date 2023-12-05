@@ -20,7 +20,6 @@ const ruleTester = new RuleTester({ parserOptions: { ecmaVersion: 2022, sourceTy
 
 ruleTester.run("no-restricted-exports", rule, {
     valid: [
-
         // nothing configured
         "export var a;",
         "export function a() {}",
@@ -135,7 +134,6 @@ ruleTester.run("no-restricted-exports", rule, {
     ],
 
     invalid: [
-
         {
             code: "export function someFunction() {}",
             options: [{ restrictedNamedExports: ["someFunction"] }],
@@ -270,7 +268,6 @@ ruleTester.run("no-restricted-exports", rule, {
             options: [{ restrictedNamedExports: ["a"] }],
             errors: [{ messageId: "restrictedNamed", data: { name: "a" }, type: "Literal" }]
         },
-
 
         // destructuring
         {

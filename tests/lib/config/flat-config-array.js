@@ -11,10 +11,7 @@
 
 const { FlatConfigArray } = require("../../../lib/config/flat-config-array");
 const assert = require("chai").assert;
-const {
-    all: allConfig,
-    recommended: recommendedConfig
-} = require("@eslint/js").configs;
+const { all: allConfig, recommended: recommendedConfig } = require("@eslint/js").configs;
 const stringify = require("json-stable-stringify-without-jsonify");
 const espree = require("espree");
 
@@ -40,14 +37,9 @@ const baseConfig = {
                             maxItems: 1
                         }
                     }
-
                 },
-                bar: {
-
-                },
-                baz: {
-
-                },
+                bar: {},
+                baz: {},
 
                 // old-style
                 boom() {},
@@ -150,7 +142,6 @@ function normalizeRuleConfig(rulesConfig) {
 //-----------------------------------------------------------------------------
 
 describe("FlatConfigArray", () => {
-
     it("should allow noniterable baseConfig objects", () => {
         const base = {
             languageOptions: {
@@ -169,14 +160,16 @@ describe("FlatConfigArray", () => {
     });
 
     it("should not reuse languageOptions.parserOptions across configs", () => {
-        const base = [{
-            files: ["**/*.js"],
-            languageOptions: {
-                parserOptions: {
-                    foo: true
+        const base = [
+            {
+                files: ["**/*.js"],
+                languageOptions: {
+                    parserOptions: {
+                        foo: true
+                    }
                 }
             }
-        }];
+        ];
 
         const configs = new FlatConfigArray([], {
             baseConfig: base
@@ -191,15 +184,15 @@ describe("FlatConfigArray", () => {
     });
 
     describe("Serialization of configs", () => {
-
         it("should convert config into normalized JSON object", () => {
-
-            const configs = new FlatConfigArray([{
-                plugins: {
-                    a: {},
-                    b: {}
+            const configs = new FlatConfigArray([
+                {
+                    plugins: {
+                        a: {},
+                        b: {}
+                    }
                 }
-            }]);
+            ]);
 
             configs.normalizeSync();
 
@@ -222,16 +215,17 @@ describe("FlatConfigArray", () => {
         });
 
         it("should convert config with plugin name/version into normalized JSON object", () => {
-
-            const configs = new FlatConfigArray([{
-                plugins: {
-                    a: {},
-                    b: {
-                        name: "b-plugin",
-                        version: "2.3.1"
+            const configs = new FlatConfigArray([
+                {
+                    plugins: {
+                        a: {},
+                        b: {
+                            name: "b-plugin",
+                            version: "2.3.1"
+                        }
                     }
                 }
-            }]);
+            ]);
 
             configs.normalizeSync();
 
@@ -254,18 +248,19 @@ describe("FlatConfigArray", () => {
         });
 
         it("should convert config with plugin meta into normalized JSON object", () => {
-
-            const configs = new FlatConfigArray([{
-                plugins: {
-                    a: {},
-                    b: {
-                        meta: {
-                            name: "b-plugin",
-                            version: "2.3.1"
+            const configs = new FlatConfigArray([
+                {
+                    plugins: {
+                        a: {},
+                        b: {
+                            meta: {
+                                name: "b-plugin",
+                                version: "2.3.1"
+                            }
                         }
                     }
                 }
-            }]);
+            ]);
 
             configs.normalizeSync();
 
@@ -288,14 +283,17 @@ describe("FlatConfigArray", () => {
         });
 
         it("should throw an error when config with unnamed parser object is normalized", () => {
-
-            const configs = new FlatConfigArray([{
-                languageOptions: {
-                    parser: {
-                        parse() { /* empty */ }
+            const configs = new FlatConfigArray([
+                {
+                    languageOptions: {
+                        parser: {
+                            parse() {
+                                /* empty */
+                            }
+                        }
                     }
                 }
-            }]);
+            ]);
 
             configs.normalizeSync();
 
@@ -304,19 +302,21 @@ describe("FlatConfigArray", () => {
             assert.throws(() => {
                 config.toJSON();
             }, /Could not serialize parser/u);
-
         });
 
         it("should throw an error when config with unnamed parser object with empty meta object is normalized", () => {
-
-            const configs = new FlatConfigArray([{
-                languageOptions: {
-                    parser: {
-                        meta: {},
-                        parse() { /* empty */ }
+            const configs = new FlatConfigArray([
+                {
+                    languageOptions: {
+                        parser: {
+                            meta: {},
+                            parse() {
+                                /* empty */
+                            }
+                        }
                     }
                 }
-            }]);
+            ]);
 
             configs.normalizeSync();
 
@@ -325,21 +325,23 @@ describe("FlatConfigArray", () => {
             assert.throws(() => {
                 config.toJSON();
             }, /Could not serialize parser/u);
-
         });
 
         it("should throw an error when config with unnamed parser object with only meta version is normalized", () => {
-
-            const configs = new FlatConfigArray([{
-                languageOptions: {
-                    parser: {
-                        meta: {
-                            version: "0.1.1"
-                        },
-                        parse() { /* empty */ }
+            const configs = new FlatConfigArray([
+                {
+                    languageOptions: {
+                        parser: {
+                            meta: {
+                                version: "0.1.1"
+                            },
+                            parse() {
+                                /* empty */
+                            }
+                        }
                     }
                 }
-            }]);
+            ]);
 
             configs.normalizeSync();
 
@@ -348,21 +350,23 @@ describe("FlatConfigArray", () => {
             assert.throws(() => {
                 config.toJSON();
             }, /Could not serialize parser/u);
-
         });
 
         it("should not throw an error when config with named parser object is normalized", () => {
-
-            const configs = new FlatConfigArray([{
-                languageOptions: {
-                    parser: {
-                        meta: {
-                            name: "custom-parser"
-                        },
-                        parse() { /* empty */ }
+            const configs = new FlatConfigArray([
+                {
+                    languageOptions: {
+                        parser: {
+                            meta: {
+                                name: "custom-parser"
+                            },
+                            parse() {
+                                /* empty */
+                            }
+                        }
                     }
                 }
-            }]);
+            ]);
 
             configs.normalizeSync();
 
@@ -378,22 +382,24 @@ describe("FlatConfigArray", () => {
                 plugins: ["@"],
                 processor: void 0
             });
-
         });
 
         it("should not throw an error when config with named and versioned parser object is normalized", () => {
-
-            const configs = new FlatConfigArray([{
-                languageOptions: {
-                    parser: {
-                        meta: {
-                            name: "custom-parser",
-                            version: "0.1.0"
-                        },
-                        parse() { /* empty */ }
+            const configs = new FlatConfigArray([
+                {
+                    languageOptions: {
+                        parser: {
+                            meta: {
+                                name: "custom-parser",
+                                version: "0.1.0"
+                            },
+                            parse() {
+                                /* empty */
+                            }
+                        }
                     }
                 }
-            }]);
+            ]);
 
             configs.normalizeSync();
 
@@ -409,22 +415,24 @@ describe("FlatConfigArray", () => {
                 plugins: ["@"],
                 processor: void 0
             });
-
         });
 
         it("should not throw an error when config with meta-named and versioned parser object is normalized", () => {
-
-            const configs = new FlatConfigArray([{
-                languageOptions: {
-                    parser: {
-                        meta: {
-                            name: "custom-parser"
-                        },
-                        version: "0.1.0",
-                        parse() { /* empty */ }
+            const configs = new FlatConfigArray([
+                {
+                    languageOptions: {
+                        parser: {
+                            meta: {
+                                name: "custom-parser"
+                            },
+                            version: "0.1.0",
+                            parse() {
+                                /* empty */
+                            }
+                        }
                     }
                 }
-            }]);
+            ]);
 
             configs.normalizeSync();
 
@@ -440,20 +448,22 @@ describe("FlatConfigArray", () => {
                 plugins: ["@"],
                 processor: void 0
             });
-
         });
 
         it("should not throw an error when config with named and versioned parser object outside of meta object is normalized", () => {
-
-            const configs = new FlatConfigArray([{
-                languageOptions: {
-                    parser: {
-                        name: "custom-parser",
-                        version: "0.1.0",
-                        parse() { /* empty */ }
+            const configs = new FlatConfigArray([
+                {
+                    languageOptions: {
+                        parser: {
+                            name: "custom-parser",
+                            version: "0.1.0",
+                            parse() {
+                                /* empty */
+                            }
+                        }
                     }
                 }
-            }]);
+            ]);
 
             configs.normalizeSync();
 
@@ -469,17 +479,21 @@ describe("FlatConfigArray", () => {
                 plugins: ["@"],
                 processor: void 0
             });
-
         });
 
         it("should throw an error when config with unnamed processor object is normalized", () => {
-
-            const configs = new FlatConfigArray([{
-                processor: {
-                    preprocess() { /* empty */ },
-                    postprocess() { /* empty */ }
+            const configs = new FlatConfigArray([
+                {
+                    processor: {
+                        preprocess() {
+                            /* empty */
+                        },
+                        postprocess() {
+                            /* empty */
+                        }
+                    }
                 }
-            }]);
+            ]);
 
             configs.normalizeSync();
 
@@ -488,18 +502,22 @@ describe("FlatConfigArray", () => {
             assert.throws(() => {
                 config.toJSON();
             }, /Could not serialize processor/u);
-
         });
 
         it("should throw an error when config with processor object with empty meta object is normalized", () => {
-
-            const configs = new FlatConfigArray([{
-                processor: {
-                    meta: {},
-                    preprocess() { /* empty */ },
-                    postprocess() { /* empty */ }
+            const configs = new FlatConfigArray([
+                {
+                    processor: {
+                        meta: {},
+                        preprocess() {
+                            /* empty */
+                        },
+                        postprocess() {
+                            /* empty */
+                        }
+                    }
                 }
-            }]);
+            ]);
 
             configs.normalizeSync();
 
@@ -508,21 +526,24 @@ describe("FlatConfigArray", () => {
             assert.throws(() => {
                 config.toJSON();
             }, /Could not serialize processor/u);
-
         });
 
-
         it("should not throw an error when config with named processor object is normalized", () => {
-
-            const configs = new FlatConfigArray([{
-                processor: {
-                    meta: {
-                        name: "custom-processor"
-                    },
-                    preprocess() { /* empty */ },
-                    postprocess() { /* empty */ }
+            const configs = new FlatConfigArray([
+                {
+                    processor: {
+                        meta: {
+                            name: "custom-processor"
+                        },
+                        preprocess() {
+                            /* empty */
+                        },
+                        postprocess() {
+                            /* empty */
+                        }
+                    }
                 }
-            }]);
+            ]);
 
             configs.normalizeSync();
 
@@ -538,18 +559,22 @@ describe("FlatConfigArray", () => {
                 plugins: ["@"],
                 processor: "custom-processor"
             });
-
         });
 
         it("should not throw an error when config with named processor object without meta is normalized", () => {
-
-            const configs = new FlatConfigArray([{
-                processor: {
-                    name: "custom-processor",
-                    preprocess() { /* empty */ },
-                    postprocess() { /* empty */ }
+            const configs = new FlatConfigArray([
+                {
+                    processor: {
+                        name: "custom-processor",
+                        preprocess() {
+                            /* empty */
+                        },
+                        postprocess() {
+                            /* empty */
+                        }
+                    }
                 }
-            }]);
+            ]);
 
             configs.normalizeSync();
 
@@ -565,22 +590,25 @@ describe("FlatConfigArray", () => {
                 plugins: ["@"],
                 processor: "custom-processor"
             });
-
         });
 
         it("should not throw an error when config with named and versioned processor object is normalized", () => {
-
-            const configs = new FlatConfigArray([{
-                processor: {
-                    meta: {
-                        name: "custom-processor",
-                        version: "1.2.3"
-                    },
-                    preprocess() { /* empty */ },
-                    postprocess() { /* empty */ }
+            const configs = new FlatConfigArray([
+                {
+                    processor: {
+                        meta: {
+                            name: "custom-processor",
+                            version: "1.2.3"
+                        },
+                        preprocess() {
+                            /* empty */
+                        },
+                        postprocess() {
+                            /* empty */
+                        }
+                    }
                 }
-            }]);
-
+            ]);
 
             configs.normalizeSync();
 
@@ -596,20 +624,23 @@ describe("FlatConfigArray", () => {
                 plugins: ["@"],
                 processor: "custom-processor@1.2.3"
             });
-
         });
 
         it("should not throw an error when config with named and versioned processor object without meta is normalized", () => {
-
-            const configs = new FlatConfigArray([{
-                processor: {
-                    name: "custom-processor",
-                    version: "1.2.3",
-                    preprocess() { /* empty */ },
-                    postprocess() { /* empty */ }
+            const configs = new FlatConfigArray([
+                {
+                    processor: {
+                        name: "custom-processor",
+                        version: "1.2.3",
+                        preprocess() {
+                            /* empty */
+                        },
+                        postprocess() {
+                            /* empty */
+                        }
+                    }
                 }
-            }]);
-
+            ]);
 
             configs.normalizeSync();
 
@@ -625,9 +656,7 @@ describe("FlatConfigArray", () => {
                 plugins: ["@"],
                 processor: "custom-processor@1.2.3"
             });
-
         });
-
     });
 
     describe("Special configs", () => {
@@ -651,1306 +680,1456 @@ describe("FlatConfigArray", () => {
     });
 
     describe("Config Properties", () => {
-
         describe("settings", () => {
+            it("should merge two objects", () =>
+                assertMergedResult(
+                    [
+                        {
+                            settings: {
+                                a: true,
+                                b: false
+                            }
+                        },
+                        {
+                            settings: {
+                                c: true,
+                                d: false
+                            }
+                        }
+                    ],
+                    {
+                        plugins: baseConfig.plugins,
 
-            it("should merge two objects", () => assertMergedResult([
-                {
-                    settings: {
-                        a: true,
-                        b: false
+                        settings: {
+                            a: true,
+                            b: false,
+                            c: true,
+                            d: false
+                        }
                     }
-                },
-                {
-                    settings: {
-                        c: true,
-                        d: false
+                ));
+
+            it("should merge two objects when second object has overrides", () =>
+                assertMergedResult(
+                    [
+                        {
+                            settings: {
+                                a: true,
+                                b: false,
+                                d: [1, 2],
+                                e: [5, 6]
+                            }
+                        },
+                        {
+                            settings: {
+                                c: true,
+                                a: false,
+                                d: [3, 4]
+                            }
+                        }
+                    ],
+                    {
+                        plugins: baseConfig.plugins,
+
+                        settings: {
+                            a: false,
+                            b: false,
+                            c: true,
+                            d: [3, 4],
+                            e: [5, 6]
+                        }
                     }
-                }
-            ], {
-                plugins: baseConfig.plugins,
+                ));
 
-                settings: {
-                    a: true,
-                    b: false,
-                    c: true,
-                    d: false
-                }
-            }));
+            it("should deeply merge two objects when second object has overrides", () =>
+                assertMergedResult(
+                    [
+                        {
+                            settings: {
+                                object: {
+                                    a: true,
+                                    b: false
+                                }
+                            }
+                        },
+                        {
+                            settings: {
+                                object: {
+                                    c: true,
+                                    a: false
+                                }
+                            }
+                        }
+                    ],
+                    {
+                        plugins: baseConfig.plugins,
 
-            it("should merge two objects when second object has overrides", () => assertMergedResult([
-                {
-                    settings: {
-                        a: true,
-                        b: false,
-                        d: [1, 2],
-                        e: [5, 6]
+                        settings: {
+                            object: {
+                                a: false,
+                                b: false,
+                                c: true
+                            }
+                        }
                     }
-                },
-                {
-                    settings: {
-                        c: true,
-                        a: false,
-                        d: [3, 4]
-                    }
-                }
-            ], {
-                plugins: baseConfig.plugins,
+                ));
 
-                settings: {
-                    a: false,
-                    b: false,
-                    c: true,
-                    d: [3, 4],
-                    e: [5, 6]
-                }
-            }));
+            it("should merge an object and undefined into one object", () =>
+                assertMergedResult(
+                    [
+                        {
+                            settings: {
+                                a: true,
+                                b: false
+                            }
+                        },
+                        {}
+                    ],
+                    {
+                        plugins: baseConfig.plugins,
 
-            it("should deeply merge two objects when second object has overrides", () => assertMergedResult([
-                {
-                    settings: {
-                        object: {
+                        settings: {
                             a: true,
                             b: false
                         }
                     }
-                },
-                {
-                    settings: {
-                        object: {
-                            c: true,
-                            a: false
+                ));
+
+            it("should merge undefined and an object into one object", () =>
+                assertMergedResult(
+                    [
+                        {},
+                        {
+                            settings: {
+                                a: true,
+                                b: false
+                            }
+                        }
+                    ],
+                    {
+                        plugins: baseConfig.plugins,
+
+                        settings: {
+                            a: true,
+                            b: false
                         }
                     }
-                }
-            ], {
-                plugins: baseConfig.plugins,
-
-                settings: {
-                    object: {
-                        a: false,
-                        b: false,
-                        c: true
-                    }
-                }
-            }));
-
-            it("should merge an object and undefined into one object", () => assertMergedResult([
-                {
-                    settings: {
-                        a: true,
-                        b: false
-                    }
-                },
-                {
-                }
-            ], {
-                plugins: baseConfig.plugins,
-
-                settings: {
-                    a: true,
-                    b: false
-                }
-            }));
-
-            it("should merge undefined and an object into one object", () => assertMergedResult([
-                {
-                },
-                {
-                    settings: {
-                        a: true,
-                        b: false
-                    }
-                }
-            ], {
-                plugins: baseConfig.plugins,
-
-                settings: {
-                    a: true,
-                    b: false
-                }
-            }));
-
+                ));
         });
 
         describe("plugins", () => {
-
             const pluginA = {};
             const pluginB = {};
             const pluginC = {};
 
-            it("should merge two objects", () => assertMergedResult([
-                {
-                    plugins: {
-                        a: pluginA,
-                        b: pluginB
-                    }
-                },
-                {
-                    plugins: {
-                        c: pluginC
-                    }
-                }
-            ], {
-                plugins: {
-                    a: pluginA,
-                    b: pluginB,
-                    c: pluginC,
-                    ...baseConfig.plugins
-                }
-            }));
-
-            it("should merge an object and undefined into one object", () => assertMergedResult([
-                {
-                    plugins: {
-                        a: pluginA,
-                        b: pluginB
-                    }
-                },
-                {
-                }
-            ], {
-                plugins: {
-                    a: pluginA,
-                    b: pluginB,
-                    ...baseConfig.plugins
-                }
-            }));
-
-            it("should error when attempting to redefine a plugin", async () => {
-
-                await assertInvalidConfig([
+            it("should merge two objects", () =>
+                assertMergedResult(
+                    [
+                        {
+                            plugins: {
+                                a: pluginA,
+                                b: pluginB
+                            }
+                        },
+                        {
+                            plugins: {
+                                c: pluginC
+                            }
+                        }
+                    ],
                     {
                         plugins: {
                             a: pluginA,
-                            b: pluginB
-                        }
-                    },
-                    {
-                        plugins: {
-                            a: pluginC
+                            b: pluginB,
+                            c: pluginC,
+                            ...baseConfig.plugins
                         }
                     }
-                ], "Cannot redefine plugin \"a\".");
+                ));
+
+            it("should merge an object and undefined into one object", () =>
+                assertMergedResult(
+                    [
+                        {
+                            plugins: {
+                                a: pluginA,
+                                b: pluginB
+                            }
+                        },
+                        {}
+                    ],
+                    {
+                        plugins: {
+                            a: pluginA,
+                            b: pluginB,
+                            ...baseConfig.plugins
+                        }
+                    }
+                ));
+
+            it("should error when attempting to redefine a plugin", async () => {
+                await assertInvalidConfig(
+                    [
+                        {
+                            plugins: {
+                                a: pluginA,
+                                b: pluginB
+                            }
+                        },
+                        {
+                            plugins: {
+                                a: pluginC
+                            }
+                        }
+                    ],
+                    'Cannot redefine plugin "a".'
+                );
             });
 
             it("should error when plugin is not an object", async () => {
-
-                await assertInvalidConfig([
-                    {
-                        plugins: {
-                            a: true
+                await assertInvalidConfig(
+                    [
+                        {
+                            plugins: {
+                                a: true
+                            }
                         }
-                    }
-                ], "Key \"a\": Expected an object.");
+                    ],
+                    'Key "a": Expected an object.'
+                );
             });
-
-
         });
 
         describe("processor", () => {
-
             it("should merge two values when second is a string", () => {
-
                 const stubProcessor = {
                     preprocess() {},
                     postprocess() {}
                 };
 
-                return assertMergedResult([
-                    {
-                        processor: {
-                            preprocess() {},
-                            postprocess() {}
+                return assertMergedResult(
+                    [
+                        {
+                            processor: {
+                                preprocess() {},
+                                postprocess() {}
+                            }
+                        },
+                        {
+                            plugins: {
+                                markdown: {
+                                    processors: {
+                                        markdown: stubProcessor
+                                    }
+                                }
+                            },
+                            processor: "markdown/markdown"
                         }
-                    },
+                    ],
                     {
                         plugins: {
                             markdown: {
                                 processors: {
                                     markdown: stubProcessor
                                 }
-                            }
+                            },
+                            ...baseConfig.plugins
                         },
-                        processor: "markdown/markdown"
+                        processor: stubProcessor
                     }
-                ], {
-                    plugins: {
-                        markdown: {
-                            processors: {
-                                markdown: stubProcessor
-                            }
-                        },
-                        ...baseConfig.plugins
-                    },
-                    processor: stubProcessor
-                });
+                );
             });
 
             it("should merge two values when second is an object", () => {
-
                 const processor = {
-                    preprocess() { },
-                    postprocess() { }
+                    preprocess() {},
+                    postprocess() {}
                 };
 
-                return assertMergedResult([
+                return assertMergedResult(
+                    [
+                        {
+                            processor: "markdown/markdown"
+                        },
+                        {
+                            processor
+                        }
+                    ],
                     {
-                        processor: "markdown/markdown"
-                    },
-                    {
+                        plugins: baseConfig.plugins,
+
                         processor
                     }
-                ], {
-                    plugins: baseConfig.plugins,
-
-                    processor
-                });
+                );
             });
 
             it("should error when an invalid string is used", async () => {
-
-                await assertInvalidConfig([
-                    {
-                        processor: "foo"
-                    }
-                ], "pluginName/objectName");
+                await assertInvalidConfig(
+                    [
+                        {
+                            processor: "foo"
+                        }
+                    ],
+                    "pluginName/objectName"
+                );
             });
 
             it("should error when an empty string is used", async () => {
-
-                await assertInvalidConfig([
-                    {
-                        processor: ""
-                    }
-                ], "pluginName/objectName");
+                await assertInvalidConfig(
+                    [
+                        {
+                            processor: ""
+                        }
+                    ],
+                    "pluginName/objectName"
+                );
             });
 
             it("should error when an invalid processor is used", async () => {
-                await assertInvalidConfig([
-                    {
-                        processor: {}
-                    }
-                ], "Object must have a preprocess() and a postprocess() method.");
-
+                await assertInvalidConfig(
+                    [
+                        {
+                            processor: {}
+                        }
+                    ],
+                    "Object must have a preprocess() and a postprocess() method."
+                );
             });
 
             it("should error when a processor cannot be found in a plugin", async () => {
-                await assertInvalidConfig([
-                    {
-                        plugins: {
-                            foo: {}
-                        },
-                        processor: "foo/bar"
-                    }
-                ], /Could not find "bar" in plugin "foo"/u);
-
+                await assertInvalidConfig(
+                    [
+                        {
+                            plugins: {
+                                foo: {}
+                            },
+                            processor: "foo/bar"
+                        }
+                    ],
+                    /Could not find "bar" in plugin "foo"/u
+                );
             });
-
         });
 
         describe("linterOptions", () => {
-
             it("should error when an unexpected key is found", async () => {
-
-                await assertInvalidConfig([
-                    {
-                        linterOptions: {
-                            foo: true
+                await assertInvalidConfig(
+                    [
+                        {
+                            linterOptions: {
+                                foo: true
+                            }
                         }
-                    }
-                ], "Unexpected key \"foo\" found.");
-
+                    ],
+                    'Unexpected key "foo" found.'
+                );
             });
 
             describe("noInlineConfig", () => {
-
                 it("should error when an unexpected value is found", async () => {
-
-                    await assertInvalidConfig([
-                        {
-                            linterOptions: {
-                                noInlineConfig: "true"
+                    await assertInvalidConfig(
+                        [
+                            {
+                                linterOptions: {
+                                    noInlineConfig: "true"
+                                }
                             }
-                        }
-                    ], "Expected a Boolean.");
+                        ],
+                        "Expected a Boolean."
+                    );
                 });
 
-                it("should merge two objects when second object has overrides", () => assertMergedResult([
-                    {
-                        linterOptions: {
-                            noInlineConfig: true
+                it("should merge two objects when second object has overrides", () =>
+                    assertMergedResult(
+                        [
+                            {
+                                linterOptions: {
+                                    noInlineConfig: true
+                                }
+                            },
+                            {
+                                linterOptions: {
+                                    noInlineConfig: false
+                                }
+                            }
+                        ],
+                        {
+                            plugins: baseConfig.plugins,
+
+                            linterOptions: {
+                                noInlineConfig: false
+                            }
                         }
-                    },
-                    {
-                        linterOptions: {
-                            noInlineConfig: false
+                    ));
+
+                it("should merge an object and undefined into one object", () =>
+                    assertMergedResult(
+                        [
+                            {
+                                linterOptions: {
+                                    noInlineConfig: false
+                                }
+                            },
+                            {}
+                        ],
+                        {
+                            plugins: baseConfig.plugins,
+
+                            linterOptions: {
+                                noInlineConfig: false
+                            }
                         }
-                    }
-                ], {
-                    plugins: baseConfig.plugins,
+                    ));
 
-                    linterOptions: {
-                        noInlineConfig: false
-                    }
-                }));
+                it("should merge undefined and an object into one object", () =>
+                    assertMergedResult(
+                        [
+                            {},
+                            {
+                                linterOptions: {
+                                    noInlineConfig: false
+                                }
+                            }
+                        ],
+                        {
+                            plugins: baseConfig.plugins,
 
-                it("should merge an object and undefined into one object", () => assertMergedResult([
-                    {
-                        linterOptions: {
-                            noInlineConfig: false
+                            linterOptions: {
+                                noInlineConfig: false
+                            }
                         }
-                    },
-                    {
-                    }
-                ], {
-                    plugins: baseConfig.plugins,
-
-                    linterOptions: {
-                        noInlineConfig: false
-                    }
-                }));
-
-                it("should merge undefined and an object into one object", () => assertMergedResult([
-                    {
-                    },
-                    {
-                        linterOptions: {
-                            noInlineConfig: false
-                        }
-                    }
-                ], {
-                    plugins: baseConfig.plugins,
-
-                    linterOptions: {
-                        noInlineConfig: false
-                    }
-                }));
-
-
+                    ));
             });
             describe("reportUnusedDisableDirectives", () => {
-
                 it("should error when an unexpected value is found", async () => {
-
-                    await assertInvalidConfig([
-                        {
-                            linterOptions: {
-                                reportUnusedDisableDirectives: "true"
+                    await assertInvalidConfig(
+                        [
+                            {
+                                linterOptions: {
+                                    reportUnusedDisableDirectives: "true"
+                                }
                             }
-                        }
-                    ], /Expected a Boolean/u);
+                        ],
+                        /Expected a Boolean/u
+                    );
                 });
 
-                it("should merge two objects when second object has overrides", () => assertMergedResult([
-                    {
-                        linterOptions: {
-                            reportUnusedDisableDirectives: false
+                it("should merge two objects when second object has overrides", () =>
+                    assertMergedResult(
+                        [
+                            {
+                                linterOptions: {
+                                    reportUnusedDisableDirectives: false
+                                }
+                            },
+                            {
+                                linterOptions: {
+                                    reportUnusedDisableDirectives: true
+                                }
+                            }
+                        ],
+                        {
+                            plugins: baseConfig.plugins,
+
+                            linterOptions: {
+                                reportUnusedDisableDirectives: true
+                            }
                         }
-                    },
-                    {
-                        linterOptions: {
-                            reportUnusedDisableDirectives: true
+                    ));
+
+                it("should merge an object and undefined into one object", () =>
+                    assertMergedResult(
+                        [
+                            {},
+                            {
+                                linterOptions: {
+                                    reportUnusedDisableDirectives: true
+                                }
+                            }
+                        ],
+                        {
+                            plugins: baseConfig.plugins,
+
+                            linterOptions: {
+                                reportUnusedDisableDirectives: true
+                            }
                         }
-                    }
-                ], {
-                    plugins: baseConfig.plugins,
-
-                    linterOptions: {
-                        reportUnusedDisableDirectives: true
-                    }
-                }));
-
-                it("should merge an object and undefined into one object", () => assertMergedResult([
-                    {},
-                    {
-                        linterOptions: {
-                            reportUnusedDisableDirectives: true
-                        }
-                    }
-                ], {
-                    plugins: baseConfig.plugins,
-
-                    linterOptions: {
-                        reportUnusedDisableDirectives: true
-                    }
-                }));
-
-
+                    ));
             });
-
         });
 
         describe("languageOptions", () => {
-
             it("should error when an unexpected key is found", async () => {
-
-                await assertInvalidConfig([
-                    {
-                        languageOptions: {
-                            foo: true
-                        }
-                    }
-                ], "Unexpected key \"foo\" found.");
-
-            });
-
-            it("should merge two languageOptions objects with different properties", () => assertMergedResult([
-                {
-                    languageOptions: {
-                        ecmaVersion: 2019
-                    }
-                },
-                {
-                    languageOptions: {
-                        sourceType: "commonjs"
-                    }
-                }
-            ], {
-                plugins: baseConfig.plugins,
-
-                languageOptions: {
-                    ecmaVersion: 2019,
-                    sourceType: "commonjs"
-                }
-            }));
-
-            describe("ecmaVersion", () => {
-
-                it("should error when an unexpected value is found", async () => {
-
-                    await assertInvalidConfig([
+                await assertInvalidConfig(
+                    [
                         {
                             languageOptions: {
-                                ecmaVersion: "true"
+                                foo: true
                             }
                         }
-                    ], /Key "languageOptions": Key "ecmaVersion": Expected a number or "latest"\./u);
+                    ],
+                    'Unexpected key "foo" found.'
+                );
+            });
+
+            it("should merge two languageOptions objects with different properties", () =>
+                assertMergedResult(
+                    [
+                        {
+                            languageOptions: {
+                                ecmaVersion: 2019
+                            }
+                        },
+                        {
+                            languageOptions: {
+                                sourceType: "commonjs"
+                            }
+                        }
+                    ],
+                    {
+                        plugins: baseConfig.plugins,
+
+                        languageOptions: {
+                            ecmaVersion: 2019,
+                            sourceType: "commonjs"
+                        }
+                    }
+                ));
+
+            describe("ecmaVersion", () => {
+                it("should error when an unexpected value is found", async () => {
+                    await assertInvalidConfig(
+                        [
+                            {
+                                languageOptions: {
+                                    ecmaVersion: "true"
+                                }
+                            }
+                        ],
+                        /Key "languageOptions": Key "ecmaVersion": Expected a number or "latest"\./u
+                    );
                 });
 
-                it("should merge two objects when second object has overrides", () => assertMergedResult([
-                    {
-                        languageOptions: {
-                            ecmaVersion: 2019
+                it("should merge two objects when second object has overrides", () =>
+                    assertMergedResult(
+                        [
+                            {
+                                languageOptions: {
+                                    ecmaVersion: 2019
+                                }
+                            },
+                            {
+                                languageOptions: {
+                                    ecmaVersion: 2021
+                                }
+                            }
+                        ],
+                        {
+                            plugins: baseConfig.plugins,
+
+                            languageOptions: {
+                                ecmaVersion: 2021
+                            }
                         }
-                    },
-                    {
-                        languageOptions: {
-                            ecmaVersion: 2021
+                    ));
+
+                it("should merge an object and undefined into one object", () =>
+                    assertMergedResult(
+                        [
+                            {
+                                languageOptions: {
+                                    ecmaVersion: 2021
+                                }
+                            },
+                            {}
+                        ],
+                        {
+                            plugins: baseConfig.plugins,
+
+                            languageOptions: {
+                                ecmaVersion: 2021
+                            }
                         }
-                    }
-                ], {
-                    plugins: baseConfig.plugins,
+                    ));
 
-                    languageOptions: {
-                        ecmaVersion: 2021
-                    }
-                }));
+                it("should merge undefined and an object into one object", () =>
+                    assertMergedResult(
+                        [
+                            {},
+                            {
+                                languageOptions: {
+                                    ecmaVersion: 2021
+                                }
+                            }
+                        ],
+                        {
+                            plugins: baseConfig.plugins,
 
-                it("should merge an object and undefined into one object", () => assertMergedResult([
-                    {
-                        languageOptions: {
-                            ecmaVersion: 2021
+                            languageOptions: {
+                                ecmaVersion: 2021
+                            }
                         }
-                    },
-                    {
-                    }
-                ], {
-                    plugins: baseConfig.plugins,
-
-                    languageOptions: {
-                        ecmaVersion: 2021
-                    }
-                }));
-
-
-                it("should merge undefined and an object into one object", () => assertMergedResult([
-                    {
-                    },
-                    {
-                        languageOptions: {
-                            ecmaVersion: 2021
-                        }
-                    }
-                ], {
-                    plugins: baseConfig.plugins,
-
-                    languageOptions: {
-                        ecmaVersion: 2021
-                    }
-                }));
-
-
+                    ));
             });
 
             describe("sourceType", () => {
-
                 it("should error when an unexpected value is found", async () => {
-
-                    await assertInvalidConfig([
-                        {
-                            languageOptions: {
-                                sourceType: "true"
+                    await assertInvalidConfig(
+                        [
+                            {
+                                languageOptions: {
+                                    sourceType: "true"
+                                }
                             }
-                        }
-                    ], "Expected \"script\", \"module\", or \"commonjs\".");
+                        ],
+                        'Expected "script", "module", or "commonjs".'
+                    );
                 });
 
-                it("should merge two objects when second object has overrides", () => assertMergedResult([
-                    {
-                        languageOptions: {
-                            sourceType: "module"
+                it("should merge two objects when second object has overrides", () =>
+                    assertMergedResult(
+                        [
+                            {
+                                languageOptions: {
+                                    sourceType: "module"
+                                }
+                            },
+                            {
+                                languageOptions: {
+                                    sourceType: "script"
+                                }
+                            }
+                        ],
+                        {
+                            plugins: baseConfig.plugins,
+
+                            languageOptions: {
+                                sourceType: "script"
+                            }
                         }
-                    },
-                    {
-                        languageOptions: {
-                            sourceType: "script"
+                    ));
+
+                it("should merge an object and undefined into one object", () =>
+                    assertMergedResult(
+                        [
+                            {
+                                languageOptions: {
+                                    sourceType: "script"
+                                }
+                            },
+                            {}
+                        ],
+                        {
+                            plugins: baseConfig.plugins,
+
+                            languageOptions: {
+                                sourceType: "script"
+                            }
                         }
-                    }
-                ], {
-                    plugins: baseConfig.plugins,
+                    ));
 
-                    languageOptions: {
-                        sourceType: "script"
-                    }
-                }));
+                it("should merge undefined and an object into one object", () =>
+                    assertMergedResult(
+                        [
+                            {},
+                            {
+                                languageOptions: {
+                                    sourceType: "module"
+                                }
+                            }
+                        ],
+                        {
+                            plugins: baseConfig.plugins,
 
-                it("should merge an object and undefined into one object", () => assertMergedResult([
-                    {
-                        languageOptions: {
-                            sourceType: "script"
+                            languageOptions: {
+                                sourceType: "module"
+                            }
                         }
-                    },
-                    {
-                    }
-                ], {
-                    plugins: baseConfig.plugins,
-
-                    languageOptions: {
-                        sourceType: "script"
-                    }
-                }));
-
-
-                it("should merge undefined and an object into one object", () => assertMergedResult([
-                    {
-                    },
-                    {
-                        languageOptions: {
-                            sourceType: "module"
-                        }
-                    }
-                ], {
-                    plugins: baseConfig.plugins,
-
-                    languageOptions: {
-                        sourceType: "module"
-                    }
-                }));
-
-
+                    ));
             });
 
             describe("globals", () => {
-
                 it("should error when an unexpected value is found", async () => {
-
-                    await assertInvalidConfig([
-                        {
-                            languageOptions: {
-                                globals: "true"
+                    await assertInvalidConfig(
+                        [
+                            {
+                                languageOptions: {
+                                    globals: "true"
+                                }
                             }
-                        }
-                    ], "Expected an object.");
+                        ],
+                        "Expected an object."
+                    );
                 });
 
                 it("should error when an unexpected key value is found", async () => {
-
-                    await assertInvalidConfig([
-                        {
-                            languageOptions: {
-                                globals: {
-                                    foo: "truex"
+                    await assertInvalidConfig(
+                        [
+                            {
+                                languageOptions: {
+                                    globals: {
+                                        foo: "truex"
+                                    }
                                 }
                             }
-                        }
-                    ], "Key \"foo\": Expected \"readonly\", \"writable\", or \"off\".");
+                        ],
+                        'Key "foo": Expected "readonly", "writable", or "off".'
+                    );
                 });
 
                 it("should error when a global has leading whitespace", async () => {
-
-                    await assertInvalidConfig([
-                        {
-                            languageOptions: {
-                                globals: {
-                                    " foo": "readonly"
+                    await assertInvalidConfig(
+                        [
+                            {
+                                languageOptions: {
+                                    globals: {
+                                        " foo": "readonly"
+                                    }
                                 }
                             }
-                        }
-                    ], /Global " foo" has leading or trailing whitespace/u);
+                        ],
+                        /Global " foo" has leading or trailing whitespace/u
+                    );
                 });
 
                 it("should error when a global has trailing whitespace", async () => {
+                    await assertInvalidConfig(
+                        [
+                            {
+                                languageOptions: {
+                                    globals: {
+                                        "foo ": "readonly"
+                                    }
+                                }
+                            }
+                        ],
+                        /Global "foo " has leading or trailing whitespace/u
+                    );
+                });
 
-                    await assertInvalidConfig([
+                it("should merge two objects when second object has different keys", () =>
+                    assertMergedResult(
+                        [
+                            {
+                                languageOptions: {
+                                    globals: {
+                                        foo: "readonly"
+                                    }
+                                }
+                            },
+                            {
+                                languageOptions: {
+                                    globals: {
+                                        bar: "writable"
+                                    }
+                                }
+                            }
+                        ],
                         {
+                            plugins: baseConfig.plugins,
+
                             languageOptions: {
                                 globals: {
-                                    "foo ": "readonly"
+                                    foo: "readonly",
+                                    bar: "writable"
                                 }
                             }
                         }
-                    ], /Global "foo " has leading or trailing whitespace/u);
-                });
+                    ));
 
-                it("should merge two objects when second object has different keys", () => assertMergedResult([
-                    {
-                        languageOptions: {
-                            globals: {
-                                foo: "readonly"
+                it("should merge two objects when second object has overrides", () =>
+                    assertMergedResult(
+                        [
+                            {
+                                languageOptions: {
+                                    globals: {
+                                        foo: null
+                                    }
+                                }
+                            },
+                            {
+                                languageOptions: {
+                                    globals: {
+                                        foo: "writeable"
+                                    }
+                                }
+                            }
+                        ],
+                        {
+                            plugins: baseConfig.plugins,
+
+                            languageOptions: {
+                                globals: {
+                                    foo: "writeable"
+                                }
                             }
                         }
-                    },
-                    {
-                        languageOptions: {
-                            globals: {
-                                bar: "writable"
+                    ));
+
+                it("should merge an object and undefined into one object", () =>
+                    assertMergedResult(
+                        [
+                            {
+                                languageOptions: {
+                                    globals: {
+                                        foo: "readable"
+                                    }
+                                }
+                            },
+                            {}
+                        ],
+                        {
+                            plugins: baseConfig.plugins,
+
+                            languageOptions: {
+                                globals: {
+                                    foo: "readable"
+                                }
                             }
                         }
-                    }
-                ], {
-                    plugins: baseConfig.plugins,
+                    ));
 
-                    languageOptions: {
-                        globals: {
-                            foo: "readonly",
-                            bar: "writable"
-                        }
-                    }
-                }));
+                it("should merge undefined and an object into one object", () =>
+                    assertMergedResult(
+                        [
+                            {},
+                            {
+                                languageOptions: {
+                                    globals: {
+                                        foo: "false"
+                                    }
+                                }
+                            }
+                        ],
+                        {
+                            plugins: baseConfig.plugins,
 
-                it("should merge two objects when second object has overrides", () => assertMergedResult([
-                    {
-                        languageOptions: {
-                            globals: {
-                                foo: null
+                            languageOptions: {
+                                globals: {
+                                    foo: "false"
+                                }
                             }
                         }
-                    },
-                    {
-                        languageOptions: {
-                            globals: {
-                                foo: "writeable"
-                            }
-                        }
-                    }
-                ], {
-                    plugins: baseConfig.plugins,
-
-                    languageOptions: {
-                        globals: {
-                            foo: "writeable"
-                        }
-                    }
-                }));
-
-                it("should merge an object and undefined into one object", () => assertMergedResult([
-                    {
-                        languageOptions: {
-                            globals: {
-                                foo: "readable"
-                            }
-                        }
-                    },
-                    {
-                    }
-                ], {
-                    plugins: baseConfig.plugins,
-
-                    languageOptions: {
-                        globals: {
-                            foo: "readable"
-                        }
-                    }
-                }));
-
-
-                it("should merge undefined and an object into one object", () => assertMergedResult([
-                    {
-                    },
-                    {
-                        languageOptions: {
-                            globals: {
-                                foo: "false"
-                            }
-                        }
-                    }
-                ], {
-                    plugins: baseConfig.plugins,
-
-                    languageOptions: {
-                        globals: {
-                            foo: "false"
-                        }
-                    }
-                }));
-
-
+                    ));
             });
 
             describe("parser", () => {
-
                 it("should error when an unexpected value is found", async () => {
-
-                    await assertInvalidConfig([
-                        {
-                            languageOptions: {
-                                parser: true
+                    await assertInvalidConfig(
+                        [
+                            {
+                                languageOptions: {
+                                    parser: true
+                                }
                             }
-                        }
-                    ], "Key \"languageOptions\": Key \"parser\": Expected object with parse() or parseForESLint() method.");
+                        ],
+                        'Key "languageOptions": Key "parser": Expected object with parse() or parseForESLint() method.'
+                    );
                 });
 
                 it("should error when a null is found", async () => {
-
-                    await assertInvalidConfig([
-                        {
-                            languageOptions: {
-                                parser: null
+                    await assertInvalidConfig(
+                        [
+                            {
+                                languageOptions: {
+                                    parser: null
+                                }
                             }
-                        }
-                    ], "Key \"languageOptions\": Key \"parser\": Expected object with parse() or parseForESLint() method.");
+                        ],
+                        'Key "languageOptions": Key "parser": Expected object with parse() or parseForESLint() method.'
+                    );
                 });
 
                 it("should error when a parser is a string", async () => {
-
-                    await assertInvalidConfig([
-                        {
-                            languageOptions: {
-                                parser: "foo/bar"
+                    await assertInvalidConfig(
+                        [
+                            {
+                                languageOptions: {
+                                    parser: "foo/bar"
+                                }
                             }
-                        }
-                    ], "Key \"languageOptions\": Key \"parser\": Expected object with parse() or parseForESLint() method.");
+                        ],
+                        'Key "languageOptions": Key "parser": Expected object with parse() or parseForESLint() method.'
+                    );
                 });
 
                 it("should error when a value doesn't have a parse() method", async () => {
-
-                    await assertInvalidConfig([
-                        {
-                            languageOptions: {
-                                parser: {}
+                    await assertInvalidConfig(
+                        [
+                            {
+                                languageOptions: {
+                                    parser: {}
+                                }
                             }
-                        }
-                    ], "Key \"languageOptions\": Key \"parser\": Expected object with parse() or parseForESLint() method.");
+                        ],
+                        'Key "languageOptions": Key "parser": Expected object with parse() or parseForESLint() method.'
+                    );
                 });
 
                 it("should merge two objects when second object has overrides", () => {
-
                     const parser = { parse() {} };
-                    const stubParser = { parse() { } };
+                    const stubParser = { parse() {} };
 
-                    return assertMergedResult([
-                        {
-                            languageOptions: {
-                                parser
+                    return assertMergedResult(
+                        [
+                            {
+                                languageOptions: {
+                                    parser
+                                }
+                            },
+                            {
+                                languageOptions: {
+                                    parser: stubParser
+                                }
                             }
-                        },
+                        ],
                         {
+                            plugins: {
+                                ...baseConfig.plugins
+                            },
                             languageOptions: {
                                 parser: stubParser
                             }
                         }
-                    ], {
-                        plugins: {
-                            ...baseConfig.plugins
-                        },
-                        languageOptions: {
-                            parser: stubParser
-                        }
-                    });
+                    );
                 });
 
                 it("should merge an object and undefined into one object", () => {
-
-                    const stubParser = { parse() { } };
-
-                    return assertMergedResult([
-                        {
-                            languageOptions: {
-                                parser: stubParser
-                            }
-                        },
-                        {
-                        }
-                    ], {
-                        plugins: {
-                            ...baseConfig.plugins
-                        },
-
-                        languageOptions: {
-                            parser: stubParser
-                        }
-                    });
-
-                });
-
-
-                it("should merge undefined and an object into one object", () => {
-
                     const stubParser = { parse() {} };
 
-                    return assertMergedResult([
+                    return assertMergedResult(
+                        [
+                            {
+                                languageOptions: {
+                                    parser: stubParser
+                                }
+                            },
+                            {}
+                        ],
                         {
-                        },
-                        {
+                            plugins: {
+                                ...baseConfig.plugins
+                            },
+
                             languageOptions: {
                                 parser: stubParser
                             }
                         }
-                    ], {
-                        plugins: {
-                            ...baseConfig.plugins
-                        },
-
-                        languageOptions: {
-                            parser: stubParser
-                        }
-                    });
-
+                    );
                 });
 
-            });
+                it("should merge undefined and an object into one object", () => {
+                    const stubParser = { parse() {} };
 
+                    return assertMergedResult(
+                        [
+                            {},
+                            {
+                                languageOptions: {
+                                    parser: stubParser
+                                }
+                            }
+                        ],
+                        {
+                            plugins: {
+                                ...baseConfig.plugins
+                            },
+
+                            languageOptions: {
+                                parser: stubParser
+                            }
+                        }
+                    );
+                });
+            });
 
             describe("parserOptions", () => {
-
                 it("should error when an unexpected value is found", async () => {
-
-                    await assertInvalidConfig([
-                        {
-                            languageOptions: {
-                                parserOptions: "true"
+                    await assertInvalidConfig(
+                        [
+                            {
+                                languageOptions: {
+                                    parserOptions: "true"
+                                }
                             }
-                        }
-                    ], "Expected an object.");
+                        ],
+                        "Expected an object."
+                    );
                 });
 
-                it("should merge two objects when second object has different keys", () => assertMergedResult([
-                    {
-                        languageOptions: {
-                            parserOptions: {
-                                foo: "whatever"
+                it("should merge two objects when second object has different keys", () =>
+                    assertMergedResult(
+                        [
+                            {
+                                languageOptions: {
+                                    parserOptions: {
+                                        foo: "whatever"
+                                    }
+                                }
+                            },
+                            {
+                                languageOptions: {
+                                    parserOptions: {
+                                        bar: "baz"
+                                    }
+                                }
                             }
-                        }
-                    },
-                    {
-                        languageOptions: {
-                            parserOptions: {
-                                bar: "baz"
-                            }
-                        }
-                    }
-                ], {
-                    plugins: baseConfig.plugins,
+                        ],
+                        {
+                            plugins: baseConfig.plugins,
 
-                    languageOptions: {
-                        parserOptions: {
-                            foo: "whatever",
-                            bar: "baz"
-                        }
-                    }
-                }));
-
-                it("should deeply merge two objects when second object has different keys", () => assertMergedResult([
-                    {
-                        languageOptions: {
-                            parserOptions: {
-                                ecmaFeatures: {
-                                    jsx: true
+                            languageOptions: {
+                                parserOptions: {
+                                    foo: "whatever",
+                                    bar: "baz"
                                 }
                             }
                         }
-                    },
-                    {
-                        languageOptions: {
-                            parserOptions: {
-                                ecmaFeatures: {
-                                    globalReturn: true
+                    ));
+
+                it("should deeply merge two objects when second object has different keys", () =>
+                    assertMergedResult(
+                        [
+                            {
+                                languageOptions: {
+                                    parserOptions: {
+                                        ecmaFeatures: {
+                                            jsx: true
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                languageOptions: {
+                                    parserOptions: {
+                                        ecmaFeatures: {
+                                            globalReturn: true
+                                        }
+                                    }
+                                }
+                            }
+                        ],
+                        {
+                            plugins: baseConfig.plugins,
+
+                            languageOptions: {
+                                parserOptions: {
+                                    ecmaFeatures: {
+                                        jsx: true,
+                                        globalReturn: true
+                                    }
                                 }
                             }
                         }
-                    }
-                ], {
-                    plugins: baseConfig.plugins,
+                    ));
 
-                    languageOptions: {
-                        parserOptions: {
-                            ecmaFeatures: {
-                                jsx: true,
-                                globalReturn: true
+                it("should deeply merge two objects when second object has missing key", () =>
+                    assertMergedResult(
+                        [
+                            {
+                                languageOptions: {
+                                    parserOptions: {
+                                        ecmaFeatures: {
+                                            jsx: true
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                languageOptions: {
+                                    ecmaVersion: 2021
+                                }
                             }
-                        }
-                    }
-                }));
+                        ],
+                        {
+                            plugins: baseConfig.plugins,
 
-                it("should deeply merge two objects when second object has missing key", () => assertMergedResult([
-                    {
-                        languageOptions: {
-                            parserOptions: {
-                                ecmaFeatures: {
-                                    jsx: true
+                            languageOptions: {
+                                ecmaVersion: 2021,
+                                parserOptions: {
+                                    ecmaFeatures: {
+                                        jsx: true
+                                    }
                                 }
                             }
                         }
-                    },
-                    {
-                        languageOptions: {
-                            ecmaVersion: 2021
-                        }
-                    }
-                ], {
-                    plugins: baseConfig.plugins,
+                    ));
 
-                    languageOptions: {
-                        ecmaVersion: 2021,
-                        parserOptions: {
-                            ecmaFeatures: {
-                                jsx: true
+                it("should merge two objects when second object has overrides", () =>
+                    assertMergedResult(
+                        [
+                            {
+                                languageOptions: {
+                                    parserOptions: {
+                                        foo: "whatever"
+                                    }
+                                }
+                            },
+                            {
+                                languageOptions: {
+                                    parserOptions: {
+                                        foo: "bar"
+                                    }
+                                }
+                            }
+                        ],
+                        {
+                            plugins: baseConfig.plugins,
+
+                            languageOptions: {
+                                parserOptions: {
+                                    foo: "bar"
+                                }
                             }
                         }
-                    }
-                }));
+                    ));
 
-                it("should merge two objects when second object has overrides", () => assertMergedResult([
-                    {
-                        languageOptions: {
-                            parserOptions: {
-                                foo: "whatever"
+                it("should merge an object and undefined into one object", () =>
+                    assertMergedResult(
+                        [
+                            {
+                                languageOptions: {
+                                    parserOptions: {
+                                        foo: "whatever"
+                                    }
+                                }
+                            },
+                            {}
+                        ],
+                        {
+                            plugins: baseConfig.plugins,
+
+                            languageOptions: {
+                                parserOptions: {
+                                    foo: "whatever"
+                                }
                             }
                         }
-                    },
-                    {
-                        languageOptions: {
-                            parserOptions: {
-                                foo: "bar"
+                    ));
+
+                it("should merge undefined and an object into one object", () =>
+                    assertMergedResult(
+                        [
+                            {},
+                            {
+                                languageOptions: {
+                                    parserOptions: {
+                                        foo: "bar"
+                                    }
+                                }
+                            }
+                        ],
+                        {
+                            plugins: baseConfig.plugins,
+
+                            languageOptions: {
+                                parserOptions: {
+                                    foo: "bar"
+                                }
                             }
                         }
-                    }
-                ], {
-                    plugins: baseConfig.plugins,
-
-                    languageOptions: {
-                        parserOptions: {
-                            foo: "bar"
-                        }
-                    }
-                }));
-
-                it("should merge an object and undefined into one object", () => assertMergedResult([
-                    {
-                        languageOptions: {
-                            parserOptions: {
-                                foo: "whatever"
-                            }
-                        }
-                    },
-                    {
-                    }
-                ], {
-                    plugins: baseConfig.plugins,
-
-                    languageOptions: {
-                        parserOptions: {
-                            foo: "whatever"
-                        }
-                    }
-                }));
-
-
-                it("should merge undefined and an object into one object", () => assertMergedResult([
-                    {
-                    },
-                    {
-                        languageOptions: {
-                            parserOptions: {
-                                foo: "bar"
-                            }
-                        }
-                    }
-                ], {
-                    plugins: baseConfig.plugins,
-
-                    languageOptions: {
-                        parserOptions: {
-                            foo: "bar"
-                        }
-                    }
-                }));
-
-
+                    ));
             });
-
-
         });
 
         describe("rules", () => {
-
             it("should error when an unexpected value is found", async () => {
-
-                await assertInvalidConfig([
-                    {
-                        rules: true
-                    }
-                ], "Expected an object.");
+                await assertInvalidConfig(
+                    [
+                        {
+                            rules: true
+                        }
+                    ],
+                    "Expected an object."
+                );
             });
 
             it("should error when an invalid rule severity is set", async () => {
-
-                await assertInvalidConfig([
-                    {
-                        rules: {
-                            foo: true
+                await assertInvalidConfig(
+                    [
+                        {
+                            rules: {
+                                foo: true
+                            }
                         }
-                    }
-                ], "Key \"rules\": Key \"foo\": Expected severity of \"off\", 0, \"warn\", 1, \"error\", or 2.");
+                    ],
+                    'Key "rules": Key "foo": Expected severity of "off", 0, "warn", 1, "error", or 2.'
+                );
             });
 
             it("should error when an invalid rule severity of the right type is set", async () => {
-
-                await assertInvalidConfig([
-                    {
-                        rules: {
-                            foo: 3
+                await assertInvalidConfig(
+                    [
+                        {
+                            rules: {
+                                foo: 3
+                            }
                         }
-                    }
-                ], "Key \"rules\": Key \"foo\": Expected severity of \"off\", 0, \"warn\", 1, \"error\", or 2.");
+                    ],
+                    'Key "rules": Key "foo": Expected severity of "off", 0, "warn", 1, "error", or 2.'
+                );
             });
 
             it("should error when a string rule severity is not in lowercase", async () => {
-
-                await assertInvalidConfig([
-                    {
-                        rules: {
-                            foo: "Error"
+                await assertInvalidConfig(
+                    [
+                        {
+                            rules: {
+                                foo: "Error"
+                            }
                         }
-                    }
-                ], "Key \"rules\": Key \"foo\": Expected severity of \"off\", 0, \"warn\", 1, \"error\", or 2.");
+                    ],
+                    'Key "rules": Key "foo": Expected severity of "off", 0, "warn", 1, "error", or 2.'
+                );
             });
 
             it("should error when an invalid rule severity is set in an array", async () => {
-
-                await assertInvalidConfig([
-                    {
-                        rules: {
-                            foo: [true]
+                await assertInvalidConfig(
+                    [
+                        {
+                            rules: {
+                                foo: [true]
+                            }
                         }
-                    }
-                ], "Key \"rules\": Key \"foo\": Expected severity of \"off\", 0, \"warn\", 1, \"error\", or 2.");
+                    ],
+                    'Key "rules": Key "foo": Expected severity of "off", 0, "warn", 1, "error", or 2.'
+                );
             });
 
             it("should error when rule doesn't exist", async () => {
-
-                await assertInvalidConfig([
-                    {
-                        rules: {
-                            foox: [1, "bar"]
+                await assertInvalidConfig(
+                    [
+                        {
+                            rules: {
+                                foox: [1, "bar"]
+                            }
                         }
-                    }
-                ], /Key "rules": Key "foox": Could not find "foox" in plugin "@"./u);
+                    ],
+                    /Key "rules": Key "foox": Could not find "foox" in plugin "@"./u
+                );
             });
 
             it("should error and suggest alternative when rule doesn't exist", async () => {
-
-                await assertInvalidConfig([
-                    {
-                        rules: {
-                            "test2/match": "error"
+                await assertInvalidConfig(
+                    [
+                        {
+                            rules: {
+                                "test2/match": "error"
+                            }
                         }
-                    }
-                ], /Key "rules": Key "test2\/match": Could not find "match" in plugin "test2"\. Did you mean "test1\/match"\?/u);
+                    ],
+                    /Key "rules": Key "test2\/match": Could not find "match" in plugin "test2"\. Did you mean "test1\/match"\?/u
+                );
             });
 
             it("should error when plugin for rule doesn't exist", async () => {
-
-                await assertInvalidConfig([
-                    {
-                        rules: {
-                            "doesnt-exist/match": "error"
+                await assertInvalidConfig(
+                    [
+                        {
+                            rules: {
+                                "doesnt-exist/match": "error"
+                            }
                         }
-                    }
-                ], /Key "rules": Key "doesnt-exist\/match": Could not find plugin "doesnt-exist"\./u);
+                    ],
+                    /Key "rules": Key "doesnt-exist\/match": Could not find plugin "doesnt-exist"\./u
+                );
             });
 
             it("should error when rule options don't match schema", async () => {
-
-                await assertInvalidConfig([
-                    {
-                        rules: {
-                            foo: [1, "bar"]
+                await assertInvalidConfig(
+                    [
+                        {
+                            rules: {
+                                foo: [1, "bar"]
+                            }
                         }
-                    }
-                ], /Value "bar" should be equal to one of the allowed values/u);
+                    ],
+                    /Value "bar" should be equal to one of the allowed values/u
+                );
             });
 
             it("should error when rule options don't match schema requiring at least one item", async () => {
-
-                await assertInvalidConfig([
-                    {
-                        rules: {
-                            foo2: 1
-                        }
-                    }
-                ], /Value \[\] should NOT have fewer than 1 items/u);
-            });
-
-            it("should merge two objects", () => assertMergedResult([
-                {
-                    rules: {
-                        foo: 1,
-                        bar: "error"
-                    }
-                },
-                {
-                    rules: {
-                        baz: "warn",
-                        boom: 0
-                    }
-                }
-            ], {
-                plugins: baseConfig.plugins,
-
-                rules: {
-                    foo: [1],
-                    bar: [2],
-                    baz: [1],
-                    boom: [0]
-                }
-            }));
-
-            it("should merge two objects when second object has simple overrides", () => assertMergedResult([
-                {
-                    rules: {
-                        foo: [1, "always"],
-                        bar: "error"
-                    }
-                },
-                {
-                    rules: {
-                        foo: "error",
-                        bar: 0
-                    }
-                }
-            ], {
-                plugins: baseConfig.plugins,
-
-                rules: {
-                    foo: [2, "always"],
-                    bar: [0]
-                }
-            }));
-
-            it("should merge two objects when second object has array overrides", () => assertMergedResult([
-                {
-                    rules: {
-                        foo: 1,
-                        foo2: "error"
-                    }
-                },
-                {
-                    rules: {
-                        foo: ["error", "never"],
-                        foo2: ["warn", "foo"]
-                    }
-                }
-            ], {
-                plugins: baseConfig.plugins,
-                rules: {
-                    foo: [2, "never"],
-                    foo2: [1, "foo"]
-                }
-            }));
-
-            it("should merge two objects and options when second object overrides without options", () => assertMergedResult([
-                {
-                    rules: {
-                        foo: [1, "always"],
-                        bar: "error"
-                    }
-                },
-                {
-                    plugins: {
-                        "@foo/baz/boom": {
+                await assertInvalidConfig(
+                    [
+                        {
                             rules: {
-                                bang: {}
+                                foo2: 1
                             }
                         }
-                    },
-                    rules: {
-                        foo: ["error"],
-                        bar: 0,
-                        "@foo/baz/boom/bang": "error"
-                    }
-                }
-            ], {
-                plugins: {
-                    ...baseConfig.plugins,
-                    "@foo/baz/boom": {
+                    ],
+                    /Value \[\] should NOT have fewer than 1 items/u
+                );
+            });
+
+            it("should merge two objects", () =>
+                assertMergedResult(
+                    [
+                        {
+                            rules: {
+                                foo: 1,
+                                bar: "error"
+                            }
+                        },
+                        {
+                            rules: {
+                                baz: "warn",
+                                boom: 0
+                            }
+                        }
+                    ],
+                    {
+                        plugins: baseConfig.plugins,
+
                         rules: {
-                            bang: {}
+                            foo: [1],
+                            bar: [2],
+                            baz: [1],
+                            boom: [0]
                         }
                     }
-                },
-                rules: {
-                    foo: [2, "always"],
-                    bar: [0],
-                    "@foo/baz/boom/bang": [2]
-                }
-            }));
+                ));
 
-            it("should merge an object and undefined into one object", () => assertMergedResult([
-                {
-                    rules: {
-                        foo: 0,
-                        bar: 1
-                    }
-                },
-                {
-                }
-            ], {
-                plugins: baseConfig.plugins,
-                rules: {
-                    foo: [0],
-                    bar: [1]
-                }
-            }));
+            it("should merge two objects when second object has simple overrides", () =>
+                assertMergedResult(
+                    [
+                        {
+                            rules: {
+                                foo: [1, "always"],
+                                bar: "error"
+                            }
+                        },
+                        {
+                            rules: {
+                                foo: "error",
+                                bar: 0
+                            }
+                        }
+                    ],
+                    {
+                        plugins: baseConfig.plugins,
 
-            it("should merge a rule that doesn't exist without error when the rule is off", () => assertMergedResult([
-                {
-                    rules: {
-                        foo: 0,
-                        bar: 1
+                        rules: {
+                            foo: [2, "always"],
+                            bar: [0]
+                        }
                     }
-                },
-                {
-                    rules: {
-                        nonExistentRule: 0,
-                        nonExistentRule2: ["off", "bar"]
-                    }
-                }
-            ], {
-                plugins: baseConfig.plugins,
-                rules: {
-                    foo: [0],
-                    bar: [1],
-                    nonExistentRule: [0],
-                    nonExistentRule2: [0, "bar"]
-                }
-            }));
+                ));
 
+            it("should merge two objects when second object has array overrides", () =>
+                assertMergedResult(
+                    [
+                        {
+                            rules: {
+                                foo: 1,
+                                foo2: "error"
+                            }
+                        },
+                        {
+                            rules: {
+                                foo: ["error", "never"],
+                                foo2: ["warn", "foo"]
+                            }
+                        }
+                    ],
+                    {
+                        plugins: baseConfig.plugins,
+                        rules: {
+                            foo: [2, "never"],
+                            foo2: [1, "foo"]
+                        }
+                    }
+                ));
+
+            it("should merge two objects and options when second object overrides without options", () =>
+                assertMergedResult(
+                    [
+                        {
+                            rules: {
+                                foo: [1, "always"],
+                                bar: "error"
+                            }
+                        },
+                        {
+                            plugins: {
+                                "@foo/baz/boom": {
+                                    rules: {
+                                        bang: {}
+                                    }
+                                }
+                            },
+                            rules: {
+                                foo: ["error"],
+                                bar: 0,
+                                "@foo/baz/boom/bang": "error"
+                            }
+                        }
+                    ],
+                    {
+                        plugins: {
+                            ...baseConfig.plugins,
+                            "@foo/baz/boom": {
+                                rules: {
+                                    bang: {}
+                                }
+                            }
+                        },
+                        rules: {
+                            foo: [2, "always"],
+                            bar: [0],
+                            "@foo/baz/boom/bang": [2]
+                        }
+                    }
+                ));
+
+            it("should merge an object and undefined into one object", () =>
+                assertMergedResult(
+                    [
+                        {
+                            rules: {
+                                foo: 0,
+                                bar: 1
+                            }
+                        },
+                        {}
+                    ],
+                    {
+                        plugins: baseConfig.plugins,
+                        rules: {
+                            foo: [0],
+                            bar: [1]
+                        }
+                    }
+                ));
+
+            it("should merge a rule that doesn't exist without error when the rule is off", () =>
+                assertMergedResult(
+                    [
+                        {
+                            rules: {
+                                foo: 0,
+                                bar: 1
+                            }
+                        },
+                        {
+                            rules: {
+                                nonExistentRule: 0,
+                                nonExistentRule2: ["off", "bar"]
+                            }
+                        }
+                    ],
+                    {
+                        plugins: baseConfig.plugins,
+                        rules: {
+                            foo: [0],
+                            bar: [1],
+                            nonExistentRule: [0],
+                            nonExistentRule2: [0, "bar"]
+                        }
+                    }
+                ));
         });
 
         describe("Invalid Keys", () => {
-
             [
                 "env",
                 "extends",
@@ -1963,63 +2142,63 @@ describe("FlatConfigArray", () => {
                 "reportUnusedDisableDirectives",
                 "root"
             ].forEach(key => {
-
                 it(`should error when a ${key} key is found`, async () => {
-                    await assertInvalidConfig([
-                        {
-                            [key]: "foo"
-                        }
-                    ], `Key "${key}": This appears to be in eslintrc format rather than flat config format.`);
-
+                    await assertInvalidConfig(
+                        [
+                            {
+                                [key]: "foo"
+                            }
+                        ],
+                        `Key "${key}": This appears to be in eslintrc format rather than flat config format.`
+                    );
                 });
             });
 
             it("should error when plugins is an array", async () => {
-                await assertInvalidConfig([
-                    {
-                        plugins: ["foo"]
-                    }
-                ], "Key \"plugins\": This appears to be in eslintrc format (array of strings) rather than flat config format (object).");
-
+                await assertInvalidConfig(
+                    [
+                        {
+                            plugins: ["foo"]
+                        }
+                    ],
+                    'Key "plugins": This appears to be in eslintrc format (array of strings) rather than flat config format (object).'
+                );
             });
-
-
         });
-
     });
 
     // https://github.com/eslint/eslint/issues/12592
     describe("Shared references between rule configs", () => {
-
         it("shared rule config should not cause a rule validation error", () => {
-
             const ruleConfig = ["error", {}];
 
-            const configs = new FlatConfigArray([{
-                rules: {
-                    camelcase: ruleConfig,
-                    "default-case": ruleConfig
+            const configs = new FlatConfigArray([
+                {
+                    rules: {
+                        camelcase: ruleConfig,
+                        "default-case": ruleConfig
+                    }
                 }
-            }]);
+            ]);
 
             configs.normalizeSync();
 
             const config = configs.getConfig("foo.js");
 
             assert.deepStrictEqual(config.rules, {
-                camelcase: [2, {
-                    ignoreDestructuring: false,
-                    ignoreGlobals: false,
-                    ignoreImports: false
-                }],
+                camelcase: [
+                    2,
+                    {
+                        ignoreDestructuring: false,
+                        ignoreGlobals: false,
+                        ignoreImports: false
+                    }
+                ],
                 "default-case": [2, {}]
             });
-
         });
 
-
         it("should throw rule validation error for camelcase", async () => {
-
             const ruleConfig = ["error", {}];
 
             const configs = new FlatConfigArray([
@@ -2032,13 +2211,11 @@ describe("FlatConfigArray", () => {
                     rules: {
                         "default-case": ruleConfig,
 
-
                         camelcase: [
                             "error",
                             {
                                 ignoreDestructuring: Date
                             }
-
                         ]
                     }
                 }
@@ -2050,8 +2227,6 @@ describe("FlatConfigArray", () => {
             assert.throws(() => {
                 configs.getConfig("foo.js");
             }, /Key "rules": Key "camelcase":/u);
-
         });
-
     });
 });

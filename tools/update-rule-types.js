@@ -16,43 +16,40 @@ module.exports = (fileInfo, api) => {
     const ruleName = path.basename(fileInfo.path, ".js");
 
     // get the object literal representing the rule
-    const nodes = j(source).find(j.ObjectExpression).filter(p => p.node.properties.some(node => node.key.name === "meta"));
+    const nodes = j(source)
+        .find(j.ObjectExpression)
+        .filter(p => p.node.properties.some(node => node.key.name === "meta"));
 
     // updating logic
-    return nodes.replaceWith(p => {
+    return nodes
+        .replaceWith(p => {
+            // gather important nodes from the rule
+            const metaNode = p.node.properties.find(node => node.key.name === "meta");
 
-        // gather important nodes from the rule
-        const metaNode = p.node.properties.find(node => node.key.name === "meta");
+            // if there's no properties, just exit
+            if (!metaNode.value.properties) {
+                return p.node;
+            }
 
-        // if there's no properties, just exit
-        if (!metaNode.value.properties) {
+            const typeNode = metaNode.value.properties.find(node => node.key.name === "type");
+
+            let ruleType;
+
+            if (ruleName in ruleTypes) {
+                ruleType = ruleTypes[ruleName];
+            }
+
+            if (typeNode) {
+                // update existing type node
+                typeNode.value = j.literal(ruleType);
+            } else {
+                // add new type node if one doesn't exist
+                const newProp = j.property("init", j.identifier("type"), j.literal(ruleType));
+
+                p.node.properties[0].value.properties.unshift(newProp);
+            }
+
             return p.node;
-        }
-
-        const typeNode = metaNode.value.properties.find(node => node.key.name === "type");
-
-        let ruleType;
-
-        if (ruleName in ruleTypes) {
-            ruleType = ruleTypes[ruleName];
-        }
-
-        if (typeNode) {
-
-            // update existing type node
-            typeNode.value = j.literal(ruleType);
-        } else {
-
-            // add new type node if one doesn't exist
-            const newProp = j.property(
-                "init",
-                j.identifier("type"),
-                j.literal(ruleType)
-            );
-
-            p.node.properties[0].value.properties.unshift(newProp);
-        }
-
-        return p.node;
-    }).toSource();
+        })
+        .toSource();
 };

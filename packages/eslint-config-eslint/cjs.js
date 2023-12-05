@@ -3,7 +3,4 @@
 const baseConfigs = require("./base");
 const { cjsConfigs } = require("./nodejs");
 
-module.exports = [
-    ...baseConfigs,
-    ...cjsConfigs
-];
+module.exports = [...baseConfigs, ...cjsConfigs];

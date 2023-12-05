@@ -20,7 +20,6 @@ const ruleTester = new RuleTester({ parserOptions: { ecmaVersion: 2018 } });
 
 ruleTester.run("no-useless-backreference", rule, {
     valid: [
-
         // not a regular expression
         String.raw`'\1(a)'`,
         String.raw`regExp('\\1(a)')`,
@@ -150,42 +149,51 @@ ruleTester.run("no-useless-backreference", rule, {
     ],
 
     invalid: [
-
         // full message tests
         {
             code: String.raw`/(b)(\2a)/`,
-            errors: [{
-                message: String.raw`Backreference '\2' will be ignored. It references group '(\2a)' from within that group.`,
-                type: "Literal"
-            }]
+            errors: [
+                {
+                    message: String.raw`Backreference '\2' will be ignored. It references group '(\2a)' from within that group.`,
+                    type: "Literal"
+                }
+            ]
         },
         {
             code: String.raw`/\k<foo>(?<foo>a)/`,
-            errors: [{
-                message: String.raw`Backreference '\k<foo>' will be ignored. It references group '(?<foo>a)' which appears later in the pattern.`,
-                type: "Literal"
-            }]
+            errors: [
+                {
+                    message: String.raw`Backreference '\k<foo>' will be ignored. It references group '(?<foo>a)' which appears later in the pattern.`,
+                    type: "Literal"
+                }
+            ]
         },
         {
             code: String.raw`RegExp('(a|bc)|\\1')`,
-            errors: [{
-                message: String.raw`Backreference '\1' will be ignored. It references group '(a|bc)' which is in another alternative.`,
-                type: "CallExpression"
-            }]
+            errors: [
+                {
+                    message: String.raw`Backreference '\1' will be ignored. It references group '(a|bc)' which is in another alternative.`,
+                    type: "CallExpression"
+                }
+            ]
         },
         {
             code: String.raw`new RegExp('(?!(?<foo>\\n))\\1')`,
-            errors: [{
-                message: String.raw`Backreference '\1' will be ignored. It references group '(?<foo>\n)' which is in a negative lookaround.`,
-                type: "NewExpression"
-            }]
+            errors: [
+                {
+                    message: String.raw`Backreference '\1' will be ignored. It references group '(?<foo>\n)' which is in a negative lookaround.`,
+                    type: "NewExpression"
+                }
+            ]
         },
         {
             code: String.raw`/(?<!(a)\1)b/`,
-            errors: [{
-                message: String.raw`Backreference '\1' will be ignored. It references group '(a)' which appears before in the same lookbehind.`,
-                type: "Literal"
-            }]
+            errors: [
+                {
+                    message: String.raw`Backreference '\1' will be ignored. It references group '(a)' which appears before in the same lookbehind.`,
+                    type: "Literal"
+                }
+            ]
         },
 
         // nested
@@ -513,7 +521,6 @@ ruleTester.run("no-useless-backreference", rule, {
             code: String.raw`const r = RegExp, p = '\\1', s = '(a)'; new r(p + s);`,
             errors: [{ messageId: "forward", data: { bref: String.raw`\1`, group: String.raw`(a)` }, type: "NewExpression" }]
         },
-
 
         // ES2024
         {

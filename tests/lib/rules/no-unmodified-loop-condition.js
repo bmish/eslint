@@ -68,7 +68,10 @@ ruleTester.run("no-unmodified-loop-condition", rule, {
             ]
         },
         { code: "var foo = 0; while (foo ? 1 : 0) { } foo = 1;", errors: [{ messageId: "loopConditionNotModified", data: { name: "foo" } }] },
-        { code: "var foo = 0; while (foo) { update(); } function update(foo) { ++foo; }", errors: [{ messageId: "loopConditionNotModified", data: { name: "foo" } }] },
+        {
+            code: "var foo = 0; while (foo) { update(); } function update(foo) { ++foo; }",
+            errors: [{ messageId: "loopConditionNotModified", data: { name: "foo" } }]
+        },
         { code: "var foo; do { } while (foo);", errors: [{ messageId: "loopConditionNotModified", data: { name: "foo" } }] },
         { code: "for (var foo = 0; foo < 10; ) { } foo = 1;", errors: [{ messageId: "loopConditionNotModified", data: { name: "foo" } }] }
     ]

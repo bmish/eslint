@@ -60,11 +60,11 @@ describe("getGraphemeCount", () => {
     /* eslint-disable quote-props -- Make consistent here for readability */
     const expectedResults = {
         "": 0,
-        "a": 1,
-        "ab": 2,
-        "aa": 2,
-        "123": 3,
-        "cccc": 4,
+        a: 1,
+        ab: 2,
+        aa: 2,
+        123: 3,
+        cccc: 4,
         [Array.from({ length: 128 }, (_, i) => String.fromCharCode(i)).join("")]: 128, // all ASCII characters
         "👍": 1, // 1 grapheme, 1 code point, 2 code units
         "👍👍": 2,

@@ -55,33 +55,39 @@ ruleTester.run("no-new-wrappers", rule, {
     invalid: [
         {
             code: "var a = new String('hello');",
-            errors: [{
-                messageId: "noConstructor",
-                data: {
-                    fn: "String"
-                },
-                type: "NewExpression"
-            }]
+            errors: [
+                {
+                    messageId: "noConstructor",
+                    data: {
+                        fn: "String"
+                    },
+                    type: "NewExpression"
+                }
+            ]
         },
         {
             code: "var a = new Number(10);",
-            errors: [{
-                messageId: "noConstructor",
-                data: {
-                    fn: "Number"
-                },
-                type: "NewExpression"
-            }]
+            errors: [
+                {
+                    messageId: "noConstructor",
+                    data: {
+                        fn: "Number"
+                    },
+                    type: "NewExpression"
+                }
+            ]
         },
         {
             code: "var a = new Boolean(false);",
-            errors: [{
-                messageId: "noConstructor",
-                data: {
-                    fn: "Boolean"
-                },
-                type: "NewExpression"
-            }]
+            errors: [
+                {
+                    messageId: "noConstructor",
+                    data: {
+                        fn: "Boolean"
+                    },
+                    type: "NewExpression"
+                }
+            ]
         },
         {
             code: `
@@ -92,14 +98,16 @@ ruleTester.run("no-new-wrappers", rule, {
             }
             `,
             parserOptions: { ecmaVersion: 6 },
-            errors: [{
-                messageId: "noConstructor",
-                data: {
-                    fn: "String"
-                },
-                type: "NewExpression",
-                line: 2
-            }]
+            errors: [
+                {
+                    messageId: "noConstructor",
+                    data: {
+                        fn: "String"
+                    },
+                    type: "NewExpression",
+                    line: 2
+                }
+            ]
         }
     ]
 });

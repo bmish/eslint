@@ -43,7 +43,6 @@ const ruleTester = new RuleTester({ parserOptions: { ecmaVersion: 2022 } });
 
 ruleTester.run("no-setter-return", rule, {
     valid: [
-
         //------------------------------------------------------------------------------
         // General
         //------------------------------------------------------------------------------
@@ -245,7 +244,6 @@ ruleTester.run("no-setter-return", rule, {
     ],
 
     invalid: [
-
         //------------------------------------------------------------------------------
         // Object literals and classes
         //------------------------------------------------------------------------------
@@ -473,10 +471,7 @@ ruleTester.run("no-setter-return", rule, {
         },
         {
             code: "Object.create({}, { baz: { set(val) { return 1; } }, bar: { set: (val) => 1 } })",
-            errors: [
-                error(39),
-                error(75, "Literal")
-            ]
+            errors: [error(39), error(75, "Literal")]
         },
 
         // various syntax for properties

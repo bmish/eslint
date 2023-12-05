@@ -62,134 +62,93 @@ ruleTester.run("no-multi-assign", rule, {
     invalid: [
         {
             code: "var a = b = c;",
-            errors: [
-                errorAt(1, 9, "AssignmentExpression")
-            ]
+            errors: [errorAt(1, 9, "AssignmentExpression")]
         },
         {
             code: "var a = b = c = d;",
-            errors: [
-                errorAt(1, 9, "AssignmentExpression"),
-                errorAt(1, 13, "AssignmentExpression")
-            ]
+            errors: [errorAt(1, 9, "AssignmentExpression"), errorAt(1, 13, "AssignmentExpression")]
         },
         {
             code: "let foo = bar = cee = 100;",
             parserOptions: { ecmaVersion: 6 },
-            errors: [
-                errorAt(1, 11, "AssignmentExpression"),
-                errorAt(1, 17, "AssignmentExpression")
-            ]
+            errors: [errorAt(1, 11, "AssignmentExpression"), errorAt(1, 17, "AssignmentExpression")]
         },
         {
             code: "a=b=c=d=e",
-            errors: [
-                errorAt(1, 3, "AssignmentExpression"),
-                errorAt(1, 5, "AssignmentExpression"),
-                errorAt(1, 7, "AssignmentExpression")
-            ]
+            errors: [errorAt(1, 3, "AssignmentExpression"), errorAt(1, 5, "AssignmentExpression"), errorAt(1, 7, "AssignmentExpression")]
         },
         {
             code: "a=b=c",
-            errors: [
-                errorAt(1, 3, "AssignmentExpression")
-            ]
+            errors: [errorAt(1, 3, "AssignmentExpression")]
         },
 
         {
             code: "a\n=b\n=c",
-            errors: [
-                errorAt(2, 2, "AssignmentExpression")
-            ]
+            errors: [errorAt(2, 2, "AssignmentExpression")]
         },
 
         {
             code: "var a = (b) = (((c)))",
-            errors: [
-                errorAt(1, 9, "AssignmentExpression")
-            ]
+            errors: [errorAt(1, 9, "AssignmentExpression")]
         },
 
         {
             code: "var a = ((b)) = (c)",
-            errors: [
-                errorAt(1, 9, "AssignmentExpression")
-            ]
+            errors: [errorAt(1, 9, "AssignmentExpression")]
         },
 
         {
             code: "var a = b = ( (c * 12) + 2)",
-            errors: [
-                errorAt(1, 9, "AssignmentExpression")
-            ]
+            errors: [errorAt(1, 9, "AssignmentExpression")]
         },
 
         {
             code: "var a =\n((b))\n = (c)",
-            errors: [
-                errorAt(2, 1, "AssignmentExpression")
-            ]
+            errors: [errorAt(2, 1, "AssignmentExpression")]
         },
 
         {
             code: "a = b = '=' + c + 'foo';",
-            errors: [
-                errorAt(1, 5, "AssignmentExpression")
-            ]
+            errors: [errorAt(1, 5, "AssignmentExpression")]
         },
         {
             code: "a = b = 7 * 12 + 5;",
-            errors: [
-                errorAt(1, 5, "AssignmentExpression")
-            ]
+            errors: [errorAt(1, 5, "AssignmentExpression")]
         },
         {
             code: "const x = {};\nconst y = x.one = 1;",
             options: [{ ignoreNonDeclaration: true }],
             parserOptions: { ecmaVersion: 6 },
-            errors: [
-                errorAt(2, 11, "AssignmentExpression")
-            ]
-
+            errors: [errorAt(2, 11, "AssignmentExpression")]
         },
         {
             code: "let a, b;a = b = 1",
             options: [{}],
             parserOptions: { ecmaVersion: 6 },
-            errors: [
-                errorAt(1, 14, "AssignmentExpression")
-            ]
+            errors: [errorAt(1, 14, "AssignmentExpression")]
         },
         {
             code: "let x, y;x = y = 'baz'",
             options: [{ ignoreNonDeclaration: false }],
             parserOptions: { ecmaVersion: 6 },
-            errors: [
-                errorAt(1, 14, "AssignmentExpression")
-            ]
+            errors: [errorAt(1, 14, "AssignmentExpression")]
         },
         {
             code: "const a = b = 1",
             options: [{ ignoreNonDeclaration: true }],
             parserOptions: { ecmaVersion: 6 },
-            errors: [
-                errorAt(1, 11, "AssignmentExpression")
-            ]
+            errors: [errorAt(1, 11, "AssignmentExpression")]
         },
         {
             code: "class C { field = foo = 0 }",
             parserOptions: { ecmaVersion: 2022 },
-            errors: [
-                errorAt(1, 19, "AssignmentExpression")
-            ]
+            errors: [errorAt(1, 19, "AssignmentExpression")]
         },
         {
             code: "class C { field = foo = 0 }",
             options: [{ ignoreNonDeclaration: true }],
             parserOptions: { ecmaVersion: 2022 },
-            errors: [
-                errorAt(1, 19, "AssignmentExpression")
-            ]
+            errors: [errorAt(1, 19, "AssignmentExpression")]
         }
     ]
 });

@@ -124,9 +124,7 @@ ruleTester.run("lines-between-class-members", rule, {
             `,
             options: [
                 {
-                    enforce: [
-                        { blankLine: "always", prev: "method", next: "method" }
-                    ]
+                    enforce: [{ blankLine: "always", prev: "method", next: "method" }]
                 }
             ]
         },
@@ -153,9 +151,7 @@ ruleTester.run("lines-between-class-members", rule, {
             `,
             options: [
                 {
-                    enforce: [
-                        { blankLine: "always", prev: "method", next: "method" }
-                    ]
+                    enforce: [{ blankLine: "always", prev: "method", next: "method" }]
                 }
             ]
         },
@@ -179,9 +175,7 @@ ruleTester.run("lines-between-class-members", rule, {
             `,
             options: [
                 {
-                    enforce: [
-                        { blankLine: "always", prev: "method", next: "field" }
-                    ]
+                    enforce: [{ blankLine: "always", prev: "method", next: "field" }]
                 }
             ]
         },
@@ -208,9 +202,7 @@ ruleTester.run("lines-between-class-members", rule, {
             `,
             options: [
                 {
-                    enforce: [
-                        { blankLine: "always", prev: "method", next: "field" }
-                    ]
+                    enforce: [{ blankLine: "always", prev: "method", next: "field" }]
                 }
             ]
         },
@@ -236,9 +228,7 @@ ruleTester.run("lines-between-class-members", rule, {
             `,
             options: [
                 {
-                    enforce: [
-                        { blankLine: "always", prev: "method", next: "*" }
-                    ]
+                    enforce: [{ blankLine: "always", prev: "method", next: "*" }]
                 }
             ]
         },
@@ -262,9 +252,7 @@ ruleTester.run("lines-between-class-members", rule, {
             `,
             options: [
                 {
-                    enforce: [
-                        { blankLine: "always", prev: "field", next: "method" }
-                    ]
+                    enforce: [{ blankLine: "always", prev: "field", next: "method" }]
                 }
             ]
         },
@@ -288,9 +276,7 @@ ruleTester.run("lines-between-class-members", rule, {
             `,
             options: [
                 {
-                    enforce: [
-                        { blankLine: "always", prev: "field", next: "field" }
-                    ]
+                    enforce: [{ blankLine: "always", prev: "field", next: "field" }]
                 }
             ]
         },
@@ -314,9 +300,7 @@ ruleTester.run("lines-between-class-members", rule, {
             `,
             options: [
                 {
-                    enforce: [
-                        { blankLine: "always", prev: "field", next: "*" }
-                    ]
+                    enforce: [{ blankLine: "always", prev: "field", next: "*" }]
                 }
             ]
         },
@@ -342,9 +326,7 @@ ruleTester.run("lines-between-class-members", rule, {
             `,
             options: [
                 {
-                    enforce: [
-                        { blankLine: "always", prev: "*", next: "method" }
-                    ]
+                    enforce: [{ blankLine: "always", prev: "*", next: "method" }]
                 }
             ]
         },
@@ -368,9 +350,7 @@ ruleTester.run("lines-between-class-members", rule, {
             `,
             options: [
                 {
-                    enforce: [
-                        { blankLine: "always", prev: "*", next: "field" }
-                    ]
+                    enforce: [{ blankLine: "always", prev: "*", next: "field" }]
                 }
             ]
         },
@@ -395,9 +375,7 @@ ruleTester.run("lines-between-class-members", rule, {
                 method2() {}
               }
             `,
-            options: [
-                { enforce: [{ blankLine: "always", prev: "*", next: "*" }] }
-            ]
+            options: [{ enforce: [{ blankLine: "always", prev: "*", next: "*" }] }]
         },
 
         // enforce option - blankLine: "never"
@@ -419,9 +397,7 @@ ruleTester.run("lines-between-class-members", rule, {
             `,
             options: [
                 {
-                    enforce: [
-                        { blankLine: "never", prev: "method", next: "method" }
-                    ]
+                    enforce: [{ blankLine: "never", prev: "method", next: "method" }]
                 }
             ]
         },
@@ -446,9 +422,7 @@ ruleTester.run("lines-between-class-members", rule, {
             `,
             options: [
                 {
-                    enforce: [
-                        { blankLine: "never", prev: "method", next: "method" }
-                    ]
+                    enforce: [{ blankLine: "never", prev: "method", next: "method" }]
                 }
             ]
         },
@@ -471,9 +445,7 @@ ruleTester.run("lines-between-class-members", rule, {
             `,
             options: [
                 {
-                    enforce: [
-                        { blankLine: "never", prev: "method", next: "field" }
-                    ]
+                    enforce: [{ blankLine: "never", prev: "method", next: "field" }]
                 }
             ]
         },
@@ -499,9 +471,7 @@ ruleTester.run("lines-between-class-members", rule, {
             `,
             options: [
                 {
-                    enforce: [
-                        { blankLine: "never", prev: "method", next: "field" }
-                    ]
+                    enforce: [{ blankLine: "never", prev: "method", next: "field" }]
                 }
             ]
         },
@@ -525,9 +495,7 @@ ruleTester.run("lines-between-class-members", rule, {
             `,
             options: [
                 {
-                    enforce: [
-                        { blankLine: "never", prev: "method", next: "*" }
-                    ]
+                    enforce: [{ blankLine: "never", prev: "method", next: "*" }]
                 }
             ]
         },
@@ -553,9 +521,7 @@ ruleTester.run("lines-between-class-members", rule, {
             `,
             options: [
                 {
-                    enforce: [
-                        { blankLine: "never", prev: "field", next: "method" }
-                    ]
+                    enforce: [{ blankLine: "never", prev: "field", next: "method" }]
                 }
             ]
         },
@@ -582,9 +548,7 @@ ruleTester.run("lines-between-class-members", rule, {
             `,
             options: [
                 {
-                    enforce: [
-                        { blankLine: "never", prev: "field", next: "field" }
-                    ]
+                    enforce: [{ blankLine: "never", prev: "field", next: "field" }]
                 }
             ]
         },
@@ -633,9 +597,7 @@ ruleTester.run("lines-between-class-members", rule, {
             `,
             options: [
                 {
-                    enforce: [
-                        { blankLine: "never", prev: "*", next: "method" }
-                    ]
+                    enforce: [{ blankLine: "never", prev: "*", next: "method" }]
                 }
             ]
         },
@@ -679,9 +641,7 @@ ruleTester.run("lines-between-class-members", rule, {
                 method2() {}
               }
             `,
-            options: [
-                { enforce: [{ blankLine: "never", prev: "*", next: "*" }] }
-            ]
+            options: [{ enforce: [{ blankLine: "never", prev: "*", next: "*" }] }]
         },
 
         // enforce option - multiple configurations
@@ -707,7 +667,6 @@ ruleTester.run("lines-between-class-members", rule, {
             `,
             options: [
                 {
-
                     // requires blank lines around methods, disallows blank lines between fields
                     enforce: [
                         { blankLine: "always", prev: "*", next: "method" },
@@ -738,7 +697,6 @@ ruleTester.run("lines-between-class-members", rule, {
             `,
             options: [
                 {
-
                     // requires blank lines around fields, disallows blank lines between methods
                     enforce: [
                         { blankLine: "always", prev: "*", next: "field" },
@@ -771,7 +729,6 @@ ruleTester.run("lines-between-class-members", rule, {
             `,
             options: [
                 {
-
                     // requires blank lines around methods and fields
                     enforce: [
                         { blankLine: "always", prev: "*", next: "method" },
@@ -804,7 +761,6 @@ ruleTester.run("lines-between-class-members", rule, {
             `,
             options: [
                 {
-
                     // requires blank lines around methods and fields
                     enforce: [
                         { blankLine: "never", prev: "*", next: "method" },
@@ -841,7 +797,6 @@ ruleTester.run("lines-between-class-members", rule, {
             `,
             options: [
                 {
-
                     // requires blank lines around methods and fields
                     enforce: [
                         { blankLine: "always", prev: "*", next: "method" },
@@ -1053,9 +1008,7 @@ ruleTester.run("lines-between-class-members", rule, {
             `,
             options: [
                 {
-                    enforce: [
-                        { blankLine: "always", prev: "method", next: "method" }
-                    ]
+                    enforce: [{ blankLine: "always", prev: "method", next: "method" }]
                 }
             ],
             errors: [
@@ -1112,9 +1065,7 @@ ruleTester.run("lines-between-class-members", rule, {
             `,
             options: [
                 {
-                    enforce: [
-                        { blankLine: "always", prev: "method", next: "method" }
-                    ]
+                    enforce: [{ blankLine: "always", prev: "method", next: "method" }]
                 }
             ],
             errors: [
@@ -1166,9 +1117,7 @@ ruleTester.run("lines-between-class-members", rule, {
             `,
             options: [
                 {
-                    enforce: [
-                        { blankLine: "always", prev: "method", next: "field" }
-                    ]
+                    enforce: [{ blankLine: "always", prev: "method", next: "field" }]
                 }
             ],
             errors: [
@@ -1213,9 +1162,7 @@ ruleTester.run("lines-between-class-members", rule, {
             `,
             options: [
                 {
-                    enforce: [
-                        { blankLine: "always", prev: "method", next: "field" }
-                    ]
+                    enforce: [{ blankLine: "always", prev: "method", next: "field" }]
                 }
             ],
             errors: [
@@ -1264,9 +1211,7 @@ ruleTester.run("lines-between-class-members", rule, {
             `,
             options: [
                 {
-                    enforce: [
-                        { blankLine: "always", prev: "method", next: "*" }
-                    ]
+                    enforce: [{ blankLine: "always", prev: "method", next: "*" }]
                 }
             ],
             errors: [
@@ -1321,9 +1266,7 @@ ruleTester.run("lines-between-class-members", rule, {
             `,
             options: [
                 {
-                    enforce: [
-                        { blankLine: "always", prev: "field", next: "method" }
-                    ]
+                    enforce: [{ blankLine: "always", prev: "field", next: "method" }]
                 }
             ],
             errors: [
@@ -1368,9 +1311,7 @@ ruleTester.run("lines-between-class-members", rule, {
             `,
             options: [
                 {
-                    enforce: [
-                        { blankLine: "always", prev: "field", next: "field" }
-                    ]
+                    enforce: [{ blankLine: "always", prev: "field", next: "field" }]
                 }
             ],
             errors: [
@@ -1416,9 +1357,7 @@ ruleTester.run("lines-between-class-members", rule, {
             `,
             options: [
                 {
-                    enforce: [
-                        { blankLine: "always", prev: "field", next: "*" }
-                    ]
+                    enforce: [{ blankLine: "always", prev: "field", next: "*" }]
                 }
             ],
             errors: [
@@ -1470,9 +1409,7 @@ ruleTester.run("lines-between-class-members", rule, {
             `,
             options: [
                 {
-                    enforce: [
-                        { blankLine: "always", prev: "*", next: "method" }
-                    ]
+                    enforce: [{ blankLine: "always", prev: "*", next: "method" }]
                 }
             ],
             errors: [
@@ -1528,9 +1465,7 @@ ruleTester.run("lines-between-class-members", rule, {
             `,
             options: [
                 {
-                    enforce: [
-                        { blankLine: "always", prev: "*", next: "field" }
-                    ]
+                    enforce: [{ blankLine: "always", prev: "*", next: "field" }]
                 }
             ],
             errors: [
@@ -1582,9 +1517,7 @@ ruleTester.run("lines-between-class-members", rule, {
                 method2() {}
               }
             `,
-            options: [
-                { enforce: [{ blankLine: "always", prev: "*", next: "*" }] }
-            ],
+            options: [{ enforce: [{ blankLine: "always", prev: "*", next: "*" }] }],
             errors: [
                 {
                     messageId: "always",
@@ -1650,9 +1583,7 @@ method2() {}
             `,
             options: [
                 {
-                    enforce: [
-                        { blankLine: "never", prev: "method", next: "method" }
-                    ]
+                    enforce: [{ blankLine: "never", prev: "method", next: "method" }]
                 }
             ],
             errors: [
@@ -1709,9 +1640,7 @@ method2() {}
             `,
             options: [
                 {
-                    enforce: [
-                        { blankLine: "never", prev: "method", next: "method" }
-                    ]
+                    enforce: [{ blankLine: "never", prev: "method", next: "method" }]
                 }
             ],
             errors: [
@@ -1767,9 +1696,7 @@ fieldA = 'Field A';
             `,
             options: [
                 {
-                    enforce: [
-                        { blankLine: "never", prev: "method", next: "field" }
-                    ]
+                    enforce: [{ blankLine: "never", prev: "method", next: "field" }]
                 }
             ],
             errors: [
@@ -1822,9 +1749,7 @@ fieldA = 'Field A';
             `,
             options: [
                 {
-                    enforce: [
-                        { blankLine: "never", prev: "method", next: "field" }
-                    ]
+                    enforce: [{ blankLine: "never", prev: "method", next: "field" }]
                 }
             ],
             errors: [
@@ -1875,9 +1800,7 @@ method2() {}
             `,
             options: [
                 {
-                    enforce: [
-                        { blankLine: "never", prev: "method", next: "*" }
-                    ]
+                    enforce: [{ blankLine: "never", prev: "method", next: "*" }]
                 }
             ],
             errors: [
@@ -1940,9 +1863,7 @@ method1() {}
             `,
             options: [
                 {
-                    enforce: [
-                        { blankLine: "never", prev: "field", next: "method" }
-                    ]
+                    enforce: [{ blankLine: "never", prev: "field", next: "method" }]
                 }
             ],
             errors: [
@@ -1995,9 +1916,7 @@ method1() {}
             `,
             options: [
                 {
-                    enforce: [
-                        { blankLine: "never", prev: "field", next: "field" }
-                    ]
+                    enforce: [{ blankLine: "never", prev: "field", next: "field" }]
                 }
             ],
             errors: [
@@ -2049,9 +1968,7 @@ method1() {}
             `,
             options: [
                 {
-                    enforce: [
-                        { blankLine: "never", prev: "field", next: "*" }
-                    ]
+                    enforce: [{ blankLine: "never", prev: "field", next: "*" }]
                 }
             ],
             errors: [
@@ -2107,9 +2024,7 @@ method2() {}
             `,
             options: [
                 {
-                    enforce: [
-                        { blankLine: "never", prev: "*", next: "method" }
-                    ]
+                    enforce: [{ blankLine: "never", prev: "*", next: "method" }]
                 }
             ],
             errors: [
@@ -2169,9 +2084,7 @@ fieldA = 'Field A';
             `,
             options: [
                 {
-                    enforce: [
-                        { blankLine: "never", prev: "*", next: "field" }
-                    ]
+                    enforce: [{ blankLine: "never", prev: "*", next: "field" }]
                 }
             ],
             errors: [
@@ -2223,9 +2136,7 @@ get area() {
 method2() {}
               }
             `,
-            options: [
-                { enforce: [{ blankLine: "never", prev: "*", next: "*" }] }
-            ],
+            options: [{ enforce: [{ blankLine: "never", prev: "*", next: "*" }] }],
             errors: [
                 {
                     messageId: "never",
@@ -2246,7 +2157,8 @@ method2() {}
                     messageId: "never",
                     line: 14,
                     column: 17
-                }, {
+                },
+                {
                     messageId: "never",
                     line: 18,
                     column: 17
@@ -2293,7 +2205,6 @@ method2() {}
             `,
             options: [
                 {
-
                     // requires blank lines around methods, disallows blank lines between fields
                     enforce: [
                         { blankLine: "always", prev: "*", next: "method" },
@@ -2322,7 +2233,8 @@ method2() {}
                     messageId: "always",
                     line: 11,
                     column: 17
-                }, {
+                },
+                {
                     messageId: "always",
                     line: 14,
                     column: 17
@@ -2367,7 +2279,6 @@ method2() {}
             `,
             options: [
                 {
-
                     // requires blank lines around fields, disallows blank lines between methods
                     enforce: [
                         { blankLine: "always", prev: "*", next: "field" },
@@ -2396,7 +2307,8 @@ method2() {}
                     messageId: "never",
                     line: 11,
                     column: 17
-                }, {
+                },
+                {
                     messageId: "never",
                     line: 15,
                     column: 17
@@ -2441,7 +2353,6 @@ method2() {}
             `,
             options: [
                 {
-
                     // requires blank lines around methods and fields
                     enforce: [
                         { blankLine: "always", prev: "*", next: "method" },
@@ -2470,7 +2381,8 @@ method2() {}
                     messageId: "always",
                     line: 10,
                     column: 17
-                }, {
+                },
+                {
                     messageId: "always",
                     line: 13,
                     column: 17
@@ -2515,7 +2427,6 @@ method2() {}
             `,
             options: [
                 {
-
                     // requires blank lines around methods and fields
                     enforce: [
                         { blankLine: "never", prev: "*", next: "method" },
@@ -2549,7 +2460,8 @@ method2() {}
                     messageId: "always",
                     line: 10,
                     column: 17
-                }, {
+                },
+                {
                     messageId: "always",
                     line: 13,
                     column: 17
@@ -2593,7 +2505,6 @@ method2() {}
             `,
             options: [
                 {
-
                     // requires blank lines around methods and fields
                     enforce: [
                         { blankLine: "always", prev: "*", next: "method" },

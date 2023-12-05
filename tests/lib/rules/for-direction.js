@@ -21,7 +21,6 @@ const incorrectDirection = { messageId: "incorrectDirection" };
 
 ruleTester.run("for-direction", rule, {
     valid: [
-
         // test if '++', '--'
         "for(var i = 0; i < 10; i++){}",
         "for(var i = 0; i <= 10; i++){}",
@@ -84,7 +83,6 @@ ruleTester.run("for-direction", rule, {
         "for(var i = 0; i != 10; i+=1){}"
     ],
     invalid: [
-
         // test if '++', '--'
         { code: "for(var i = 0; i < 10; i--){}", errors: [incorrectDirection] },
         { code: "for(var i = 0; i <= 10; i--){}", errors: [incorrectDirection] },

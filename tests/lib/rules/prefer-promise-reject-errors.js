@@ -18,7 +18,6 @@ const { RuleTester } = require("../../../lib/rule-tester");
 const ruleTester = new RuleTester({ parserOptions: { ecmaVersion: 2022 } });
 
 ruleTester.run("prefer-promise-reject-errors", rule, {
-
     valid: [
         "Promise.resolve(5)",
         "Foo.reject(5)",
@@ -122,7 +121,6 @@ ruleTester.run("prefer-promise-reject-errors", rule, {
         // evaluates either to a falsy value of `foo` (which, then, cannot be an Error object), or to `5`
         "Promise.reject(foo && 5)",
         "Promise.reject(foo &&= 5)"
-
     ].map(invalidCase => {
         const errors = { errors: [{ messageId: "rejectAnError", type: "CallExpression" }] };
 

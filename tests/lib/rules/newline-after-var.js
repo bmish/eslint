@@ -36,7 +36,6 @@ const NO_VAR = "console.log(greet);",
     END_OF_IF = "if(true) {\nvar foo;\n}",
     END_OF_SWITCH = "switch(a) {\ncase 0:\nvar foo;\n}";
 
-
 // Valid for "Always"
 const ONE_BLANK = "var greet = 'hello';\n\nconsole.log(greet);",
     TWO_BLANKS = "var greet = 'hello';\n\n\nconsole.log(greet);",
@@ -65,7 +64,6 @@ const ONE_BLANK = "var greet = 'hello';\n\nconsole.log(greet);",
     NOT_END_OF_FUNCTION_EXPRESSION_ONE_BLANK = "var f = function() {\nvar greet = 'hello';\n\nconsole.log(greet);\n};",
     NOT_END_OF_ARROW_FUNCTION_ONE_BLANK = "() => {\nvar greet = 'hello';\n\nconsole.log(greet);\n}",
     ONE_BLANK_BEFORE_CASE = "switch(a) {\ncase 0:\nvar foo;\n\ncase 1:}";
-
 
 // Valid for "Never"
 const NO_BREAK = "var greet = 'hello';console.log(greet);",
@@ -111,7 +109,6 @@ const ruleTester = new RuleTester();
 
 ruleTester.run("newline-after-var", rule, {
     valid: [
-
         // should skip rule entirely
         { code: NO_VAR, options: ["always"] },
         { code: NO_VAR, options: ["never"] },
@@ -261,7 +258,6 @@ ruleTester.run("newline-after-var", rule, {
     ],
 
     invalid: [
-
         // should disallow no line break in "always" mode
         { code: NO_BREAK, output: ONE_BLANK, options: ["always"], errors: [ALWAYS_ERROR] },
         { code: MULTI_VAR_NO_BREAK, output: MULTI_VAR_NO_BREAK_ONE_BLANK, options: ["always"], errors: [ALWAYS_ERROR] },
@@ -278,7 +274,13 @@ ruleTester.run("newline-after-var", rule, {
         { code: CONST_NO_BLANK, output: CONST_ONE_BLANK, options: ["always"], parserOptions: { ecmaVersion: 6 }, errors: [ALWAYS_ERROR] },
         { code: NOT_END_OF_FUNCTION, output: NOT_END_OF_FUNCTION_ONE_BLANK, options: ["always"], errors: [ALWAYS_ERROR] },
         { code: NOT_END_OF_FUNCTION_EXPRESSION, output: NOT_END_OF_FUNCTION_EXPRESSION_ONE_BLANK, options: ["always"], errors: [ALWAYS_ERROR] },
-        { code: NOT_END_OF_ARROW_FUNCTION, output: NOT_END_OF_ARROW_FUNCTION_ONE_BLANK, options: ["always"], parserOptions: { ecmaVersion: 6 }, errors: [ALWAYS_ERROR] },
+        {
+            code: NOT_END_OF_ARROW_FUNCTION,
+            output: NOT_END_OF_ARROW_FUNCTION_ONE_BLANK,
+            options: ["always"],
+            parserOptions: { ecmaVersion: 6 },
+            errors: [ALWAYS_ERROR]
+        },
         { code: NO_BLANK_BEFORE_CASE, output: ONE_BLANK_BEFORE_CASE, options: ["always"], errors: [ALWAYS_ERROR] },
 
         // should disallow blank lines in "never" mode

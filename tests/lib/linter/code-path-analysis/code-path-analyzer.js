@@ -57,9 +57,7 @@ function getExpectedDotArrows(source) {
 //------------------------------------------------------------------------------
 
 describe("CodePathAnalyzer", () => {
-    EventGeneratorTester.testEventGeneratorInterface(
-        new CodePathAnalyzer(new NodeEventGenerator(createEmitter(), STANDARD_ESQUERY_OPTION))
-    );
+    EventGeneratorTester.testEventGeneratorInterface(new CodePathAnalyzer(new NodeEventGenerator(createEmitter(), STANDARD_ESQUERY_OPTION)));
 
     describe("interface of code paths", () => {
         let actual = [];
@@ -73,10 +71,7 @@ describe("CodePathAnalyzer", () => {
                     }
                 })
             });
-            linter.verify(
-                "function foo(a) { if (a) return 0; else throw new Error(); }",
-                { rules: { test: 2 } }
-            );
+            linter.verify("function foo(a) { if (a) return 0; else throw new Error(); }", { rules: { test: 2 } });
         });
 
         it("should have `id` as unique string", () => {
@@ -163,10 +158,7 @@ describe("CodePathAnalyzer", () => {
                     };
                 }
             });
-            linter.verify(
-                "function foo(a) { if (a) return 0; else throw new Error(); }",
-                { rules: { test: 2 } }
-            );
+            linter.verify("function foo(a) { if (a) return 0; else throw new Error(); }", { rules: { test: 2 } });
         });
     });
 
@@ -182,10 +174,7 @@ describe("CodePathAnalyzer", () => {
                     }
                 })
             });
-            linter.verify(
-                "function foo(a) { if (a) return 0; else throw new Error(); }",
-                { rules: { test: 2 } }
-            );
+            linter.verify("function foo(a) { if (a) return 0; else throw new Error(); }", { rules: { test: 2 } });
         });
 
         it("should have `id` as unique string", () => {
@@ -295,10 +284,7 @@ describe("CodePathAnalyzer", () => {
                     }
                 })
             });
-            linter.verify(
-                "foo(); function foo() {} var foo = function() {}; var foo = () => {};",
-                { rules: { test: 2 }, env: { es6: true } }
-            );
+            linter.verify("foo(); function foo() {} var foo = function() {}; var foo = () => {};", { rules: { test: 2 }, env: { es6: true } });
 
             assert(count === 4);
         });
@@ -340,10 +326,7 @@ describe("CodePathAnalyzer", () => {
                     }
                 })
             });
-            linter.verify(
-                "foo(); function foo() {} var foo = function() {}; var foo = () => {};",
-                { rules: { test: 2 }, env: { es6: true } }
-            );
+            linter.verify("foo(); function foo() {} var foo = function() {}; var foo = () => {};", { rules: { test: 2 }, env: { es6: true } });
 
             assert(count === 4);
         });
@@ -385,10 +368,7 @@ describe("CodePathAnalyzer", () => {
                     }
                 })
             });
-            linter.verify(
-                "foo(); function foo() {} var foo = function() {}; var foo = () => {};",
-                { rules: { test: 2 }, env: { es6: true } }
-            );
+            linter.verify("foo(); function foo() {} var foo = function() {}; var foo = () => {};", { rules: { test: 2 }, env: { es6: true } });
 
             assert(count === 4);
         });
@@ -430,10 +410,7 @@ describe("CodePathAnalyzer", () => {
                     }
                 })
             });
-            linter.verify(
-                "foo(); function foo() {} var foo = function() {}; var foo = () => {};",
-                { rules: { test: 2 }, env: { es6: true } }
-            );
+            linter.verify("foo(); function foo() {} var foo = function() {}; var foo = () => {};", { rules: { test: 2 }, env: { es6: true } });
 
             assert(count === 4);
         });
@@ -456,11 +433,7 @@ describe("CodePathAnalyzer", () => {
                     }
                 })
             });
-            linter.verify(
-                "throw 'boom'; foo();",
-                { rules: { test: 2 } }
-            );
-
+            linter.verify("throw 'boom'; foo();", { rules: { test: 2 } });
         });
 
         it("should be fired after a return", () => {
@@ -479,11 +452,7 @@ describe("CodePathAnalyzer", () => {
                     }
                 })
             });
-            linter.verify(
-                "function foo() { return; foo(); }",
-                { rules: { test: 2 } }
-            );
-
+            linter.verify("function foo() { return; foo(); }", { rules: { test: 2 } });
         });
     });
 
@@ -501,10 +470,7 @@ describe("CodePathAnalyzer", () => {
                     }
                 })
             });
-            linter.verify(
-                "throw 'boom'; foo();",
-                { rules: { test: 2 } }
-            );
+            linter.verify("throw 'boom'; foo();", { rules: { test: 2 } });
 
             assert.strictEqual(lastCodePathNodeType, "Program");
         });
@@ -524,11 +490,7 @@ describe("CodePathAnalyzer", () => {
                     }
                 })
             });
-            linter.verify(
-                "function foo() { return; foo(); }",
-                { rules: { test: 2 } }
-            );
-
+            linter.verify("function foo() { return; foo(); }", { rules: { test: 2 } });
         });
 
         it("should be fired after a return inside of function and if statement", () => {
@@ -546,11 +508,7 @@ describe("CodePathAnalyzer", () => {
                     }
                 })
             });
-            linter.verify(
-                "function foo() { if (bar) { return; foo(); } else {} }",
-                { rules: { test: 2 } }
-            );
-
+            linter.verify("function foo() { if (bar) { return; foo(); } else {} }", { rules: { test: 2 } });
         });
 
         it("should be fired at the end of programs/functions for the final segment", () => {
@@ -588,10 +546,10 @@ describe("CodePathAnalyzer", () => {
                     }
                 })
             });
-            linter.verify(
-                "foo(); function foo() { return; } var foo = function() { return; }; var foo = () => { return; }; throw 'boom';",
-                { rules: { test: 2 }, env: { es6: true } }
-            );
+            linter.verify("foo(); function foo() { return; } var foo = function() { return; }; var foo = () => { return; }; throw 'boom';", {
+                rules: { test: 2 },
+                env: { es6: true }
+            });
 
             assert(count === 4);
         });
@@ -611,10 +569,7 @@ describe("CodePathAnalyzer", () => {
                     }
                 })
             });
-            linter.verify(
-                "while (a) { foo(); }",
-                { rules: { test: 2 } }
-            );
+            linter.verify("while (a) { foo(); }", { rules: { test: 2 } });
 
             assert(count === 1);
         });
@@ -632,10 +587,7 @@ describe("CodePathAnalyzer", () => {
                     }
                 })
             });
-            linter.verify(
-                "do { foo(); } while (a);",
-                { rules: { test: 2 } }
-            );
+            linter.verify("do { foo(); } while (a);", { rules: { test: 2 } });
 
             assert(count === 1);
         });
@@ -651,7 +603,6 @@ describe("CodePathAnalyzer", () => {
                         assert(toSegment instanceof CodePathSegment);
 
                         if (count === 1) {
-
                             // connect path: "update" -> "test"
                             assert(node.parent.type === "ForStatement");
                         } else if (count === 2) {
@@ -660,10 +611,7 @@ describe("CodePathAnalyzer", () => {
                     }
                 })
             });
-            linter.verify(
-                "for (var i = 0; i < 10; ++i) { foo(); }",
-                { rules: { test: 2 } }
-            );
+            linter.verify("for (var i = 0; i < 10; ++i) { foo(); }", { rules: { test: 2 } });
 
             assert(count === 2);
         });
@@ -679,7 +627,6 @@ describe("CodePathAnalyzer", () => {
                         assert(toSegment instanceof CodePathSegment);
 
                         if (count === 1) {
-
                             // connect path: "right" -> "left"
                             assert(node.parent.type === "ForInStatement");
                         } else if (count === 2) {
@@ -688,10 +635,7 @@ describe("CodePathAnalyzer", () => {
                     }
                 })
             });
-            linter.verify(
-                "for (var k in obj) { foo(); }",
-                { rules: { test: 2 } }
-            );
+            linter.verify("for (var k in obj) { foo(); }", { rules: { test: 2 } });
 
             assert(count === 2);
         });
@@ -707,7 +651,6 @@ describe("CodePathAnalyzer", () => {
                         assert(toSegment instanceof CodePathSegment);
 
                         if (count === 1) {
-
                             // connect path: "right" -> "left"
                             assert(node.parent.type === "ForOfStatement");
                         } else if (count === 2) {
@@ -716,10 +659,7 @@ describe("CodePathAnalyzer", () => {
                     }
                 })
             });
-            linter.verify(
-                "for (var x of xs) { foo(); }",
-                { rules: { test: 2 }, env: { es6: true } }
-            );
+            linter.verify("for (var x of xs) { foo(); }", { rules: { test: 2 }, env: { es6: true } });
 
             assert(count === 2);
         });

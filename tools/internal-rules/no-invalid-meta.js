@@ -19,7 +19,6 @@ function getPropertyFromObject(property, node) {
     const properties = node.properties;
 
     if (!Array.isArray(properties)) {
-
         return null;
     }
 
@@ -110,12 +109,13 @@ module.exports = {
 
         return {
             AssignmentExpression(node) {
-                if (node.left &&
+                if (
+                    node.left &&
                     node.right &&
                     node.left.type === "MemberExpression" &&
                     node.left.object.name === "module" &&
-                    node.left.property.name === "exports") {
-
+                    node.left.property.name === "exports"
+                ) {
                     exportsNode = node.right;
                 }
             },

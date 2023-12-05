@@ -38,390 +38,501 @@ ruleTester.run("no-console", rule, {
         "var console = require('myconsole'); console.log(foo)"
     ],
     invalid: [
-
         // no options
         {
             code: "if (a) console.warn(foo)",
-            errors: [{
-                messageId: "unexpected",
-                type: "MemberExpression",
-                suggestions: null
-            }]
+            errors: [
+                {
+                    messageId: "unexpected",
+                    type: "MemberExpression",
+                    suggestions: null
+                }
+            ]
         },
         {
             code: "foo(console.log)",
-            errors: [{
-                messageId: "unexpected",
-                type: "MemberExpression",
-                suggestions: null
-            }]
+            errors: [
+                {
+                    messageId: "unexpected",
+                    type: "MemberExpression",
+                    suggestions: null
+                }
+            ]
         },
         {
             code: "console.log(foo)",
-            errors: [{
-                messageId: "unexpected",
-                type: "MemberExpression",
-                suggestions: [{
-                    messageId: "removeConsole",
-                    data: { propertyName: "log" },
-                    output: ""
-                }]
-            }]
+            errors: [
+                {
+                    messageId: "unexpected",
+                    type: "MemberExpression",
+                    suggestions: [
+                        {
+                            messageId: "removeConsole",
+                            data: { propertyName: "log" },
+                            output: ""
+                        }
+                    ]
+                }
+            ]
         },
         {
             code: "console.error(foo)",
-            errors: [{
-                messageId: "unexpected",
-                type: "MemberExpression",
-                suggestions: [{
-                    messageId: "removeConsole",
-                    data: { propertyName: "error" },
-                    output: ""
-                }]
-            }]
+            errors: [
+                {
+                    messageId: "unexpected",
+                    type: "MemberExpression",
+                    suggestions: [
+                        {
+                            messageId: "removeConsole",
+                            data: { propertyName: "error" },
+                            output: ""
+                        }
+                    ]
+                }
+            ]
         },
         {
             code: "console.info(foo)",
-            errors: [{
-                messageId: "unexpected",
-                type: "MemberExpression",
-                suggestions: [{
-                    messageId: "removeConsole",
-                    data: { propertyName: "info" },
-                    output: ""
-                }]
-            }]
+            errors: [
+                {
+                    messageId: "unexpected",
+                    type: "MemberExpression",
+                    suggestions: [
+                        {
+                            messageId: "removeConsole",
+                            data: { propertyName: "info" },
+                            output: ""
+                        }
+                    ]
+                }
+            ]
         },
         {
             code: "console.warn(foo)",
-            errors: [{
-                messageId: "unexpected",
-                type: "MemberExpression",
-                suggestions: [{
-                    messageId: "removeConsole",
-                    data: { propertyName: "warn" },
-                    output: ""
-                }]
-            }]
+            errors: [
+                {
+                    messageId: "unexpected",
+                    type: "MemberExpression",
+                    suggestions: [
+                        {
+                            messageId: "removeConsole",
+                            data: { propertyName: "warn" },
+                            output: ""
+                        }
+                    ]
+                }
+            ]
         },
         {
             code: "switch (a) { case 1: console.log(foo) }",
-            errors: [{
-                messageId: "unexpected",
-                type: "MemberExpression",
-                suggestions: [{
-                    messageId: "removeConsole",
-                    data: { propertyName: "log" },
-                    output: "switch (a) { case 1:  }"
-                }]
-            }]
+            errors: [
+                {
+                    messageId: "unexpected",
+                    type: "MemberExpression",
+                    suggestions: [
+                        {
+                            messageId: "removeConsole",
+                            data: { propertyName: "log" },
+                            output: "switch (a) { case 1:  }"
+                        }
+                    ]
+                }
+            ]
         },
         {
             code: "if (a) { console.warn(foo) }",
-            errors: [{
-                messageId: "unexpected",
-                type: "MemberExpression",
-                suggestions: [{
-                    messageId: "removeConsole",
-                    data: { propertyName: "warn" },
-                    output: "if (a) {  }"
-                }]
-            }]
+            errors: [
+                {
+                    messageId: "unexpected",
+                    type: "MemberExpression",
+                    suggestions: [
+                        {
+                            messageId: "removeConsole",
+                            data: { propertyName: "warn" },
+                            output: "if (a) {  }"
+                        }
+                    ]
+                }
+            ]
         },
         {
             code: "a();\nconsole.log(foo);\nb();",
-            errors: [{
-                messageId: "unexpected",
-                type: "MemberExpression",
-                suggestions: [{
-                    messageId: "removeConsole",
-                    data: { propertyName: "log" },
-                    output: "a();\n\nb();"
-                }]
-            }]
+            errors: [
+                {
+                    messageId: "unexpected",
+                    type: "MemberExpression",
+                    suggestions: [
+                        {
+                            messageId: "removeConsole",
+                            data: { propertyName: "log" },
+                            output: "a();\n\nb();"
+                        }
+                    ]
+                }
+            ]
         },
         {
             code: "class A { static { console.info(foo) } }",
             parserOptions: { ecmaVersion: "latest" },
-            errors: [{
-                messageId: "unexpected",
-                type: "MemberExpression",
-                suggestions: [{
-                    messageId: "removeConsole",
-                    data: { propertyName: "info" },
-                    output: "class A { static {  } }"
-                }]
-            }]
+            errors: [
+                {
+                    messageId: "unexpected",
+                    type: "MemberExpression",
+                    suggestions: [
+                        {
+                            messageId: "removeConsole",
+                            data: { propertyName: "info" },
+                            output: "class A { static {  } }"
+                        }
+                    ]
+                }
+            ]
         },
         {
             code: "a()\nconsole.log(foo);\n[1, 2, 3].forEach(a => doSomething(a))",
             parserOptions: { ecmaVersion: "latest" },
-            errors: [{
-                messageId: "unexpected",
-                type: "MemberExpression",
-                suggestions: null
-            }]
+            errors: [
+                {
+                    messageId: "unexpected",
+                    type: "MemberExpression",
+                    suggestions: null
+                }
+            ]
         },
         {
             code: "a++\nconsole.log();\n/b/",
             parserOptions: { ecmaVersion: "latest" },
-            errors: [{
-                messageId: "unexpected",
-                type: "MemberExpression",
-                suggestions: null
-            }]
+            errors: [
+                {
+                    messageId: "unexpected",
+                    type: "MemberExpression",
+                    suggestions: null
+                }
+            ]
         },
         {
             code: "a();\nconsole.log(foo);\n[1, 2, 3].forEach(a => doSomething(a));",
             parserOptions: { ecmaVersion: "latest" },
-            errors: [{
-                messageId: "unexpected",
-                type: "MemberExpression",
-                suggestions: [{
-                    messageId: "removeConsole",
-                    data: { propertyName: "log" },
-                    output: "a();\n\n[1, 2, 3].forEach(a => doSomething(a));"
-                }]
-            }]
+            errors: [
+                {
+                    messageId: "unexpected",
+                    type: "MemberExpression",
+                    suggestions: [
+                        {
+                            messageId: "removeConsole",
+                            data: { propertyName: "log" },
+                            output: "a();\n\n[1, 2, 3].forEach(a => doSomething(a));"
+                        }
+                    ]
+                }
+            ]
         },
 
         //  one option
         {
             code: "if (a) console.info(foo)",
             options: [{ allow: ["warn"] }],
-            errors: [{
-                messageId: "unexpected",
-                type: "MemberExpression",
-                suggestions: null
-            }]
+            errors: [
+                {
+                    messageId: "unexpected",
+                    type: "MemberExpression",
+                    suggestions: null
+                }
+            ]
         },
         {
             code: "foo(console.warn)",
             options: [{ allow: ["log"] }],
-            errors: [{
-                messageId: "unexpected",
-                type: "MemberExpression",
-                suggestions: null
-            }]
+            errors: [
+                {
+                    messageId: "unexpected",
+                    type: "MemberExpression",
+                    suggestions: null
+                }
+            ]
         },
         {
             code: "console.log(foo)",
             options: [{ allow: ["error"] }],
-            errors: [{
-                messageId: "unexpected",
-                type: "MemberExpression",
-                suggestions: [{
-                    messageId: "removeConsole",
-                    data: { propertyName: "log" },
-                    output: ""
-                }]
-            }]
+            errors: [
+                {
+                    messageId: "unexpected",
+                    type: "MemberExpression",
+                    suggestions: [
+                        {
+                            messageId: "removeConsole",
+                            data: { propertyName: "log" },
+                            output: ""
+                        }
+                    ]
+                }
+            ]
         },
         {
             code: "console.error(foo)",
             options: [{ allow: ["warn"] }],
-            errors: [{
-                messageId: "unexpected",
-                type: "MemberExpression",
-                suggestions: [{
-                    messageId: "removeConsole",
-                    data: { propertyName: "error" },
-                    output: ""
-                }]
-            }]
+            errors: [
+                {
+                    messageId: "unexpected",
+                    type: "MemberExpression",
+                    suggestions: [
+                        {
+                            messageId: "removeConsole",
+                            data: { propertyName: "error" },
+                            output: ""
+                        }
+                    ]
+                }
+            ]
         },
         {
             code: "console.info(foo)",
             options: [{ allow: ["log"] }],
-            errors: [{
-                messageId: "unexpected",
-                type: "MemberExpression",
-                suggestions: [{
-                    messageId: "removeConsole",
-                    data: { propertyName: "info" },
-                    output: ""
-                }]
-            }]
+            errors: [
+                {
+                    messageId: "unexpected",
+                    type: "MemberExpression",
+                    suggestions: [
+                        {
+                            messageId: "removeConsole",
+                            data: { propertyName: "info" },
+                            output: ""
+                        }
+                    ]
+                }
+            ]
         },
         {
             code: "console.warn(foo)",
             options: [{ allow: ["error"] }],
-            errors: [{
-                messageId: "unexpected",
-                type: "MemberExpression",
-                suggestions: [{
-                    messageId: "removeConsole",
-                    data: { propertyName: "warn" },
-                    output: ""
-                }]
-            }]
+            errors: [
+                {
+                    messageId: "unexpected",
+                    type: "MemberExpression",
+                    suggestions: [
+                        {
+                            messageId: "removeConsole",
+                            data: { propertyName: "warn" },
+                            output: ""
+                        }
+                    ]
+                }
+            ]
         },
         {
             code: "switch (a) { case 1: console.log(foo) }",
             options: [{ allow: ["error"] }],
-            errors: [{
-                messageId: "unexpected",
-                type: "MemberExpression",
-                suggestions: [{
-                    messageId: "removeConsole",
-                    data: { propertyName: "log" },
-                    output: "switch (a) { case 1:  }"
-                }]
-            }]
+            errors: [
+                {
+                    messageId: "unexpected",
+                    type: "MemberExpression",
+                    suggestions: [
+                        {
+                            messageId: "removeConsole",
+                            data: { propertyName: "log" },
+                            output: "switch (a) { case 1:  }"
+                        }
+                    ]
+                }
+            ]
         },
         {
             code: "if (a) { console.info(foo) }",
             options: [{ allow: ["warn"] }],
-            errors: [{
-                messageId: "unexpected",
-                type: "MemberExpression",
-                suggestions: [{
-                    messageId: "removeConsole",
-                    data: { propertyName: "info" },
-                    output: "if (a) {  }"
-                }]
-            }]
+            errors: [
+                {
+                    messageId: "unexpected",
+                    type: "MemberExpression",
+                    suggestions: [
+                        {
+                            messageId: "removeConsole",
+                            data: { propertyName: "info" },
+                            output: "if (a) {  }"
+                        }
+                    ]
+                }
+            ]
         },
         {
             code: "class A { static { console.error(foo) } }",
             options: [{ allow: ["log"] }],
             parserOptions: { ecmaVersion: "latest" },
-            errors: [{
-                messageId: "unexpected",
-                type: "MemberExpression",
-                suggestions: [{
-                    messageId: "removeConsole",
-                    data: { propertyName: "error" },
-                    output: "class A { static {  } }"
-                }]
-            }]
+            errors: [
+                {
+                    messageId: "unexpected",
+                    type: "MemberExpression",
+                    suggestions: [
+                        {
+                            messageId: "removeConsole",
+                            data: { propertyName: "error" },
+                            output: "class A { static {  } }"
+                        }
+                    ]
+                }
+            ]
         },
 
         // multiple options
         {
             code: "if (a) console.log(foo)",
             options: [{ allow: ["warn", "error"] }],
-            errors: [{
-                messageId: "unexpected",
-                type: "MemberExpression",
-                suggestions: null
-            }]
+            errors: [
+                {
+                    messageId: "unexpected",
+                    type: "MemberExpression",
+                    suggestions: null
+                }
+            ]
         },
         {
             code: "foo(console.info)",
             options: [{ allow: ["warn", "error"] }],
-            errors: [{
-                messageId: "unexpected",
-                type: "MemberExpression",
-                suggestions: null
-            }]
+            errors: [
+                {
+                    messageId: "unexpected",
+                    type: "MemberExpression",
+                    suggestions: null
+                }
+            ]
         },
         {
             code: "console.log(foo)",
             options: [{ allow: ["warn", "info"] }],
-            errors: [{
-                messageId: "unexpected",
-                type: "MemberExpression",
-                suggestions: [{
-                    messageId: "removeConsole",
-                    data: { propertyName: "log" },
-                    output: ""
-                }]
-            }]
+            errors: [
+                {
+                    messageId: "unexpected",
+                    type: "MemberExpression",
+                    suggestions: [
+                        {
+                            messageId: "removeConsole",
+                            data: { propertyName: "log" },
+                            output: ""
+                        }
+                    ]
+                }
+            ]
         },
         {
             code: "console.error(foo)",
             options: [{ allow: ["warn", "info", "log"] }],
-            errors: [{
-                messageId: "unexpected",
-                type: "MemberExpression",
-                suggestions: [{
-                    messageId: "removeConsole",
-                    data: { propertyName: "error" },
-                    output: ""
-                }]
-            }]
+            errors: [
+                {
+                    messageId: "unexpected",
+                    type: "MemberExpression",
+                    suggestions: [
+                        {
+                            messageId: "removeConsole",
+                            data: { propertyName: "error" },
+                            output: ""
+                        }
+                    ]
+                }
+            ]
         },
         {
             code: "console.info(foo)",
             options: [{ allow: ["warn", "error", "log"] }],
-            errors: [{
-                messageId: "unexpected",
-                type: "MemberExpression",
-                suggestions: [{
-                    messageId: "removeConsole",
-                    data: { propertyName: "info" },
-                    output: ""
-                }]
-            }]
+            errors: [
+                {
+                    messageId: "unexpected",
+                    type: "MemberExpression",
+                    suggestions: [
+                        {
+                            messageId: "removeConsole",
+                            data: { propertyName: "info" },
+                            output: ""
+                        }
+                    ]
+                }
+            ]
         },
         {
             code: "console.warn(foo)",
             options: [{ allow: ["info", "log"] }],
-            errors: [{
-                messageId: "unexpected",
-                type: "MemberExpression",
-                suggestions: [{
-                    messageId: "removeConsole",
-                    data: { propertyName: "warn" },
-                    output: ""
-                }]
-            }]
+            errors: [
+                {
+                    messageId: "unexpected",
+                    type: "MemberExpression",
+                    suggestions: [
+                        {
+                            messageId: "removeConsole",
+                            data: { propertyName: "warn" },
+                            output: ""
+                        }
+                    ]
+                }
+            ]
         },
         {
             code: "switch (a) { case 1: console.error(foo) }",
             options: [{ allow: ["info", "log"] }],
-            errors: [{
-                messageId: "unexpected",
-                type: "MemberExpression",
-                suggestions: [{
-                    messageId: "removeConsole",
-                    data: { propertyName: "error" },
-                    output: "switch (a) { case 1:  }"
-                }]
-            }]
+            errors: [
+                {
+                    messageId: "unexpected",
+                    type: "MemberExpression",
+                    suggestions: [
+                        {
+                            messageId: "removeConsole",
+                            data: { propertyName: "error" },
+                            output: "switch (a) { case 1:  }"
+                        }
+                    ]
+                }
+            ]
         },
         {
             code: "if (a) { console.log(foo) }",
             options: [{ allow: ["warn", "error"] }],
-            errors: [{
-                messageId: "unexpected",
-                type: "MemberExpression",
-                suggestions: [{
-                    messageId: "removeConsole",
-                    data: { propertyName: "log" },
-                    output: "if (a) {  }"
-                }]
-            }]
+            errors: [
+                {
+                    messageId: "unexpected",
+                    type: "MemberExpression",
+                    suggestions: [
+                        {
+                            messageId: "removeConsole",
+                            data: { propertyName: "log" },
+                            output: "if (a) {  }"
+                        }
+                    ]
+                }
+            ]
         },
         {
             code: "class A { static { console.info(foo) } }",
             options: [{ allow: ["log", "error", "warn"] }],
             parserOptions: { ecmaVersion: "latest" },
-            errors: [{
-                messageId: "unexpected",
-                type: "MemberExpression",
-                suggestions: [{
-                    messageId: "removeConsole",
-                    data: { propertyName: "info" },
-                    output: "class A { static {  } }"
-                }]
-            }]
+            errors: [
+                {
+                    messageId: "unexpected",
+                    type: "MemberExpression",
+                    suggestions: [
+                        {
+                            messageId: "removeConsole",
+                            data: { propertyName: "info" },
+                            output: "class A { static {  } }"
+                        }
+                    ]
+                }
+            ]
         },
 
         // In case that implicit global variable of 'console' exists
         {
             code: "console.log(foo)",
             env: { node: true },
-            errors: [{
-                messageId: "unexpected",
-                type: "MemberExpression",
-                suggestions: [{
-                    messageId: "removeConsole",
-                    data: { propertyName: "log" },
-                    output: ""
-                }]
-            }]
+            errors: [
+                {
+                    messageId: "unexpected",
+                    type: "MemberExpression",
+                    suggestions: [
+                        {
+                            messageId: "removeConsole",
+                            data: { propertyName: "log" },
+                            output: ""
+                        }
+                    ]
+                }
+            ]
         }
     ]
 });

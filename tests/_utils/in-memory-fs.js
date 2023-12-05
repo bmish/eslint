@@ -22,11 +22,7 @@ const { Volume, createFsFromVolume } = require("memfs");
  * @param {Object} [options.files] The initial files definition in the in-memory file system.
  * @returns {import("fs")} The stubbed `ConfigArrayFactory` class.
  */
-function defineInMemoryFs({
-    cwd = process.cwd,
-    files = {}
-} = {}) {
-
+function defineInMemoryFs({ cwd = process.cwd, files = {} } = {}) {
     /**
      * The in-memory file system for this mock.
      * @type {import("fs")}
@@ -55,7 +51,7 @@ function defineInMemoryFs({
                 throw new Error(`Invalid content: ${typeof content}`);
             }
         }
-    }(cwd(), files));
+    })(cwd(), files);
 
     return fs;
 }

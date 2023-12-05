@@ -19,10 +19,6 @@ const rule = require("../../../lib/rules/no-with"),
 const ruleTester = new RuleTester();
 
 ruleTester.run("no-with", rule, {
-    valid: [
-        "foo.bar()"
-    ],
-    invalid: [
-        { code: "with(foo) { bar() }", errors: [{ messageId: "unexpectedWith", type: "WithStatement" }] }
-    ]
+    valid: ["foo.bar()"],
+    invalid: [{ code: "with(foo) { bar() }", errors: [{ messageId: "unexpectedWith", type: "WithStatement" }] }]
 });

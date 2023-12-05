@@ -44,6 +44,5 @@ ruleTester.run("no-sync", rule, {
             options: [{ allowAtRootLevel: true }],
             errors: [{ messageId: "noSync", data: { propertyName: "fooSync" }, type: "MemberExpression" }]
         }
-
     ]
 });

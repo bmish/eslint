@@ -513,291 +513,213 @@ ruleTester.run("func-name-matching", rule, {
             code: "let foo = function bar() {};",
             options: ["always"],
             parserOptions: { ecmaVersion: 6 },
-            errors: [
-                { messageId: "matchVariable", data: { funcName: "bar", name: "foo" } }
-            ]
+            errors: [{ messageId: "matchVariable", data: { funcName: "bar", name: "foo" } }]
         },
         {
             code: "let foo = function bar() {};",
             parserOptions: { ecmaVersion: 6 },
-            errors: [
-                { messageId: "matchVariable", data: { funcName: "bar", name: "foo" } }
-            ]
+            errors: [{ messageId: "matchVariable", data: { funcName: "bar", name: "foo" } }]
         },
         {
             code: "foo = function bar() {};",
             parserOptions: { ecmaVersion: 6 },
-            errors: [
-                { messageId: "matchVariable", data: { funcName: "bar", name: "foo" } }
-            ]
+            errors: [{ messageId: "matchVariable", data: { funcName: "bar", name: "foo" } }]
         },
         {
             code: "foo &&= function bar() {};",
             parserOptions: { ecmaVersion: 2021 },
-            errors: [
-                { messageId: "matchVariable", data: { funcName: "bar", name: "foo" } }
-            ]
+            errors: [{ messageId: "matchVariable", data: { funcName: "bar", name: "foo" } }]
         },
         {
             code: "obj.foo ||= function bar() {};",
             parserOptions: { ecmaVersion: 2021 },
-            errors: [
-                { messageId: "matchProperty", data: { funcName: "bar", name: "foo" } }
-            ]
+            errors: [{ messageId: "matchProperty", data: { funcName: "bar", name: "foo" } }]
         },
         {
             code: "obj['foo'] ??= function bar() {};",
             parserOptions: { ecmaVersion: 2021 },
-            errors: [
-                { messageId: "matchProperty", data: { funcName: "bar", name: "foo" } }
-            ]
+            errors: [{ messageId: "matchProperty", data: { funcName: "bar", name: "foo" } }]
         },
         {
             code: "obj.foo = function bar() {};",
             parserOptions: { ecmaVersion: 6 },
-            errors: [
-                { messageId: "matchProperty", data: { funcName: "bar", name: "foo" } }
-            ]
+            errors: [{ messageId: "matchProperty", data: { funcName: "bar", name: "foo" } }]
         },
         {
             code: "obj.bar.foo = function bar() {};",
             parserOptions: { ecmaVersion: 6 },
-            errors: [
-                { messageId: "matchProperty", data: { funcName: "bar", name: "foo" } }
-            ]
+            errors: [{ messageId: "matchProperty", data: { funcName: "bar", name: "foo" } }]
         },
         {
             code: "obj['foo'] = function bar() {};",
             parserOptions: { ecmaVersion: 6 },
-            errors: [
-                { messageId: "matchProperty", data: { funcName: "bar", name: "foo" } }
-            ]
+            errors: [{ messageId: "matchProperty", data: { funcName: "bar", name: "foo" } }]
         },
         {
             code: "let obj = {foo: function bar() {}};",
             parserOptions: { ecmaVersion: 6 },
-            errors: [
-                { messageId: "matchProperty", data: { funcName: "bar", name: "foo" } }
-            ]
+            errors: [{ messageId: "matchProperty", data: { funcName: "bar", name: "foo" } }]
         },
         {
             code: "let obj = {'foo': function bar() {}};",
             parserOptions: { ecmaVersion: 6 },
-            errors: [
-                { messageId: "matchProperty", data: { funcName: "bar", name: "foo" } }
-            ]
+            errors: [{ messageId: "matchProperty", data: { funcName: "bar", name: "foo" } }]
         },
         {
             code: "({['foo']: function bar() {}})",
             parserOptions: { ecmaVersion: 6 },
-            errors: [
-                { messageId: "matchProperty", data: { funcName: "bar", name: "foo" } }
-            ]
+            errors: [{ messageId: "matchProperty", data: { funcName: "bar", name: "foo" } }]
         },
         {
             code: "module.exports = function foo(name) {};",
             options: [{ includeCommonJSModuleExports: true }],
             parserOptions: { ecmaVersion: 6 },
-            errors: [
-                { messageId: "matchProperty", data: { funcName: "foo", name: "exports" } }
-            ]
+            errors: [{ messageId: "matchProperty", data: { funcName: "foo", name: "exports" } }]
         },
         {
             code: "module.exports = function foo(name) {};",
             options: ["always", { includeCommonJSModuleExports: true }],
             parserOptions: { ecmaVersion: 6 },
-            errors: [
-                { messageId: "matchProperty", data: { funcName: "foo", name: "exports" } }
-            ]
+            errors: [{ messageId: "matchProperty", data: { funcName: "foo", name: "exports" } }]
         },
         {
             code: "module.exports = function exports(name) {};",
             options: ["never", { includeCommonJSModuleExports: true }],
             parserOptions: { ecmaVersion: 6 },
-            errors: [
-                { messageId: "notMatchProperty", data: { funcName: "exports", name: "exports" } }
-            ]
+            errors: [{ messageId: "notMatchProperty", data: { funcName: "exports", name: "exports" } }]
         },
         {
             code: "module['exports'] = function foo(name) {};",
             options: [{ includeCommonJSModuleExports: true }],
             parserOptions: { ecmaVersion: 6 },
-            errors: [
-                { messageId: "matchProperty", data: { funcName: "foo", name: "exports" } }
-            ]
+            errors: [{ messageId: "matchProperty", data: { funcName: "foo", name: "exports" } }]
         },
         {
             code: "module['exports'] = function foo(name) {};",
             options: ["always", { includeCommonJSModuleExports: true }],
             parserOptions: { ecmaVersion: 6 },
-            errors: [
-                { messageId: "matchProperty", data: { funcName: "foo", name: "exports" } }
-            ]
+            errors: [{ messageId: "matchProperty", data: { funcName: "foo", name: "exports" } }]
         },
         {
             code: "module['exports'] = function exports(name) {};",
             options: ["never", { includeCommonJSModuleExports: true }],
             parserOptions: { ecmaVersion: 6 },
-            errors: [
-                { messageId: "notMatchProperty", data: { funcName: "exports", name: "exports" } }
-            ]
+            errors: [{ messageId: "notMatchProperty", data: { funcName: "exports", name: "exports" } }]
         },
         {
             code: "var foo = function foo(name) {};",
             options: ["never"],
-            errors: [
-                { messageId: "notMatchVariable", data: { funcName: "foo", name: "foo" } }
-            ]
+            errors: [{ messageId: "notMatchVariable", data: { funcName: "foo", name: "foo" } }]
         },
         {
             code: "obj.foo = function foo(name) {};",
             options: ["never"],
-            errors: [
-                { messageId: "notMatchProperty", data: { funcName: "foo", name: "foo" } }
-            ]
+            errors: [{ messageId: "notMatchProperty", data: { funcName: "foo", name: "foo" } }]
         },
         {
             code: "Object.defineProperty(foo, 'bar', { value: function baz() {} })",
             options: ["always", { considerPropertyDescriptor: true }],
-            errors: [
-                { messageId: "matchProperty", data: { funcName: "baz", name: "bar" } }
-            ]
+            errors: [{ messageId: "matchProperty", data: { funcName: "baz", name: "bar" } }]
         },
         {
             code: "Object.defineProperties(foo, { bar: { value: function baz() {} } })",
             options: ["always", { considerPropertyDescriptor: true }],
-            errors: [
-                { messageId: "matchProperty", data: { funcName: "baz", name: "bar" } }
-            ]
+            errors: [{ messageId: "matchProperty", data: { funcName: "baz", name: "bar" } }]
         },
         {
             code: "Object.create(proto, { bar: { value: function baz() {} } })",
             options: ["always", { considerPropertyDescriptor: true }],
-            errors: [
-                { messageId: "matchProperty", data: { funcName: "baz", name: "bar" } }
-            ]
+            errors: [{ messageId: "matchProperty", data: { funcName: "baz", name: "bar" } }]
         },
         {
             code: "var obj = { value: function foo(name) {} }",
             options: ["always", { considerPropertyDescriptor: true }],
-            errors: [
-                { messageId: "matchProperty", data: { funcName: "foo", name: "value" } }
-            ]
+            errors: [{ messageId: "matchProperty", data: { funcName: "foo", name: "value" } }]
         },
         {
             code: "Object.defineProperty(foo, 'bar', { value: function bar() {} })",
             options: ["never", { considerPropertyDescriptor: true }],
-            errors: [
-                { messageId: "notMatchProperty", data: { funcName: "bar", name: "bar" } }
-            ]
+            errors: [{ messageId: "notMatchProperty", data: { funcName: "bar", name: "bar" } }]
         },
         {
             code: "Object.defineProperties(foo, { bar: { value: function bar() {} } })",
             options: ["never", { considerPropertyDescriptor: true }],
-            errors: [
-                { messageId: "notMatchProperty", data: { funcName: "bar", name: "bar" } }
-            ]
+            errors: [{ messageId: "notMatchProperty", data: { funcName: "bar", name: "bar" } }]
         },
         {
             code: "Object.create(proto, { bar: { value: function bar() {} } })",
             options: ["never", { considerPropertyDescriptor: true }],
-            errors: [
-                { messageId: "notMatchProperty", data: { funcName: "bar", name: "bar" } }
-            ]
+            errors: [{ messageId: "notMatchProperty", data: { funcName: "bar", name: "bar" } }]
         },
         {
             code: "Reflect.defineProperty(foo, 'bar', { value: function baz() {} })",
             options: ["always", { considerPropertyDescriptor: true }],
-            errors: [
-                { messageId: "matchProperty", data: { funcName: "baz", name: "bar" } }
-            ]
+            errors: [{ messageId: "matchProperty", data: { funcName: "baz", name: "bar" } }]
         },
         {
             code: "Reflect.defineProperty(foo, 'bar', { value: function bar() {} })",
             options: ["never", { considerPropertyDescriptor: true }],
-            errors: [
-                { messageId: "notMatchProperty", data: { funcName: "bar", name: "bar" } }
-            ]
+            errors: [{ messageId: "notMatchProperty", data: { funcName: "bar", name: "bar" } }]
         },
         {
             code: "foo({ value: function bar() {} })",
             options: ["always", { considerPropertyDescriptor: true }],
-            errors: [
-                { messageId: "matchProperty", data: { funcName: "bar", name: "value" } }
-            ]
+            errors: [{ messageId: "matchProperty", data: { funcName: "bar", name: "value" } }]
         },
 
         // Optional chaining
         {
             code: "(obj?.aaa).foo = function bar() {};",
             parserOptions: { ecmaVersion: 2020 },
-            errors: [
-                { messageId: "matchProperty", data: { funcName: "bar", name: "foo" } }
-            ]
+            errors: [{ messageId: "matchProperty", data: { funcName: "bar", name: "foo" } }]
         },
         {
             code: "Object?.defineProperty(foo, 'bar', { value: function baz() {} })",
             options: ["always", { considerPropertyDescriptor: true }],
             parserOptions: { ecmaVersion: 2020 },
-            errors: [
-                { messageId: "matchProperty", data: { funcName: "baz", name: "bar" } }
-            ]
+            errors: [{ messageId: "matchProperty", data: { funcName: "baz", name: "bar" } }]
         },
         {
             code: "(Object?.defineProperty)(foo, 'bar', { value: function baz() {} })",
             options: ["always", { considerPropertyDescriptor: true }],
             parserOptions: { ecmaVersion: 2020 },
-            errors: [
-                { messageId: "matchProperty", data: { funcName: "baz", name: "bar" } }
-            ]
+            errors: [{ messageId: "matchProperty", data: { funcName: "baz", name: "bar" } }]
         },
         {
             code: "Object?.defineProperty(foo, 'bar', { value: function bar() {} })",
             options: ["never", { considerPropertyDescriptor: true }],
             parserOptions: { ecmaVersion: 2020 },
-            errors: [
-                { messageId: "notMatchProperty", data: { funcName: "bar", name: "bar" } }
-            ]
+            errors: [{ messageId: "notMatchProperty", data: { funcName: "bar", name: "bar" } }]
         },
         {
             code: "(Object?.defineProperty)(foo, 'bar', { value: function bar() {} })",
             options: ["never", { considerPropertyDescriptor: true }],
             parserOptions: { ecmaVersion: 2020 },
-            errors: [
-                { messageId: "notMatchProperty", data: { funcName: "bar", name: "bar" } }
-            ]
+            errors: [{ messageId: "notMatchProperty", data: { funcName: "bar", name: "bar" } }]
         },
         {
             code: "Object?.defineProperties(foo, { bar: { value: function baz() {} } })",
             options: ["always", { considerPropertyDescriptor: true }],
             parserOptions: { ecmaVersion: 2020 },
-            errors: [
-                { messageId: "matchProperty", data: { funcName: "baz", name: "bar" } }
-            ]
+            errors: [{ messageId: "matchProperty", data: { funcName: "baz", name: "bar" } }]
         },
         {
             code: "(Object?.defineProperties)(foo, { bar: { value: function baz() {} } })",
             options: ["always", { considerPropertyDescriptor: true }],
             parserOptions: { ecmaVersion: 2020 },
-            errors: [
-                { messageId: "matchProperty", data: { funcName: "baz", name: "bar" } }
-            ]
+            errors: [{ messageId: "matchProperty", data: { funcName: "baz", name: "bar" } }]
         },
         {
             code: "Object?.defineProperties(foo, { bar: { value: function bar() {} } })",
             options: ["never", { considerPropertyDescriptor: true }],
             parserOptions: { ecmaVersion: 2020 },
-            errors: [
-                { messageId: "notMatchProperty", data: { funcName: "bar", name: "bar" } }
-            ]
+            errors: [{ messageId: "notMatchProperty", data: { funcName: "bar", name: "bar" } }]
         },
         {
             code: "(Object?.defineProperties)(foo, { bar: { value: function bar() {} } })",
             options: ["never", { considerPropertyDescriptor: true }],
             parserOptions: { ecmaVersion: 2020 },
-            errors: [
-                { messageId: "notMatchProperty", data: { funcName: "bar", name: "bar" } }
-            ]
+            errors: [{ messageId: "notMatchProperty", data: { funcName: "bar", name: "bar" } }]
         },
 
         // class fields
@@ -805,88 +727,66 @@ ruleTester.run("func-name-matching", rule, {
             code: "class C { x = function y() {}; }",
             options: ["always"],
             parserOptions: { ecmaVersion: 2022 },
-            errors: [
-                { messageId: "matchProperty", data: { funcName: "y", name: "x" } }
-            ]
+            errors: [{ messageId: "matchProperty", data: { funcName: "y", name: "x" } }]
         },
         {
             code: "class C { x = function x() {}; }",
             options: ["never"],
             parserOptions: { ecmaVersion: 2022 },
-            errors: [
-                { messageId: "notMatchProperty", data: { funcName: "x", name: "x" } }
-            ]
+            errors: [{ messageId: "notMatchProperty", data: { funcName: "x", name: "x" } }]
         },
         {
             code: "class C { 'x' = function y() {}; }",
             options: ["always"],
             parserOptions: { ecmaVersion: 2022 },
-            errors: [
-                { messageId: "matchProperty", data: { funcName: "y", name: "x" } }
-            ]
+            errors: [{ messageId: "matchProperty", data: { funcName: "y", name: "x" } }]
         },
         {
             code: "class C { 'x' = function x() {}; }",
             options: ["never"],
             parserOptions: { ecmaVersion: 2022 },
-            errors: [
-                { messageId: "notMatchProperty", data: { funcName: "x", name: "x" } }
-            ]
+            errors: [{ messageId: "notMatchProperty", data: { funcName: "x", name: "x" } }]
         },
         {
             code: "class C { ['x'] = function y() {}; }",
             options: ["always"],
             parserOptions: { ecmaVersion: 2022 },
-            errors: [
-                { messageId: "matchProperty", data: { funcName: "y", name: "x" } }
-            ]
+            errors: [{ messageId: "matchProperty", data: { funcName: "y", name: "x" } }]
         },
         {
             code: "class C { ['x'] = function x() {}; }",
             options: ["never"],
             parserOptions: { ecmaVersion: 2022 },
-            errors: [
-                { messageId: "notMatchProperty", data: { funcName: "x", name: "x" } }
-            ]
+            errors: [{ messageId: "notMatchProperty", data: { funcName: "x", name: "x" } }]
         },
         {
             code: "class C { static x = function y() {}; }",
             options: ["always"],
             parserOptions: { ecmaVersion: 2022 },
-            errors: [
-                { messageId: "matchProperty", data: { funcName: "y", name: "x" } }
-            ]
+            errors: [{ messageId: "matchProperty", data: { funcName: "y", name: "x" } }]
         },
         {
             code: "class C { static x = function x() {}; }",
             options: ["never"],
             parserOptions: { ecmaVersion: 2022 },
-            errors: [
-                { messageId: "notMatchProperty", data: { funcName: "x", name: "x" } }
-            ]
+            errors: [{ messageId: "notMatchProperty", data: { funcName: "x", name: "x" } }]
         },
         {
             code: "(class { x = function y() {}; })",
             options: ["always"],
             parserOptions: { ecmaVersion: 2022 },
-            errors: [
-                { messageId: "matchProperty", data: { funcName: "y", name: "x" } }
-            ]
+            errors: [{ messageId: "matchProperty", data: { funcName: "y", name: "x" } }]
         },
         {
             code: "(class { x = function x() {}; })",
             options: ["never"],
             parserOptions: { ecmaVersion: 2022 },
-            errors: [
-                { messageId: "notMatchProperty", data: { funcName: "x", name: "x" } }
-            ]
+            errors: [{ messageId: "notMatchProperty", data: { funcName: "x", name: "x" } }]
         },
         {
             code: "var obj = { '\\u1885': function foo() {} };", // valid identifier in es2015
             parserOptions: { ecmaVersion: 6 },
-            errors: [
-                { messageId: "matchProperty", data: { funcName: "foo", name: "\u1885" } }
-            ]
+            errors: [{ messageId: "matchProperty", data: { funcName: "foo", name: "\u1885" } }]
         }
     ]
 });
@@ -910,9 +810,7 @@ flatRuleTester.run("func-name-matching", rule, {
             languageOptions: {
                 ecmaVersion: 2015
             },
-            errors: [
-                { messageId: "matchProperty", data: { funcName: "foo", name: "\u1885" } }
-            ]
+            errors: [{ messageId: "matchProperty", data: { funcName: "foo", name: "\u1885" } }]
         }
     ]
 });

@@ -19,7 +19,8 @@ const rule = require("../../../lib/rules/no-implicit-globals"),
 const ruleTester = new RuleTester();
 
 const varMessage = "Unexpected 'var' declaration in the global scope, wrap in an IIFE for a local variable, assign as global property for a global variable.";
-const functionMessage = "Unexpected function declaration in the global scope, wrap in an IIFE for a local variable, assign as global property for a global variable.";
+const functionMessage =
+    "Unexpected function declaration in the global scope, wrap in an IIFE for a local variable, assign as global property for a global variable.";
 const constMessage = "Unexpected 'const' declaration in the global scope, wrap in a block or in an IIFE.";
 const letMessage = "Unexpected 'let' declaration in the global scope, wrap in a block or in an IIFE.";
 const classMessage = "Unexpected class declaration in the global scope, wrap in a block or in an IIFE.";
@@ -29,7 +30,6 @@ const leakMessage = "Global variable leak, declare the variable if it is intende
 
 ruleTester.run("no-implicit-globals", rule, {
     valid: [
-
         //------------------------------------------------------------------------------
         // General
         //------------------------------------------------------------------------------
@@ -408,12 +408,10 @@ ruleTester.run("no-implicit-globals", rule, {
             globals: { foo: "writable" }
         },
 
-
         // This rule doesn't disallow assignments to properties of readonly globals
         "Array.from = 1;",
         "Object['assign'] = 1;",
         "/*global foo:readonly*/ foo.bar = 1;",
-
 
         //------------------------------------------------------------------------------
         // exported
@@ -445,7 +443,6 @@ ruleTester.run("no-implicit-globals", rule, {
             parserOptions: { ecmaVersion: 2015 }
         },
         "/* exported foo, bar */ var foo = 1, bar = 2;",
-
 
         // `const`, `let` and `class`
         {
@@ -501,7 +498,6 @@ ruleTester.run("no-implicit-globals", rule, {
     ],
 
     invalid: [
-
         //------------------------------------------------------------------------------
         // `var` and function declarations
         //------------------------------------------------------------------------------
@@ -606,7 +602,6 @@ ruleTester.run("no-implicit-globals", rule, {
             ]
         },
 
-
         //------------------------------------------------------------------------------
         // `const`, `let` and class declarations
         //------------------------------------------------------------------------------
@@ -616,33 +611,41 @@ ruleTester.run("no-implicit-globals", rule, {
             code: "const a = 1;",
             options: [{ lexicalBindings: true }],
             parserOptions: { ecmaVersion: 2015 },
-            errors: [{
-                message: constMessage
-            }]
+            errors: [
+                {
+                    message: constMessage
+                }
+            ]
         },
         {
             code: "let a;",
             options: [{ lexicalBindings: true }],
             parserOptions: { ecmaVersion: 2015 },
-            errors: [{
-                message: letMessage
-            }]
+            errors: [
+                {
+                    message: letMessage
+                }
+            ]
         },
         {
             code: "let a = 1;",
             options: [{ lexicalBindings: true }],
             parserOptions: { ecmaVersion: 2015 },
-            errors: [{
-                message: letMessage
-            }]
+            errors: [
+                {
+                    message: letMessage
+                }
+            ]
         },
         {
             code: "class A {}",
             options: [{ lexicalBindings: true }],
             parserOptions: { ecmaVersion: 2015 },
-            errors: [{
-                message: classMessage
-            }]
+            errors: [
+                {
+                    message: classMessage
+                }
+            ]
         },
 
         // Multiple and mixed tests
@@ -650,58 +653,37 @@ ruleTester.run("no-implicit-globals", rule, {
             code: "const a = 1; const b = 2;",
             options: [{ lexicalBindings: true }],
             parserOptions: { ecmaVersion: 2015 },
-            errors: [
-                { message: constMessage },
-                { message: constMessage }
-            ]
+            errors: [{ message: constMessage }, { message: constMessage }]
         },
         {
             code: "const a = 1, b = 2;",
             options: [{ lexicalBindings: true }],
             parserOptions: { ecmaVersion: 2015 },
-            errors: [
-                { message: constMessage },
-                { message: constMessage }
-            ]
+            errors: [{ message: constMessage }, { message: constMessage }]
         },
         {
             code: "let a, b = 1;",
             options: [{ lexicalBindings: true }],
             parserOptions: { ecmaVersion: 2015 },
-            errors: [
-                { message: letMessage },
-                { message: letMessage }
-            ]
+            errors: [{ message: letMessage }, { message: letMessage }]
         },
         {
             code: "const a = 1; let b; class C {}",
             options: [{ lexicalBindings: true }],
             parserOptions: { ecmaVersion: 2015 },
-            errors: [
-                { message: constMessage },
-                { message: letMessage },
-                { message: classMessage }
-            ]
+            errors: [{ message: constMessage }, { message: letMessage }, { message: classMessage }]
         },
         {
             code: "const [a, b, ...c] = [];",
             options: [{ lexicalBindings: true }],
             parserOptions: { ecmaVersion: 2015 },
-            errors: [
-                { message: constMessage },
-                { message: constMessage },
-                { message: constMessage }
-            ]
+            errors: [{ message: constMessage }, { message: constMessage }, { message: constMessage }]
         },
         {
             code: "let { a, foo: b, bar: { c } } = {};",
             options: [{ lexicalBindings: true }],
             parserOptions: { ecmaVersion: 2015 },
-            errors: [
-                { message: letMessage },
-                { message: letMessage },
-                { message: letMessage }
-            ]
+            errors: [{ message: letMessage }, { message: letMessage }, { message: letMessage }]
         },
 
         //------------------------------------------------------------------------------

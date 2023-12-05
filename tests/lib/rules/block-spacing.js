@@ -20,7 +20,6 @@ const ruleTester = new RuleTester();
 
 ruleTester.run("block-spacing", rule, {
     valid: [
-
         // default/always
         { code: "{ foo(); }", options: ["always"] },
         "{ foo(); }",
@@ -75,7 +74,6 @@ ruleTester.run("block-spacing", rule, {
     ],
 
     invalid: [
-
         // default/always
         {
             code: "{foo();}",
@@ -97,30 +95,22 @@ ruleTester.run("block-spacing", rule, {
         {
             code: "{ foo();}",
             output: "{ foo(); }",
-            errors: [
-                { type: "BlockStatement", line: 1, column: 9, messageId: "missing", data: { location: "before", token: "}" } }
-            ]
+            errors: [{ type: "BlockStatement", line: 1, column: 9, messageId: "missing", data: { location: "before", token: "}" } }]
         },
         {
             code: "{foo(); }",
             output: "{ foo(); }",
-            errors: [
-                { type: "BlockStatement", line: 1, column: 1, messageId: "missing", data: { location: "after", token: "{" } }
-            ]
+            errors: [{ type: "BlockStatement", line: 1, column: 1, messageId: "missing", data: { location: "after", token: "{" } }]
         },
         {
             code: "{\nfoo();}",
             output: "{\nfoo(); }",
-            errors: [
-                { type: "BlockStatement", line: 2, column: 7, messageId: "missing", data: { location: "before", token: "}" } }
-            ]
+            errors: [{ type: "BlockStatement", line: 2, column: 7, messageId: "missing", data: { location: "before", token: "}" } }]
         },
         {
             code: "{foo();\n}",
             output: "{ foo();\n}",
-            errors: [
-                { type: "BlockStatement", line: 1, column: 1, messageId: "missing", data: { location: "after", token: "{" } }
-            ]
+            errors: [{ type: "BlockStatement", line: 1, column: 1, messageId: "missing", data: { location: "after", token: "{" } }]
         },
         {
             code: "if (a) {foo();}",

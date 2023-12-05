@@ -4,7 +4,6 @@ const path = require("path");
 const commonjs = require("vite-plugin-commonjs").default;
 
 exports.config = {
-
     /*
      *
      * ====================
@@ -12,35 +11,37 @@ exports.config = {
      * ====================
      * WebdriverIO supports running e2e tests as well as unit and component tests.
      */
-    runner: ["browser", {
-        viteConfig: {
-            resolve: {
-                alias: {
-                    util: "rollup-plugin-node-polyfills/polyfills/util",
-                    path: "rollup-plugin-node-polyfills/polyfills/path",
-                    assert: "rollup-plugin-node-polyfills/polyfills/assert"
-                }
-            },
-            plugins: [
-                commonjs(),
-                {
-                    name: "wdio:import-fix",
-                    enforce: "pre",
-                    transform(source, id) {
-                        if (!id.endsWith("/tests/lib/linter/linter.js")) {
-                            return source;
-                        }
-
-                        return source.replace(
-                            'const { Linter } = require("../../../lib/linter");',
-                            'const { Linter } = require("../../../build/eslint");\n' +
-                            'process.cwd = () => "/";'
-                        );
+    runner: [
+        "browser",
+        {
+            viteConfig: {
+                resolve: {
+                    alias: {
+                        util: "rollup-plugin-node-polyfills/polyfills/util",
+                        path: "rollup-plugin-node-polyfills/polyfills/path",
+                        assert: "rollup-plugin-node-polyfills/polyfills/assert"
                     }
-                }
-            ]
+                },
+                plugins: [
+                    commonjs(),
+                    {
+                        name: "wdio:import-fix",
+                        enforce: "pre",
+                        transform(source, id) {
+                            if (!id.endsWith("/tests/lib/linter/linter.js")) {
+                                return source;
+                            }
+
+                            return source.replace(
+                                'const { Linter } = require("../../../lib/linter");',
+                                'const { Linter } = require("../../../build/eslint");\n' + 'process.cwd = () => "/";'
+                            );
+                        }
+                    }
+                ]
+            }
         }
-    }],
+    ],
 
     /*
      *
@@ -60,9 +61,7 @@ exports.config = {
      * will be called from there.
      *
      */
-    specs: [
-        path.join(__dirname, "tests", "lib", "linter", "linter.js")
-    ],
+    specs: [path.join(__dirname, "tests", "lib", "linter", "linter.js")],
 
     // Patterns to exclude.
     exclude: [],
@@ -94,12 +93,14 @@ exports.config = {
      * https://saucelabs.com/platform/platform-configurator
      *
      */
-    capabilities: [{
-        browserName: "chrome",
-        "goog:chromeOptions": {
-            args: process.env.CI ? ["headless", "disable-gpu"] : []
+    capabilities: [
+        {
+            browserName: "chrome",
+            "goog:chromeOptions": {
+                args: process.env.CI ? ["headless", "disable-gpu"] : []
+            }
         }
-    }],
+    ],
 
     /*
      *
@@ -321,7 +322,6 @@ exports.config = {
      * afterTest: function(test, context, { error, result, duration, passed, retries }) {
      * },
      */
-
 
     /**
      * Hook that gets executed after the suite has ended

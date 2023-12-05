@@ -134,9 +134,7 @@ const INSERT_AT_END = {
 //------------------------------------------------------------------------------
 
 describe("SourceCodeFixer", () => {
-
     describe("constructor", () => {
-
         it("Should not be able to add anything to this", () => {
             const result = new SourceCodeFixer();
 
@@ -206,7 +204,6 @@ describe("SourceCodeFixer", () => {
         });
 
         describe("Text Insertion", () => {
-
             it("should insert text at the end of the code", () => {
                 const result = SourceCodeFixer.applyFixes(TEST_CODE, [INSERT_AT_END]);
 
@@ -231,22 +228,21 @@ describe("SourceCodeFixer", () => {
             it("should insert text at the beginning, middle, and end of the code", () => {
                 const result = SourceCodeFixer.applyFixes(TEST_CODE, [INSERT_IN_MIDDLE, INSERT_AT_START, INSERT_AT_END]);
 
-                assert.strictEqual(result.output, INSERT_AT_START.fix.text + TEST_CODE.replace("6 *", `${INSERT_IN_MIDDLE.fix.text}6 *`) + INSERT_AT_END.fix.text);
+                assert.strictEqual(
+                    result.output,
+                    INSERT_AT_START.fix.text + TEST_CODE.replace("6 *", `${INSERT_IN_MIDDLE.fix.text}6 *`) + INSERT_AT_END.fix.text
+                );
                 assert.strictEqual(result.messages.length, 0);
             });
-
 
             it("should ignore reversed ranges", () => {
                 const result = SourceCodeFixer.applyFixes(TEST_CODE, [REVERSED_RANGE]);
 
                 assert.strictEqual(result.output, TEST_CODE);
             });
-
         });
 
-
         describe("Text Replacement", () => {
-
             it("should replace text at the end of the code", () => {
                 const result = SourceCodeFixer.applyFixes(TEST_CODE, [REPLACE_VAR]);
 
@@ -278,11 +274,9 @@ describe("SourceCodeFixer", () => {
                 assert.strictEqual(result.output, "let foo = 5 * 7;");
                 assert.isTrue(result.fixed);
             });
-
         });
 
         describe("Text Removal", () => {
-
             it("should remove text at the start of the code", () => {
                 const result = SourceCodeFixer.applyFixes(TEST_CODE, [REMOVE_START]);
 
@@ -317,7 +311,6 @@ describe("SourceCodeFixer", () => {
         });
 
         describe("Combination", () => {
-
             it("should replace text at the beginning, remove text in the middle, and insert text at the end", () => {
                 const result = SourceCodeFixer.applyFixes(TEST_CODE, [INSERT_AT_END, REMOVE_END, REPLACE_VAR]);
 
@@ -363,7 +356,6 @@ describe("SourceCodeFixer", () => {
         });
 
         describe("No Fixes", () => {
-
             it("should only apply one fix when ranges overlap and one message has no fix", () => {
                 const result = SourceCodeFixer.applyFixes(TEST_CODE, [NO_FIX]);
 
@@ -382,11 +374,9 @@ describe("SourceCodeFixer", () => {
                 assert.strictEqual(result.messages[1].message, "nofix2");
                 assert.isTrue(result.fixed);
             });
-
         });
 
         describe("BOM manipulations", () => {
-
             it("should insert BOM with an insertion of '\uFEFF' at 0", () => {
                 const result = SourceCodeFixer.applyFixes(TEST_CODE, [INSERT_BOM]);
 
@@ -418,9 +408,7 @@ describe("SourceCodeFixer", () => {
                 assert.isTrue(result.fixed);
                 assert.strictEqual(result.messages.length, 0);
             });
-
         });
-
     });
 
     /*
@@ -428,11 +416,9 @@ describe("SourceCodeFixer", () => {
      * Just `result.output` has BOM.
      */
     describe("applyFixes() with BOM", () => {
-
         const TEST_CODE_WITH_BOM = `\uFEFF${TEST_CODE}`;
 
         describe("Text Insertion", () => {
-
             it("should insert text at the end of the code", () => {
                 const result = SourceCodeFixer.applyFixes(TEST_CODE_WITH_BOM, [INSERT_AT_END]);
 
@@ -467,11 +453,9 @@ describe("SourceCodeFixer", () => {
 
                 assert.strictEqual(result.output, `\uFEFF${TEST_CODE}`);
             });
-
         });
 
         describe("Text Replacement", () => {
-
             it("should replace text at the end of the code", () => {
                 const result = SourceCodeFixer.applyFixes(TEST_CODE_WITH_BOM, [REPLACE_VAR]);
 
@@ -503,11 +487,9 @@ describe("SourceCodeFixer", () => {
                 assert.strictEqual(result.output, "\uFEFFlet foo = 5 * 7;");
                 assert.isTrue(result.fixed);
             });
-
         });
 
         describe("Text Removal", () => {
-
             it("should remove text at the start of the code", () => {
                 const result = SourceCodeFixer.applyFixes(TEST_CODE_WITH_BOM, [REMOVE_START]);
 
@@ -542,7 +524,6 @@ describe("SourceCodeFixer", () => {
         });
 
         describe("Combination", () => {
-
             it("should replace text at the beginning, remove text in the middle, and insert text at the end", () => {
                 const result = SourceCodeFixer.applyFixes(TEST_CODE_WITH_BOM, [INSERT_AT_END, REMOVE_END, REPLACE_VAR]);
 
@@ -585,11 +566,9 @@ describe("SourceCodeFixer", () => {
 
                 assert.strictEqual(result1.output, result2.output);
             });
-
         });
 
         describe("No Fixes", () => {
-
             it("should only apply one fix when ranges overlap and one message has no fix", () => {
                 const result = SourceCodeFixer.applyFixes(TEST_CODE_WITH_BOM, [NO_FIX]);
 
@@ -598,11 +577,9 @@ describe("SourceCodeFixer", () => {
                 assert.strictEqual(result.messages[0].message, "nofix");
                 assert.isFalse(result.fixed);
             });
-
         });
 
         describe("BOM manipulations", () => {
-
             it("should insert BOM with an insertion of '\uFEFF' at 0", () => {
                 const result = SourceCodeFixer.applyFixes(TEST_CODE_WITH_BOM, [INSERT_BOM]);
 
@@ -634,9 +611,6 @@ describe("SourceCodeFixer", () => {
                 assert.isTrue(result.fixed);
                 assert.strictEqual(result.messages.length, 0);
             });
-
         });
-
     });
-
 });

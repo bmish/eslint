@@ -21,9 +21,7 @@ const UNEXPECTED_LINEBREAK = { messageId: "expectNoLinebreak" };
 const ruleTester = new RuleTester({ parserOptions: { ecmaVersion: 6 } });
 
 ruleTester.run("nonblock-statement-body-position", rule, {
-
     valid: [
-
         // 'beside' option
         "if (foo) bar;",
         "while (foo) bar;",
@@ -185,7 +183,6 @@ ruleTester.run("nonblock-statement-body-position", rule, {
     ],
 
     invalid: [
-
         // 'beside' option
         {
             code: `

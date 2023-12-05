@@ -53,9 +53,7 @@ describe("FixTracker", () => {
     describe("replaceTextRange", () => {
         it("should expand to include an explicitly retained range", () => {
             const sourceCode = createSourceCode("var foo = +bar;");
-            const result = new FixTracker(ruleFixer, sourceCode)
-                .retainRange([4, 14])
-                .replaceTextRange([10, 11], "-");
+            const result = new FixTracker(ruleFixer, sourceCode).retainRange([4, 14]).replaceTextRange([10, 11], "-");
 
             assert.deepStrictEqual(result, {
                 range: [4, 14],
@@ -65,9 +63,7 @@ describe("FixTracker", () => {
 
         it("ignores a retained range that's smaller than the replaced range", () => {
             const sourceCode = createSourceCode("abcdefghij");
-            const result = new FixTracker(ruleFixer, sourceCode)
-                .retainRange([5, 7])
-                .replaceTextRange([4, 8], "123");
+            const result = new FixTracker(ruleFixer, sourceCode).retainRange([5, 7]).replaceTextRange([4, 8], "123");
 
             assert.deepStrictEqual(result, {
                 range: [4, 8],
@@ -77,8 +73,7 @@ describe("FixTracker", () => {
 
         it("allows an unspecified retained range", () => {
             const sourceCode = createSourceCode("abcdefghij");
-            const result = new FixTracker(ruleFixer, sourceCode)
-                .replaceTextRange([4, 8], "123");
+            const result = new FixTracker(ruleFixer, sourceCode).replaceTextRange([4, 8], "123");
 
             assert.deepStrictEqual(result, {
                 range: [4, 8],
@@ -90,9 +85,7 @@ describe("FixTracker", () => {
     describe("remove", () => {
         it("should expand to include an explicitly retained range", () => {
             const sourceCode = createSourceCode("a = b + +c");
-            const result = new FixTracker(ruleFixer, sourceCode)
-                .retainRange([4, 10])
-                .remove(sourceCode.ast.tokens[4]);
+            const result = new FixTracker(ruleFixer, sourceCode).retainRange([4, 10]).remove(sourceCode.ast.tokens[4]);
 
             assert.deepStrictEqual(result, {
                 range: [4, 10],
@@ -105,9 +98,7 @@ describe("FixTracker", () => {
         it("handles a normal enclosing function", () => {
             const sourceCode = createSourceCode("f = function() { return x; }");
             const xNode = sourceCode.ast.body[0].expression.right.body.body[0].argument;
-            const result = new FixTracker(ruleFixer, sourceCode)
-                .retainEnclosingFunction(xNode)
-                .replaceTextRange(xNode.range, "y");
+            const result = new FixTracker(ruleFixer, sourceCode).retainEnclosingFunction(xNode).replaceTextRange(xNode.range, "y");
 
             assert.deepStrictEqual(result, {
                 range: [4, 28],
@@ -118,9 +109,7 @@ describe("FixTracker", () => {
         it("handles the case when there is no enclosing function", () => {
             const sourceCode = createSourceCode("const a = b;");
             const bNode = sourceCode.ast.body[0].declarations[0].init;
-            const result = new FixTracker(ruleFixer, sourceCode)
-                .retainEnclosingFunction(bNode)
-                .replaceTextRange(bNode.range, "c");
+            const result = new FixTracker(ruleFixer, sourceCode).retainEnclosingFunction(bNode).replaceTextRange(bNode.range, "c");
 
             assert.deepStrictEqual(result, {
                 range: [0, 12],
@@ -133,9 +122,7 @@ describe("FixTracker", () => {
         it("handles a change to a binary operator", () => {
             const sourceCode = createSourceCode("const i = j + k;");
             const plusToken = sourceCode.ast.tokens[4];
-            const result = new FixTracker(ruleFixer, sourceCode)
-                .retainSurroundingTokens(plusToken)
-                .replaceTextRange(plusToken.range, "*");
+            const result = new FixTracker(ruleFixer, sourceCode).retainSurroundingTokens(plusToken).replaceTextRange(plusToken.range, "*");
 
             assert.deepStrictEqual(result, {
                 range: [10, 15],

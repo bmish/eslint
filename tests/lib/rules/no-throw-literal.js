@@ -48,137 +48,170 @@ ruleTester.run("no-throw-literal", rule, {
     invalid: [
         {
             code: "throw 'error';",
-            errors: [{
-                messageId: "object",
-                type: "ThrowStatement"
-            }]
+            errors: [
+                {
+                    messageId: "object",
+                    type: "ThrowStatement"
+                }
+            ]
         },
         {
             code: "throw 0;",
-            errors: [{
-                messageId: "object",
-                type: "ThrowStatement"
-            }]
+            errors: [
+                {
+                    messageId: "object",
+                    type: "ThrowStatement"
+                }
+            ]
         },
         {
             code: "throw false;",
-            errors: [{
-                messageId: "object",
-                type: "ThrowStatement"
-            }]
+            errors: [
+                {
+                    messageId: "object",
+                    type: "ThrowStatement"
+                }
+            ]
         },
         {
             code: "throw null;",
-            errors: [{
-                messageId: "object",
-                type: "ThrowStatement"
-            }]
+            errors: [
+                {
+                    messageId: "object",
+                    type: "ThrowStatement"
+                }
+            ]
         },
         {
             code: "throw {};",
-            errors: [{
-                messageId: "object",
-                type: "ThrowStatement"
-            }]
+            errors: [
+                {
+                    messageId: "object",
+                    type: "ThrowStatement"
+                }
+            ]
         },
         {
             code: "throw undefined;",
-            errors: [{
-                messageId: "undef",
-                type: "ThrowStatement"
-            }]
+            errors: [
+                {
+                    messageId: "undef",
+                    type: "ThrowStatement"
+                }
+            ]
         },
 
         // String concatenation
         {
             code: "throw 'a' + 'b';",
-            errors: [{
-                messageId: "object",
-                type: "ThrowStatement"
-            }]
+            errors: [
+                {
+                    messageId: "object",
+                    type: "ThrowStatement"
+                }
+            ]
         },
         {
             code: "var b = new Error(); throw 'a' + b;",
-            errors: [{
-                messageId: "object",
-                type: "ThrowStatement"
-            }]
+            errors: [
+                {
+                    messageId: "object",
+                    type: "ThrowStatement"
+                }
+            ]
         },
 
         // AssignmentExpression
         {
             code: "throw foo = 'error';", // RHS is a literal
-            errors: [{
-                messageId: "object",
-                type: "ThrowStatement"
-            }]
+            errors: [
+                {
+                    messageId: "object",
+                    type: "ThrowStatement"
+                }
+            ]
         },
         {
             code: "throw foo += new Error();", // evaluates to a primitive value, or throws while evaluating
-            errors: [{
-                messageId: "object",
-                type: "ThrowStatement"
-            }]
+            errors: [
+                {
+                    messageId: "object",
+                    type: "ThrowStatement"
+                }
+            ]
         },
         {
             code: "throw foo &= new Error();", // evaluates to a primitive value, or throws while evaluating
-            errors: [{
-                messageId: "object",
-                type: "ThrowStatement"
-            }]
+            errors: [
+                {
+                    messageId: "object",
+                    type: "ThrowStatement"
+                }
+            ]
         },
         {
             code: "throw foo &&= 'literal'", // evaluates either to a falsy value of `foo` (which, then, cannot be an Error object), or to 'literal'
             parserOptions: { ecmaVersion: 2021 },
-            errors: [{
-                messageId: "object",
-                type: "ThrowStatement"
-            }]
+            errors: [
+                {
+                    messageId: "object",
+                    type: "ThrowStatement"
+                }
+            ]
         },
 
         // SequenceExpression
         {
             code: "throw new Error(), 1, 2, 3;",
-            errors: [{
-                messageId: "object",
-                type: "ThrowStatement"
-            }]
+            errors: [
+                {
+                    messageId: "object",
+                    type: "ThrowStatement"
+                }
+            ]
         },
 
         // LogicalExpression
         {
             code: "throw 'literal' && 'not an Error';",
-            errors: [{
-                messageId: "object",
-                type: "ThrowStatement"
-            }]
+            errors: [
+                {
+                    messageId: "object",
+                    type: "ThrowStatement"
+                }
+            ]
         },
         {
             code: "throw foo && 'literal'", // evaluates either to a falsy value of `foo` (which, then, cannot be an Error object), or to 'literal'
-            errors: [{
-                messageId: "object",
-                type: "ThrowStatement"
-            }]
+            errors: [
+                {
+                    messageId: "object",
+                    type: "ThrowStatement"
+                }
+            ]
         },
 
         // ConditionalExpression
         {
             code: "throw foo ? 'not an Error' : 'literal';",
-            errors: [{
-                messageId: "object",
-                type: "ThrowStatement"
-            }]
+            errors: [
+                {
+                    messageId: "object",
+                    type: "ThrowStatement"
+                }
+            ]
         },
 
         // TemplateLiteral
         {
             code: "throw `${err}`;",
             parserOptions: { ecmaVersion: 6 },
-            errors: [{
-                messageId: "object",
-                type: "ThrowStatement"
-
-            }]
+            errors: [
+                {
+                    messageId: "object",
+                    type: "ThrowStatement"
+                }
+            ]
         }
     ]
 });

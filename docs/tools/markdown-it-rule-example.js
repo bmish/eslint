@@ -75,9 +75,7 @@ function markdownItRuleExample({ open, close }) {
             const codeBlockToken = tokens[index + 1];
 
             // Remove trailing newline and presentational `⏎` characters (https://github.com/eslint/eslint/issues/17627):
-            const code = codeBlockToken.content
-                .replace(/\n$/u, "")
-                .replace(/⏎(?=\n)/gu, "");
+            const code = codeBlockToken.content.replace(/\n$/u, "").replace(/⏎(?=\n)/gu, "");
 
             const text = open({ type, code, parserOptions, codeBlockToken, env });
 

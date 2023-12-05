@@ -32,7 +32,6 @@ function parser(name) {
 const ruleTester = new RuleTester();
 
 ruleTester.run("array-bracket-spacing", rule, {
-
     valid: [
         { code: "var foo = obj[ 1 ]", options: ["always"] },
         { code: "var foo = obj[ 'foo' ];", options: ["always"] },
@@ -82,7 +81,10 @@ ruleTester.run("array-bracket-spacing", rule, {
         { code: "var foo = [];", options: ["always"] },
 
         // singleValue: false, objectsInArrays: true, arraysInArrays
-        { code: "this.db.mappings.insert([\n { alias: 'a', url: 'http://www.amazon.de' },\n { alias: 'g', url: 'http://www.google.de' }\n], function() {});", options: ["always", { singleValue: false, objectsInArrays: true, arraysInArrays: true }] },
+        {
+            code: "this.db.mappings.insert([\n { alias: 'a', url: 'http://www.amazon.de' },\n { alias: 'g', url: 'http://www.google.de' }\n], function() {});",
+            options: ["always", { singleValue: false, objectsInArrays: true, arraysInArrays: true }]
+        },
 
         // always - destructuring assignment
         { code: "var [ x, y ] = z", options: ["always"], parserOptions: { ecmaVersion: 6 } },
@@ -473,186 +475,204 @@ ruleTester.run("array-bracket-spacing", rule, {
             output: "var [ x,y ] = y",
             options: ["always"],
             parserOptions: { ecmaVersion: 6 },
-            errors: [{
-                messageId: "missingSpaceAfter",
-                data: {
-                    tokenValue: "["
+            errors: [
+                {
+                    messageId: "missingSpaceAfter",
+                    data: {
+                        tokenValue: "["
+                    },
+                    type: "ArrayPattern",
+                    line: 1,
+                    column: 5,
+                    endLine: 1,
+                    endColumn: 6
                 },
-                type: "ArrayPattern",
-                line: 1,
-                column: 5,
-                endLine: 1,
-                endColumn: 6
-            },
-            {
-                messageId: "missingSpaceBefore",
-                data: {
-                    tokenValue: "]"
-                },
-                type: "ArrayPattern",
-                line: 1,
-                column: 9,
-                endLine: 1,
-                endColumn: 10
-            }]
+                {
+                    messageId: "missingSpaceBefore",
+                    data: {
+                        tokenValue: "]"
+                    },
+                    type: "ArrayPattern",
+                    line: 1,
+                    column: 9,
+                    endLine: 1,
+                    endColumn: 10
+                }
+            ]
         },
         {
             code: "var [x,y ] = y",
             output: "var [ x,y ] = y",
             options: ["always"],
             parserOptions: { ecmaVersion: 6 },
-            errors: [{
-                messageId: "missingSpaceAfter",
-                data: {
-                    tokenValue: "["
-                },
-                type: "ArrayPattern",
-                line: 1,
-                column: 5,
-                endLine: 1,
-                endColumn: 6
-            }]
+            errors: [
+                {
+                    messageId: "missingSpaceAfter",
+                    data: {
+                        tokenValue: "["
+                    },
+                    type: "ArrayPattern",
+                    line: 1,
+                    column: 5,
+                    endLine: 1,
+                    endColumn: 6
+                }
+            ]
         },
         {
             code: "var [,,,x,,] = y",
             output: "var [ ,,,x,, ] = y",
             options: ["always"],
             parserOptions: { ecmaVersion: 6 },
-            errors: [{
-                messageId: "missingSpaceAfter",
-                data: {
-                    tokenValue: "["
+            errors: [
+                {
+                    messageId: "missingSpaceAfter",
+                    data: {
+                        tokenValue: "["
+                    },
+                    type: "ArrayPattern",
+                    line: 1,
+                    column: 5,
+                    endLine: 1,
+                    endColumn: 6
                 },
-                type: "ArrayPattern",
-                line: 1,
-                column: 5,
-                endLine: 1,
-                endColumn: 6
-            },
-            {
-                messageId: "missingSpaceBefore",
-                data: {
-                    tokenValue: "]"
-                },
-                type: "ArrayPattern",
-                line: 1,
-                column: 12,
-                endLine: 1,
-                endColumn: 13
-            }]
+                {
+                    messageId: "missingSpaceBefore",
+                    data: {
+                        tokenValue: "]"
+                    },
+                    type: "ArrayPattern",
+                    line: 1,
+                    column: 12,
+                    endLine: 1,
+                    endColumn: 13
+                }
+            ]
         },
         {
             code: "var [ ,,,x,,] = y",
             output: "var [ ,,,x,, ] = y",
             options: ["always"],
             parserOptions: { ecmaVersion: 6 },
-            errors: [{
-                messageId: "missingSpaceBefore",
-                data: {
-                    tokenValue: "]"
-                },
-                type: "ArrayPattern",
-                line: 1,
-                column: 13,
-                endLine: 1,
-                endColumn: 14
-            }]
+            errors: [
+                {
+                    messageId: "missingSpaceBefore",
+                    data: {
+                        tokenValue: "]"
+                    },
+                    type: "ArrayPattern",
+                    line: 1,
+                    column: 13,
+                    endLine: 1,
+                    endColumn: 14
+                }
+            ]
         },
         {
             code: "var [...horse] = y",
             output: "var [ ...horse ] = y",
             options: ["always"],
             parserOptions: { ecmaVersion: 6 },
-            errors: [{
-                messageId: "missingSpaceAfter",
-                data: {
-                    tokenValue: "["
+            errors: [
+                {
+                    messageId: "missingSpaceAfter",
+                    data: {
+                        tokenValue: "["
+                    },
+                    type: "ArrayPattern",
+                    line: 1,
+                    column: 5,
+                    endLine: 1,
+                    endColumn: 6
                 },
-                type: "ArrayPattern",
-                line: 1,
-                column: 5,
-                endLine: 1,
-                endColumn: 6
-            },
-            {
-                messageId: "missingSpaceBefore",
-                data: {
-                    tokenValue: "]"
-                },
-                type: "ArrayPattern",
-                line: 1,
-                column: 14,
-                endLine: 1,
-                endColumn: 15
-            }]
+                {
+                    messageId: "missingSpaceBefore",
+                    data: {
+                        tokenValue: "]"
+                    },
+                    type: "ArrayPattern",
+                    line: 1,
+                    column: 14,
+                    endLine: 1,
+                    endColumn: 15
+                }
+            ]
         },
         {
             code: "var [...horse ] = y",
             output: "var [ ...horse ] = y",
             options: ["always"],
             parserOptions: { ecmaVersion: 6 },
-            errors: [{
-                messageId: "missingSpaceAfter",
-                data: {
-                    tokenValue: "["
-                },
-                type: "ArrayPattern",
-                line: 1,
-                column: 5,
-                endLine: 1,
-                endColumn: 6
-            }]
+            errors: [
+                {
+                    messageId: "missingSpaceAfter",
+                    data: {
+                        tokenValue: "["
+                    },
+                    type: "ArrayPattern",
+                    line: 1,
+                    column: 5,
+                    endLine: 1,
+                    endColumn: 6
+                }
+            ]
         },
         {
             code: "var [ [ x, y ], z ] = arr;",
             output: "var [[ x, y ], z ] = arr;",
             options: ["always", { arraysInArrays: false }],
             parserOptions: { ecmaVersion: 6 },
-            errors: [{
-                messageId: "unexpectedSpaceAfter",
-                data: {
-                    tokenValue: "["
-                },
-                type: "ArrayPattern",
-                line: 1,
-                column: 6,
-                endLine: 1,
-                endColumn: 7
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedSpaceAfter",
+                    data: {
+                        tokenValue: "["
+                    },
+                    type: "ArrayPattern",
+                    line: 1,
+                    column: 6,
+                    endLine: 1,
+                    endColumn: 7
+                }
+            ]
         },
         {
             code: "[ { x, y }, z ] = arr;",
             output: "[{ x, y }, z ] = arr;",
             options: ["always", { objectsInArrays: false }],
             parserOptions: { ecmaVersion: 6 },
-            errors: [{
-                messageId: "unexpectedSpaceAfter",
-                data: {
-                    tokenValue: "["
-                },
-                type: "ArrayPattern",
-                line: 1,
-                column: 2,
-                endLine: 1,
-                endColumn: 3
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedSpaceAfter",
+                    data: {
+                        tokenValue: "["
+                    },
+                    type: "ArrayPattern",
+                    line: 1,
+                    column: 2,
+                    endLine: 1,
+                    endColumn: 3
+                }
+            ]
         },
         {
             code: "[ x, { y, z } ] = arr;",
             output: "[ x, { y, z }] = arr;",
             options: ["always", { objectsInArrays: false }],
             parserOptions: { ecmaVersion: 6 },
-            errors: [{
-                messageId: "unexpectedSpaceBefore",
-                data: {
-                    tokenValue: "]"
-                },
-                type: "ArrayPattern",
-                line: 1,
-                column: 14,
-                endLine: 1,
-                endColumn: 15
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedSpaceBefore",
+                    data: {
+                        tokenValue: "]"
+                    },
+                    type: "ArrayPattern",
+                    line: 1,
+                    column: 14,
+                    endLine: 1,
+                    endColumn: 15
+                }
+            ]
         },
 
         // never -  arraysInArrays

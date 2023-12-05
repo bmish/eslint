@@ -36,7 +36,6 @@ ruleTester.run("no-control-regex", rule, {
         String.raw`new RegExp("\\u{1F}", flags)`, // when flags are unknown, this rule assumes there's no `u` flag
         String.raw`new RegExp("[\\q{\\u{20}}]", "v")`,
         { code: String.raw`/[\u{20}--B]/v`, parserOptions: { ecmaVersion: 2024 } }
-
     ],
     invalid: [
         { code: String.raw`var regex = /\x1f/`, errors: [{ messageId: "unexpected", data: { controlChars: "\\x1f" }, type: "Literal" }] },

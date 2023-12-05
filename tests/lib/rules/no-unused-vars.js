@@ -20,7 +20,6 @@ const ruleTester = new RuleTester();
 
 ruleTester.defineRule("use-every-a", {
     create(context) {
-
         const sourceCode = context.sourceCode;
 
         /**
@@ -96,7 +95,7 @@ ruleTester.run("no-unused-vars", rule, {
         { code: "function a(x, y){ return y; }; a();", options: ["all"] },
         { code: "var arr1 = [1, 2]; var arr2 = [3, 4]; for (var i in arr1) { arr1[i] = 5; } for (var i in arr2) { arr2[i] = 10; }", options: ["all"] },
         { code: "var a=10;", options: ["local"] },
-        { code: "var min = \"min\"; Math[min];", options: ["all"] },
+        { code: 'var min = "min"; Math[min];', options: ["all"] },
         { code: "Foo.bar = function(baz) { return baz; };", options: ["all"] },
         "myFunc(function foo() {}.bind(this))",
         "myFunc(function foo(){}.toString())",
@@ -113,13 +112,13 @@ ruleTester.run("no-unused-vars", rule, {
         { code: "var g = function(bar, baz) { return 2; }; g();", options: [{ vars: "all", args: "none" }] },
         "(function z() { z(); })();",
         { code: " ", globals: { a: true } },
-        { code: "var who = \"Paul\";\nmodule.exports = `Hello ${who}!`;", parserOptions: { ecmaVersion: 6 } },
+        { code: 'var who = "Paul";\nmodule.exports = `Hello ${who}!`;', parserOptions: { ecmaVersion: 6 } },
         { code: "export var foo = 123;", parserOptions: { ecmaVersion: 6, sourceType: "module" } },
         { code: "export function foo () {}", parserOptions: { ecmaVersion: 6, sourceType: "module" } },
         { code: "let toUpper = (partial) => partial.toUpperCase; export {toUpper}", parserOptions: { ecmaVersion: 6, sourceType: "module" } },
         { code: "export class foo {}", parserOptions: { ecmaVersion: 6, sourceType: "module" } },
         { code: "class Foo{}; var x = new Foo(); x.foo()", parserOptions: { ecmaVersion: 6 } },
-        { code: "const foo = \"hello!\";function bar(foobar = foo) {  foobar.replace(/!$/, \" world!\");}\nbar();", parserOptions: { ecmaVersion: 6 } },
+        { code: 'const foo = "hello!";function bar(foobar = foo) {  foobar.replace(/!$/, " world!");}\nbar();', parserOptions: { ecmaVersion: 6 } },
         "function Foo(){}; var x = new Foo(); x.foo()",
         "function foo() {var foo = 1; return foo}; foo();",
         "function foo(foo) {return foo}; foo(1);",
@@ -166,7 +165,11 @@ ruleTester.run("no-unused-vars", rule, {
         { code: "var a; function foo() { var _b; } foo();", options: [{ vars: "local", varsIgnorePattern: "^_" }] },
         { code: "function foo(_a) { } foo();", options: [{ args: "all", argsIgnorePattern: "^_" }] },
         { code: "function foo(a, _b) { return a; } foo();", options: [{ args: "after-used", argsIgnorePattern: "^_" }] },
-        { code: "var [ firstItemIgnored, secondItem ] = items;\nconsole.log(secondItem);", options: [{ vars: "all", varsIgnorePattern: "[iI]gnored" }], parserOptions: { ecmaVersion: 6 } },
+        {
+            code: "var [ firstItemIgnored, secondItem ] = items;\nconsole.log(secondItem);",
+            options: [{ vars: "all", varsIgnorePattern: "[iI]gnored" }],
+            parserOptions: { ecmaVersion: 6 }
+        },
         {
             code: "const [ a, _b, c ] = items;\nconsole.log(a+c);",
             options: [{ destructuredArrayIgnorePattern: "^_" }],
@@ -310,40 +313,22 @@ ruleTester.run("no-unused-vars", rule, {
         [
             "var unregisterFooWatcher;",
             "// ...",
-            "unregisterFooWatcher = $scope.$watch( \"foo\", function() {",
+            'unregisterFooWatcher = $scope.$watch( "foo", function() {',
             "    // ...some code..",
             "    unregisterFooWatcher();",
             "});"
         ].join("\n"),
-        [
-            "var ref;",
-            "ref = setInterval(",
-            "    function(){",
-            "        clearInterval(ref);",
-            "    }, 10);"
-        ].join("\n"),
-        [
-            "var _timer;",
-            "function f() {",
-            "    _timer = setTimeout(function () {}, _timer ? 100 : 0);",
-            "}",
-            "f();"
-        ].join("\n"),
+        ["var ref;", "ref = setInterval(", "    function(){", "        clearInterval(ref);", "    }, 10);"].join("\n"),
+        ["var _timer;", "function f() {", "    _timer = setTimeout(function () {}, _timer ? 100 : 0);", "}", "f();"].join("\n"),
         "function foo(cb) { cb = function() { function something(a) { cb(1 + a); } register(something); }(); } foo();",
         { code: "function* foo(cb) { cb = yield function(a) { cb(1 + a); }; } foo();", parserOptions: { ecmaVersion: 6 } },
         { code: "function foo(cb) { cb = tag`hello${function(a) { cb(1 + a); }}`; } foo();", parserOptions: { ecmaVersion: 6 } },
         "function foo(cb) { var b; cb = b = function(a) { cb(1 + a); }; b(); } foo();",
 
         // https://github.com/eslint/eslint/issues/6646
-        [
-            "function someFunction() {",
-            "    var a = 0, i;",
-            "    for (i = 0; i < 2; i++) {",
-            "        a = myFunction(a);",
-            "    }",
-            "}",
-            "someFunction();"
-        ].join("\n"),
+        ["function someFunction() {", "    var a = 0, i;", "    for (i = 0; i < 2; i++) {", "        a = myFunction(a);", "    }", "}", "someFunction();"].join(
+            "\n"
+        ),
 
         // https://github.com/eslint/eslint/issues/7124
         {
@@ -446,17 +431,23 @@ ruleTester.run("no-unused-vars", rule, {
         { code: "var a=10; (function() { var a = 1; alert(a); })();", options: ["all"], errors: [assignedError("a")] },
         { code: "var a=10, b=0, c=null; alert(a+b)", options: ["all"], errors: [assignedError("c")] },
         { code: "var a=10, b=0, c=null; setTimeout(function() { var b=2; alert(a+b+c); }, 0);", options: ["all"], errors: [assignedError("b")] },
-        { code: "var a=10, b=0, c=null; setTimeout(function() { var b=2; var c=2; alert(a+b+c); }, 0);", options: ["all"], errors: [assignedError("b"), assignedError("c")] },
+        {
+            code: "var a=10, b=0, c=null; setTimeout(function() { var b=2; var c=2; alert(a+b+c); }, 0);",
+            options: ["all"],
+            errors: [assignedError("b"), assignedError("c")]
+        },
         { code: "function f(){var a=[];return a.map(function(){});}", options: ["all"], errors: [definedError("f")] },
         { code: "function f(){var a=[];return a.map(function g(){});}", options: ["all"], errors: [definedError("f")] },
         {
             code: "function foo() {function foo(x) {\nreturn x; }; return function() {return foo; }; }",
-            errors: [{
-                messageId: "unusedVar",
-                data: { varName: "foo", action: "defined", additional: "" },
-                line: 1,
-                type: "Identifier"
-            }]
+            errors: [
+                {
+                    messageId: "unusedVar",
+                    data: { varName: "foo", action: "defined", additional: "" },
+                    line: 1,
+                    type: "Identifier"
+                }
+            ]
         },
         { code: "function f(){var x;function a(){x=42;}function b(){alert(x);}}", options: ["all"], errors: 3 },
         { code: "function f(a) {}; f();", options: ["all"], errors: [definedError("a")] },
@@ -471,8 +462,12 @@ ruleTester.run("no-unused-vars", rule, {
         { code: "(function z(foo) { var bar = 33; })();", options: [{ vars: "all", args: "all" }], errors: [definedError("foo"), assignedError("bar")] },
         { code: "(function z(foo) { z(); })();", options: [{}], errors: [definedError("foo")] },
         { code: "function f() { var a = 1; return function(){ f(a = 2); }; }", options: [{}], errors: [definedError("f"), assignedError("a")] },
-        { code: "import x from \"y\";", parserOptions: { ecmaVersion: 6, sourceType: "module" }, errors: [definedError("x")] },
-        { code: "export function fn2({ x, y }) {\n console.log(x); \n};", parserOptions: { ecmaVersion: 6, sourceType: "module" }, errors: [definedError("y")] },
+        { code: 'import x from "y";', parserOptions: { ecmaVersion: 6, sourceType: "module" }, errors: [definedError("x")] },
+        {
+            code: "export function fn2({ x, y }) {\n console.log(x); \n};",
+            parserOptions: { ecmaVersion: 6, sourceType: "module" },
+            errors: [definedError("y")]
+        },
         { code: "export function fn2( x, y ) {\n console.log(x); \n};", parserOptions: { ecmaVersion: 6, sourceType: "module" }, errors: [definedError("y")] },
 
         // exported
@@ -483,87 +478,99 @@ ruleTester.run("no-unused-vars", rule, {
         {
             code: "var _a; var b;",
             options: [{ vars: "all", varsIgnorePattern: "^_" }],
-            errors: [{
-                line: 1,
-                column: 13,
-                messageId: "unusedVar",
-                data: {
-                    varName: "b",
-                    action: "defined",
-                    additional: ". Allowed unused vars must match /^_/u"
+            errors: [
+                {
+                    line: 1,
+                    column: 13,
+                    messageId: "unusedVar",
+                    data: {
+                        varName: "b",
+                        action: "defined",
+                        additional: ". Allowed unused vars must match /^_/u"
+                    }
                 }
-            }]
+            ]
         },
         {
             code: "var a; function foo() { var _b; var c_; } foo();",
             options: [{ vars: "local", varsIgnorePattern: "^_" }],
-            errors: [{
-                line: 1,
-                column: 37,
-                messageId: "unusedVar",
-                data: {
-                    varName: "c_",
-                    action: "defined",
-                    additional: ". Allowed unused vars must match /^_/u"
+            errors: [
+                {
+                    line: 1,
+                    column: 37,
+                    messageId: "unusedVar",
+                    data: {
+                        varName: "c_",
+                        action: "defined",
+                        additional: ". Allowed unused vars must match /^_/u"
+                    }
                 }
-            }]
+            ]
         },
         {
             code: "function foo(a, _b) { } foo();",
             options: [{ args: "all", argsIgnorePattern: "^_" }],
-            errors: [{
-                line: 1,
-                column: 14,
-                messageId: "unusedVar",
-                data: {
-                    varName: "a",
-                    action: "defined",
-                    additional: ". Allowed unused args must match /^_/u"
+            errors: [
+                {
+                    line: 1,
+                    column: 14,
+                    messageId: "unusedVar",
+                    data: {
+                        varName: "a",
+                        action: "defined",
+                        additional: ". Allowed unused args must match /^_/u"
+                    }
                 }
-            }]
+            ]
         },
         {
             code: "function foo(a, _b, c) { return a; } foo();",
             options: [{ args: "after-used", argsIgnorePattern: "^_" }],
-            errors: [{
-                line: 1,
-                column: 21,
-                messageId: "unusedVar",
-                data: {
-                    varName: "c",
-                    action: "defined",
-                    additional: ". Allowed unused args must match /^_/u"
+            errors: [
+                {
+                    line: 1,
+                    column: 21,
+                    messageId: "unusedVar",
+                    data: {
+                        varName: "c",
+                        action: "defined",
+                        additional: ". Allowed unused args must match /^_/u"
+                    }
                 }
-            }]
+            ]
         },
         {
             code: "function foo(_a) { } foo();",
             options: [{ args: "all", argsIgnorePattern: "[iI]gnored" }],
-            errors: [{
-                line: 1,
-                column: 14,
-                messageId: "unusedVar",
-                data: {
-                    varName: "_a",
-                    action: "defined",
-                    additional: ". Allowed unused args must match /[iI]gnored/u"
+            errors: [
+                {
+                    line: 1,
+                    column: 14,
+                    messageId: "unusedVar",
+                    data: {
+                        varName: "_a",
+                        action: "defined",
+                        additional: ". Allowed unused args must match /[iI]gnored/u"
+                    }
                 }
-            }]
+            ]
         },
         {
             code: "var [ firstItemIgnored, secondItem ] = items;",
             options: [{ vars: "all", varsIgnorePattern: "[iI]gnored" }],
             parserOptions: { ecmaVersion: 6 },
-            errors: [{
-                line: 1,
-                column: 25,
-                messageId: "unusedVar",
-                data: {
-                    varName: "secondItem",
-                    action: "assigned a value",
-                    additional: ". Allowed unused vars must match /[iI]gnored/u"
+            errors: [
+                {
+                    line: 1,
+                    column: 25,
+                    messageId: "unusedVar",
+                    data: {
+                        varName: "secondItem",
+                        action: "assigned a value",
+                        additional: ". Allowed unused vars must match /[iI]gnored/u"
+                    }
                 }
-            }]
+            ]
         },
 
         // https://github.com/eslint/eslint/issues/15611
@@ -576,7 +583,6 @@ ruleTester.run("no-unused-vars", rule, {
             options: [{ destructuredArrayIgnorePattern: "^_" }],
             parserOptions: { ecmaVersion: 2020 },
             errors: [
-
                 // should report only `newArray`
                 { ...assignedError("newArray"), line: 4, column: 19 }
             ]
@@ -694,86 +700,98 @@ ruleTester.run("no-unused-vars", rule, {
         // for-in loops (see #2342)
         {
             code: "(function(obj) { var name; for ( name in obj ) { i(); return; } })({});",
-            errors: [{
-                line: 1,
-                column: 34,
-                messageId: "unusedVar",
-                data: {
-                    varName: "name",
-                    action: "assigned a value",
-                    additional: ""
+            errors: [
+                {
+                    line: 1,
+                    column: 34,
+                    messageId: "unusedVar",
+                    data: {
+                        varName: "name",
+                        action: "assigned a value",
+                        additional: ""
+                    }
                 }
-            }]
+            ]
         },
         {
             code: "(function(obj) { var name; for ( name in obj ) { } })({});",
-            errors: [{
-                line: 1,
-                column: 34,
-                messageId: "unusedVar",
-                data: {
-                    varName: "name",
-                    action: "assigned a value",
-                    additional: ""
+            errors: [
+                {
+                    line: 1,
+                    column: 34,
+                    messageId: "unusedVar",
+                    data: {
+                        varName: "name",
+                        action: "assigned a value",
+                        additional: ""
+                    }
                 }
-            }]
+            ]
         },
         {
             code: "(function(obj) { for ( var name in obj ) { } })({});",
-            errors: [{
-                line: 1,
-                column: 28,
-                messageId: "unusedVar",
-                data: {
-                    varName: "name",
-                    action: "assigned a value",
-                    additional: ""
+            errors: [
+                {
+                    line: 1,
+                    column: 28,
+                    messageId: "unusedVar",
+                    data: {
+                        varName: "name",
+                        action: "assigned a value",
+                        additional: ""
+                    }
                 }
-            }]
+            ]
         },
 
         // For-of loops
         {
             code: "(function(iter) { var name; for ( name of iter ) { i(); return; } })({});",
             env: { es6: true },
-            errors: [{
-                line: 1,
-                column: 35,
-                messageId: "unusedVar",
-                data: {
-                    varName: "name",
-                    action: "assigned a value",
-                    additional: ""
+            errors: [
+                {
+                    line: 1,
+                    column: 35,
+                    messageId: "unusedVar",
+                    data: {
+                        varName: "name",
+                        action: "assigned a value",
+                        additional: ""
+                    }
                 }
-            }]
+            ]
         },
         {
             code: "(function(iter) { var name; for ( name of iter ) { } })({});",
             env: { es6: true },
-            errors: [{
-                line: 1,
-                column: 35,
-                messageId: "unusedVar",
-                data: {
-                    varName: "name",
-                    action: "assigned a value",
-                    additional: ""
+            errors: [
+                {
+                    line: 1,
+                    column: 35,
+                    messageId: "unusedVar",
+                    data: {
+                        varName: "name",
+                        action: "assigned a value",
+                        additional: ""
+                    }
                 }
-            }]
+            ]
         },
         {
             code: "(function(iter) { for ( var name of iter ) { } })({});",
             env: { es6: true },
-            errors: [{
-                line: 1,
-                column: 29,
-                messageId: "unusedVar",
-                data: {
-                    varName: "name",
-                    action: "assigned a value",
-                    additional: ""
+            errors: [
+                {
+                    line: 1,
+                    column: 29,
+                    messageId: "unusedVar",
+                    data: {
+                        varName: "name",
+                        action: "assigned a value",
+                        additional: ""
+                    }
                 }
-            }]
+            ]
         },
 
         // https://github.com/eslint/eslint/issues/3617
@@ -1133,10 +1151,7 @@ ruleTester.run("no-unused-vars", rule, {
         {
             code: "try{}catch(error){}try{}catch(err){};",
             options: [{ caughtErrors: "all", caughtErrorsIgnorePattern: "^ignore" }],
-            errors: [
-                definedError("error", ". Allowed unused args must match /^ignore/u"),
-                definedError("err", ". Allowed unused args must match /^ignore/u")
-            ]
+            errors: [definedError("error", ". Allowed unused args must match /^ignore/u"), definedError("err", ". Allowed unused args must match /^ignore/u")]
         },
 
         // caughtErrors with other configs
@@ -1191,14 +1206,7 @@ ruleTester.run("no-unused-vars", rule, {
 
         // https://github.com/eslint/eslint/issues/6646
         {
-            code: [
-                "while (a) {",
-                "    function foo(b) {",
-                "        b = b + 1;",
-                "    }",
-                "    foo()",
-                "}"
-            ].join("\n"),
+            code: ["while (a) {", "    function foo(b) {", "        b = b + 1;", "    }", "    foo()", "}"].join("\n"),
             errors: [assignedError("b")]
         },
 
@@ -1206,19 +1214,13 @@ ruleTester.run("no-unused-vars", rule, {
         {
             code: "(function(a, b, c) {})",
             options: [{ argsIgnorePattern: "c" }],
-            errors: [
-                definedError("a", ". Allowed unused args must match /c/u"),
-                definedError("b", ". Allowed unused args must match /c/u")
-            ]
+            errors: [definedError("a", ". Allowed unused args must match /c/u"), definedError("b", ". Allowed unused args must match /c/u")]
         },
         {
             code: "(function(a, b, {c, d}) {})",
             options: [{ argsIgnorePattern: "[cd]" }],
             parserOptions: { ecmaVersion: 6 },
-            errors: [
-                definedError("a", ". Allowed unused args must match /[cd]/u"),
-                definedError("b", ". Allowed unused args must match /[cd]/u")
-            ]
+            errors: [definedError("a", ". Allowed unused args must match /[cd]/u"), definedError("b", ". Allowed unused args must match /[cd]/u")]
         },
         {
             code: "(function(a, b, {c, d}) {})",
@@ -1242,35 +1244,32 @@ ruleTester.run("no-unused-vars", rule, {
         },
         {
             code: "/*global\rfoo*/",
-            errors: [{
-                line: 2,
-                column: 1,
-                endLine: 2,
-                endColumn: 4,
-                messageId: "unusedVar",
-                data: {
-                    varName: "foo",
-                    action: "defined",
-                    additional: ""
+            errors: [
+                {
+                    line: 2,
+                    column: 1,
+                    endLine: 2,
+                    endColumn: 4,
+                    messageId: "unusedVar",
+                    data: {
+                        varName: "foo",
+                        action: "defined",
+                        additional: ""
+                    }
                 }
-            }]
+            ]
         },
 
         // https://github.com/eslint/eslint/issues/8442
         {
             code: "(function ({ a }, b ) { return b; })();",
             parserOptions: { ecmaVersion: 2015 },
-            errors: [
-                definedError("a")
-            ]
+            errors: [definedError("a")]
         },
         {
             code: "(function ({ a }, { b, c } ) { return b; })();",
             parserOptions: { ecmaVersion: 2015 },
-            errors: [
-                definedError("a"),
-                definedError("c")
-            ]
+            errors: [definedError("a"), definedError("c")]
         },
 
         // https://github.com/eslint/eslint/issues/14325
@@ -1389,33 +1388,22 @@ ruleTester.run("no-unused-vars", rule, {
         {
             code: "(function ({ a, b }, { c } ) { return b; })();",
             parserOptions: { ecmaVersion: 2015 },
-            errors: [
-                definedError("a"),
-                definedError("c")
-            ]
+            errors: [definedError("a"), definedError("c")]
         },
         {
             code: "(function ([ a ], b ) { return b; })();",
             parserOptions: { ecmaVersion: 2015 },
-            errors: [
-                definedError("a")
-            ]
+            errors: [definedError("a")]
         },
         {
             code: "(function ([ a ], [ b, c ] ) { return b; })();",
             parserOptions: { ecmaVersion: 2015 },
-            errors: [
-                definedError("a"),
-                definedError("c")
-            ]
+            errors: [definedError("a"), definedError("c")]
         },
         {
             code: "(function ([ a, b ], [ c ] ) { return b; })();",
             parserOptions: { ecmaVersion: 2015 },
-            errors: [
-                definedError("a"),
-                definedError("c")
-            ]
+            errors: [definedError("a"), definedError("c")]
         },
 
         // https://github.com/eslint/eslint/issues/9774
@@ -1486,7 +1474,6 @@ ruleTester.run("no-unused-vars", rule, {
             errors: [{ ...assignedError("x"), line: 2, column: 1 }]
         },
         {
-
             code: `let a = 'a';
             a = 10;
             function foo(){
@@ -1496,7 +1483,10 @@ ruleTester.run("no-unused-vars", rule, {
                 }
             }`,
             parserOptions: { ecmaVersion: 2020 },
-            errors: [{ ...assignedError("a"), line: 2, column: 13 }, { ...definedError("foo"), line: 3, column: 22 }]
+            errors: [
+                { ...assignedError("a"), line: 2, column: 13 },
+                { ...definedError("foo"), line: 3, column: 22 }
+            ]
         },
         {
             code: `let foo;

@@ -22,7 +22,6 @@ describe("eslint-all", () => {
         const ruleNames = Object.keys(rules);
 
         assert.notInclude(ruleNames, ".eslintrc.yml");
-
     });
 
     it("should return all rules", () => {

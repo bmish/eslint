@@ -17,7 +17,6 @@ const assert = require("chai").assert,
 //------------------------------------------------------------------------------
 
 describe("ConfigCommentParser", () => {
-
     let commentParser;
     const location = {
         start: {
@@ -31,11 +30,9 @@ describe("ConfigCommentParser", () => {
     });
 
     describe("parseJsonConfig", () => {
-
         it("should parse JSON config with one item", () => {
             const code = "no-alert:0";
             const result = commentParser.parseJsonConfig(code, location);
-
 
             assert.deepStrictEqual(result, {
                 success: true,
@@ -48,7 +45,6 @@ describe("ConfigCommentParser", () => {
         it("should parse JSON config with two items", () => {
             const code = "no-alert:0 semi: 2";
             const result = commentParser.parseJsonConfig(code, location);
-
 
             assert.deepStrictEqual(result, {
                 success: true,
@@ -63,7 +59,6 @@ describe("ConfigCommentParser", () => {
             const code = "no-alert:0,semi: 2";
             const result = commentParser.parseJsonConfig(code, location);
 
-
             assert.deepStrictEqual(result, {
                 success: true,
                 config: {
@@ -77,7 +72,6 @@ describe("ConfigCommentParser", () => {
             const code = "no-alert:off,semi: 2";
             const result = commentParser.parseJsonConfig(code, location);
 
-
             assert.deepStrictEqual(result, {
                 success: true,
                 config: {
@@ -90,7 +84,6 @@ describe("ConfigCommentParser", () => {
         it("should parse JSON config with two items and options", () => {
             const code = "no-alert:off, semi: [2, always]";
             const result = commentParser.parseJsonConfig(code, location);
-
 
             assert.deepStrictEqual(result, {
                 success: true,
@@ -113,12 +106,9 @@ describe("ConfigCommentParser", () => {
                 }
             });
         });
-
-
     });
 
     describe("parseStringConfig", () => {
-
         const comment = {};
 
         it("should parse String config with one item", () => {
@@ -195,7 +185,6 @@ describe("ConfigCommentParser", () => {
     });
 
     describe("parseListConfig", () => {
-
         it("should parse list config with one item", () => {
             const code = "a";
             const result = commentParser.parseListConfig(code);
@@ -247,5 +236,4 @@ describe("ConfigCommentParser", () => {
             });
         });
     });
-
 });

@@ -104,12 +104,7 @@ ruleTester.run("no-loop-func", rule, {
             parserOptions: { ecmaVersion: 6 }
         },
         {
-            code: [
-                "while (true) {",
-                "    (function() { a; });",
-                "}",
-                "let a;"
-            ].join("\n"),
+            code: ["while (true) {", "    (function() { a; });", "}", "let a;"].join("\n"),
             parserOptions: { ecmaVersion: 6 }
         },
 
@@ -157,7 +152,6 @@ ruleTester.run("no-loop-func", rule, {
             code: "for (let i = 0; i < 10; ++i) { for (let x in xs.filter(x => x != undeclared)) {  } }",
             parserOptions: { ecmaVersion: 6 }
         }
-
     ],
     invalid: [
         {

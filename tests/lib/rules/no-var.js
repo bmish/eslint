@@ -103,17 +103,13 @@ ruleTester.run("no-var", rule, {
             code: "for (var i = 0; i < list.length; ++i) { foo(i) }",
             output: "for (let i = 0; i < list.length; ++i) { foo(i) }",
             parserOptions: { ecmaFeatures: { globalReturn: true } },
-            errors: [
-                { messageId: "unexpectedVar", type: "VariableDeclaration" }
-            ]
+            errors: [{ messageId: "unexpectedVar", type: "VariableDeclaration" }]
         },
         {
             code: "for (var i = 0, i = 0; false;);",
             output: null,
             parserOptions: { ecmaFeatures: { globalReturn: true } },
-            errors: [
-                { messageId: "unexpectedVar", type: "VariableDeclaration" }
-            ]
+            errors: [{ messageId: "unexpectedVar", type: "VariableDeclaration" }]
         },
         {
             code: "var i = 0; for (var i = 1; false;); console.log(i);",
@@ -130,59 +126,43 @@ ruleTester.run("no-var", rule, {
             code: "var a, b, c; var a;",
             output: null,
             parserOptions: { ecmaFeatures: { globalReturn: true } },
-            errors: [
-                { messageId: "unexpectedVar" },
-                { messageId: "unexpectedVar" }
-            ]
+            errors: [{ messageId: "unexpectedVar" }, { messageId: "unexpectedVar" }]
         },
         {
             code: "var a; if (b) { var a; }",
             output: null,
             parserOptions: { ecmaFeatures: { globalReturn: true } },
-            errors: [
-                { messageId: "unexpectedVar" },
-                { messageId: "unexpectedVar" }
-            ]
+            errors: [{ messageId: "unexpectedVar" }, { messageId: "unexpectedVar" }]
         },
         {
             code: "if (foo) { var a, b, c; } a;",
             output: null,
             parserOptions: { ecmaFeatures: { globalReturn: true } },
-            errors: [
-                { messageId: "unexpectedVar" }
-            ]
+            errors: [{ messageId: "unexpectedVar" }]
         },
         {
             code: "for (var i = 0; i < 10; ++i) {} i;",
             output: null,
             parserOptions: { ecmaFeatures: { globalReturn: true } },
-            errors: [
-                { messageId: "unexpectedVar" }
-            ]
+            errors: [{ messageId: "unexpectedVar" }]
         },
         {
             code: "for (var a in obj) {} a;",
             output: null,
             parserOptions: { ecmaFeatures: { globalReturn: true } },
-            errors: [
-                { messageId: "unexpectedVar" }
-            ]
+            errors: [{ messageId: "unexpectedVar" }]
         },
         {
             code: "for (var a of list) {} a;",
             output: null,
             parserOptions: { ecmaFeatures: { globalReturn: true } },
-            errors: [
-                { messageId: "unexpectedVar" }
-            ]
+            errors: [{ messageId: "unexpectedVar" }]
         },
         {
             code: "switch (a) { case 0: var b = 1 }",
             output: null,
             parserOptions: { ecmaFeatures: { globalReturn: true } },
-            errors: [
-                { messageId: "unexpectedVar" }
-            ]
+            errors: [{ messageId: "unexpectedVar" }]
         },
 
         // Don't fix if the variable is in a loop and the behavior might change.
@@ -190,17 +170,13 @@ ruleTester.run("no-var", rule, {
             code: "for (var a of b) { arr.push(() => a); }",
             output: null,
             parserOptions: { ecmaFeatures: { globalReturn: true } },
-            errors: [
-                { messageId: "unexpectedVar" }
-            ]
+            errors: [{ messageId: "unexpectedVar" }]
         },
         {
             code: "for (let a of b) { var c; console.log(c); c = 'hello'; }",
             output: null,
             parserOptions: { ecmaFeatures: { globalReturn: true } },
-            errors: [
-                { messageId: "unexpectedVar" }
-            ]
+            errors: [{ messageId: "unexpectedVar" }]
         },
 
         // https://github.com/eslint/eslint/issues/7950
@@ -208,50 +184,37 @@ ruleTester.run("no-var", rule, {
             code: "var a = a",
             output: null,
             parserOptions: { ecmaFeatures: { globalReturn: true } },
-            errors: [
-                { messageId: "unexpectedVar" }
-            ]
+            errors: [{ messageId: "unexpectedVar" }]
         },
         {
             code: "var {a = a} = {}",
             output: null,
             parserOptions: { ecmaVersion: 2015, ecmaFeatures: { globalReturn: true } },
-            errors: [
-                { messageId: "unexpectedVar" }
-            ]
+            errors: [{ messageId: "unexpectedVar" }]
         },
         {
             code: "var {a = b, b} = {}",
             output: null,
             parserOptions: { ecmaVersion: 2015, ecmaFeatures: { globalReturn: true } },
-            errors: [
-                { messageId: "unexpectedVar" }
-            ]
+            errors: [{ messageId: "unexpectedVar" }]
         },
         {
             code: "var {a, b = a} = {}",
             output: "let {a, b = a} = {}",
             parserOptions: { ecmaVersion: 2015, ecmaFeatures: { globalReturn: true } },
-            errors: [
-                { messageId: "unexpectedVar" }
-            ]
+            errors: [{ messageId: "unexpectedVar" }]
         },
         {
             code: "var a = b, b = 1",
             output: null,
             parserOptions: { ecmaVersion: 2015, ecmaFeatures: { globalReturn: true } },
-            errors: [
-                { messageId: "unexpectedVar" }
-            ]
+            errors: [{ messageId: "unexpectedVar" }]
         },
         {
             code: "var a = b; var b = 1",
             output: "let a = b; var b = 1",
             parserOptions: { ecmaVersion: 2015, ecmaFeatures: { globalReturn: true } },
-            errors: [
-                { messageId: "unexpectedVar" },
-                { messageId: "unexpectedVar" }
-            ]
+            errors: [{ messageId: "unexpectedVar" }, { messageId: "unexpectedVar" }]
         },
 
         /*
@@ -262,9 +225,7 @@ ruleTester.run("no-var", rule, {
             code: "function foo() { a } var a = 1; foo()",
             output: null,
             parserOptions: { ecmaVersion: 2015, ecmaFeatures: { globalReturn: true } },
-            errors: [
-                { messageId: "unexpectedVar" }
-            ]
+            errors: [{ messageId: "unexpectedVar" }]
         },
 
         // https://github.com/eslint/eslint/issues/7961
@@ -272,9 +233,7 @@ ruleTester.run("no-var", rule, {
             code: "if (foo) var bar = 1;",
             output: null,
             parserOptions: { ecmaFeatures: { globalReturn: true } },
-            errors: [
-                { messageId: "unexpectedVar", type: "VariableDeclaration" }
-            ]
+            errors: [{ messageId: "unexpectedVar", type: "VariableDeclaration" }]
         },
 
         // https://github.com/eslint/eslint/issues/9520
@@ -362,10 +321,7 @@ ruleTester.run("no-var", rule, {
             code: "var bar = foo; var foo = function () { foo(); };",
             output: "let bar = foo; var foo = function () { foo(); };",
             parserOptions: { ecmaVersion: 6, sourceType: "module" },
-            errors: [
-                { messageId: "unexpectedVar" },
-                { messageId: "unexpectedVar" }
-            ]
+            errors: [{ messageId: "unexpectedVar" }, { messageId: "unexpectedVar" }]
         },
         {
             code: "var { foo = foo } = function () { foo(); };",
@@ -383,10 +339,7 @@ ruleTester.run("no-var", rule, {
             code: "var bar = function () { foo(); }; var foo = function() {};",
             output: "let bar = function () { foo(); }; var foo = function() {};",
             parserOptions: { ecmaVersion: 6, sourceType: "module" },
-            errors: [
-                { messageId: "unexpectedVar" },
-                { messageId: "unexpectedVar" }
-            ]
+            errors: [{ messageId: "unexpectedVar" }, { messageId: "unexpectedVar" }]
         }
     ]
 });

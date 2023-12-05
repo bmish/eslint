@@ -23,8 +23,11 @@ describe("interpolate()", () => {
         assert.strictEqual(interpolate(message, {}), message);
     });
     it("Properly interpolates keys in {{ }}", () => {
-        assert.strictEqual(interpolate("This is a very important {{ message }}!", {
-            message: "test"
-        }), "This is a very important test!");
+        assert.strictEqual(
+            interpolate("This is a very important {{ message }}!", {
+                message: "test"
+            }),
+            "This is a very important test!"
+        );
     });
 });

@@ -19,13 +19,7 @@ const rule = require("../../../lib/rules/wrap-regex"),
 const ruleTester = new RuleTester();
 
 ruleTester.run("wrap-regex", rule, {
-    valid: [
-        "(/foo/).test(bar);",
-        "(/foo/ig).test(bar);",
-        "/foo/;",
-        "var f = 0;",
-        "a[/b/];"
-    ],
+    valid: ["(/foo/).test(bar);", "(/foo/ig).test(bar);", "/foo/;", "var f = 0;", "a[/b/];"],
     invalid: [
         {
             code: "/foo/.test(bar);",

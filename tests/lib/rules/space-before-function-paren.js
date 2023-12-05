@@ -19,7 +19,6 @@ const baseParser = require("../../fixtures/fixture-parser");
 const ruleTester = new RuleTester();
 
 ruleTester.run("space-before-function-paren", rule, {
-
     valid: [
         "function foo () {}",
         "var foo = function () {}",
@@ -407,16 +406,8 @@ ruleTester.run("space-before-function-paren", rule, {
         },
 
         {
-            code: [
-                "function foo () {}",
-                "var bar = function() {}",
-                "var obj = { get foo () {}, set foo (val) {}, bar () {} };"
-            ].join("\n"),
-            output: [
-                "function foo() {}",
-                "var bar = function () {}",
-                "var obj = { get foo() {}, set foo(val) {}, bar() {} };"
-            ].join("\n"),
+            code: ["function foo () {}", "var bar = function() {}", "var obj = { get foo () {}, set foo (val) {}, bar () {} };"].join("\n"),
+            output: ["function foo() {}", "var bar = function () {}", "var obj = { get foo() {}, set foo(val) {}, bar() {} };"].join("\n"),
             options: [{ named: "never", anonymous: "always" }],
             parserOptions: { ecmaVersion: 6 },
             errors: [
@@ -487,16 +478,8 @@ ruleTester.run("space-before-function-paren", rule, {
             ]
         },
         {
-            code: [
-                "function foo() {}",
-                "var bar = function () {}",
-                "var obj = { get foo() {}, set foo(val) {}, bar() {} };"
-            ].join("\n"),
-            output: [
-                "function foo () {}",
-                "var bar = function() {}",
-                "var obj = { get foo () {}, set foo (val) {}, bar () {} };"
-            ].join("\n"),
+            code: ["function foo() {}", "var bar = function () {}", "var obj = { get foo() {}, set foo(val) {}, bar() {} };"].join("\n"),
+            output: ["function foo () {}", "var bar = function() {}", "var obj = { get foo () {}, set foo (val) {}, bar () {} };"].join("\n"),
             options: [{ named: "always", anonymous: "never" }],
             parserOptions: { ecmaVersion: 6 },
             errors: [

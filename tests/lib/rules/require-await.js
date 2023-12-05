@@ -85,78 +85,97 @@ ruleTester.run("require-await", rule, {
             code: 'async function* run() { console.log("bar") }',
             parserOptions: { ecmaVersion: 9 }
         }
-
     ],
     invalid: [
         {
             code: "async function foo() { doSomething() }",
-            errors: [{
-                messageId: "missingAwait",
-                data: { name: "Async function 'foo'" }
-            }]
+            errors: [
+                {
+                    messageId: "missingAwait",
+                    data: { name: "Async function 'foo'" }
+                }
+            ]
         },
         {
             code: "(async function() { doSomething() })",
-            errors: [{
-                messageId: "missingAwait",
-                data: { name: "Async function" }
-            }]
+            errors: [
+                {
+                    messageId: "missingAwait",
+                    data: { name: "Async function" }
+                }
+            ]
         },
         {
             code: "async () => { doSomething() }",
-            errors: [{
-                messageId: "missingAwait",
-                data: { name: "Async arrow function" }
-            }]
+            errors: [
+                {
+                    messageId: "missingAwait",
+                    data: { name: "Async arrow function" }
+                }
+            ]
         },
         {
             code: "async () => doSomething()",
-            errors: [{
-                messageId: "missingAwait",
-                data: { name: "Async arrow function" }
-            }]
+            errors: [
+                {
+                    messageId: "missingAwait",
+                    data: { name: "Async arrow function" }
+                }
+            ]
         },
         {
             code: "({ async foo() { doSomething() } })",
-            errors: [{
-                messageId: "missingAwait",
-                data: { name: "Async method 'foo'" }
-            }]
+            errors: [
+                {
+                    messageId: "missingAwait",
+                    data: { name: "Async method 'foo'" }
+                }
+            ]
         },
         {
             code: "class A { async foo() { doSomething() } }",
-            errors: [{
-                messageId: "missingAwait",
-                data: { name: "Async method 'foo'" }
-            }]
+            errors: [
+                {
+                    messageId: "missingAwait",
+                    data: { name: "Async method 'foo'" }
+                }
+            ]
         },
         {
             code: "(class { async foo() { doSomething() } })",
-            errors: [{
-                messageId: "missingAwait",
-                data: { name: "Async method 'foo'" }
-            }]
+            errors: [
+                {
+                    messageId: "missingAwait",
+                    data: { name: "Async method 'foo'" }
+                }
+            ]
         },
         {
             code: "(class { async ''() { doSomething() } })",
-            errors: [{
-                messageId: "missingAwait",
-                data: { name: "Async method ''" }
-            }]
+            errors: [
+                {
+                    messageId: "missingAwait",
+                    data: { name: "Async method ''" }
+                }
+            ]
         },
         {
             code: "async function foo() { async () => { await doSomething() } }",
-            errors: [{
-                messageId: "missingAwait",
-                data: { name: "Async function 'foo'" }
-            }]
+            errors: [
+                {
+                    messageId: "missingAwait",
+                    data: { name: "Async function 'foo'" }
+                }
+            ]
         },
         {
             code: "async function foo() { await (async () => { doSomething() }) }",
-            errors: [{
-                messageId: "missingAwait",
-                data: { name: "Async arrow function" }
-            }]
+            errors: [
+                {
+                    messageId: "missingAwait",
+                    data: { name: "Async arrow function" }
+                }
+            ]
         }
     ]
 });

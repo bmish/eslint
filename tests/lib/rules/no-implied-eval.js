@@ -120,10 +120,10 @@ ruleTester.run("no-implied-eval", rule, {
     ],
 
     invalid: [
-        { code: "setTimeout(\"x = 1;\");", errors: [expectedError] },
-        { code: "setTimeout(\"x = 1;\", 100);", errors: [expectedError] },
-        { code: "setInterval(\"x = 1;\");", errors: [expectedError] },
-        { code: "execScript(\"x = 1;\");", errors: [expectedError] },
+        { code: 'setTimeout("x = 1;");', errors: [expectedError] },
+        { code: 'setTimeout("x = 1;", 100);', errors: [expectedError] },
+        { code: 'setInterval("x = 1;");', errors: [expectedError] },
+        { code: 'execScript("x = 1;");', errors: [expectedError] },
 
         { code: "const s = 'x=1'; setTimeout(s, 100);", parserOptions: { ecmaVersion: 6 }, errors: [expectedError] },
         { code: "setTimeout(String('x=1'), 100);", parserOptions: { ecmaVersion: 6 }, errors: [expectedError] },
@@ -169,12 +169,7 @@ ruleTester.run("no-implied-eval", rule, {
 
         // gives the correct node when dealing with nesting
         {
-            code:
-                "setTimeout('foo' + (function() {\n" +
-                "   setTimeout(helper);\n" +
-                "   execScript('str');\n" +
-                "   return 'bar';\n" +
-                "})())",
+            code: "setTimeout('foo' + (function() {\n" + "   setTimeout(helper);\n" + "   execScript('str');\n" + "   return 'bar';\n" + "})())",
             errors: [
                 {
                     messageId: "impliedEval",
@@ -191,12 +186,7 @@ ruleTester.run("no-implied-eval", rule, {
             ]
         },
         {
-            code:
-                "window.setTimeout('foo' + (function() {\n" +
-                "   setTimeout(helper);\n" +
-                "   window.execScript('str');\n" +
-                "   return 'bar';\n" +
-                "})())",
+            code: "window.setTimeout('foo' + (function() {\n" + "   setTimeout(helper);\n" + "   window.execScript('str');\n" + "   return 'bar';\n" + "})())",
             env: { browser: true },
             errors: [
                 {
@@ -214,12 +204,7 @@ ruleTester.run("no-implied-eval", rule, {
             ]
         },
         {
-            code:
-                "global.setTimeout('foo' + (function() {\n" +
-                "   setTimeout(helper);\n" +
-                "   global.execScript('str');\n" +
-                "   return 'bar';\n" +
-                "})())",
+            code: "global.setTimeout('foo' + (function() {\n" + "   setTimeout(helper);\n" + "   global.execScript('str');\n" + "   return 'bar';\n" + "})())",
             env: { node: true },
             errors: [
                 {

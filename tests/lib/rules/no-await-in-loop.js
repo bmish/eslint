@@ -50,7 +50,6 @@ ruleTester.run("no-await-in-loop", rule, {
         "async function foo() { for await (var x of xs) { await f(x) } }"
     ],
     invalid: [
-
         // While loops
         { code: "async function foo() { while (baz) { await bar; } }", errors: [error] },
         { code: "async function foo() { while (await foo()) {  } }", errors: [error] },

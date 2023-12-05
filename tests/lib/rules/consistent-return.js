@@ -18,7 +18,6 @@ const rule = require("../../../lib/rules/consistent-return"),
 const ruleTester = new RuleTester();
 
 ruleTester.run("consistent-return", rule, {
-
     valid: [
         "function foo() { return; }",
         "function foo() { if (true) return; }",

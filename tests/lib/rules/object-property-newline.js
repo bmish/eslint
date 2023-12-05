@@ -19,9 +19,7 @@ const rule = require("../../../lib/rules/object-property-newline"),
 const ruleTester = new RuleTester();
 
 ruleTester.run("object-property-newline", rule, {
-
     valid: [
-
         // default-case
         "var obj = {\nk1: 'val1',\nk2: 'val2',\nk3: 'val3',\nk4: 'val4'\n};",
         "var obj = {\nk1: 'val1'\n, k2: 'val2'\n, k3: 'val3'\n, k4: 'val4'\n};",
@@ -68,7 +66,6 @@ ruleTester.run("object-property-newline", rule, {
     ],
 
     invalid: [
-
         // default-case
         {
             code: "var obj = { k1: 'val1', k2: 'val2', k3: 'val3' };",

@@ -356,11 +356,11 @@ ruleTester.run("use-isnan", rule, {
             errors: [comparisonError]
         },
         {
-            code: "NaN === \"abc\";",
+            code: 'NaN === "abc";',
             errors: [comparisonError]
         },
         {
-            code: "NaN == \"abc\";",
+            code: 'NaN == "abc";',
             errors: [comparisonError]
         },
         {
@@ -372,43 +372,43 @@ ruleTester.run("use-isnan", rule, {
             errors: [comparisonError]
         },
         {
-            code: "NaN !== \"abc\";",
+            code: 'NaN !== "abc";',
             errors: [comparisonError]
         },
         {
-            code: "NaN != \"abc\";",
+            code: 'NaN != "abc";',
             errors: [comparisonError]
         },
         {
-            code: "NaN < \"abc\";",
+            code: 'NaN < "abc";',
             errors: [comparisonError]
         },
         {
-            code: "\"abc\" < NaN;",
+            code: '"abc" < NaN;',
             errors: [comparisonError]
         },
         {
-            code: "NaN > \"abc\";",
+            code: 'NaN > "abc";',
             errors: [comparisonError]
         },
         {
-            code: "\"abc\" > NaN;",
+            code: '"abc" > NaN;',
             errors: [comparisonError]
         },
         {
-            code: "NaN <= \"abc\";",
+            code: 'NaN <= "abc";',
             errors: [comparisonError]
         },
         {
-            code: "\"abc\" <= NaN;",
+            code: '"abc" <= NaN;',
             errors: [comparisonError]
         },
         {
-            code: "NaN >= \"abc\";",
+            code: 'NaN >= "abc";',
             errors: [comparisonError]
         },
         {
-            code: "\"abc\" >= NaN;",
+            code: '"abc" >= NaN;',
             errors: [comparisonError]
         },
         {
@@ -420,11 +420,11 @@ ruleTester.run("use-isnan", rule, {
             errors: [comparisonError]
         },
         {
-            code: "Number.NaN === \"abc\";",
+            code: 'Number.NaN === "abc";',
             errors: [comparisonError]
         },
         {
-            code: "Number.NaN == \"abc\";",
+            code: 'Number.NaN == "abc";',
             errors: [comparisonError]
         },
         {
@@ -436,43 +436,43 @@ ruleTester.run("use-isnan", rule, {
             errors: [comparisonError]
         },
         {
-            code: "Number.NaN !== \"abc\";",
+            code: 'Number.NaN !== "abc";',
             errors: [comparisonError]
         },
         {
-            code: "Number.NaN != \"abc\";",
+            code: 'Number.NaN != "abc";',
             errors: [comparisonError]
         },
         {
-            code: "Number.NaN < \"abc\";",
+            code: 'Number.NaN < "abc";',
             errors: [comparisonError]
         },
         {
-            code: "\"abc\" < Number.NaN;",
+            code: '"abc" < Number.NaN;',
             errors: [comparisonError]
         },
         {
-            code: "Number.NaN > \"abc\";",
+            code: 'Number.NaN > "abc";',
             errors: [comparisonError]
         },
         {
-            code: "\"abc\" > Number.NaN;",
+            code: '"abc" > Number.NaN;',
             errors: [comparisonError]
         },
         {
-            code: "Number.NaN <= \"abc\";",
+            code: 'Number.NaN <= "abc";',
             errors: [comparisonError]
         },
         {
-            code: "\"abc\" <= Number.NaN;",
+            code: '"abc" <= Number.NaN;',
             errors: [comparisonError]
         },
         {
-            code: "Number.NaN >= \"abc\";",
+            code: 'Number.NaN >= "abc";',
             errors: [comparisonError]
         },
         {
-            code: "\"abc\" >= Number.NaN;",
+            code: '"abc" >= Number.NaN;',
             errors: [comparisonError]
         },
         {

@@ -15,9 +15,7 @@ const { assert } = require("chai");
 const sh = require("shelljs");
 const sinon = require("sinon");
 const {
-    Legacy: {
-        CascadingConfigArrayFactory
-    }
+    Legacy: { CascadingConfigArrayFactory }
 } = require("@eslint/eslintrc");
 const { createCustomTeardown } = require("../../_utils");
 const { FileEnumerator } = require("../../../lib/cli-engine/file-enumerator");
@@ -65,7 +63,6 @@ describe("FileEnumerator", () => {
             });
 
             describe("if 'lib/*.js' was given,", () => {
-
                 /** @type {Array<{config:(typeof import('../../../lib/cli-engine')).ConfigArray, filePath:string, ignored:boolean}>} */
                 let list;
 
@@ -80,10 +77,7 @@ describe("FileEnumerator", () => {
                 it("should list 'lib/one.js' and 'lib/two.js'.", () => {
                     assert.deepStrictEqual(
                         list.map(entry => entry.filePath),
-                        [
-                            path.join(root, "lib/one.js"),
-                            path.join(root, "lib/two.js")
-                        ]
+                        [path.join(root, "lib/one.js"), path.join(root, "lib/two.js")]
                     );
                 });
 
@@ -97,7 +91,6 @@ describe("FileEnumerator", () => {
             });
 
             describe("if 'lib/**/*.js' was given,", () => {
-
                 /** @type {Array<{config:(typeof import('../../../lib/cli-engine')).ConfigArray, filePath:string, ignored:boolean}>} */
                 let list;
 
@@ -140,7 +133,6 @@ describe("FileEnumerator", () => {
             });
 
             describe("if 'lib/*.js' and 'test/*.js' were given,", () => {
-
                 /** @type {Array<{config:(typeof import('../../../lib/cli-engine')).ConfigArray, filePath:string, ignored:boolean}>} */
                 let list;
 
@@ -155,12 +147,7 @@ describe("FileEnumerator", () => {
                 it("should list 'lib/one.js', 'lib/two.js', 'test/one.js', 'test/two.js'.", () => {
                     assert.deepStrictEqual(
                         list.map(entry => entry.filePath),
-                        [
-                            path.join(root, "lib/one.js"),
-                            path.join(root, "lib/two.js"),
-                            path.join(root, "test/one.js"),
-                            path.join(root, "test/two.js")
-                        ]
+                        [path.join(root, "lib/one.js"), path.join(root, "lib/two.js"), path.join(root, "test/one.js"), path.join(root, "test/two.js")]
                     );
                 });
 
@@ -227,9 +214,7 @@ describe("FileEnumerator", () => {
                 it("should use the config '{lib}/server/.eslintrc.json' for '{lib}/server/src/two.js'.", () => {
                     const spy = sinon.spy(fs, "readdirSync");
 
-                    const list = [
-                        ...enumerator.iterateFiles(["src/**/*.{js,json}"])
-                    ];
+                    const list = [...enumerator.iterateFiles(["src/**/*.{js,json}"])];
 
                     // should enter the directory '{lib}/server/src' directly
                     assert.strictEqual(spy.getCall(0).firstArg, path.join(root, "{lib}/server/src"));
@@ -239,9 +224,7 @@ describe("FileEnumerator", () => {
                     assert.strictEqual(list[0].config[1].filePath, getPath("{lib}/server/.eslintrc.json"));
                     assert.deepStrictEqual(
                         list.map(entry => entry.filePath),
-                        [
-                            path.join(root, "{lib}/server/src/two.js")
-                        ]
+                        [path.join(root, "{lib}/server/src/two.js")]
                     );
 
                     // destroy the spy
@@ -285,8 +268,7 @@ describe("FileEnumerator", () => {
                 );
             }
 
-            before(function() {
-
+            before(function () {
                 /*
                  * GitHub Actions Windows and macOS runners occasionally
                  * exhibit extremely slow filesystem operations, during which
@@ -334,10 +316,7 @@ describe("FileEnumerator", () => {
                 });
 
                 it("should return all files matching multiple glob patterns", () => {
-                    const patterns = [
-                        getFixturePath("glob-util", "two-js-files", "**/*.js"),
-                        getFixturePath("glob-util", "one-js-file", "**/*.js")
-                    ];
+                    const patterns = [getFixturePath("glob-util", "two-js-files", "**/*.js"), getFixturePath("glob-util", "one-js-file", "**/*.js")];
                     const result = listFiles(patterns, {
                         cwd: getFixturePath()
                     });
@@ -373,9 +352,7 @@ describe("FileEnumerator", () => {
                     const file1 = getFixturePath("glob-util", "hidden", ".foo.js");
 
                     assert.strictEqual(result.length, 1);
-                    assert.deepStrictEqual(result, [
-                        { filename: file1, ignored: false }
-                    ]);
+                    assert.deepStrictEqual(result, [{ filename: file1, ignored: false }]);
                 });
 
                 it("should ignore default ignored files if not passed explicitly", () => {
@@ -457,7 +434,6 @@ describe("FileEnumerator", () => {
                 });
 
                 it("should throw an error if no files match a glob", () => {
-
                     // Relying here on the .eslintignore from the repo root
                     const patterns = ["tests/fixtures/glob-util/ignored/**/*.js"];
 
@@ -493,10 +469,7 @@ describe("FileEnumerator", () => {
                 });
 
                 it("should return a file only once if listed in more than 1 pattern", () => {
-                    const patterns = [
-                        getFixturePath("glob-util", "one-js-file", "**/*.js"),
-                        getFixturePath("glob-util", "one-js-file", "baz.js")
-                    ];
+                    const patterns = [getFixturePath("glob-util", "one-js-file", "**/*.js"), getFixturePath("glob-util", "one-js-file", "baz.js")];
                     const result = listFiles(patterns, {
                         cwd: path.join(fixtureDir, "..")
                     });
@@ -504,9 +477,7 @@ describe("FileEnumerator", () => {
                     const file1 = getFixturePath("glob-util", "one-js-file", "baz.js");
 
                     assert.isArray(result);
-                    assert.deepStrictEqual(result, [
-                        { filename: file1, ignored: false }
-                    ]);
+                    assert.deepStrictEqual(result, [{ filename: file1, ignored: false }]);
                 });
 
                 it("should set 'ignored: true' for files that are explicitly specified but ignored", () => {
@@ -516,9 +487,7 @@ describe("FileEnumerator", () => {
                     const result = listFiles(patterns, options);
 
                     assert.strictEqual(result.length, 1);
-                    assert.deepStrictEqual(result, [
-                        { filename, ignored: true }
-                    ]);
+                    assert.deepStrictEqual(result, [{ filename, ignored: true }]);
                 });
 
                 it("should not return files from default ignored folders", () => {
@@ -591,11 +560,7 @@ describe("FileEnumerator", () => {
                 const enumerator = new FileEnumerator({ cwd: root });
                 const list = Array.from(enumerator.iterateFiles(["dir2/**/*.js"])).map(({ filePath }) => filePath);
 
-                assert.deepStrictEqual(list, [
-                    path.join(dir2, "nested", "1.js"),
-                    path.join(dir2, "nested", "2.js"),
-                    path.join(dir2, "top.js")
-                ]);
+                assert.deepStrictEqual(list, [path.join(dir2, "nested", "1.js"), path.join(dir2, "nested", "2.js"), path.join(dir2, "top.js")]);
             });
 
             it("should ignore broken links", () => {
@@ -604,10 +569,7 @@ describe("FileEnumerator", () => {
                 const enumerator = new FileEnumerator({ cwd: root });
                 const list = Array.from(enumerator.iterateFiles(["dir2/**/*.js"])).map(({ filePath }) => filePath);
 
-                assert.deepStrictEqual(list, [
-                    path.join(dir2, "nested", "1.js"),
-                    path.join(dir2, "nested", "2.js")
-                ]);
+                assert.deepStrictEqual(list, [path.join(dir2, "nested", "1.js"), path.join(dir2, "nested", "2.js")]);
             });
         });
     });
@@ -622,7 +584,6 @@ describe("FileEnumerator", () => {
             })
         };
         const { prepare, cleanup, getPath } = createCustomTeardown({ cwd: root, files });
-
 
         /** @type {FileEnumerator} */
         let enumerator;

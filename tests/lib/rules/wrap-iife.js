@@ -482,7 +482,6 @@ ruleTester.run("wrap-iife", rule, {
             errors: [wrapExpressionError]
         },
         {
-
             // Ensure all comments get preserved when autofixing.
             code: "( /* a */ function /* b */ foo /* c */ ( /* d */ bar /* e */ ) /* f */ { /* g */ return; /* h */ } /* i */ ( /* j */ baz /* k */) /* l */ ) /* m */ ;",
             output: "( /* a */ function /* b */ foo /* c */ ( /* d */ bar /* e */ ) /* f */ { /* g */ return; /* h */ }) /* i */ ( /* j */ baz /* k */) /* l */  /* m */ ;",

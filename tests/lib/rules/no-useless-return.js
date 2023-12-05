@@ -11,7 +11,6 @@
 const rule = require("../../../lib/rules/no-useless-return"),
     { RuleTester } = require("../../../lib/rule-tester");
 
-
 //------------------------------------------------------------------------------
 // Tests
 //------------------------------------------------------------------------------
@@ -589,10 +588,9 @@ ruleTester.run("no-useless-return", rule, {
     ].map(invalidCase =>
         Object.assign(
             {
-                errors: [
-                    { messageId: "unnecessaryReturn", type: "ReturnStatement" }
-                ]
+                errors: [{ messageId: "unnecessaryReturn", type: "ReturnStatement" }]
             },
             invalidCase
-        ))
+        )
+    )
 });

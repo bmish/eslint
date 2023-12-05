@@ -30,7 +30,7 @@ ruleTester.run("no-undef", rule, {
         "var a; function f() { a = 1; }",
         "/*global b:true*/ b++;",
         "/*eslint-env browser*/ window;",
-        "/*eslint-env node*/ require(\"a\");",
+        '/*eslint-env node*/ require("a");',
         "Object; isNaN();",
         "toString()",
         "hasOwnProperty()",
@@ -156,17 +156,36 @@ ruleTester.run("no-undef", rule, {
     ],
     invalid: [
         { code: "a = 1;", errors: [{ messageId: "undef", data: { name: "a" }, type: "Identifier" }] },
-        { code: "if (typeof anUndefinedVar === 'string') {}", options: [{ typeof: true }], errors: [{ messageId: "undef", data: { name: "anUndefinedVar" }, type: "Identifier" }] },
+        {
+            code: "if (typeof anUndefinedVar === 'string') {}",
+            options: [{ typeof: true }],
+            errors: [{ messageId: "undef", data: { name: "anUndefinedVar" }, type: "Identifier" }]
+        },
         { code: "var a = b;", errors: [{ messageId: "undef", data: { name: "b" }, type: "Identifier" }] },
         { code: "function f() { b; }", errors: [{ messageId: "undef", data: { name: "b" }, type: "Identifier" }] },
         { code: "window;", errors: [{ messageId: "undef", data: { name: "window" }, type: "Identifier" }] },
-        { code: "require(\"a\");", errors: [{ messageId: "undef", data: { name: "require" }, type: "Identifier" }] },
-        { code: "var React; React.render(<img attr={a} />);", parserOptions: { ecmaVersion: 6, ecmaFeatures: { jsx: true } }, errors: [{ messageId: "undef", data: { name: "a" } }] },
-        { code: "var React, App; React.render(<App attr={a} />);", parserOptions: { ecmaVersion: 6, ecmaFeatures: { jsx: true } }, errors: [{ messageId: "undef", data: { name: "a" } }] },
+        { code: 'require("a");', errors: [{ messageId: "undef", data: { name: "require" }, type: "Identifier" }] },
+        {
+            code: "var React; React.render(<img attr={a} />);",
+            parserOptions: { ecmaVersion: 6, ecmaFeatures: { jsx: true } },
+            errors: [{ messageId: "undef", data: { name: "a" } }]
+        },
+        {
+            code: "var React, App; React.render(<App attr={a} />);",
+            parserOptions: { ecmaVersion: 6, ecmaFeatures: { jsx: true } },
+            errors: [{ messageId: "undef", data: { name: "a" } }]
+        },
         { code: "[a] = [0];", parserOptions: { ecmaVersion: 6 }, errors: [{ messageId: "undef", data: { name: "a" } }] },
         { code: "({a} = {});", parserOptions: { ecmaVersion: 6 }, errors: [{ messageId: "undef", data: { name: "a" } }] },
         { code: "({b: a} = {});", parserOptions: { ecmaVersion: 6 }, errors: [{ messageId: "undef", data: { name: "a" } }] },
-        { code: "[obj.a, obj.b] = [0, 1];", parserOptions: { ecmaVersion: 6 }, errors: [{ messageId: "undef", data: { name: "obj" } }, { messageId: "undef", data: { name: "obj" } }] },
+        {
+            code: "[obj.a, obj.b] = [0, 1];",
+            parserOptions: { ecmaVersion: 6 },
+            errors: [
+                { messageId: "undef", data: { name: "obj" } },
+                { messageId: "undef", data: { name: "obj" } }
+            ]
+        },
 
         // Experimental
         {

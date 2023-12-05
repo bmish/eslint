@@ -94,11 +94,32 @@ ruleTester.run("no-self-assign", rule, {
     invalid: [
         { code: "a = a", errors: [{ messageId: "selfAssignment", data: { name: "a" } }] },
         { code: "[a] = [a]", parserOptions: { ecmaVersion: 6 }, errors: [{ messageId: "selfAssignment", data: { name: "a" } }] },
-        { code: "[a, b] = [a, b]", parserOptions: { ecmaVersion: 6 }, errors: [{ messageId: "selfAssignment", data: { name: "a" } }, { messageId: "selfAssignment", data: { name: "b" } }] },
+        {
+            code: "[a, b] = [a, b]",
+            parserOptions: { ecmaVersion: 6 },
+            errors: [
+                { messageId: "selfAssignment", data: { name: "a" } },
+                { messageId: "selfAssignment", data: { name: "b" } }
+            ]
+        },
         { code: "[a, b] = [a, c]", parserOptions: { ecmaVersion: 6 }, errors: [{ messageId: "selfAssignment", data: { name: "a" } }] },
         { code: "[a, b] = [, b]", parserOptions: { ecmaVersion: 6 }, errors: [{ messageId: "selfAssignment", data: { name: "b" } }] },
-        { code: "[a, ...b] = [a, ...b]", parserOptions: { ecmaVersion: 6 }, errors: [{ messageId: "selfAssignment", data: { name: "a" } }, { messageId: "selfAssignment", data: { name: "b" } }] },
-        { code: "[[a], {b}] = [[a], {b}]", parserOptions: { ecmaVersion: 6 }, errors: [{ messageId: "selfAssignment", data: { name: "a" } }, { messageId: "selfAssignment", data: { name: "b" } }] },
+        {
+            code: "[a, ...b] = [a, ...b]",
+            parserOptions: { ecmaVersion: 6 },
+            errors: [
+                { messageId: "selfAssignment", data: { name: "a" } },
+                { messageId: "selfAssignment", data: { name: "b" } }
+            ]
+        },
+        {
+            code: "[[a], {b}] = [[a], {b}]",
+            parserOptions: { ecmaVersion: 6 },
+            errors: [
+                { messageId: "selfAssignment", data: { name: "a" } },
+                { messageId: "selfAssignment", data: { name: "b" } }
+            ]
+        },
         { code: "({a} = {a})", parserOptions: { ecmaVersion: 6 }, errors: [{ messageId: "selfAssignment", data: { name: "a" } }] },
         { code: "({a: b} = {a: b})", parserOptions: { ecmaVersion: 6 }, errors: [{ messageId: "selfAssignment", data: { name: "b" } }] },
         { code: "({'a': b} = {'a': b})", parserOptions: { ecmaVersion: 6 }, errors: [{ messageId: "selfAssignment", data: { name: "b" } }] },
@@ -110,10 +131,31 @@ ruleTester.run("no-self-assign", rule, {
         { code: "({['a']: b} = {a: b})", parserOptions: { ecmaVersion: 6 }, errors: [{ messageId: "selfAssignment", data: { name: "b" } }] },
         { code: "({'a': b} = {[`a`]: b})", parserOptions: { ecmaVersion: 6 }, errors: [{ messageId: "selfAssignment", data: { name: "b" } }] },
         { code: "({1: b} = {[1]: b})", parserOptions: { ecmaVersion: 6 }, errors: [{ messageId: "selfAssignment", data: { name: "b" } }] },
-        { code: "({a, b} = {a, b})", parserOptions: { ecmaVersion: 6 }, errors: [{ messageId: "selfAssignment", data: { name: "a" } }, { messageId: "selfAssignment", data: { name: "b" } }] },
-        { code: "({a, b} = {b, a})", parserOptions: { ecmaVersion: 6 }, errors: [{ messageId: "selfAssignment", data: { name: "b" } }, { messageId: "selfAssignment", data: { name: "a" } }] },
+        {
+            code: "({a, b} = {a, b})",
+            parserOptions: { ecmaVersion: 6 },
+            errors: [
+                { messageId: "selfAssignment", data: { name: "a" } },
+                { messageId: "selfAssignment", data: { name: "b" } }
+            ]
+        },
+        {
+            code: "({a, b} = {b, a})",
+            parserOptions: { ecmaVersion: 6 },
+            errors: [
+                { messageId: "selfAssignment", data: { name: "b" } },
+                { messageId: "selfAssignment", data: { name: "a" } }
+            ]
+        },
         { code: "({a, b} = {c, a})", parserOptions: { ecmaVersion: 6 }, errors: [{ messageId: "selfAssignment", data: { name: "a" } }] },
-        { code: "({a: {b}, c: [d]} = {a: {b}, c: [d]})", parserOptions: { ecmaVersion: 6 }, errors: [{ messageId: "selfAssignment", data: { name: "b" } }, { messageId: "selfAssignment", data: { name: "d" } }] },
+        {
+            code: "({a: {b}, c: [d]} = {a: {b}, c: [d]})",
+            parserOptions: { ecmaVersion: 6 },
+            errors: [
+                { messageId: "selfAssignment", data: { name: "b" } },
+                { messageId: "selfAssignment", data: { name: "d" } }
+            ]
+        },
         { code: "({a, b} = {a, ...x, b})", parserOptions: { ecmaVersion: 2018 }, errors: [{ messageId: "selfAssignment", data: { name: "b" } }] },
         {
             code: "a.b = a.b",
@@ -145,7 +187,12 @@ ruleTester.run("no-self-assign", rule, {
             options: [{ props: true }],
             errors: [{ messageId: "selfAssignment", data: { name: "this.x" } }]
         },
-        { code: "a['/(?<zero>0)/'] = a[/(?<zero>0)/]", options: [{ props: true }], parserOptions: { ecmaVersion: 2018 }, errors: [{ messageId: "selfAssignment", data: { name: "a[/(?<zero>0)/]" } }] },
+        {
+            code: "a['/(?<zero>0)/'] = a[/(?<zero>0)/]",
+            options: [{ props: true }],
+            parserOptions: { ecmaVersion: 2018 },
+            errors: [{ messageId: "selfAssignment", data: { name: "a[/(?<zero>0)/]" } }]
+        },
 
         // Optional chaining
         {

@@ -142,202 +142,248 @@ ruleTester.run("no-invalid-regexp", rule, {
     invalid: [
         {
             code: "RegExp('[');",
-            errors: [{
-                messageId: "regexMessage",
-                data: { message: "Invalid regular expression: /[/: Unterminated character class" },
-                type: "CallExpression"
-            }]
+            errors: [
+                {
+                    messageId: "regexMessage",
+                    data: { message: "Invalid regular expression: /[/: Unterminated character class" },
+                    type: "CallExpression"
+                }
+            ]
         },
         {
             code: "RegExp('.', 'z');",
-            errors: [{
-                messageId: "regexMessage",
-                data: { message: "Invalid flags supplied to RegExp constructor 'z'" },
-                type: "CallExpression"
-            }]
+            errors: [
+                {
+                    messageId: "regexMessage",
+                    data: { message: "Invalid flags supplied to RegExp constructor 'z'" },
+                    type: "CallExpression"
+                }
+            ]
         },
         {
             code: "RegExp('.', 'a');",
             options: [{}],
-            errors: [{
-                messageId: "regexMessage",
-                data: { message: "Invalid flags supplied to RegExp constructor 'a'" },
-                type: "CallExpression"
-            }]
+            errors: [
+                {
+                    messageId: "regexMessage",
+                    data: { message: "Invalid flags supplied to RegExp constructor 'a'" },
+                    type: "CallExpression"
+                }
+            ]
         },
         {
             code: "new RegExp('.', 'a');",
             options: [{ allowConstructorFlags: [] }],
-            errors: [{
-                messageId: "regexMessage",
-                data: { message: "Invalid flags supplied to RegExp constructor 'a'" },
-                type: "NewExpression"
-            }]
+            errors: [
+                {
+                    messageId: "regexMessage",
+                    data: { message: "Invalid flags supplied to RegExp constructor 'a'" },
+                    type: "NewExpression"
+                }
+            ]
         },
         {
             code: "new RegExp('.', 'z');",
             options: [{ allowConstructorFlags: ["a"] }],
-            errors: [{
-                messageId: "regexMessage",
-                data: { message: "Invalid flags supplied to RegExp constructor 'z'" },
-                type: "NewExpression"
-            }]
+            errors: [
+                {
+                    messageId: "regexMessage",
+                    data: { message: "Invalid flags supplied to RegExp constructor 'z'" },
+                    type: "NewExpression"
+                }
+            ]
         },
         {
             code: "new RegExp('.', 'az');",
             options: [{ allowConstructorFlags: ["z"] }],
-            errors: [{
-                messageId: "regexMessage",
-                data: { message: "Invalid flags supplied to RegExp constructor 'a'" },
-                type: "NewExpression"
-            }]
+            errors: [
+                {
+                    messageId: "regexMessage",
+                    data: { message: "Invalid flags supplied to RegExp constructor 'a'" },
+                    type: "NewExpression"
+                }
+            ]
         },
         {
             code: "new RegExp(')');",
-            errors: [{
-                messageId: "regexMessage",
-                data: { message: "Invalid regular expression: /)/: Unmatched ')'" },
-                type: "NewExpression"
-            }]
+            errors: [
+                {
+                    messageId: "regexMessage",
+                    data: { message: "Invalid regular expression: /)/: Unmatched ')'" },
+                    type: "NewExpression"
+                }
+            ]
         },
         {
             code: String.raw`new RegExp('\\a', 'u');`,
-            errors: [{
-                messageId: "regexMessage",
-                data: { message: "Invalid regular expression: /\\a/u: Invalid escape" },
-                type: "NewExpression"
-            }]
+            errors: [
+                {
+                    messageId: "regexMessage",
+                    data: { message: "Invalid regular expression: /\\a/u: Invalid escape" },
+                    type: "NewExpression"
+                }
+            ]
         },
         {
             code: String.raw`new RegExp('\\a', 'u');`,
             options: [{ allowConstructorFlags: ["u"] }],
-            errors: [{
-                messageId: "regexMessage",
-                data: { message: "Invalid regular expression: /\\a/u: Invalid escape" },
-                type: "NewExpression"
-            }]
+            errors: [
+                {
+                    messageId: "regexMessage",
+                    data: { message: "Invalid regular expression: /\\a/u: Invalid escape" },
+                    type: "NewExpression"
+                }
+            ]
         },
         {
             code: String.raw`RegExp('\\u{0}*');`,
-            errors: [{
-                messageId: "regexMessage",
-                data: { message: "Invalid regular expression: /\\u{0}*/: Nothing to repeat" },
-                type: "CallExpression"
-            }]
+            errors: [
+                {
+                    messageId: "regexMessage",
+                    data: { message: "Invalid regular expression: /\\u{0}*/: Nothing to repeat" },
+                    type: "CallExpression"
+                }
+            ]
         },
         {
             code: String.raw`new RegExp('\\u{0}*');`,
-            errors: [{
-                messageId: "regexMessage",
-                data: { message: "Invalid regular expression: /\\u{0}*/: Nothing to repeat" },
-                type: "NewExpression"
-            }]
+            errors: [
+                {
+                    messageId: "regexMessage",
+                    data: { message: "Invalid regular expression: /\\u{0}*/: Nothing to repeat" },
+                    type: "NewExpression"
+                }
+            ]
         },
         {
             code: String.raw`new RegExp('\\u{0}*', '');`,
-            errors: [{
-                messageId: "regexMessage",
-                data: { message: "Invalid regular expression: /\\u{0}*/: Nothing to repeat" },
-                type: "NewExpression"
-            }]
+            errors: [
+                {
+                    messageId: "regexMessage",
+                    data: { message: "Invalid regular expression: /\\u{0}*/: Nothing to repeat" },
+                    type: "NewExpression"
+                }
+            ]
         },
         {
             code: String.raw`new RegExp('\\u{0}*', 'a');`,
             options: [{ allowConstructorFlags: ["a"] }],
-            errors: [{
-                messageId: "regexMessage",
-                data: { message: "Invalid regular expression: /\\u{0}*/: Nothing to repeat" },
-                type: "NewExpression"
-            }]
+            errors: [
+                {
+                    messageId: "regexMessage",
+                    data: { message: "Invalid regular expression: /\\u{0}*/: Nothing to repeat" },
+                    type: "NewExpression"
+                }
+            ]
         },
         {
             code: String.raw`RegExp('\\u{0}*');`,
             options: [{ allowConstructorFlags: ["a"] }],
-            errors: [{
-                messageId: "regexMessage",
-                data: { message: "Invalid regular expression: /\\u{0}*/: Nothing to repeat" },
-                type: "CallExpression"
-            }]
+            errors: [
+                {
+                    messageId: "regexMessage",
+                    data: { message: "Invalid regular expression: /\\u{0}*/: Nothing to repeat" },
+                    type: "CallExpression"
+                }
+            ]
         },
 
         // https://github.com/eslint/eslint/issues/10861
         {
             code: String.raw`new RegExp('\\');`,
-            errors: [{
-                messageId: "regexMessage",
-                data: { message: "Invalid regular expression: /\\/: \\ at end of pattern" },
-                type: "NewExpression"
-            }]
+            errors: [
+                {
+                    messageId: "regexMessage",
+                    data: { message: "Invalid regular expression: /\\/: \\ at end of pattern" },
+                    type: "NewExpression"
+                }
+            ]
         },
 
         // https://github.com/eslint/eslint/issues/16573
         {
             code: "RegExp(')' + '', 'a');",
-            errors: [{
-                messageId: "regexMessage",
-                data: { message: "Invalid flags supplied to RegExp constructor 'a'" },
-                type: "CallExpression"
-            }]
+            errors: [
+                {
+                    messageId: "regexMessage",
+                    data: { message: "Invalid flags supplied to RegExp constructor 'a'" },
+                    type: "CallExpression"
+                }
+            ]
         },
         {
             code: "new RegExp('.' + '', 'az');",
             options: [{ allowConstructorFlags: ["z"] }],
-            errors: [{
-                messageId: "regexMessage",
-                data: { message: "Invalid flags supplied to RegExp constructor 'a'" },
-                type: "NewExpression"
-            }]
+            errors: [
+                {
+                    messageId: "regexMessage",
+                    data: { message: "Invalid flags supplied to RegExp constructor 'a'" },
+                    type: "NewExpression"
+                }
+            ]
         },
         {
             code: "new RegExp(pattern, 'az');",
             options: [{ allowConstructorFlags: ["a"] }],
-            errors: [{
-                messageId: "regexMessage",
-                data: { message: "Invalid flags supplied to RegExp constructor 'z'" },
-                type: "NewExpression"
-            }]
+            errors: [
+                {
+                    messageId: "regexMessage",
+                    data: { message: "Invalid flags supplied to RegExp constructor 'z'" },
+                    type: "NewExpression"
+                }
+            ]
         },
 
         // ES2024
         {
             code: "new RegExp('[[]', 'v');",
-            errors: [{
-                messageId: "regexMessage",
-                data: { message: "Invalid regular expression: /[[]/v: Unterminated character class" },
-                type: "NewExpression"
-            }]
+            errors: [
+                {
+                    messageId: "regexMessage",
+                    data: { message: "Invalid regular expression: /[[]/v: Unterminated character class" },
+                    type: "NewExpression"
+                }
+            ]
         },
         {
             code: "new RegExp('.', 'uv');",
-            errors: [{
-                messageId: "regexMessage",
-                data: { message: "Regex 'u' and 'v' flags cannot be used together" },
-                type: "NewExpression"
-            }]
+            errors: [
+                {
+                    messageId: "regexMessage",
+                    data: { message: "Regex 'u' and 'v' flags cannot be used together" },
+                    type: "NewExpression"
+                }
+            ]
         },
         {
             code: "new RegExp(pattern, 'uv');",
-            errors: [{
-                messageId: "regexMessage",
-                data: { message: "Regex 'u' and 'v' flags cannot be used together" },
-                type: "NewExpression"
-            }]
+            errors: [
+                {
+                    messageId: "regexMessage",
+                    data: { message: "Regex 'u' and 'v' flags cannot be used together" },
+                    type: "NewExpression"
+                }
+            ]
         },
         {
             code: "new RegExp('[A--B]' /* valid only with `v` flag */, 'u')",
-            errors: [{
-                messageId: "regexMessage",
-                data: { message: "Invalid regular expression: /[A--B]/u: Range out of order in character class" },
-                type: "NewExpression"
-            }]
+            errors: [
+                {
+                    messageId: "regexMessage",
+                    data: { message: "Invalid regular expression: /[A--B]/u: Range out of order in character class" },
+                    type: "NewExpression"
+                }
+            ]
         },
         {
             code: "new RegExp('[[]\\\\u{0}*' /* valid only with `u` flag */, 'v')",
-            errors: [{
-                messageId: "regexMessage",
-                data: { message: "Invalid regular expression: /[[]\\u{0}*/v: Unterminated character class" },
-                type: "NewExpression"
-            }]
+            errors: [
+                {
+                    messageId: "regexMessage",
+                    data: { message: "Invalid regular expression: /[[]\\u{0}*/v: Unterminated character class" },
+                    type: "NewExpression"
+                }
+            ]
         }
     ]
 });

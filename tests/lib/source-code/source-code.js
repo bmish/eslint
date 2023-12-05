@@ -47,15 +47,12 @@ function getVariable(scope, name) {
     return scope.variables.find(v => v.name === name) || null;
 }
 
-
 //------------------------------------------------------------------------------
 // Tests
 //------------------------------------------------------------------------------
 
 describe("SourceCode", () => {
-
     describe("new SourceCode()", () => {
-
         it("should create a new instance when called with valid data", () => {
             const ast = { comments: [], tokens: [], loc: {}, range: [] };
             const sourceCode = new SourceCode("foo;", ast);
@@ -91,50 +88,24 @@ describe("SourceCode", () => {
         });
 
         it("should throw an error when called with an AST that's missing tokens", () => {
-
-            assert.throws(
-                () => new SourceCode("foo;", { comments: [], loc: {}, range: [] }),
-                /missing the tokens array/u
-            );
-
+            assert.throws(() => new SourceCode("foo;", { comments: [], loc: {}, range: [] }), /missing the tokens array/u);
         });
 
         it("should throw an error when called with an AST that's missing comments", () => {
-
-            assert.throws(
-                () => new SourceCode("foo;", { tokens: [], loc: {}, range: [] }),
-                /missing the comments array/u
-            );
-
+            assert.throws(() => new SourceCode("foo;", { tokens: [], loc: {}, range: [] }), /missing the comments array/u);
         });
 
         it("should throw an error when called with an AST that's missing location", () => {
-
-            assert.throws(
-                () => new SourceCode("foo;", { comments: [], tokens: [], range: [] }),
-                /missing location information/u
-            );
-
+            assert.throws(() => new SourceCode("foo;", { comments: [], tokens: [], range: [] }), /missing location information/u);
         });
 
         it("should throw an error when called with an AST that's missing range", () => {
-
-            assert.throws(
-                () => new SourceCode("foo;", { comments: [], tokens: [], loc: {} }),
-                /missing range information/u
-            );
+            assert.throws(() => new SourceCode("foo;", { comments: [], tokens: [], loc: {} }), /missing range information/u);
         });
 
         it("should store all tokens and comments sorted by range", () => {
-            const comments = [
-                { range: [0, 2] },
-                { range: [10, 12] }
-            ];
-            const tokens = [
-                { range: [3, 8] },
-                { range: [8, 10] },
-                { range: [12, 20] }
-            ];
+            const comments = [{ range: [0, 2] }, { range: [10, 12] }];
+            const tokens = [{ range: [3, 8] }, { range: [8, 10] }, { range: [12, 20] }];
             const sourceCode = new SourceCode("", { comments, tokens, loc: {}, range: [] });
 
             const actual = sourceCode.tokensAndComments;
@@ -188,7 +159,7 @@ describe("SourceCode", () => {
                 sourceCode = new SourceCode(SHEBANG_TEST_CODE, ast);
             });
 
-            it("should change the type of the first comment to \"Shebang\"", () => {
+            it('should change the type of the first comment to "Shebang"', () => {
                 const firstToken = sourceCode.getAllComments()[0];
 
                 assert.strictEqual(firstToken.type, "Shebang");
@@ -207,10 +178,7 @@ describe("SourceCode", () => {
 
         describe("when it read a UTF-8 file (has BOM), SourceCode", () => {
             const UTF8_FILE = path.resolve(__dirname, "../../fixtures/utf8-bom.js");
-            const text = fs.readFileSync(
-                UTF8_FILE,
-                "utf8"
-            ).replace(/\r\n/gu, "\n"); // <-- For autocrlf of "git for Windows"
+            const text = fs.readFileSync(UTF8_FILE, "utf8").replace(/\r\n/gu, "\n"); // <-- For autocrlf of "git for Windows"
             let sourceCode;
 
             beforeEach(() => {
@@ -222,9 +190,9 @@ describe("SourceCode", () => {
             it("to be clear, check the file has UTF-8 BOM.", () => {
                 const buffer = fs.readFileSync(UTF8_FILE);
 
-                assert.strictEqual(buffer[0], 0xEF);
-                assert.strictEqual(buffer[1], 0xBB);
-                assert.strictEqual(buffer[2], 0xBF);
+                assert.strictEqual(buffer[0], 0xef);
+                assert.strictEqual(buffer[1], 0xbb);
+                assert.strictEqual(buffer[2], 0xbf);
             });
 
             it("should has true at `hasBOM` property.", () => {
@@ -232,14 +200,10 @@ describe("SourceCode", () => {
             });
 
             it("should not has BOM in `text` property.", () => {
-                assert.strictEqual(
-                    sourceCode.text,
-                    "\"use strict\";\n\nconsole.log(\"This file has [0xEF, 0xBB, 0xBF] as BOM.\");\n"
-                );
+                assert.strictEqual(sourceCode.text, '"use strict";\n\nconsole.log("This file has [0xEF, 0xBB, 0xBF] as BOM.");\n');
             });
         });
     });
-
 
     describe("getJSDocComment()", () => {
         afterEach(() => {
@@ -247,11 +211,7 @@ describe("SourceCode", () => {
         });
 
         it("should not take a JSDoc comment from a FunctionDeclaration parent node when the node is a FunctionExpression", () => {
-
-            const code = [
-                "/** Desc*/",
-                "function Foo(){var t = function(){}}"
-            ].join("\n");
+            const code = ["/** Desc*/", "function Foo(){var t = function(){}}"].join("\n");
 
             /**
              * Check jsdoc presence
@@ -270,22 +230,17 @@ describe("SourceCode", () => {
 
             linter.defineRule("checker", {
                 create() {
-                    return ({
+                    return {
                         FunctionExpression: spy
-                    });
+                    };
                 }
             });
             linter.verify(code, { rules: { checker: "error" } });
             assert.isTrue(spy.calledOnce, "Event handler should be called.");
-
         });
 
         it("should not take a JSDoc comment from a VariableDeclaration parent node when the node is a FunctionExpression inside a NewExpression", () => {
-
-            const code = [
-                "/** Desc*/",
-                "var x = new Foo(function(){});"
-            ].join("\n");
+            const code = ["/** Desc*/", "var x = new Foo(function(){});"].join("\n");
 
             /**
              * Check jsdoc presence
@@ -304,22 +259,17 @@ describe("SourceCode", () => {
 
             linter.defineRule("checker", {
                 create() {
-                    return ({
+                    return {
                         FunctionExpression: spy
-                    });
+                    };
                 }
             });
             linter.verify(code, { rules: { checker: "error" } });
             assert.isTrue(spy.calledOnce, "Event handler should be called.");
-
         });
 
         it("should not take a JSDoc comment from a FunctionExpression parent node when the node is a FunctionExpression", () => {
-
-            const code = [
-                "/** Desc*/",
-                "var f = function(){var t = function(arg){}}"
-            ].join("\n");
+            const code = ["/** Desc*/", "var f = function(){var t = function(arg){}}"].join("\n");
 
             /**
              * Check jsdoc presence
@@ -340,25 +290,17 @@ describe("SourceCode", () => {
 
             linter.defineRule("checker", {
                 create() {
-                    return ({
+                    return {
                         FunctionExpression: spy
-                    });
+                    };
                 }
             });
             linter.verify(code, { rules: { checker: "error" } });
             assert.isTrue(spy.calledTwice, "Event handler should be called twice.");
-
         });
 
         it("should get JSDoc comment for FunctionExpression in a CallExpression", () => {
-            const code = [
-                "call(",
-                "  /** Documentation. */",
-                "  function(argName) {",
-                "    return 'the return';",
-                "  }",
-                ");"
-            ].join("\n");
+            const code = ["call(", "  /** Documentation. */", "  function(argName) {", "    return 'the return';", "  }", ");"].join("\n");
 
             /**
              * Check jsdoc presence
@@ -378,9 +320,9 @@ describe("SourceCode", () => {
 
             linter.defineRule("checker", {
                 create() {
-                    return ({
+                    return {
                         FunctionExpression: spy
-                    });
+                    };
                 }
             });
             linter.verify(code, { rules: { checker: "error" } });
@@ -388,11 +330,7 @@ describe("SourceCode", () => {
         });
 
         it("should get JSDoc comment for node when the node is a FunctionDeclaration", () => {
-
-            const code = [
-                "/** Desc*/",
-                "function Foo(){}"
-            ].join("\n");
+            const code = ["/** Desc*/", "function Foo(){}"].join("\n");
 
             /**
              * Check jsdoc presence
@@ -412,22 +350,17 @@ describe("SourceCode", () => {
 
             linter.defineRule("checker", {
                 create() {
-                    return ({
+                    return {
                         FunctionDeclaration: spy
-                    });
+                    };
                 }
             });
             linter.verify(code, { rules: { checker: "error" } });
             assert.isTrue(spy.calledOnce, "Event handler should be called.");
-
         });
 
         it("should get JSDoc comment for node when the node is a FunctionDeclaration but its parent is an export", () => {
-
-            const code = [
-                "/** Desc*/",
-                "export function Foo(){}"
-            ].join("\n");
+            const code = ["/** Desc*/", "export function Foo(){}"].join("\n");
 
             /**
              * Check jsdoc presence
@@ -447,24 +380,17 @@ describe("SourceCode", () => {
 
             linter.defineRule("checker", {
                 create() {
-                    return ({
+                    return {
                         FunctionDeclaration: spy
-                    });
+                    };
                 }
             });
             linter.verify(code, { rules: { checker: "error" }, parserOptions: { ecmaVersion: 6, sourceType: "module" } });
             assert.isTrue(spy.calledOnce, "Event handler should be called.");
-
         });
 
-
         it("should get JSDoc comment for node when the node is a FunctionDeclaration but not the first statement", () => {
-
-            const code = [
-                "'use strict';",
-                "/** Desc*/",
-                "function Foo(){}"
-            ].join("\n");
+            const code = ["'use strict';", "/** Desc*/", "function Foo(){}"].join("\n");
 
             /**
              * Check jsdoc presence
@@ -484,25 +410,17 @@ describe("SourceCode", () => {
 
             linter.defineRule("checker", {
                 create() {
-                    return ({
+                    return {
                         FunctionDeclaration: spy
-                    });
+                    };
                 }
             });
             linter.verify(code, { rules: { checker: "error" } });
             assert.isTrue(spy.calledOnce, "Event handler should be called.");
-
         });
 
-
         it("should not get JSDoc comment for node when the node is a FunctionDeclaration inside of an IIFE without a JSDoc comment", () => {
-
-            const code = [
-                "/** Desc*/",
-                "(function(){",
-                "function Foo(){}",
-                "}())"
-            ].join("\n");
+            const code = ["/** Desc*/", "(function(){", "function Foo(){}", "}())"].join("\n");
 
             /**
              * Check jsdoc presence
@@ -521,23 +439,17 @@ describe("SourceCode", () => {
 
             linter.defineRule("checker", {
                 create() {
-                    return ({
+                    return {
                         FunctionDeclaration: spy
-                    });
+                    };
                 }
             });
             linter.verify(code, { rules: { checker: "error" } });
             assert.isTrue(spy.calledOnce, "Event handler should be called.");
-
         });
 
         it("should get JSDoc comment for node when the node is a FunctionDeclaration and there are multiple comments", () => {
-
-            const code = [
-                "/* Code is good */",
-                "/** Desc*/",
-                "function Foo(){}"
-            ].join("\n");
+            const code = ["/* Code is good */", "/** Desc*/", "function Foo(){}"].join("\n");
 
             /**
              * Check jsdoc presence
@@ -557,25 +469,17 @@ describe("SourceCode", () => {
 
             linter.defineRule("checker", {
                 create() {
-                    return ({
+                    return {
                         FunctionDeclaration: spy
-                    });
+                    };
                 }
             });
             linter.verify(code, { rules: { checker: "error" } });
             assert.isTrue(spy.calledOnce, "Event handler should be called.");
-
         });
 
         it("should get JSDoc comment for node when the node is a FunctionDeclaration inside of an IIFE", () => {
-
-            const code = [
-                "/** Code is good */",
-                "(function() {",
-                "/** Desc*/",
-                "function Foo(){}",
-                "}())"
-            ].join("\n");
+            const code = ["/** Code is good */", "(function() {", "/** Desc*/", "function Foo(){}", "}())"].join("\n");
 
             /**
              * Check jsdoc presence
@@ -595,9 +499,9 @@ describe("SourceCode", () => {
 
             linter.defineRule("checker", {
                 create() {
-                    return ({
+                    return {
                         FunctionDeclaration: spy
-                    });
+                    };
                 }
             });
             linter.verify(code, { rules: { checker: "error" } });
@@ -605,14 +509,7 @@ describe("SourceCode", () => {
         });
 
         it("should get JSDoc comment for node when the node is a FunctionExpression inside of an object literal", () => {
-
-            const code = [
-                "/** Code is good */",
-                "var o = {",
-                "/** Desc*/",
-                "foo: function(){}",
-                "};"
-            ].join("\n");
+            const code = ["/** Code is good */", "var o = {", "/** Desc*/", "foo: function(){}", "};"].join("\n");
 
             /**
              * Check jsdoc presence
@@ -632,9 +529,9 @@ describe("SourceCode", () => {
 
             linter.defineRule("checker", {
                 create() {
-                    return ({
+                    return {
                         FunctionExpression: spy
-                    });
+                    };
                 }
             });
             linter.verify(code, { rules: { checker: "error" } });
@@ -642,14 +539,7 @@ describe("SourceCode", () => {
         });
 
         it("should get JSDoc comment for node when the node is a ArrowFunctionExpression inside of an object literal", () => {
-
-            const code = [
-                "/** Code is good */",
-                "var o = {",
-                "/** Desc*/",
-                "foo: () => {}",
-                "};"
-            ].join("\n");
+            const code = ["/** Code is good */", "var o = {", "/** Desc*/", "foo: () => {}", "};"].join("\n");
 
             /**
              * Check jsdoc presence
@@ -669,9 +559,9 @@ describe("SourceCode", () => {
 
             linter.defineRule("checker", {
                 create() {
-                    return ({
+                    return {
                         ArrowFunctionExpression: spy
-                    });
+                    };
                 }
             });
             linter.verify(code, { rules: { checker: "error" }, parserOptions: { ecmaVersion: 6 } });
@@ -679,12 +569,7 @@ describe("SourceCode", () => {
         });
 
         it("should get JSDoc comment for node when the node is a FunctionExpression in an assignment", () => {
-
-            const code = [
-                "/** Code is good */",
-                "/** Desc*/",
-                "Foo.bar = function(){}"
-            ].join("\n");
+            const code = ["/** Code is good */", "/** Desc*/", "Foo.bar = function(){}"].join("\n");
 
             /**
              * Check jsdoc presence
@@ -704,9 +589,9 @@ describe("SourceCode", () => {
 
             linter.defineRule("checker", {
                 create() {
-                    return ({
+                    return {
                         FunctionExpression: spy
-                    });
+                    };
                 }
             });
             linter.verify(code, { rules: { checker: "error" } });
@@ -714,14 +599,7 @@ describe("SourceCode", () => {
         });
 
         it("should get JSDoc comment for node when the node is a FunctionExpression in an assignment inside an IIFE", () => {
-
-            const code = [
-                "/** Code is good */",
-                "(function iife() {",
-                "/** Desc*/",
-                "Foo.bar = function(){}",
-                "}());"
-            ].join("\n");
+            const code = ["/** Code is good */", "(function iife() {", "/** Desc*/", "Foo.bar = function(){}", "}());"].join("\n");
 
             /**
              * Check jsdoc presence
@@ -743,9 +621,9 @@ describe("SourceCode", () => {
 
             linter.defineRule("checker", {
                 create() {
-                    return ({
+                    return {
                         FunctionExpression: spy
-                    });
+                    };
                 }
             });
             linter.verify(code, { rules: { checker: "error" } });
@@ -753,14 +631,7 @@ describe("SourceCode", () => {
         });
 
         it("should not get JSDoc comment for node when the node is a FunctionExpression in an assignment inside an IIFE without a JSDoc comment", () => {
-
-            const code = [
-                "/** Code is good */",
-                "(function iife() {",
-                "//* whatever",
-                "Foo.bar = function(){}",
-                "}());"
-            ].join("\n");
+            const code = ["/** Code is good */", "(function iife() {", "//* whatever", "Foo.bar = function(){}", "}());"].join("\n");
 
             /**
              * Check jsdoc presence
@@ -781,9 +652,9 @@ describe("SourceCode", () => {
 
             linter.defineRule("checker", {
                 create() {
-                    return ({
+                    return {
                         FunctionExpression: spy
-                    });
+                    };
                 }
             });
             linter.verify(code, { rules: { checker: "error" } });
@@ -791,12 +662,7 @@ describe("SourceCode", () => {
         });
 
         it("should not get JSDoc comment for node when the node is a FunctionExpression inside of a CallExpression", () => {
-
-            const code = [
-                "/** Code is good */",
-                "module.exports = (function() {",
-                "}());"
-            ].join("\n");
+            const code = ["/** Code is good */", "module.exports = (function() {", "}());"].join("\n");
 
             /**
              * Check jsdoc presence
@@ -817,9 +683,9 @@ describe("SourceCode", () => {
 
             linter.defineRule("checker", {
                 create() {
-                    return ({
+                    return {
                         FunctionExpression: spy
-                    });
+                    };
                 }
             });
             linter.verify(code, { rules: { checker: "error" } });
@@ -827,7 +693,6 @@ describe("SourceCode", () => {
         });
 
         it("should not get JSDoc comment for node when the node is a FunctionExpression in an assignment inside an IIFE without a JSDoc comment", () => {
-
             const code = [
                 "/**",
                 " * Merges two objects together.",
@@ -861,9 +726,9 @@ describe("SourceCode", () => {
 
             linter.defineRule("checker", {
                 create() {
-                    return ({
+                    return {
                         FunctionExpression: spy
-                    });
+                    };
                 }
             });
             linter.verify(code, { rules: { checker: "error" } });
@@ -871,12 +736,7 @@ describe("SourceCode", () => {
         });
 
         it("should get JSDoc comment for node when the node is a ClassExpression", () => {
-
-            const code = [
-                "/** Merges two objects together.*/",
-                "var A = class {",
-                "};"
-            ].join("\n");
+            const code = ["/** Merges two objects together.*/", "var A = class {", "};"].join("\n");
 
             /**
              * Check jsdoc presence
@@ -896,9 +756,9 @@ describe("SourceCode", () => {
 
             linter.defineRule("checker", {
                 create() {
-                    return ({
+                    return {
                         ClassExpression: spy
-                    });
+                    };
                 }
             });
             linter.verify(code, { rules: { checker: "error" }, parserOptions: { ecmaVersion: 6 } });
@@ -906,12 +766,7 @@ describe("SourceCode", () => {
         });
 
         it("should get JSDoc comment for node when the node is a ClassDeclaration", () => {
-
-            const code = [
-                "/** Merges two objects together.*/",
-                "class A {",
-                "};"
-            ].join("\n");
+            const code = ["/** Merges two objects together.*/", "class A {", "};"].join("\n");
 
             /**
              * Check jsdoc presence
@@ -931,9 +786,9 @@ describe("SourceCode", () => {
 
             linter.defineRule("checker", {
                 create() {
-                    return ({
+                    return {
                         ClassDeclaration: spy
-                    });
+                    };
                 }
             });
             linter.verify(code, { rules: { checker: "error" }, parserOptions: { ecmaVersion: 6 } });
@@ -941,13 +796,7 @@ describe("SourceCode", () => {
         });
 
         it("should not get JSDoc comment for class method even if the class has jsdoc present", () => {
-
-            const code = [
-                "/** Merges two objects together.*/",
-                "var A = class {",
-                "    constructor(xs) {}",
-                "};"
-            ].join("\n");
+            const code = ["/** Merges two objects together.*/", "var A = class {", "    constructor(xs) {}", "};"].join("\n");
 
             /**
              * Check jsdoc presence
@@ -966,9 +815,9 @@ describe("SourceCode", () => {
 
             linter.defineRule("checker", {
                 create() {
-                    return ({
+                    return {
                         FunctionExpression: spy
-                    });
+                    };
                 }
             });
             linter.verify(code, { rules: { checker: "error" }, parserOptions: { ecmaVersion: 6 } });
@@ -976,16 +825,7 @@ describe("SourceCode", () => {
         });
 
         it("should get JSDoc comment for function expression even if function has blank lines on top", () => {
-
-            const code = [
-                "/** Merges two objects together.*/",
-                "var A = ",
-                " ",
-                " ",
-                " ",
-                "     function() {",
-                "};"
-            ].join("\n");
+            const code = ["/** Merges two objects together.*/", "var A = ", " ", " ", " ", "     function() {", "};"].join("\n");
 
             /**
              * Check jsdoc presence
@@ -1005,9 +845,9 @@ describe("SourceCode", () => {
 
             linter.defineRule("checker", {
                 create() {
-                    return ({
+                    return {
                         FunctionExpression: spy
-                    });
+                    };
                 }
             });
             linter.verify(code, { rules: { checker: "error" }, parserOptions: { ecmaVersion: 6 } });
@@ -1015,15 +855,7 @@ describe("SourceCode", () => {
         });
 
         it("should not get JSDoc comment for function declaration when the function has blank lines on top", () => {
-
-            const code = [
-                "/** Merges two objects together.*/",
-                " ",
-                " ",
-                " ",
-                "function test() {",
-                "};"
-            ].join("\n");
+            const code = ["/** Merges two objects together.*/", " ", " ", " ", "function test() {", "};"].join("\n");
 
             /**
              * Check jsdoc presence
@@ -1042,21 +874,19 @@ describe("SourceCode", () => {
 
             linter.defineRule("checker", {
                 create() {
-                    return ({
+                    return {
                         FunctionDeclaration: spy
-                    });
+                    };
                 }
             });
             linter.verify(code, { rules: { checker: "error" }, parserOptions: { ecmaVersion: 6 } });
             assert.isTrue(spy.calledOnce, "Event handler should be called.");
         });
-
     });
 
     describe("getComments()", () => {
         const config = { rules: { checker: "error" }, parserOptions: { ecmaVersion: 6, sourceType: "module" } };
         let unusedAssertionFuncs;
-
 
         beforeEach(() => {
             unusedAssertionFuncs = new Set();
@@ -1070,7 +900,6 @@ describe("SourceCode", () => {
          * @private
          */
         function assertCommentCount(leading, trailing) {
-
             /**
              * Asserts the comment count for a node
              * @param {ASTNode} node the node being traversed
@@ -1089,29 +918,21 @@ describe("SourceCode", () => {
         }
 
         afterEach(() => {
-            assert.strictEqual(
-                unusedAssertionFuncs.size,
-                0,
-                "An assertion function was created with assertCommentCount, but the function was not called."
-            );
+            assert.strictEqual(unusedAssertionFuncs.size, 0, "An assertion function was created with assertCommentCount, but the function was not called.");
         });
 
         it("should return comments around nodes", () => {
-            const code = [
-                "// Leading comment for VariableDeclaration",
-                "var a = 42;",
-                "/* Trailing comment for VariableDeclaration */"
-            ].join("\n");
+            const code = ["// Leading comment for VariableDeclaration", "var a = 42;", "/* Trailing comment for VariableDeclaration */"].join("\n");
 
             linter.defineRule("checker", {
                 create() {
-                    return ({
+                    return {
                         Program: assertCommentCount(0, 0),
                         VariableDeclaration: assertCommentCount(1, 1),
                         VariableDeclarator: assertCommentCount(0, 0),
                         Identifier: assertCommentCount(0, 0),
                         Literal: assertCommentCount(0, 0)
-                    });
+                    };
                 }
             });
 
@@ -1119,22 +940,17 @@ describe("SourceCode", () => {
         });
 
         it("should return trailing comments inside a block", () => {
-            const code = [
-                "{",
-                "    a();",
-                "    // Trailing comment for ExpressionStatement",
-                "}"
-            ].join("\n");
+            const code = ["{", "    a();", "    // Trailing comment for ExpressionStatement", "}"].join("\n");
 
             linter.defineRule("checker", {
                 create() {
-                    return ({
+                    return {
                         Program: assertCommentCount(0, 0),
                         BlockStatement: assertCommentCount(0, 0),
                         ExpressionStatement: assertCommentCount(0, 1),
                         CallExpression: assertCommentCount(0, 0),
                         Identifier: assertCommentCount(0, 0)
-                    });
+                    };
                 }
             });
 
@@ -1142,19 +958,16 @@ describe("SourceCode", () => {
         });
 
         it("should return comments within a conditional", () => {
-            const code = [
-                "/* Leading comment for IfStatement */",
-                "if (/* Leading comment for Identifier */ a) {}"
-            ].join("\n");
+            const code = ["/* Leading comment for IfStatement */", "if (/* Leading comment for Identifier */ a) {}"].join("\n");
 
             linter.defineRule("checker", {
                 create() {
-                    return ({
+                    return {
                         Program: assertCommentCount(0, 0),
                         IfStatement: assertCommentCount(1, 0),
                         Identifier: assertCommentCount(1, 0),
                         BlockStatement: assertCommentCount(0, 0)
-                    });
+                    };
                 }
             });
 
@@ -1162,18 +975,11 @@ describe("SourceCode", () => {
         });
 
         it("should not return comments within a previous node", () => {
-            const code = [
-                "function a() {",
-                "    var b = {",
-                "        // Trailing comment for ObjectExpression",
-                "    };",
-                "    return b;",
-                "}"
-            ].join("\n");
+            const code = ["function a() {", "    var b = {", "        // Trailing comment for ObjectExpression", "    };", "    return b;", "}"].join("\n");
 
             linter.defineRule("checker", {
                 create() {
-                    return ({
+                    return {
                         Program: assertCommentCount(0, 0),
                         Identifier: assertCommentCount(0, 0),
                         BlockStatement: assertCommentCount(0, 0),
@@ -1181,7 +987,7 @@ describe("SourceCode", () => {
                         VariableDeclarator: assertCommentCount(0, 0),
                         ObjectExpression: assertCommentCount(0, 1),
                         ReturnStatement: assertCommentCount(0, 0)
-                    });
+                    };
                 }
             });
 
@@ -1189,17 +995,11 @@ describe("SourceCode", () => {
         });
 
         it("should return comments only for children of parent node", () => {
-            const code = [
-                "var foo = {",
-                "    bar: 'bar'",
-                "    // Trailing comment for Property",
-                "};",
-                "var baz;"
-            ].join("\n");
+            const code = ["var foo = {", "    bar: 'bar'", "    // Trailing comment for Property", "};", "var baz;"].join("\n");
 
             linter.defineRule("checker", {
                 create() {
-                    return ({
+                    return {
                         Program: assertCommentCount(0, 0),
                         VariableDeclaration: assertCommentCount(0, 0),
                         VariableDeclarator: assertCommentCount(0, 0),
@@ -1207,7 +1007,7 @@ describe("SourceCode", () => {
                         ObjectExpression: assertCommentCount(0, 0),
                         Property: assertCommentCount(0, 1),
                         Literal: assertCommentCount(0, 0)
-                    });
+                    };
                 }
             });
 
@@ -1230,7 +1030,7 @@ describe("SourceCode", () => {
 
             linter.defineRule("checker", {
                 create() {
-                    return ({
+                    return {
                         Program: assertCommentCount(0, 0),
                         ExportDefaultDeclaration: assertCommentCount(1, 0),
                         ClassDeclaration: assertCommentCount(0, 0),
@@ -1239,7 +1039,7 @@ describe("SourceCode", () => {
                         Identifier: assertCommentCount(0, 0),
                         FunctionExpression: assertCommentCount(0, 0),
                         BlockStatement: assertCommentCount(0, 0)
-                    });
+                    };
                 }
             });
 
@@ -1257,7 +1057,7 @@ describe("SourceCode", () => {
 
             linter.defineRule("checker", {
                 create() {
-                    return ({
+                    return {
                         Program: assertCommentCount(0, 0),
 
                         VariableDeclaration(node) {
@@ -1271,7 +1071,7 @@ describe("SourceCode", () => {
 
                         VariableDeclarator: assertCommentCount(0, 0),
                         Identifier: assertCommentCount(0, 0)
-                    });
+                    };
                 }
             });
 
@@ -1289,7 +1089,7 @@ describe("SourceCode", () => {
 
             linter.defineRule("checker", {
                 create() {
-                    return ({
+                    return {
                         Program: assertCommentCount(0, 0),
 
                         VariableDeclaration(node) {
@@ -1302,7 +1102,7 @@ describe("SourceCode", () => {
                         },
 
                         Identifier: assertCommentCount(0, 0)
-                    });
+                    };
                 }
             });
 
@@ -1314,9 +1114,9 @@ describe("SourceCode", () => {
 
             linter.defineRule("checker", {
                 create() {
-                    return ({
+                    return {
                         Program: assertCommentCount(1, 0)
-                    });
+                    };
                 }
             });
 
@@ -1332,13 +1132,13 @@ describe("SourceCode", () => {
 
             linter.defineRule("checker", {
                 create() {
-                    return ({
+                    return {
                         Program: assertCommentCount(0, 0),
                         VariableDeclaration: assertCommentCount(1, 1),
                         VariableDeclarator: assertCommentCount(0, 0),
                         Identifier: assertCommentCount(0, 1),
                         Literal: assertCommentCount(0, 0)
-                    });
+                    };
                 }
             });
 
@@ -1356,14 +1156,14 @@ describe("SourceCode", () => {
 
             linter.defineRule("checker", {
                 create() {
-                    return ({
+                    return {
                         Program: assertCommentCount(0, 0),
                         FunctionDeclaration: assertCommentCount(0, 0),
                         Identifier: assertCommentCount(0, 0),
                         BlockStatement: assertCommentCount(0, 0),
                         ExpressionStatement: assertCommentCount(1, 1),
                         CallExpression: assertCommentCount(0, 0)
-                    });
+                    };
                 }
             });
 
@@ -1381,13 +1181,13 @@ describe("SourceCode", () => {
 
             linter.defineRule("checker", {
                 create() {
-                    return ({
+                    return {
                         Program: assertCommentCount(0, 0),
                         FunctionDeclaration: assertCommentCount(0, 0),
                         Identifier: assertCommentCount(0, 0),
                         BlockStatement: assertCommentCount(0, 0),
                         DebuggerStatement: assertCommentCount(1, 1)
-                    });
+                    };
                 }
             });
 
@@ -1405,13 +1205,13 @@ describe("SourceCode", () => {
 
             linter.defineRule("checker", {
                 create() {
-                    return ({
+                    return {
                         Program: assertCommentCount(0, 0),
                         FunctionDeclaration: assertCommentCount(0, 0),
                         Identifier: assertCommentCount(0, 0),
                         BlockStatement: assertCommentCount(0, 0),
                         ReturnStatement: assertCommentCount(1, 1)
-                    });
+                    };
                 }
             });
 
@@ -1429,13 +1229,13 @@ describe("SourceCode", () => {
 
             linter.defineRule("checker", {
                 create() {
-                    return ({
+                    return {
                         Program: assertCommentCount(0, 0),
                         FunctionDeclaration: assertCommentCount(0, 0),
                         Identifier: assertCommentCount(0, 0),
                         BlockStatement: assertCommentCount(0, 0),
                         ThrowStatement: assertCommentCount(1, 1)
-                    });
+                    };
                 }
             });
 
@@ -1454,7 +1254,7 @@ describe("SourceCode", () => {
 
             linter.defineRule("checker", {
                 create() {
-                    return ({
+                    return {
                         Program: assertCommentCount(0, 0),
                         FunctionDeclaration: assertCommentCount(0, 0),
                         Identifier: assertCommentCount(0, 0),
@@ -1463,7 +1263,7 @@ describe("SourceCode", () => {
                         Literal: assertCommentCount(0, 0),
                         VariableDeclaration: assertCommentCount(1, 0),
                         VariableDeclarator: assertCommentCount(0, 0)
-                    });
+                    };
                 }
             });
 
@@ -1486,7 +1286,7 @@ describe("SourceCode", () => {
 
             linter.defineRule("checker", {
                 create() {
-                    return ({
+                    return {
                         Program: assertCommentCount(0, 0),
                         FunctionDeclaration: assertCommentCount(0, 0),
                         Identifier: assertCommentCount(0, 0),
@@ -1505,7 +1305,7 @@ describe("SourceCode", () => {
                         Literal: assertCommentCount(0, 0),
                         ExpressionStatement: assertCommentCount(0, 0),
                         CallExpression: assertCommentCount(0, 0)
-                    });
+                    };
                 }
             });
 
@@ -1526,7 +1326,7 @@ describe("SourceCode", () => {
 
             linter.defineRule("checker", {
                 create() {
-                    return ({
+                    return {
                         Program: assertCommentCount(0, 0),
                         SwitchStatement: assertCommentCount(0, 0),
 
@@ -1542,7 +1342,7 @@ describe("SourceCode", () => {
                         Literal: assertCommentCount(0, 0),
                         ExpressionStatement: assertCommentCount(0, 0),
                         CallExpression: assertCommentCount(0, 0)
-                    });
+                    };
                 }
             });
 
@@ -1565,7 +1365,7 @@ describe("SourceCode", () => {
 
             linter.defineRule("checker", {
                 create() {
-                    return ({
+                    return {
                         Program: assertCommentCount(0, 0),
                         FunctionDeclaration: assertCommentCount(0, 0),
                         Identifier: assertCommentCount(0, 0),
@@ -1583,7 +1383,7 @@ describe("SourceCode", () => {
 
                         BreakStatement: assertCommentCount(0, 0),
                         Literal: assertCommentCount(0, 0)
-                    });
+                    };
                 }
             });
 
@@ -1601,14 +1401,14 @@ describe("SourceCode", () => {
 
             linter.defineRule("checker", {
                 create() {
-                    return ({
+                    return {
                         Program: assertCommentCount(0, 0),
                         SwitchStatement: assertCommentCount(0, 0),
                         Identifier: assertCommentCount(0, 0),
                         SwitchCase: assertCommentCount(0, 1),
                         BreakStatement: assertCommentCount(0, 0),
                         Literal: assertCommentCount(0, 0)
-                    });
+                    };
                 }
             });
 
@@ -1631,7 +1431,7 @@ describe("SourceCode", () => {
 
             linter.defineRule("checker", {
                 create() {
-                    return ({
+                    return {
                         Program: assertCommentCount(0, 0),
                         ExpressionStatement: assertCommentCount(0, 0),
                         AssignmentExpression: assertCommentCount(0, 0),
@@ -1646,7 +1446,7 @@ describe("SourceCode", () => {
                         CallExpression: assertCommentCount(0, 0),
                         BinaryExpression: assertCommentCount(0, 0),
                         Literal: assertCommentCount(0, 0)
-                    });
+                    };
                 }
             });
 
@@ -1654,16 +1454,13 @@ describe("SourceCode", () => {
         });
 
         it("should return leading comments if the code only contains comments", () => {
-            const code = [
-                "//comment",
-                "/*another comment*/"
-            ].join("\n");
+            const code = ["//comment", "/*another comment*/"].join("\n");
 
             linter.defineRule("checker", {
                 create() {
-                    return ({
+                    return {
                         Program: assertCommentCount(2, 0)
-                    });
+                    };
                 }
             });
 
@@ -1671,19 +1468,14 @@ describe("SourceCode", () => {
         });
 
         it("should return trailing comments if a block statement only contains comments", () => {
-            const code = [
-                "{",
-                "    //comment",
-                "    /*another comment*/",
-                "}"
-            ].join("\n");
+            const code = ["{", "    //comment", "    /*another comment*/", "}"].join("\n");
 
             linter.defineRule("checker", {
                 create() {
-                    return ({
+                    return {
                         Program: assertCommentCount(0, 0),
                         BlockStatement: assertCommentCount(0, 2)
-                    });
+                    };
                 }
             });
 
@@ -1691,20 +1483,15 @@ describe("SourceCode", () => {
         });
 
         it("should return trailing comments if a class body only contains comments", () => {
-            const code = [
-                "class Foo {",
-                "    //comment",
-                "    /*another comment*/",
-                "}"
-            ].join("\n");
+            const code = ["class Foo {", "    //comment", "    /*another comment*/", "}"].join("\n");
 
             linter.defineRule("checker", {
                 create() {
-                    return ({
+                    return {
                         Program: assertCommentCount(0, 0),
                         ClassDeclaration: assertCommentCount(0, 0),
                         ClassBody: assertCommentCount(0, 2)
-                    });
+                    };
                 }
             });
 
@@ -1712,20 +1499,15 @@ describe("SourceCode", () => {
         });
 
         it("should return trailing comments if an object only contains comments", () => {
-            const code = [
-                "({",
-                "    //comment",
-                "    /*another comment*/",
-                "})"
-            ].join("\n");
+            const code = ["({", "    //comment", "    /*another comment*/", "})"].join("\n");
 
             linter.defineRule("checker", {
                 create() {
-                    return ({
+                    return {
                         Program: assertCommentCount(0, 0),
                         ExpressionStatement: assertCommentCount(0, 0),
                         ObjectExpression: assertCommentCount(0, 2)
-                    });
+                    };
                 }
             });
 
@@ -1733,20 +1515,15 @@ describe("SourceCode", () => {
         });
 
         it("should return trailing comments if an array only contains comments", () => {
-            const code = [
-                "[",
-                "    //comment",
-                "    /*another comment*/",
-                "]"
-            ].join("\n");
+            const code = ["[", "    //comment", "    /*another comment*/", "]"].join("\n");
 
             linter.defineRule("checker", {
                 create() {
-                    return ({
+                    return {
                         Program: assertCommentCount(0, 0),
                         ExpressionStatement: assertCommentCount(0, 0),
                         ArrayExpression: assertCommentCount(0, 2)
-                    });
+                    };
                 }
             });
 
@@ -1754,20 +1531,15 @@ describe("SourceCode", () => {
         });
 
         it("should return trailing comments if a switch statement only contains comments", () => {
-            const code = [
-                "switch (foo) {",
-                "    //comment",
-                "    /*another comment*/",
-                "}"
-            ].join("\n");
+            const code = ["switch (foo) {", "    //comment", "    /*another comment*/", "}"].join("\n");
 
             linter.defineRule("checker", {
                 create() {
-                    return ({
+                    return {
                         Program: assertCommentCount(0, 0),
                         SwitchStatement: assertCommentCount(0, 2),
                         Identifier: assertCommentCount(0, 0)
-                    });
+                    };
                 }
             });
 
@@ -1786,7 +1558,7 @@ describe("SourceCode", () => {
 
             linter.defineRule("checker", {
                 create() {
-                    return ({
+                    return {
                         Program: assertCommentCount(0, 0),
                         VariableDeclaration: assertCommentCount(1, 2),
 
@@ -1802,7 +1574,7 @@ describe("SourceCode", () => {
                         },
 
                         Identifier: assertCommentCount(0, 0)
-                    });
+                    };
                 }
             });
 
@@ -1810,20 +1582,16 @@ describe("SourceCode", () => {
         });
 
         it("should return comments when comments exist between var keyword and VariableDeclarator", () => {
-            const code = [
-                "var // Leading comment for VariableDeclarator",
-                "    // Leading comment for VariableDeclarator",
-                "    a;"
-            ].join("\n");
+            const code = ["var // Leading comment for VariableDeclarator", "    // Leading comment for VariableDeclarator", "    a;"].join("\n");
 
             linter.defineRule("checker", {
                 create() {
-                    return ({
+                    return {
                         Program: assertCommentCount(0, 0),
                         VariableDeclaration: assertCommentCount(0, 0),
                         VariableDeclarator: assertCommentCount(2, 0),
                         Identifier: assertCommentCount(0, 0)
-                    });
+                    };
                 }
             });
 
@@ -1835,12 +1603,12 @@ describe("SourceCode", () => {
 
             linter.defineRule("checker", {
                 create() {
-                    return ({
+                    return {
                         Program: assertCommentCount(0, 0),
                         FunctionDeclaration: assertCommentCount(1, 1),
                         Identifier: assertCommentCount(1, 0),
                         BlockStatement: assertCommentCount(1, 1)
-                    });
+                    };
                 }
             });
 
@@ -1853,7 +1621,7 @@ describe("SourceCode", () => {
 
             linter.defineRule("checker", {
                 create() {
-                    return ({
+                    return {
                         Program: assertCommentCount(0, 0),
                         ClassDeclaration: assertCommentCount(1, 1),
 
@@ -1867,7 +1635,7 @@ describe("SourceCode", () => {
                         },
 
                         ClassBody: assertCommentCount(1, 1)
-                    });
+                    };
                 }
             });
 
@@ -1879,11 +1647,11 @@ describe("SourceCode", () => {
 
             linter.defineRule("checker", {
                 create() {
-                    return ({
+                    return {
                         Program: assertCommentCount(0, 0),
                         SwitchStatement: assertCommentCount(1, 6),
                         Identifier: assertCommentCount(1, 1)
-                    });
+                    };
                 }
             });
 
@@ -1892,7 +1660,6 @@ describe("SourceCode", () => {
     });
 
     describe("getLines()", () => {
-
         it("should get proper lines when using \\n as a line break", () => {
             const code = "a;\nb;",
                 ast = espree.parse(code, DEFAULT_CONFIG),
@@ -1950,15 +1717,15 @@ describe("SourceCode", () => {
     });
 
     describe("getText()", () => {
-
-        let sourceCode,
-            ast;
+        let sourceCode, ast;
 
         describe("when text begins with a shebang", () => {
             it("should retrieve unaltered shebang text", () => {
-
                 // Shebangs are normalized to line comments before parsing.
-                ast = espree.parse(SHEBANG_TEST_CODE.replace(astUtils.shebangPattern, (match, captured) => `//${captured}`), DEFAULT_CONFIG);
+                ast = espree.parse(
+                    SHEBANG_TEST_CODE.replace(astUtils.shebangPattern, (match, captured) => `//${captured}`),
+                    DEFAULT_CONFIG
+                );
                 sourceCode = new SourceCode(SHEBANG_TEST_CODE, ast);
 
                 const shebangToken = sourceCode.getAllComments()[0];
@@ -1993,7 +1760,6 @@ describe("SourceCode", () => {
         });
 
         it("should retrieve all text for binary expression", () => {
-
             const node = ast.body[0].declarations[0].init;
             const text = sourceCode.getText(node);
 
@@ -2001,7 +1767,6 @@ describe("SourceCode", () => {
         });
 
         it("should retrieve all text plus two characters before for binary expression", () => {
-
             const node = ast.body[0].declarations[0].init;
             const text = sourceCode.getText(node, 2);
 
@@ -2021,11 +1786,9 @@ describe("SourceCode", () => {
 
             assert.strictEqual(text, "= 6 * 7;");
         });
-
     });
 
     describe("getNodeByRangeIndex()", () => {
-
         let sourceCode;
 
         beforeEach(() => {
@@ -2091,10 +1854,7 @@ describe("SourceCode", () => {
                             sourceCode = new SourceCode(code, ast);
 
                         assert.strictEqual(
-                            sourceCode.isSpaceBetween(
-                                sourceCode.ast.tokens[0],
-                                sourceCode.ast.tokens[sourceCode.ast.tokens.length - 1]
-                            ),
+                            sourceCode.isSpaceBetween(sourceCode.ast.tokens[0], sourceCode.ast.tokens[sourceCode.ast.tokens.length - 1]),
                             expected
                         );
                     });
@@ -2106,10 +1866,7 @@ describe("SourceCode", () => {
                             sourceCode = new SourceCode(code, ast);
 
                         assert.strictEqual(
-                            sourceCode.isSpaceBetween(
-                                sourceCode.ast.tokens[sourceCode.ast.tokens.length - 1],
-                                sourceCode.ast.tokens[0]
-                            ),
+                            sourceCode.isSpaceBetween(sourceCode.ast.tokens[sourceCode.ast.tokens.length - 1], sourceCode.ast.tokens[0]),
                             expected
                         );
                     });
@@ -2155,10 +1912,7 @@ describe("SourceCode", () => {
                             sourceCode = new SourceCode(code, ast);
 
                         assert.strictEqual(
-                            sourceCode.isSpaceBetween(
-                                sourceCode.ast.tokens[0],
-                                sourceCode.ast.tokens[sourceCode.ast.tokens.length - 2]
-                            ),
+                            sourceCode.isSpaceBetween(sourceCode.ast.tokens[0], sourceCode.ast.tokens[sourceCode.ast.tokens.length - 2]),
                             expected
                         );
                     });
@@ -2170,10 +1924,7 @@ describe("SourceCode", () => {
                             sourceCode = new SourceCode(code, ast);
 
                         assert.strictEqual(
-                            sourceCode.isSpaceBetween(
-                                sourceCode.ast.tokens[sourceCode.ast.tokens.length - 2],
-                                sourceCode.ast.tokens[0]
-                            ),
+                            sourceCode.isSpaceBetween(sourceCode.ast.tokens[sourceCode.ast.tokens.length - 2], sourceCode.ast.tokens[0]),
                             expected
                         );
                     });
@@ -2216,13 +1967,7 @@ describe("SourceCode", () => {
                         const ast = espree.parse(code, DEFAULT_CONFIG),
                             sourceCode = new SourceCode(code, ast);
 
-                        assert.strictEqual(
-                            sourceCode.isSpaceBetween(
-                                sourceCode.ast.tokens[0],
-                                sourceCode.ast.body[sourceCode.ast.body.length - 1]
-                            ),
-                            expected
-                        );
+                        assert.strictEqual(sourceCode.isSpaceBetween(sourceCode.ast.tokens[0], sourceCode.ast.body[sourceCode.ast.body.length - 1]), expected);
                     });
                 });
 
@@ -2231,13 +1976,7 @@ describe("SourceCode", () => {
                         const ast = espree.parse(code, DEFAULT_CONFIG),
                             sourceCode = new SourceCode(code, ast);
 
-                        assert.strictEqual(
-                            sourceCode.isSpaceBetween(
-                                sourceCode.ast.body[sourceCode.ast.body.length - 1],
-                                sourceCode.ast.tokens[0]
-                            ),
-                            expected
-                        );
+                        assert.strictEqual(sourceCode.isSpaceBetween(sourceCode.ast.body[sourceCode.ast.body.length - 1], sourceCode.ast.tokens[0]), expected);
                     });
                 });
             });
@@ -2279,10 +2018,7 @@ describe("SourceCode", () => {
                             sourceCode = new SourceCode(code, ast);
 
                         assert.strictEqual(
-                            sourceCode.isSpaceBetween(
-                                sourceCode.ast.body[0],
-                                sourceCode.ast.tokens[sourceCode.ast.tokens.length - 1]
-                            ),
+                            sourceCode.isSpaceBetween(sourceCode.ast.body[0], sourceCode.ast.tokens[sourceCode.ast.tokens.length - 1]),
                             expected
                         );
                     });
@@ -2294,10 +2030,7 @@ describe("SourceCode", () => {
                             sourceCode = new SourceCode(code, ast);
 
                         assert.strictEqual(
-                            sourceCode.isSpaceBetween(
-                                sourceCode.ast.tokens[sourceCode.ast.tokens.length - 1],
-                                sourceCode.ast.body[0]
-                            ),
+                            sourceCode.isSpaceBetween(sourceCode.ast.tokens[sourceCode.ast.tokens.length - 1], sourceCode.ast.body[0]),
                             expected
                         );
                     });
@@ -2338,13 +2071,7 @@ describe("SourceCode", () => {
                         const ast = espree.parse(code, DEFAULT_CONFIG),
                             sourceCode = new SourceCode(code, ast);
 
-                        assert.strictEqual(
-                            sourceCode.isSpaceBetween(
-                                sourceCode.ast.body[0],
-                                sourceCode.ast.body[sourceCode.ast.body.length - 1]
-                            ),
-                            expected
-                        );
+                        assert.strictEqual(sourceCode.isSpaceBetween(sourceCode.ast.body[0], sourceCode.ast.body[sourceCode.ast.body.length - 1]), expected);
                     });
                 });
 
@@ -2353,13 +2080,7 @@ describe("SourceCode", () => {
                         const ast = espree.parse(code, DEFAULT_CONFIG),
                             sourceCode = new SourceCode(code, ast);
 
-                        assert.strictEqual(
-                            sourceCode.isSpaceBetween(
-                                sourceCode.ast.body[sourceCode.ast.body.length - 1],
-                                sourceCode.ast.body[0]
-                            ),
-                            expected
-                        );
+                        assert.strictEqual(sourceCode.isSpaceBetween(sourceCode.ast.body[sourceCode.ast.body.length - 1], sourceCode.ast.body[0]), expected);
                     });
                 });
             });
@@ -2371,24 +2092,12 @@ describe("SourceCode", () => {
                 const jsx = ast.body[0].declarations[0].init;
                 const interpolation = jsx.children[1];
 
-                assert.strictEqual(
-                    sourceCode.isSpaceBetween(jsx.openingElement, interpolation),
-                    false
-                );
-                assert.strictEqual(
-                    sourceCode.isSpaceBetween(interpolation, jsx.closingElement),
-                    false
-                );
+                assert.strictEqual(sourceCode.isSpaceBetween(jsx.openingElement, interpolation), false);
+                assert.strictEqual(sourceCode.isSpaceBetween(interpolation, jsx.closingElement), false);
 
                 // Reversed order
-                assert.strictEqual(
-                    sourceCode.isSpaceBetween(interpolation, jsx.openingElement),
-                    false
-                );
-                assert.strictEqual(
-                    sourceCode.isSpaceBetween(jsx.closingElement, interpolation),
-                    false
-                );
+                assert.strictEqual(sourceCode.isSpaceBetween(interpolation, jsx.openingElement), false);
+                assert.strictEqual(sourceCode.isSpaceBetween(jsx.closingElement, interpolation), false);
             });
 
             it("JSXText tokens that contain both letters and whitespaces should NOT be handled as space", () => {
@@ -2397,16 +2106,10 @@ describe("SourceCode", () => {
                 const sourceCode = new SourceCode(code, ast);
                 const jsx = ast.body[0].declarations[0].init;
 
-                assert.strictEqual(
-                    sourceCode.isSpaceBetween(jsx.openingElement, jsx.closingElement),
-                    false
-                );
+                assert.strictEqual(sourceCode.isSpaceBetween(jsx.openingElement, jsx.closingElement), false);
 
                 // Reversed order
-                assert.strictEqual(
-                    sourceCode.isSpaceBetween(jsx.closingElement, jsx.openingElement),
-                    false
-                );
+                assert.strictEqual(sourceCode.isSpaceBetween(jsx.closingElement, jsx.openingElement), false);
             });
 
             it("JSXText tokens that contain only letters should NOT be handled as space", () => {
@@ -2415,58 +2118,26 @@ describe("SourceCode", () => {
                 const sourceCode = new SourceCode(code, ast);
                 const jsx = ast.body[0].declarations[0].init;
 
-                assert.strictEqual(
-                    sourceCode.isSpaceBetween(jsx.openingElement, jsx.closingElement),
-                    false
-                );
+                assert.strictEqual(sourceCode.isSpaceBetween(jsx.openingElement, jsx.closingElement), false);
 
                 // Reversed order
-                assert.strictEqual(
-                    sourceCode.isSpaceBetween(jsx.closingElement, jsx.openingElement),
-                    false
-                );
+                assert.strictEqual(sourceCode.isSpaceBetween(jsx.closingElement, jsx.openingElement), false);
             });
         });
 
         describe("should return false either of the arguments' location is inside the other one", () => {
-            [
-                ["let foo = bar;", false]
-            ].forEach(([code, expected]) => {
+            [["let foo = bar;", false]].forEach(([code, expected]) => {
                 it(code, () => {
                     const ast = espree.parse(code, DEFAULT_CONFIG),
                         sourceCode = new SourceCode(code, ast);
 
-                    assert.strictEqual(
-                        sourceCode.isSpaceBetween(
-                            sourceCode.ast.tokens[0],
-                            sourceCode.ast.body[0]
-                        ),
-                        expected
-                    );
+                    assert.strictEqual(sourceCode.isSpaceBetween(sourceCode.ast.tokens[0], sourceCode.ast.body[0]), expected);
 
-                    assert.strictEqual(
-                        sourceCode.isSpaceBetween(
-                            sourceCode.ast.tokens[sourceCode.ast.tokens.length - 1],
-                            sourceCode.ast.body[0]
-                        ),
-                        expected
-                    );
+                    assert.strictEqual(sourceCode.isSpaceBetween(sourceCode.ast.tokens[sourceCode.ast.tokens.length - 1], sourceCode.ast.body[0]), expected);
 
-                    assert.strictEqual(
-                        sourceCode.isSpaceBetween(
-                            sourceCode.ast.body[0],
-                            sourceCode.ast.tokens[0]
-                        ),
-                        expected
-                    );
+                    assert.strictEqual(sourceCode.isSpaceBetween(sourceCode.ast.body[0], sourceCode.ast.tokens[0]), expected);
 
-                    assert.strictEqual(
-                        sourceCode.isSpaceBetween(
-                            sourceCode.ast.body[0],
-                            sourceCode.ast.tokens[sourceCode.ast.tokens.length - 1]
-                        ),
-                        expected
-                    );
+                    assert.strictEqual(sourceCode.isSpaceBetween(sourceCode.ast.body[0], sourceCode.ast.tokens[sourceCode.ast.tokens.length - 1]), expected);
                 });
             });
         });
@@ -2487,10 +2158,7 @@ describe("SourceCode", () => {
                             sourceCode = new SourceCode(code, ast);
 
                         assert.strictEqual(
-                            sourceCode.isSpaceBetweenTokens(
-                                sourceCode.ast.tokens[0],
-                                sourceCode.ast.tokens[sourceCode.ast.tokens.length - 1]
-                            ),
+                            sourceCode.isSpaceBetweenTokens(sourceCode.ast.tokens[0], sourceCode.ast.tokens[sourceCode.ast.tokens.length - 1]),
                             expected
                         );
                     });
@@ -2502,10 +2170,7 @@ describe("SourceCode", () => {
                             sourceCode = new SourceCode(code, ast);
 
                         assert.strictEqual(
-                            sourceCode.isSpaceBetweenTokens(
-                                sourceCode.ast.tokens[sourceCode.ast.tokens.length - 1],
-                                sourceCode.ast.tokens[0]
-                            ),
+                            sourceCode.isSpaceBetweenTokens(sourceCode.ast.tokens[sourceCode.ast.tokens.length - 1], sourceCode.ast.tokens[0]),
                             expected
                         );
                     });
@@ -2551,10 +2216,7 @@ describe("SourceCode", () => {
                             sourceCode = new SourceCode(code, ast);
 
                         assert.strictEqual(
-                            sourceCode.isSpaceBetweenTokens(
-                                sourceCode.ast.tokens[0],
-                                sourceCode.ast.tokens[sourceCode.ast.tokens.length - 2]
-                            ),
+                            sourceCode.isSpaceBetweenTokens(sourceCode.ast.tokens[0], sourceCode.ast.tokens[sourceCode.ast.tokens.length - 2]),
                             expected
                         );
                     });
@@ -2566,10 +2228,7 @@ describe("SourceCode", () => {
                             sourceCode = new SourceCode(code, ast);
 
                         assert.strictEqual(
-                            sourceCode.isSpaceBetweenTokens(
-                                sourceCode.ast.tokens[sourceCode.ast.tokens.length - 2],
-                                sourceCode.ast.tokens[0]
-                            ),
+                            sourceCode.isSpaceBetweenTokens(sourceCode.ast.tokens[sourceCode.ast.tokens.length - 2], sourceCode.ast.tokens[0]),
                             expected
                         );
                     });
@@ -2613,10 +2272,7 @@ describe("SourceCode", () => {
                             sourceCode = new SourceCode(code, ast);
 
                         assert.strictEqual(
-                            sourceCode.isSpaceBetweenTokens(
-                                sourceCode.ast.tokens[0],
-                                sourceCode.ast.body[sourceCode.ast.body.length - 1]
-                            ),
+                            sourceCode.isSpaceBetweenTokens(sourceCode.ast.tokens[0], sourceCode.ast.body[sourceCode.ast.body.length - 1]),
                             expected
                         );
                     });
@@ -2628,10 +2284,7 @@ describe("SourceCode", () => {
                             sourceCode = new SourceCode(code, ast);
 
                         assert.strictEqual(
-                            sourceCode.isSpaceBetweenTokens(
-                                sourceCode.ast.body[sourceCode.ast.body.length - 1],
-                                sourceCode.ast.tokens[0]
-                            ),
+                            sourceCode.isSpaceBetweenTokens(sourceCode.ast.body[sourceCode.ast.body.length - 1], sourceCode.ast.tokens[0]),
                             expected
                         );
                     });
@@ -2675,10 +2328,7 @@ describe("SourceCode", () => {
                             sourceCode = new SourceCode(code, ast);
 
                         assert.strictEqual(
-                            sourceCode.isSpaceBetweenTokens(
-                                sourceCode.ast.body[0],
-                                sourceCode.ast.tokens[sourceCode.ast.tokens.length - 1]
-                            ),
+                            sourceCode.isSpaceBetweenTokens(sourceCode.ast.body[0], sourceCode.ast.tokens[sourceCode.ast.tokens.length - 1]),
                             expected
                         );
                     });
@@ -2690,10 +2340,7 @@ describe("SourceCode", () => {
                             sourceCode = new SourceCode(code, ast);
 
                         assert.strictEqual(
-                            sourceCode.isSpaceBetweenTokens(
-                                sourceCode.ast.tokens[sourceCode.ast.tokens.length - 1],
-                                sourceCode.ast.body[0]
-                            ),
+                            sourceCode.isSpaceBetweenTokens(sourceCode.ast.tokens[sourceCode.ast.tokens.length - 1], sourceCode.ast.body[0]),
                             expected
                         );
                     });
@@ -2735,10 +2382,7 @@ describe("SourceCode", () => {
                             sourceCode = new SourceCode(code, ast);
 
                         assert.strictEqual(
-                            sourceCode.isSpaceBetweenTokens(
-                                sourceCode.ast.body[0],
-                                sourceCode.ast.body[sourceCode.ast.body.length - 1]
-                            ),
+                            sourceCode.isSpaceBetweenTokens(sourceCode.ast.body[0], sourceCode.ast.body[sourceCode.ast.body.length - 1]),
                             expected
                         );
                     });
@@ -2750,10 +2394,7 @@ describe("SourceCode", () => {
                             sourceCode = new SourceCode(code, ast);
 
                         assert.strictEqual(
-                            sourceCode.isSpaceBetweenTokens(
-                                sourceCode.ast.body[sourceCode.ast.body.length - 1],
-                                sourceCode.ast.body[0]
-                            ),
+                            sourceCode.isSpaceBetweenTokens(sourceCode.ast.body[sourceCode.ast.body.length - 1], sourceCode.ast.body[0]),
                             expected
                         );
                     });
@@ -2767,24 +2408,12 @@ describe("SourceCode", () => {
                 const jsx = ast.body[0].declarations[0].init;
                 const interpolation = jsx.children[1];
 
-                assert.strictEqual(
-                    sourceCode.isSpaceBetweenTokens(jsx.openingElement, interpolation),
-                    true
-                );
-                assert.strictEqual(
-                    sourceCode.isSpaceBetweenTokens(interpolation, jsx.closingElement),
-                    true
-                );
+                assert.strictEqual(sourceCode.isSpaceBetweenTokens(jsx.openingElement, interpolation), true);
+                assert.strictEqual(sourceCode.isSpaceBetweenTokens(interpolation, jsx.closingElement), true);
 
                 // Reversed order
-                assert.strictEqual(
-                    sourceCode.isSpaceBetweenTokens(interpolation, jsx.openingElement),
-                    true
-                );
-                assert.strictEqual(
-                    sourceCode.isSpaceBetweenTokens(jsx.closingElement, interpolation),
-                    true
-                );
+                assert.strictEqual(sourceCode.isSpaceBetweenTokens(interpolation, jsx.openingElement), true);
+                assert.strictEqual(sourceCode.isSpaceBetweenTokens(jsx.closingElement, interpolation), true);
             });
 
             it("JSXText tokens that contain both letters and whitespaces should be handled as space", () => {
@@ -2793,16 +2422,10 @@ describe("SourceCode", () => {
                 const sourceCode = new SourceCode(code, ast);
                 const jsx = ast.body[0].declarations[0].init;
 
-                assert.strictEqual(
-                    sourceCode.isSpaceBetweenTokens(jsx.openingElement, jsx.closingElement),
-                    true
-                );
+                assert.strictEqual(sourceCode.isSpaceBetweenTokens(jsx.openingElement, jsx.closingElement), true);
 
                 // Reversed order
-                assert.strictEqual(
-                    sourceCode.isSpaceBetweenTokens(jsx.closingElement, jsx.openingElement),
-                    true
-                );
+                assert.strictEqual(sourceCode.isSpaceBetweenTokens(jsx.closingElement, jsx.openingElement), true);
             });
 
             it("JSXText tokens that contain only letters should NOT be handled as space", () => {
@@ -2811,56 +2434,30 @@ describe("SourceCode", () => {
                 const sourceCode = new SourceCode(code, ast);
                 const jsx = ast.body[0].declarations[0].init;
 
-                assert.strictEqual(
-                    sourceCode.isSpaceBetweenTokens(jsx.openingElement, jsx.closingElement),
-                    false
-                );
+                assert.strictEqual(sourceCode.isSpaceBetweenTokens(jsx.openingElement, jsx.closingElement), false);
 
                 // Reversed order
-                assert.strictEqual(
-                    sourceCode.isSpaceBetweenTokens(jsx.closingElement, jsx.openingElement),
-                    false
-                );
+                assert.strictEqual(sourceCode.isSpaceBetweenTokens(jsx.closingElement, jsx.openingElement), false);
             });
         });
 
         describe("should return false either of the arguments' location is inside the other one", () => {
-            [
-                ["let foo = bar;", false]
-            ].forEach(([code, expected]) => {
+            [["let foo = bar;", false]].forEach(([code, expected]) => {
                 it(code, () => {
                     const ast = espree.parse(code, DEFAULT_CONFIG),
                         sourceCode = new SourceCode(code, ast);
 
+                    assert.strictEqual(sourceCode.isSpaceBetweenTokens(sourceCode.ast.tokens[0], sourceCode.ast.body[0]), expected);
+
                     assert.strictEqual(
-                        sourceCode.isSpaceBetweenTokens(
-                            sourceCode.ast.tokens[0],
-                            sourceCode.ast.body[0]
-                        ),
+                        sourceCode.isSpaceBetweenTokens(sourceCode.ast.tokens[sourceCode.ast.tokens.length - 1], sourceCode.ast.body[0]),
                         expected
                     );
 
-                    assert.strictEqual(
-                        sourceCode.isSpaceBetweenTokens(
-                            sourceCode.ast.tokens[sourceCode.ast.tokens.length - 1],
-                            sourceCode.ast.body[0]
-                        ),
-                        expected
-                    );
+                    assert.strictEqual(sourceCode.isSpaceBetweenTokens(sourceCode.ast.body[0], sourceCode.ast.tokens[0]), expected);
 
                     assert.strictEqual(
-                        sourceCode.isSpaceBetweenTokens(
-                            sourceCode.ast.body[0],
-                            sourceCode.ast.tokens[0]
-                        ),
-                        expected
-                    );
-
-                    assert.strictEqual(
-                        sourceCode.isSpaceBetweenTokens(
-                            sourceCode.ast.body[0],
-                            sourceCode.ast.tokens[sourceCode.ast.tokens.length - 1]
-                        ),
+                        sourceCode.isSpaceBetweenTokens(sourceCode.ast.body[0], sourceCode.ast.tokens[sourceCode.ast.tokens.length - 1]),
                         expected
                     );
                 });
@@ -2871,7 +2468,6 @@ describe("SourceCode", () => {
     // need to check that linter.verify() works with SourceCode
 
     describe("linter.verify()", () => {
-
         const CONFIG = {
             parserOptions: { ecmaVersion: 6 }
         };
@@ -2905,14 +2501,7 @@ describe("SourceCode", () => {
     });
 
     describe("getLocFromIndex()", () => {
-        const CODE =
-            "foo\n" +
-            "bar\r\n" +
-            "baz\r" +
-            "qux\u2028" +
-            "foo\u2029" +
-            "\n" +
-            "qux\n";
+        const CODE = "foo\n" + "bar\r\n" + "baz\r" + "qux\u2028" + "foo\u2029" + "\n" + "qux\n";
 
         let sourceCode;
 
@@ -2928,10 +2517,7 @@ describe("SourceCode", () => {
         });
 
         it("should throw if given a bad input", () => {
-            assert.throws(
-                () => sourceCode.getLocFromIndex({ line: 1, column: 1 }),
-                /Expected `index` to be a number\./u
-            );
+            assert.throws(() => sourceCode.getLocFromIndex({ line: 1, column: 1 }), /Expected `index` to be a number\./u);
         });
 
         it("should not throw if given sourceCode.text.length", () => {
@@ -2939,10 +2525,7 @@ describe("SourceCode", () => {
         });
 
         it("should throw if given an out-of-range input", () => {
-            assert.throws(
-                () => sourceCode.getLocFromIndex(CODE.length + 1),
-                /Index out of range \(requested index 27, but source text has length 26\)\./u
-            );
+            assert.throws(() => sourceCode.getLocFromIndex(CODE.length + 1), /Index out of range \(requested index 27, but source text has length 26\)\./u);
         });
 
         it("is symmetric with getIndexFromLoc()", () => {
@@ -2953,14 +2536,7 @@ describe("SourceCode", () => {
     });
 
     describe("getIndexFromLoc()", () => {
-        const CODE =
-            "foo\n" +
-            "bar\r\n" +
-            "baz\r" +
-            "qux\u2028" +
-            "foo\u2029" +
-            "\n" +
-            "qux\n";
+        const CODE = "foo\n" + "bar\r\n" + "baz\r" + "qux\u2028" + "foo\u2029" + "\n" + "qux\n";
 
         let sourceCode;
 
@@ -2976,10 +2552,7 @@ describe("SourceCode", () => {
         });
 
         it("should throw a useful error if given a malformed location", () => {
-            assert.throws(
-                () => sourceCode.getIndexFromLoc(5),
-                /Expected `loc` to be an object with numeric `line` and `column` properties\./u
-            );
+            assert.throws(() => sourceCode.getIndexFromLoc(5), /Expected `loc` to be an object with numeric `line` and `column` properties\./u);
 
             assert.throws(
                 () => sourceCode.getIndexFromLoc({ line: "three", column: "four" }),
@@ -3027,9 +2600,7 @@ describe("SourceCode", () => {
     });
 
     describe("getScope()", () => {
-
         it("should throw an error when argument is missing", () => {
-
             linter.defineRule("get-scope", {
                 create: context => ({
                     Program() {
@@ -3039,14 +2610,10 @@ describe("SourceCode", () => {
             });
 
             assert.throws(() => {
-                linter.verify(
-                    "foo",
-                    {
-                        rules: { "get-scope": 2 }
-                    }
-                );
+                linter.verify("foo", {
+                    rules: { "get-scope": 2 }
+                });
             }, /Missing required argument: node/u);
-
         });
 
         /**
@@ -3067,13 +2634,10 @@ describe("SourceCode", () => {
                     }
                 })
             });
-            linter.verify(
-                code,
-                {
-                    parserOptions: { ecmaVersion },
-                    rules: { "get-scope": 2 }
-                }
-            );
+            linter.verify(code, {
+                parserOptions: { ecmaVersion },
+                rules: { "get-scope": 2 }
+            });
 
             return { node, scope };
         }
@@ -3111,7 +2675,10 @@ describe("SourceCode", () => {
 
             assert.strictEqual(scope.type, "function");
             assert.strictEqual(scope.block, node.parent.parent);
-            assert.deepStrictEqual(scope.variables.map(v => v.name), ["arguments", "b"]);
+            assert.deepStrictEqual(
+                scope.variables.map(v => v.name),
+                ["arguments", "b"]
+            );
         });
 
         it("should return 'block' scope on BlockStatement in functions (ES2015)", () => {
@@ -3120,8 +2687,14 @@ describe("SourceCode", () => {
             assert.strictEqual(scope.type, "block");
             assert.strictEqual(scope.upper.type, "function");
             assert.strictEqual(scope.block, node);
-            assert.deepStrictEqual(scope.variables.map(v => v.name), ["a"]);
-            assert.deepStrictEqual(scope.variableScope.variables.map(v => v.name), ["arguments", "b"]);
+            assert.deepStrictEqual(
+                scope.variables.map(v => v.name),
+                ["a"]
+            );
+            assert.deepStrictEqual(
+                scope.variableScope.variables.map(v => v.name),
+                ["arguments", "b"]
+            );
         });
 
         it("should return 'block' scope on nested BlockStatement in functions (ES2015)", () => {
@@ -3131,9 +2704,18 @@ describe("SourceCode", () => {
             assert.strictEqual(scope.upper.type, "block");
             assert.strictEqual(scope.upper.upper.type, "function");
             assert.strictEqual(scope.block, node);
-            assert.deepStrictEqual(scope.variables.map(v => v.name), ["b"]);
-            assert.deepStrictEqual(scope.upper.variables.map(v => v.name), ["a"]);
-            assert.deepStrictEqual(scope.variableScope.variables.map(v => v.name), ["arguments", "c"]);
+            assert.deepStrictEqual(
+                scope.variables.map(v => v.name),
+                ["b"]
+            );
+            assert.deepStrictEqual(
+                scope.upper.variables.map(v => v.name),
+                ["a"]
+            );
+            assert.deepStrictEqual(
+                scope.variableScope.variables.map(v => v.name),
+                ["arguments", "c"]
+            );
         });
 
         it("should return 'function' scope on SwitchStatement in functions (ES5)", () => {
@@ -3141,7 +2723,10 @@ describe("SourceCode", () => {
 
             assert.strictEqual(scope.type, "function");
             assert.strictEqual(scope.block, node.parent.parent);
-            assert.deepStrictEqual(scope.variables.map(v => v.name), ["arguments", "b"]);
+            assert.deepStrictEqual(
+                scope.variables.map(v => v.name),
+                ["arguments", "b"]
+            );
         });
 
         it("should return 'switch' scope on SwitchStatement in functions (ES2015)", () => {
@@ -3149,7 +2734,10 @@ describe("SourceCode", () => {
 
             assert.strictEqual(scope.type, "switch");
             assert.strictEqual(scope.block, node);
-            assert.deepStrictEqual(scope.variables.map(v => v.name), ["b"]);
+            assert.deepStrictEqual(
+                scope.variables.map(v => v.name),
+                ["b"]
+            );
         });
 
         it("should return 'function' scope on SwitchCase in functions (ES5)", () => {
@@ -3157,7 +2745,10 @@ describe("SourceCode", () => {
 
             assert.strictEqual(scope.type, "function");
             assert.strictEqual(scope.block, node.parent.parent.parent);
-            assert.deepStrictEqual(scope.variables.map(v => v.name), ["arguments", "b"]);
+            assert.deepStrictEqual(
+                scope.variables.map(v => v.name),
+                ["arguments", "b"]
+            );
         });
 
         it("should return 'switch' scope on SwitchCase in functions (ES2015)", () => {
@@ -3165,7 +2756,10 @@ describe("SourceCode", () => {
 
             assert.strictEqual(scope.type, "switch");
             assert.strictEqual(scope.block, node.parent);
-            assert.deepStrictEqual(scope.variables.map(v => v.name), ["b"]);
+            assert.deepStrictEqual(
+                scope.variables.map(v => v.name),
+                ["b"]
+            );
         });
 
         it("should return 'catch' scope on CatchClause in functions (ES5)", () => {
@@ -3173,7 +2767,10 @@ describe("SourceCode", () => {
 
             assert.strictEqual(scope.type, "catch");
             assert.strictEqual(scope.block, node);
-            assert.deepStrictEqual(scope.variables.map(v => v.name), ["e"]);
+            assert.deepStrictEqual(
+                scope.variables.map(v => v.name),
+                ["e"]
+            );
         });
 
         it("should return 'catch' scope on CatchClause in functions (ES2015)", () => {
@@ -3181,7 +2778,10 @@ describe("SourceCode", () => {
 
             assert.strictEqual(scope.type, "catch");
             assert.strictEqual(scope.block, node);
-            assert.deepStrictEqual(scope.variables.map(v => v.name), ["e"]);
+            assert.deepStrictEqual(
+                scope.variables.map(v => v.name),
+                ["e"]
+            );
         });
 
         it("should return 'catch' scope on the block of CatchClause in functions (ES5)", () => {
@@ -3189,7 +2789,10 @@ describe("SourceCode", () => {
 
             assert.strictEqual(scope.type, "catch");
             assert.strictEqual(scope.block, node.parent);
-            assert.deepStrictEqual(scope.variables.map(v => v.name), ["e"]);
+            assert.deepStrictEqual(
+                scope.variables.map(v => v.name),
+                ["e"]
+            );
         });
 
         it("should return 'block' scope on the block of CatchClause in functions (ES2015)", () => {
@@ -3197,7 +2800,10 @@ describe("SourceCode", () => {
 
             assert.strictEqual(scope.type, "block");
             assert.strictEqual(scope.block, node);
-            assert.deepStrictEqual(scope.variables.map(v => v.name), ["a"]);
+            assert.deepStrictEqual(
+                scope.variables.map(v => v.name),
+                ["a"]
+            );
         });
 
         it("should return 'function' scope on ForStatement in functions (ES5)", () => {
@@ -3205,7 +2811,10 @@ describe("SourceCode", () => {
 
             assert.strictEqual(scope.type, "function");
             assert.strictEqual(scope.block, node.parent.parent);
-            assert.deepStrictEqual(scope.variables.map(v => v.name), ["arguments", "i"]);
+            assert.deepStrictEqual(
+                scope.variables.map(v => v.name),
+                ["arguments", "i"]
+            );
         });
 
         it("should return 'for' scope on ForStatement in functions (ES2015)", () => {
@@ -3213,7 +2822,10 @@ describe("SourceCode", () => {
 
             assert.strictEqual(scope.type, "for");
             assert.strictEqual(scope.block, node);
-            assert.deepStrictEqual(scope.variables.map(v => v.name), ["i"]);
+            assert.deepStrictEqual(
+                scope.variables.map(v => v.name),
+                ["i"]
+            );
         });
 
         it("should return 'function' scope on the block body of ForStatement in functions (ES5)", () => {
@@ -3221,7 +2833,10 @@ describe("SourceCode", () => {
 
             assert.strictEqual(scope.type, "function");
             assert.strictEqual(scope.block, node.parent.parent.parent);
-            assert.deepStrictEqual(scope.variables.map(v => v.name), ["arguments", "i"]);
+            assert.deepStrictEqual(
+                scope.variables.map(v => v.name),
+                ["arguments", "i"]
+            );
         });
 
         it("should return 'block' scope on the block body of ForStatement in functions (ES2015)", () => {
@@ -3230,8 +2845,14 @@ describe("SourceCode", () => {
             assert.strictEqual(scope.type, "block");
             assert.strictEqual(scope.upper.type, "for");
             assert.strictEqual(scope.block, node);
-            assert.deepStrictEqual(scope.variables.map(v => v.name), []);
-            assert.deepStrictEqual(scope.upper.variables.map(v => v.name), ["i"]);
+            assert.deepStrictEqual(
+                scope.variables.map(v => v.name),
+                []
+            );
+            assert.deepStrictEqual(
+                scope.upper.variables.map(v => v.name),
+                ["i"]
+            );
         });
 
         it("should return 'function' scope on ForInStatement in functions (ES5)", () => {
@@ -3239,7 +2860,10 @@ describe("SourceCode", () => {
 
             assert.strictEqual(scope.type, "function");
             assert.strictEqual(scope.block, node.parent.parent);
-            assert.deepStrictEqual(scope.variables.map(v => v.name), ["arguments", "key"]);
+            assert.deepStrictEqual(
+                scope.variables.map(v => v.name),
+                ["arguments", "key"]
+            );
         });
 
         it("should return 'for' scope on ForInStatement in functions (ES2015)", () => {
@@ -3247,7 +2871,10 @@ describe("SourceCode", () => {
 
             assert.strictEqual(scope.type, "for");
             assert.strictEqual(scope.block, node);
-            assert.deepStrictEqual(scope.variables.map(v => v.name), ["key"]);
+            assert.deepStrictEqual(
+                scope.variables.map(v => v.name),
+                ["key"]
+            );
         });
 
         it("should return 'function' scope on the block body of ForInStatement in functions (ES5)", () => {
@@ -3255,7 +2882,10 @@ describe("SourceCode", () => {
 
             assert.strictEqual(scope.type, "function");
             assert.strictEqual(scope.block, node.parent.parent.parent);
-            assert.deepStrictEqual(scope.variables.map(v => v.name), ["arguments", "key"]);
+            assert.deepStrictEqual(
+                scope.variables.map(v => v.name),
+                ["arguments", "key"]
+            );
         });
 
         it("should return 'block' scope on the block body of ForInStatement in functions (ES2015)", () => {
@@ -3264,8 +2894,14 @@ describe("SourceCode", () => {
             assert.strictEqual(scope.type, "block");
             assert.strictEqual(scope.upper.type, "for");
             assert.strictEqual(scope.block, node);
-            assert.deepStrictEqual(scope.variables.map(v => v.name), []);
-            assert.deepStrictEqual(scope.upper.variables.map(v => v.name), ["key"]);
+            assert.deepStrictEqual(
+                scope.variables.map(v => v.name),
+                []
+            );
+            assert.deepStrictEqual(
+                scope.upper.variables.map(v => v.name),
+                ["key"]
+            );
         });
 
         it("should return 'for' scope on ForOfStatement in functions (ES2015)", () => {
@@ -3273,7 +2909,10 @@ describe("SourceCode", () => {
 
             assert.strictEqual(scope.type, "for");
             assert.strictEqual(scope.block, node);
-            assert.deepStrictEqual(scope.variables.map(v => v.name), ["x"]);
+            assert.deepStrictEqual(
+                scope.variables.map(v => v.name),
+                ["x"]
+            );
         });
 
         it("should return 'block' scope on the block body of ForOfStatement in functions (ES2015)", () => {
@@ -3282,8 +2921,14 @@ describe("SourceCode", () => {
             assert.strictEqual(scope.type, "block");
             assert.strictEqual(scope.upper.type, "for");
             assert.strictEqual(scope.block, node);
-            assert.deepStrictEqual(scope.variables.map(v => v.name), []);
-            assert.deepStrictEqual(scope.upper.variables.map(v => v.name), ["x"]);
+            assert.deepStrictEqual(
+                scope.variables.map(v => v.name),
+                []
+            );
+            assert.deepStrictEqual(
+                scope.upper.variables.map(v => v.name),
+                ["x"]
+            );
         });
 
         it("should shadow the same name variable by the iteration variable.", () => {
@@ -3303,7 +2948,6 @@ describe("SourceCode", () => {
         const code = TEST_CODE;
 
         it("should retrieve all ancestors when used", () => {
-
             let spy;
 
             const config = {
@@ -3375,7 +3019,6 @@ describe("SourceCode", () => {
                                         assert.throws(() => {
                                             sourceCode.getAncestors();
                                         }, /Missing required argument: node/u);
-
                                     });
 
                                     return { Program: spy };
@@ -3392,9 +3035,7 @@ describe("SourceCode", () => {
         });
     });
 
-
     describe("getDeclaredVariables(node)", () => {
-
         /**
          * Assert `sourceCode.getDeclaredVariables(node)` is valid.
          * @param {string} code A code to check.
@@ -3406,7 +3047,6 @@ describe("SourceCode", () => {
             linter.defineRules({
                 test: {
                     create(context) {
-
                         const sourceCode = context.sourceCode;
 
                         /**
@@ -3467,7 +3107,7 @@ describe("SourceCode", () => {
                             MetaProperty: checkEmpty
                         };
 
-                        rule[type] = function(node) {
+                        rule[type] = function (node) {
                             const expectedNames = expectedNamesList.shift();
                             const variables = sourceCode.getDeclaredVariables(node);
 
@@ -3495,48 +3135,33 @@ describe("SourceCode", () => {
         }
 
         it("VariableDeclaration", () => {
-            const code = "\n var {a, x: [b], y: {c = 0}} = foo;\n let {d, x: [e], y: {f = 0}} = foo;\n const {g, x: [h], y: {i = 0}} = foo, {j, k = function(z) { let l; }} = bar;\n ";
-            const namesList = [
-                ["a", "b", "c"],
-                ["d", "e", "f"],
-                ["g", "h", "i", "j", "k"],
-                ["l"]
-            ];
+            const code =
+                "\n var {a, x: [b], y: {c = 0}} = foo;\n let {d, x: [e], y: {f = 0}} = foo;\n const {g, x: [h], y: {i = 0}} = foo, {j, k = function(z) { let l; }} = bar;\n ";
+            const namesList = [["a", "b", "c"], ["d", "e", "f"], ["g", "h", "i", "j", "k"], ["l"]];
 
             verify(code, "VariableDeclaration", namesList);
         });
 
         it("VariableDeclaration (on for-in/of loop)", () => {
-
             // TDZ scope is created here, so tests to exclude those.
             const code = "\n for (var {a, x: [b], y: {c = 0}} in foo) {\n let g;\n }\n for (let {d, x: [e], y: {f = 0}} of foo) {\n let h;\n }\n ";
-            const namesList = [
-                ["a", "b", "c"],
-                ["g"],
-                ["d", "e", "f"],
-                ["h"]
-            ];
+            const namesList = [["a", "b", "c"], ["g"], ["d", "e", "f"], ["h"]];
 
             verify(code, "VariableDeclaration", namesList);
         });
 
         it("VariableDeclarator", () => {
-
             // TDZ scope is created here, so tests to exclude those.
-            const code = "\n var {a, x: [b], y: {c = 0}} = foo;\n let {d, x: [e], y: {f = 0}} = foo;\n const {g, x: [h], y: {i = 0}} = foo, {j, k = function(z) { let l; }} = bar;\n ";
-            const namesList = [
-                ["a", "b", "c"],
-                ["d", "e", "f"],
-                ["g", "h", "i"],
-                ["j", "k"],
-                ["l"]
-            ];
+            const code =
+                "\n var {a, x: [b], y: {c = 0}} = foo;\n let {d, x: [e], y: {f = 0}} = foo;\n const {g, x: [h], y: {i = 0}} = foo, {j, k = function(z) { let l; }} = bar;\n ";
+            const namesList = [["a", "b", "c"], ["d", "e", "f"], ["g", "h", "i"], ["j", "k"], ["l"]];
 
             verify(code, "VariableDeclarator", namesList);
         });
 
         it("FunctionDeclaration", () => {
-            const code = "\n function foo({a, x: [b], y: {c = 0}}, [d, e]) {\n let z;\n }\n function bar({f, x: [g], y: {h = 0}}, [i, j = function(q) { let w; }]) {\n let z;\n }\n ";
+            const code =
+                "\n function foo({a, x: [b], y: {c = 0}}, [d, e]) {\n let z;\n }\n function bar({f, x: [g], y: {h = 0}}, [i, j = function(q) { let w; }]) {\n let z;\n }\n ";
             const namesList = [
                 ["foo", "a", "b", "c", "d", "e"],
                 ["bar", "f", "g", "h", "i", "j"]
@@ -3546,12 +3171,9 @@ describe("SourceCode", () => {
         });
 
         it("FunctionExpression", () => {
-            const code = "\n (function foo({a, x: [b], y: {c = 0}}, [d, e]) {\n let z;\n });\n (function bar({f, x: [g], y: {h = 0}}, [i, j = function(q) { let w; }]) {\n let z;\n });\n ";
-            const namesList = [
-                ["foo", "a", "b", "c", "d", "e"],
-                ["bar", "f", "g", "h", "i", "j"],
-                ["q"]
-            ];
+            const code =
+                "\n (function foo({a, x: [b], y: {c = 0}}, [d, e]) {\n let z;\n });\n (function bar({f, x: [g], y: {h = 0}}, [i, j = function(q) { let w; }]) {\n let z;\n });\n ";
+            const namesList = [["foo", "a", "b", "c", "d", "e"], ["bar", "f", "g", "h", "i", "j"], ["q"]];
 
             verify(code, "FunctionExpression", namesList);
         });
@@ -3578,10 +3200,7 @@ describe("SourceCode", () => {
 
         it("ClassExpression", () => {
             const code = "\n (class A { foo(x) { let y; } });\n (class B { foo(x) { let y; } });\n ";
-            const namesList = [
-                ["A"],
-                ["B"]
-            ];
+            const namesList = [["A"], ["B"]];
 
             verify(code, "ClassExpression", namesList);
         });
@@ -3597,47 +3216,35 @@ describe("SourceCode", () => {
         });
 
         it("ImportDeclaration", () => {
-            const code = "\n import \"aaa\";\n import * as a from \"bbb\";\n import b, {c, x as d} from \"ccc\";\n ";
-            const namesList = [
-                [],
-                ["a"],
-                ["b", "c", "d"]
-            ];
+            const code = '\n import "aaa";\n import * as a from "bbb";\n import b, {c, x as d} from "ccc";\n ';
+            const namesList = [[], ["a"], ["b", "c", "d"]];
 
             verify(code, "ImportDeclaration", namesList);
         });
 
         it("ImportSpecifier", () => {
-            const code = "\n import \"aaa\";\n import * as a from \"bbb\";\n import b, {c, x as d} from \"ccc\";\n ";
-            const namesList = [
-                ["c"],
-                ["d"]
-            ];
+            const code = '\n import "aaa";\n import * as a from "bbb";\n import b, {c, x as d} from "ccc";\n ';
+            const namesList = [["c"], ["d"]];
 
             verify(code, "ImportSpecifier", namesList);
         });
 
         it("ImportDefaultSpecifier", () => {
-            const code = "\n import \"aaa\";\n import * as a from \"bbb\";\n import b, {c, x as d} from \"ccc\";\n ";
-            const namesList = [
-                ["b"]
-            ];
+            const code = '\n import "aaa";\n import * as a from "bbb";\n import b, {c, x as d} from "ccc";\n ';
+            const namesList = [["b"]];
 
             verify(code, "ImportDefaultSpecifier", namesList);
         });
 
         it("ImportNamespaceSpecifier", () => {
-            const code = "\n import \"aaa\";\n import * as a from \"bbb\";\n import b, {c, x as d} from \"ccc\";\n ";
-            const namesList = [
-                ["a"]
-            ];
+            const code = '\n import "aaa";\n import * as a from "bbb";\n import b, {c, x as d} from "ccc";\n ';
+            const namesList = [["a"]];
 
             verify(code, "ImportNamespaceSpecifier", namesList);
         });
     });
 
     describe("markVariableAsUsed()", () => {
-
         it("should mark variables in current scope as used", () => {
             const code = "var a = 1, b = 2;";
             let spy;
@@ -3786,13 +3393,10 @@ describe("SourceCode", () => {
             linter.verify(code, { rules: { checker: "error" } });
             assert(spy && spy.calledOnce);
         });
-
     });
 
     describe("getInlineConfigNodes()", () => {
-
         it("should return inline config comments", () => {
-
             const code = "/*eslint foo: 1*/ foo; /* non-config comment*/ /* eslint-disable bar */ bar; /* eslint-enable bar */";
             const ast = espree.parse(code, DEFAULT_CONFIG);
             const sourceCode = new SourceCode(code, ast);
@@ -3805,10 +3409,7 @@ describe("SourceCode", () => {
                     value: "eslint foo: 1",
                     start: 0,
                     end: 17,
-                    range: [
-                        0,
-                        17
-                    ],
+                    range: [0, 17],
                     loc: {
                         start: {
                             line: 1,
@@ -3825,10 +3426,7 @@ describe("SourceCode", () => {
                     value: " eslint-disable bar ",
                     start: 47,
                     end: 71,
-                    range: [
-                        47,
-                        71
-                    ],
+                    range: [47, 71],
                     loc: {
                         start: {
                             line: 1,
@@ -3845,10 +3443,7 @@ describe("SourceCode", () => {
                     value: " eslint-enable bar ",
                     start: 77,
                     end: 100,
-                    range: [
-                        77,
-                        100
-                    ],
+                    range: [77, 100],
                     loc: {
                         start: {
                             line: 1,
@@ -3861,15 +3456,11 @@ describe("SourceCode", () => {
                     }
                 }
             ]);
-
         });
-
     });
 
     describe("applyLanguageOptions()", () => {
-
         it("should add ES6 globals", () => {
-
             const code = "foo";
             const ast = espree.parse(code, DEFAULT_CONFIG);
             const scopeManager = eslintScope.analyze(ast, {
@@ -3888,11 +3479,9 @@ describe("SourceCode", () => {
             const variable = globalScope.set.get("Promise");
 
             assert.isDefined(variable);
-
         });
 
         it("should add custom globals", () => {
-
             const code = "foo";
             const ast = espree.parse(code, DEFAULT_CONFIG);
             const scopeManager = eslintScope.analyze(ast, {
@@ -3918,7 +3507,6 @@ describe("SourceCode", () => {
         });
 
         it("should add commonjs globals", () => {
-
             const code = "foo";
             const ast = espree.parse(code, DEFAULT_CONFIG);
             const scopeManager = eslintScope.analyze(ast, {
@@ -3939,15 +3527,11 @@ describe("SourceCode", () => {
             const variable = globalScope.set.get("require");
 
             assert.isDefined(variable);
-
         });
-
     });
 
     describe("applyInlineConfig()", () => {
-
         it("should add inline globals", () => {
-
             const code = "/*global bar: true */ foo";
             const ast = espree.parse(code, DEFAULT_CONFIG);
             const scopeManager = eslintScope.analyze(ast, {
@@ -3966,9 +3550,7 @@ describe("SourceCode", () => {
             assert.isTrue(variable.writeable);
         });
 
-
         it("should mark exported variables", () => {
-
             const code = "/*exported foo */ var foo;";
             const ast = espree.parse(code, DEFAULT_CONFIG);
             const scopeManager = eslintScope.analyze(ast, {
@@ -3989,7 +3571,6 @@ describe("SourceCode", () => {
         });
 
         it("should extract rule configuration", () => {
-
             const code = "/*eslint some-rule: 2 */ var foo;";
             const ast = espree.parse(code, DEFAULT_CONFIG);
             const sourceCode = new SourceCode(code, ast);
@@ -4000,8 +3581,7 @@ describe("SourceCode", () => {
         });
 
         it("should extract multiple rule configurations", () => {
-
-            const code = "/*eslint some-rule: 2, other-rule: [\"error\", { skip: true }] */ var foo;";
+            const code = '/*eslint some-rule: 2, other-rule: ["error", { skip: true }] */ var foo;';
             const ast = espree.parse(code, DEFAULT_CONFIG);
             const sourceCode = new SourceCode(code, ast);
             const result = sourceCode.applyInlineConfig();
@@ -4012,8 +3592,7 @@ describe("SourceCode", () => {
         });
 
         it("should extract multiple comments into multiple configurations", () => {
-
-            const code = "/*eslint some-rule: 2*/ /*eslint other-rule: [\"error\", { skip: true }] */ var foo;";
+            const code = '/*eslint some-rule: 2*/ /*eslint other-rule: ["error", { skip: true }] */ var foo;';
             const ast = espree.parse(code, DEFAULT_CONFIG);
             const sourceCode = new SourceCode(code, ast);
             const result = sourceCode.applyInlineConfig();
@@ -4024,7 +3603,6 @@ describe("SourceCode", () => {
         });
 
         it("should report problem with rule configuration parsing", () => {
-
             const code = "/*eslint some-rule::, */ var foo;";
             const ast = espree.parse(code, DEFAULT_CONFIG);
             const sourceCode = new SourceCode(code, ast);

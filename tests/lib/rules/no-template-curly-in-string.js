@@ -11,7 +11,6 @@
 const rule = require("../../../lib/rules/no-template-curly-in-string"),
     { RuleTester } = require("../../../lib/rule-tester");
 
-
 //------------------------------------------------------------------------------
 // Tests
 //------------------------------------------------------------------------------
@@ -29,9 +28,9 @@ ruleTester.run("no-template-curly-in-string", rule, {
         { code: "'Hello, name';", parserOptions },
         { code: "'Hello, ' + name;", parserOptions },
         { code: "`Hello, ${index + 1}`", parserOptions },
-        { code: "`Hello, ${name + \" foo\"}`", parserOptions },
-        { code: "`Hello, ${name || \"foo\"}`", parserOptions },
-        { code: "`Hello, ${{foo: \"bar\"}.foo}`", parserOptions },
+        { code: '`Hello, ${name + " foo"}`', parserOptions },
+        { code: '`Hello, ${name || "foo"}`', parserOptions },
+        { code: '`Hello, ${{foo: "bar"}.foo}`', parserOptions },
         { code: "'$2'", parserOptions },
         { code: "'${'", parserOptions },
         { code: "'$}'", parserOptions },
@@ -46,7 +45,7 @@ ruleTester.run("no-template-curly-in-string", rule, {
             errors: [{ messageId }]
         },
         {
-            code: "\"Hello, ${name}\"",
+            code: '"Hello, ${name}"',
             parserOptions,
             errors: [{ messageId }]
         },

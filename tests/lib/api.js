@@ -17,7 +17,6 @@ const assert = require("chai").assert,
 //-----------------------------------------------------------------------------
 
 describe("api", () => {
-
     it("should have RuleTester exposed", () => {
         assert.isFunction(api.RuleTester);
     });

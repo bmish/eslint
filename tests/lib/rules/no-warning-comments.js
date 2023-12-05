@@ -35,8 +35,11 @@ ruleTester.run("no-warning-comments", rule, {
         "/* any block comment with (TODO, FIXME's or XXX!) */",
         { code: "// comments containing terms as substrings like TodoMVC", options: [{ terms: ["todo"], location: "anywhere" }] },
         { code: "// special regex characters don't cause a problem", options: [{ terms: ["[aeiou]"], location: "anywhere" }] },
-        "/*eslint no-warning-comments: [2, { \"terms\": [\"todo\", \"fixme\", \"any other term\"], \"location\": \"anywhere\" }]*/\n\nvar x = 10;\n",
-        { code: "/*eslint no-warning-comments: [2, { \"terms\": [\"todo\", \"fixme\", \"any other term\"], \"location\": \"anywhere\" }]*/\n\nvar x = 10;\n", options: [{ location: "anywhere" }] },
+        '/*eslint no-warning-comments: [2, { "terms": ["todo", "fixme", "any other term"], "location": "anywhere" }]*/\n\nvar x = 10;\n',
+        {
+            code: '/*eslint no-warning-comments: [2, { "terms": ["todo", "fixme", "any other term"], "location": "anywhere" }]*/\n\nvar x = 10;\n',
+            options: [{ location: "anywhere" }]
+        },
         { code: "// foo", options: [{ terms: ["foo-bar"] }] },
         "/** multi-line block comment with lines starting with\nTODO\nFIXME or\nXXX\n*/",
         { code: "//!TODO ", options: [{ decoration: ["*"] }] }
@@ -44,58 +47,42 @@ ruleTester.run("no-warning-comments", rule, {
     invalid: [
         {
             code: "// fixme",
-            errors: [
-                { messageId: "unexpectedComment", data: { matchedTerm: "fixme", comment: "fixme" } }
-            ]
+            errors: [{ messageId: "unexpectedComment", data: { matchedTerm: "fixme", comment: "fixme" } }]
         },
         {
             code: "// any fixme",
             options: [{ location: "anywhere" }],
-            errors: [
-                { messageId: "unexpectedComment", data: { matchedTerm: "fixme", comment: "any fixme" } }
-            ]
+            errors: [{ messageId: "unexpectedComment", data: { matchedTerm: "fixme", comment: "any fixme" } }]
         },
         {
             code: "// any fixme",
             options: [{ terms: ["fixme"], location: "anywhere" }],
-            errors: [
-                { messageId: "unexpectedComment", data: { matchedTerm: "fixme", comment: "any fixme" } }
-            ]
+            errors: [{ messageId: "unexpectedComment", data: { matchedTerm: "fixme", comment: "any fixme" } }]
         },
         {
             code: "// any FIXME",
             options: [{ terms: ["fixme"], location: "anywhere" }],
-            errors: [
-                { messageId: "unexpectedComment", data: { matchedTerm: "fixme", comment: "any FIXME" } }
-            ]
+            errors: [{ messageId: "unexpectedComment", data: { matchedTerm: "fixme", comment: "any FIXME" } }]
         },
         {
             code: "// any fIxMe",
             options: [{ terms: ["fixme"], location: "anywhere" }],
-            errors: [
-                { messageId: "unexpectedComment", data: { matchedTerm: "fixme", comment: "any fIxMe" } }
-            ]
+            errors: [{ messageId: "unexpectedComment", data: { matchedTerm: "fixme", comment: "any fIxMe" } }]
         },
         {
             code: "/* any fixme */",
             options: [{ terms: ["FIXME"], location: "anywhere" }],
-            errors: [
-                { messageId: "unexpectedComment", data: { matchedTerm: "FIXME", comment: "any fixme" } }
-            ]
+            errors: [{ messageId: "unexpectedComment", data: { matchedTerm: "FIXME", comment: "any fixme" } }]
         },
         {
             code: "/* any FIXME */",
             options: [{ terms: ["FIXME"], location: "anywhere" }],
-            errors: [
-                { messageId: "unexpectedComment", data: { matchedTerm: "FIXME", comment: "any FIXME" } }
-            ]
+            errors: [{ messageId: "unexpectedComment", data: { matchedTerm: "FIXME", comment: "any FIXME" } }]
         },
         {
             code: "/* any fIxMe */",
             options: [{ terms: ["FIXME"], location: "anywhere" }],
-            errors: [
-                { messageId: "unexpectedComment", data: { matchedTerm: "FIXME", comment: "any fIxMe" } }
-            ]
+            errors: [{ messageId: "unexpectedComment", data: { matchedTerm: "FIXME", comment: "any fIxMe" } }]
         },
         {
             code: "// any fixme or todo",
@@ -123,9 +110,7 @@ ruleTester.run("no-warning-comments", rule, {
         },
         {
             code: "/* fixme and todo */",
-            errors: [
-                { messageId: "unexpectedComment", data: { matchedTerm: "fixme", comment: "fixme and todo" } }
-            ]
+            errors: [{ messageId: "unexpectedComment", data: { matchedTerm: "fixme", comment: "fixme and todo" } }]
         },
         {
             code: "/* fixme and todo */",
@@ -138,37 +123,27 @@ ruleTester.run("no-warning-comments", rule, {
         {
             code: "/* any fixme */",
             options: [{ location: "anywhere" }],
-            errors: [
-                { messageId: "unexpectedComment", data: { matchedTerm: "fixme", comment: "any fixme" } }
-            ]
+            errors: [{ messageId: "unexpectedComment", data: { matchedTerm: "fixme", comment: "any fixme" } }]
         },
         {
             code: "/* fixme! */",
             options: [{ terms: ["fixme"] }],
-            errors: [
-                { messageId: "unexpectedComment", data: { matchedTerm: "fixme", comment: "fixme!" } }
-            ]
+            errors: [{ messageId: "unexpectedComment", data: { matchedTerm: "fixme", comment: "fixme!" } }]
         },
         {
             code: "// regex [litera|$]",
             options: [{ terms: ["[litera|$]"], location: "anywhere" }],
-            errors: [
-                { messageId: "unexpectedComment", data: { matchedTerm: "[litera|$]", comment: "regex [litera|$]" } }
-            ]
+            errors: [{ messageId: "unexpectedComment", data: { matchedTerm: "[litera|$]", comment: "regex [litera|$]" } }]
         },
         {
             code: "/* eslint one-var: 2 */",
             options: [{ terms: ["eslint"] }],
-            errors: [
-                { messageId: "unexpectedComment", data: { matchedTerm: "eslint", comment: "eslint one-var: 2" } }
-            ]
+            errors: [{ messageId: "unexpectedComment", data: { matchedTerm: "eslint", comment: "eslint one-var: 2" } }]
         },
         {
             code: "/* eslint one-var: 2 */",
             options: [{ terms: ["one"], location: "anywhere" }],
-            errors: [
-                { messageId: "unexpectedComment", data: { matchedTerm: "one", comment: "eslint one-var: 2" } }
-            ]
+            errors: [{ messageId: "unexpectedComment", data: { matchedTerm: "one", comment: "eslint one-var: 2" } }]
         },
         {
             code: "/* any block comment with TODO, FIXME or XXX */",
@@ -209,20 +184,15 @@ ruleTester.run("no-warning-comments", rule, {
         {
             code: "// TODO: something small",
             options: [{ location: "anywhere" }],
-            errors: [
-                { messageId: "unexpectedComment", data: { matchedTerm: "todo", comment: "TODO: something small" } }
-            ]
+            errors: [{ messageId: "unexpectedComment", data: { matchedTerm: "todo", comment: "TODO: something small" } }]
         },
         {
             code: "// TODO: something really longer than 40 characters",
             options: [{ location: "anywhere" }],
-            errors: [
-                { messageId: "unexpectedComment", data: { matchedTerm: "todo", comment: "TODO: something really longer than 40..." } }
-            ]
+            errors: [{ messageId: "unexpectedComment", data: { matchedTerm: "todo", comment: "TODO: something really longer than 40..." } }]
         },
         {
-            code:
-                "/* TODO: something \n really longer than 40 characters \n and also a new line */",
+            code: "/* TODO: something \n really longer than 40 characters \n and also a new line */",
             options: [{ location: "anywhere" }],
             errors: [
                 {

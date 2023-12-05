@@ -42,8 +42,7 @@ ruleTester.run("no-spaced-func", rule, {
         {
             code: "f ();",
             output: "f();",
-            errors: [
-                { messageId: "noSpacedFunction", type: "CallExpression" }]
+            errors: [{ messageId: "noSpacedFunction", type: "CallExpression" }]
         },
         {
             code: "f (a, b);",

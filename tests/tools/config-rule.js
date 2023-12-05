@@ -21,7 +21,6 @@ const assert = require("chai").assert,
 const SEVERITY = 2;
 
 describe("ConfigRule", () => {
-
     describe("generateConfigsFromSchema()", () => {
         let actualConfigs;
 
@@ -36,7 +35,6 @@ describe("ConfigRule", () => {
         });
 
         describe("for a single enum schema", () => {
-
             before(() => {
                 actualConfigs = ConfigRule.generateConfigsFromSchema(schema.enum);
             });
@@ -64,13 +62,11 @@ describe("ConfigRule", () => {
         });
 
         describe("for a object schema with a single enum property", () => {
-
             before(() => {
                 actualConfigs = ConfigRule.generateConfigsFromSchema(schema.objectWithEnum);
             });
 
             it("should return configs with option objects", () => {
-
                 // Skip first config (severity only)
                 actualConfigs.slice(1).forEach(actualConfig => {
                     const actualConfigOption = actualConfig[1]; // severity is first element, option is second
@@ -104,7 +100,6 @@ describe("ConfigRule", () => {
         });
 
         describe("for a object schema with a multiple enum properties", () => {
-
             before(() => {
                 actualConfigs = ConfigRule.generateConfigsFromSchema(schema.objectWithMultipleEnums);
             });
@@ -134,11 +129,9 @@ describe("ConfigRule", () => {
 
                 assert.sameDeepMembers(actualConfigOptions, expectedConfigs);
             });
-
         });
 
         describe("for a object schema with a single boolean property", () => {
-
             before(() => {
                 actualConfigs = ConfigRule.generateConfigsFromSchema(schema.objectWithBool);
             });
@@ -177,7 +170,6 @@ describe("ConfigRule", () => {
         });
 
         describe("for a object schema with a multiple bool properties", () => {
-
             before(() => {
                 actualConfigs = ConfigRule.generateConfigsFromSchema(schema.objectWithMultipleBools);
             });
@@ -208,7 +200,6 @@ describe("ConfigRule", () => {
         });
 
         describe("for a schema with an enum and an object", () => {
-
             before(() => {
                 actualConfigs = ConfigRule.generateConfigsFromSchema(schema.mixedEnumObject);
             });
@@ -267,7 +258,6 @@ describe("ConfigRule", () => {
         });
 
         describe("for a schema with oneOf", () => {
-
             before(() => {
                 actualConfigs = ConfigRule.generateConfigsFromSchema(schema.oneOf);
             });
@@ -278,7 +268,6 @@ describe("ConfigRule", () => {
         });
 
         describe("for a schema with nested objects", () => {
-
             before(() => {
                 actualConfigs = ConfigRule.generateConfigsFromSchema(schema.nestedObjects);
             });
@@ -290,12 +279,10 @@ describe("ConfigRule", () => {
     });
 
     describe("createCoreRuleConfigs()", () => {
-
         const rulesConfig = ConfigRule.createCoreRuleConfigs();
 
         it("should create a rulesConfig containing all core rules", () => {
-            const
-                expectedRules = Array.from(builtInRules.keys()),
+            const expectedRules = Array.from(builtInRules.keys()),
                 actualRules = Object.keys(rulesConfig);
 
             assert.sameMembers(actualRules, expectedRules);
@@ -304,7 +291,7 @@ describe("ConfigRule", () => {
         it("should allow to ignore deprecated rules", () => {
             const expectedRules = Array.from(builtInRules.entries())
                     .filter(([, rule]) => {
-                        const isDeprecated = (typeof rule === "function") ? rule.deprecated : rule.meta.deprecated;
+                        const isDeprecated = typeof rule === "function" ? rule.deprecated : rule.meta.deprecated;
 
                         return !isDeprecated;
                     })

@@ -9,12 +9,7 @@
 
 module.exports = {
     reportUnusedDisableDirectives: true,
-    extends: [
-        "eslint:recommended",
-        "plugin:n/recommended",
-        "plugin:jsdoc/recommended",
-        "plugin:eslint-comments/recommended"
-    ],
+    extends: ["eslint:recommended", "plugin:n/recommended", "plugin:jsdoc/recommended", "plugin:eslint-comments/recommended"],
     plugins: ["unicorn"],
     settings: {
         jsdoc: {
@@ -26,31 +21,26 @@ module.exports = {
             },
             preferredTypes: {
                 "*": {
-                    message:
-                        "Use a more precise type or if necessary use `any` or `ArbitraryCallbackResult`",
+                    message: "Use a more precise type or if necessary use `any` or `ArbitraryCallbackResult`",
                     replacement: "any"
                 },
                 Any: {
-                    message:
-                        "Use a more precise type or if necessary use `any` or `ArbitraryCallbackResult`",
+                    message: "Use a more precise type or if necessary use `any` or `ArbitraryCallbackResult`",
                     replacement: "any"
                 },
                 function: {
-                    message:
-                        "Point to a `@callback` namepath or `Function` if truly arbitrary in form",
+                    message: "Point to a `@callback` namepath or `Function` if truly arbitrary in form",
                     replacement: "Function"
                 },
                 Promise: {
-                    message:
-                        "Specify the specific Promise type, including, if necessary, the type `any`"
+                    message: "Specify the specific Promise type, including, if necessary, the type `any`"
                 },
                 ".<>": {
                     message: "Prefer type form without dot",
                     replacement: "<>"
                 },
                 object: {
-                    message:
-                        "Use the specific object type or `Object` if truly arbitrary",
+                    message: "Use the specific object type or `Object` if truly arbitrary",
                     replacement: "Object"
                 },
                 array: "Array"
@@ -141,7 +131,6 @@ module.exports = {
                 },
                 startLines: 0
             }
-
         ],
         "jsdoc/no-undefined-types": "off",
         "jsdoc/require-yields": "off",
@@ -269,20 +258,17 @@ module.exports = {
             {
                 object: "assert",
                 property: "notEqual",
-                message:
-                    "Use assert.notStrictEqual instead of assert.notEqual."
+                message: "Use assert.notStrictEqual instead of assert.notEqual."
             },
             {
                 object: "assert",
                 property: "deepEqual",
-                message:
-                    "Use assert.deepStrictEqual instead of assert.deepEqual."
+                message: "Use assert.deepStrictEqual instead of assert.deepEqual."
             },
             {
                 object: "assert",
                 property: "notDeepEqual",
-                message:
-                    "Use assert.notDeepStrictEqual instead of assert.notDeepEqual."
+                message: "Use assert.notDeepStrictEqual instead of assert.notDeepEqual."
             }
         ],
         "no-return-assign": "error",

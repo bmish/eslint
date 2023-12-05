@@ -36,39 +36,45 @@ ruleTester.run("no-extra-bind", rule, {
         {
             code: "var a = function() { return 1; }.bind(b)",
             output: "var a = function() { return 1; }",
-            errors: [{
-                messageId: "unexpected",
-                type: "CallExpression",
-                line: 1,
-                column: 34,
-                endLine: 1,
-                endColumn: 38
-            }]
+            errors: [
+                {
+                    messageId: "unexpected",
+                    type: "CallExpression",
+                    line: 1,
+                    column: 34,
+                    endLine: 1,
+                    endColumn: 38
+                }
+            ]
         },
         {
             code: "var a = function() { return 1; }['bind'](b)",
             output: "var a = function() { return 1; }",
-            errors: [{
-                messageId: "unexpected",
-                type: "CallExpression",
-                line: 1,
-                column: 34,
-                endLine: 1,
-                endColumn: 40
-            }]
+            errors: [
+                {
+                    messageId: "unexpected",
+                    type: "CallExpression",
+                    line: 1,
+                    column: 34,
+                    endLine: 1,
+                    endColumn: 40
+                }
+            ]
         },
         {
             code: "var a = function() { return 1; }[`bind`](b)",
             output: "var a = function() { return 1; }",
             parserOptions: { ecmaVersion: 6 },
-            errors: [{
-                messageId: "unexpected",
-                type: "CallExpression",
-                line: 1,
-                column: 34,
-                endLine: 1,
-                endColumn: 40
-            }]
+            errors: [
+                {
+                    messageId: "unexpected",
+                    type: "CallExpression",
+                    line: 1,
+                    column: 34,
+                    endLine: 1,
+                    endColumn: 40
+                }
+            ]
         },
         {
             code: "var a = (() => { return 1; }).bind(b)",

@@ -33,12 +33,12 @@ ruleTester.run("no-unused-expressions", rule, {
         { code: "a ? b() || (c = d) : e()", options: [{ allowShortCircuit: true, allowTernary: true }] },
         "delete foo.bar",
         "void new C",
-        "\"use strict\";",
-        "\"directive one\"; \"directive two\"; f();",
-        "function foo() {\"use strict\"; return true; }",
-        { code: "var foo = () => {\"use strict\"; return true; }", parserOptions: { ecmaVersion: 6 } },
-        "function foo() {\"directive one\"; \"directive two\"; f(); }",
-        "function foo() { var foo = \"use strict\"; return true; }",
+        '"use strict";',
+        '"directive one"; "directive two"; f();',
+        'function foo() {"use strict"; return true; }',
+        { code: 'var foo = () => {"use strict"; return true; }', parserOptions: { ecmaVersion: 6 } },
+        'function foo() {"directive one"; "directive two"; f(); }',
+        'function foo() { var foo = "use strict"; return true; }',
         {
             code: "function* foo(){ yield 0; }",
             parserOptions: { ecmaVersion: 6 }
@@ -72,15 +72,15 @@ ruleTester.run("no-unused-expressions", rule, {
             parserOptions: { ecmaVersion: 6 }
         },
         {
-            code: "import(\"foo\")",
+            code: 'import("foo")',
             parserOptions: { ecmaVersion: 11 }
         },
         {
-            code: "func?.(\"foo\")",
+            code: 'func?.("foo")',
             parserOptions: { ecmaVersion: 11 }
         },
         {
-            code: "obj?.foo(\"bar\")",
+            code: 'obj?.foo("bar")',
             parserOptions: { ecmaVersion: 11 }
         },
 
@@ -137,11 +137,15 @@ ruleTester.run("no-unused-expressions", rule, {
         { code: "foo.bar;", errors: [{ messageId: "unusedExpression", type: "ExpressionStatement" }] },
         { code: "!a", errors: [{ messageId: "unusedExpression", type: "ExpressionStatement" }] },
         { code: "+a", errors: [{ messageId: "unusedExpression", type: "ExpressionStatement" }] },
-        { code: "\"directive one\"; f(); \"directive two\";", errors: [{ messageId: "unusedExpression", type: "ExpressionStatement" }] },
-        { code: "function foo() {\"directive one\"; f(); \"directive two\"; }", errors: [{ messageId: "unusedExpression", type: "ExpressionStatement" }] },
-        { code: "if (0) { \"not a directive\"; f(); }", errors: [{ messageId: "unusedExpression", type: "ExpressionStatement" }] },
-        { code: "function foo() { var foo = true; \"use strict\"; }", errors: [{ messageId: "unusedExpression", type: "ExpressionStatement" }] },
-        { code: "var foo = () => { var foo = true; \"use strict\"; }", parserOptions: { ecmaVersion: 6 }, errors: [{ messageId: "unusedExpression", type: "ExpressionStatement" }] },
+        { code: '"directive one"; f(); "directive two";', errors: [{ messageId: "unusedExpression", type: "ExpressionStatement" }] },
+        { code: 'function foo() {"directive one"; f(); "directive two"; }', errors: [{ messageId: "unusedExpression", type: "ExpressionStatement" }] },
+        { code: 'if (0) { "not a directive"; f(); }', errors: [{ messageId: "unusedExpression", type: "ExpressionStatement" }] },
+        { code: 'function foo() { var foo = true; "use strict"; }', errors: [{ messageId: "unusedExpression", type: "ExpressionStatement" }] },
+        {
+            code: 'var foo = () => { var foo = true; "use strict"; }',
+            parserOptions: { ecmaVersion: 6 },
+            errors: [{ messageId: "unusedExpression", type: "ExpressionStatement" }]
+        },
         {
             code: "`untagged template literal`",
             options: [{ allowTaggedTemplates: true }],

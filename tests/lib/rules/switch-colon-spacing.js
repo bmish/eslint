@@ -63,114 +63,75 @@ ruleTester.run("switch-colon-spacing", rule, {
         {
             code: "switch(a){case 0 :break;}",
             output: "switch(a){case 0: break;}",
-            errors: [
-                unexpectedBeforeError,
-                expectedAfterError
-            ]
+            errors: [unexpectedBeforeError, expectedAfterError]
         },
         {
             code: "switch(a){default :break;}",
             output: "switch(a){default: break;}",
-            errors: [
-                unexpectedBeforeError,
-                expectedAfterError
-            ]
+            errors: [unexpectedBeforeError, expectedAfterError]
         },
         {
             code: "switch(a){case 0 : break;}",
             output: "switch(a){case 0:break;}",
             options: [{ before: false, after: false }],
-            errors: [
-                unexpectedBeforeError,
-                unexpectedAfterError
-            ]
+            errors: [unexpectedBeforeError, unexpectedAfterError]
         },
         {
             code: "switch(a){default : break;}",
             output: "switch(a){default:break;}",
             options: [{ before: false, after: false }],
-            errors: [
-                unexpectedBeforeError,
-                unexpectedAfterError
-            ]
+            errors: [unexpectedBeforeError, unexpectedAfterError]
         },
         {
             code: "switch(a){case 0 :break;}",
             output: "switch(a){case 0: break;}",
             options: [{ before: false, after: true }],
-            errors: [
-                unexpectedBeforeError,
-                expectedAfterError
-            ]
+            errors: [unexpectedBeforeError, expectedAfterError]
         },
         {
             code: "switch(a){default :break;}",
             output: "switch(a){default: break;}",
             options: [{ before: false, after: true }],
-            errors: [
-                unexpectedBeforeError,
-                expectedAfterError
-            ]
+            errors: [unexpectedBeforeError, expectedAfterError]
         },
         {
             code: "switch(a){case 0: break;}",
             output: "switch(a){case 0 :break;}",
             options: [{ before: true, after: false }],
-            errors: [
-                expectedBeforeError,
-                unexpectedAfterError
-            ]
+            errors: [expectedBeforeError, unexpectedAfterError]
         },
         {
             code: "switch(a){default: break;}",
             output: "switch(a){default :break;}",
             options: [{ before: true, after: false }],
-            errors: [
-                expectedBeforeError,
-                unexpectedAfterError
-            ]
+            errors: [expectedBeforeError, unexpectedAfterError]
         },
         {
             code: "switch(a){case 0:break;}",
             output: "switch(a){case 0 : break;}",
             options: [{ before: true, after: true }],
-            errors: [
-                expectedBeforeError,
-                expectedAfterError
-            ]
+            errors: [expectedBeforeError, expectedAfterError]
         },
         {
             code: "switch(a){default:break;}",
             output: "switch(a){default : break;}",
             options: [{ before: true, after: true }],
-            errors: [
-                expectedBeforeError,
-                expectedAfterError
-            ]
+            errors: [expectedBeforeError, expectedAfterError]
         },
         {
             code: "switch(a){case 0 /**/ :break;}",
             output: "switch(a){case 0 /**/ : break;}",
-            errors: [
-                unexpectedBeforeError,
-                expectedAfterError
-            ]
+            errors: [unexpectedBeforeError, expectedAfterError]
         },
         {
             code: "switch(a){case 0 :/**/break;}",
             output: "switch(a){case 0:/**/break;}",
-            errors: [
-                unexpectedBeforeError,
-                expectedAfterError
-            ]
+            errors: [unexpectedBeforeError, expectedAfterError]
         },
         {
             code: "switch(a){case (0) :break;}",
             output: "switch(a){case (0): break;}",
-            errors: [
-                unexpectedBeforeError,
-                expectedAfterError
-            ]
+            errors: [unexpectedBeforeError, expectedAfterError]
         }
     ]
 });

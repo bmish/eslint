@@ -31,7 +31,6 @@ async function runCheckRuleExamples(...filenames) {
 //------------------------------------------------------------------------------
 
 describe("check-rule-examples", () => {
-
     it("succeeds when not passed any files", async () => {
         const childProcess = await runCheckRuleExamples();
 
@@ -49,12 +48,10 @@ describe("check-rule-examples", () => {
     it("fails when passed a file with a syntax error", async () => {
         const promise = runCheckRuleExamples("tests/fixtures/good-examples.md", "tests/fixtures/bad-examples.md");
 
-        await assert.rejects(
-            promise,
-            {
-                code: 1,
-                stdout: "",
-                stderr:
+        await assert.rejects(promise, {
+            code: 1,
+            stdout: "",
+            stderr:
                 "\x1B[0m\x1B[0m\n" +
                 "\x1B[0m\x1B[4mtests/fixtures/bad-examples.md\x1B[24m\x1B[0m\n" +
                 "\x1B[0m  \x1B[2m11:4\x1B[22m  \x1B[31merror\x1B[39m  Missing language tag: use one of 'javascript', 'js' or 'jsx'\x1B[0m\n" +
@@ -64,19 +61,16 @@ describe("check-rule-examples", () => {
                 "\x1B[0m\x1B[0m\n" +
                 "\x1B[0m\x1B[31m\x1B[1m✖ 4 problems (4 errors, 0 warnings)\x1B[22m\x1B[39m\x1B[0m\n" +
                 "\x1B[0m\x1B[31m\x1B[1m\x1B[22m\x1B[39m\x1B[0m\n"
-            }
-        );
+        });
     });
 
     it("fails when a file cannot be processed", async () => {
         const promise = runCheckRuleExamples("tests/fixtures/non-existing-examples.md");
 
-        await assert.rejects(
-            promise,
-            ({ code, stdout, stderr }) => {
-                assert.strictEqual(code, 1);
-                assert.strictEqual(stdout, "");
-                const expectedStderr =
+        await assert.rejects(promise, ({ code, stdout, stderr }) => {
+            assert.strictEqual(code, 1);
+            assert.strictEqual(stdout, "");
+            const expectedStderr =
                 "\x1B[0m\x1B[0m\n" +
                 "\x1B[0m\x1B[4mtests/fixtures/non-existing-examples.md\x1B[24m\x1B[0m\n" +
                 "\x1B[0m  \x1B[2m0:0\x1B[22m  \x1B[31merror\x1B[39m  Error checking file: ENOENT: no such file or directory, open <FILE>\x1B[0m\n" +
@@ -84,12 +78,11 @@ describe("check-rule-examples", () => {
                 "\x1B[0m\x1B[31m\x1B[1m✖ 1 problem (1 error, 0 warnings)\x1B[22m\x1B[39m\x1B[0m\n" +
                 "\x1B[0m\x1B[31m\x1B[1m\x1B[22m\x1B[39m\x1B[0m\n";
 
-                // Replace filename as it's OS-dependent.
-                const normalizedStderr = stderr.replace(/'.+'/u, "<FILE>");
+            // Replace filename as it's OS-dependent.
+            const normalizedStderr = stderr.replace(/'.+'/u, "<FILE>");
 
-                assert.strictEqual(normalizedStderr, expectedStderr);
-                return true;
-            }
-        );
+            assert.strictEqual(normalizedStderr, expectedStderr);
+            return true;
+        });
     });
 });

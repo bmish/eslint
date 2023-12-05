@@ -60,17 +60,17 @@ ruleTester.run("sort-vars", rule, {
             parserOptions: { ecmaVersion: 6 }
         },
         {
-            code: "const {a, b, c} = {a: 1, b: true, c: \"Moo\"};",
+            code: 'const {a, b, c} = {a: 1, b: true, c: "Moo"};',
             options: ignoreCaseArgs,
             parserOptions: { ecmaVersion: 6 }
         },
         {
-            code: "const [a, b, c] = [1, true, \"Moo\"];",
+            code: 'const [a, b, c] = [1, true, "Moo"];',
             options: ignoreCaseArgs,
             parserOptions: { ecmaVersion: 6 }
         },
         {
-            code: "const [c, a, b] = [1, true, \"Moo\"];",
+            code: 'const [c, a, b] = [1, true, "Moo"];',
             options: ignoreCaseArgs,
             parserOptions: { ecmaVersion: 6 }
         },
@@ -124,14 +124,8 @@ ruleTester.run("sort-vars", rule, {
             errors: [expectedError]
         },
         {
-            code: [
-                "var b,",
-                "    a;"
-            ].join("\n"),
-            output: [
-                "var a,",
-                "    b;"
-            ].join("\n"),
+            code: ["var b,", "    a;"].join("\n"),
+            output: ["var a,", "    b;"].join("\n"),
             errors: [expectedError]
         },
         {

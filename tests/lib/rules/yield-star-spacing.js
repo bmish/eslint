@@ -24,9 +24,7 @@ const unexpectedBeforeError = { messageId: "unexpectedBefore", type: "Punctuator
 const unexpectedAfterError = { messageId: "unexpectedAfter", type: "Punctuator" };
 
 ruleTester.run("yield-star-spacing", rule, {
-
     valid: [
-
         // default (after)
         "function *foo(){ yield foo; }",
         "function *foo(){ yield* foo; }",
@@ -159,7 +157,6 @@ ruleTester.run("yield-star-spacing", rule, {
     ],
 
     invalid: [
-
         // default (after)
         {
             code: "function *foo(){ yield *foo1; }",
@@ -273,5 +270,4 @@ ruleTester.run("yield-star-spacing", rule, {
             errors: [unexpectedBeforeError, unexpectedAfterError]
         }
     ]
-
 });

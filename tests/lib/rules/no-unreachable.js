@@ -100,12 +100,18 @@ ruleTester.run("no-unreachable", rule, {
         { code: "while (true) { switch (foo) { case 1: break; x = 1; } }", errors: [{ messageId: "unreachableCode", type: "ExpressionStatement" }] },
         { code: "while (true) { switch (foo) { case 1: continue; x = 1; } }", errors: [{ messageId: "unreachableCode", type: "ExpressionStatement" }] },
         { code: "var x = 1; throw 'uh oh'; var y = 2;", errors: [{ messageId: "unreachableCode", type: "VariableDeclaration" }] },
-        { code: "function foo() { var x = 1; if (x) { return; } else { throw e; } x = 2; }", errors: [{ messageId: "unreachableCode", type: "ExpressionStatement" }] },
+        {
+            code: "function foo() { var x = 1; if (x) { return; } else { throw e; } x = 2; }",
+            errors: [{ messageId: "unreachableCode", type: "ExpressionStatement" }]
+        },
         { code: "function foo() { var x = 1; if (x) return; else throw -1; x = 2; }", errors: [{ messageId: "unreachableCode", type: "ExpressionStatement" }] },
         { code: "function foo() { var x = 1; try { return; } finally {} x = 2; }", errors: [{ messageId: "unreachableCode", type: "ExpressionStatement" }] },
         { code: "function foo() { var x = 1; try { } finally { return; } x = 2; }", errors: [{ messageId: "unreachableCode", type: "ExpressionStatement" }] },
         { code: "function foo() { var x = 1; do { return; } while (x); x = 2; }", errors: [{ messageId: "unreachableCode", type: "ExpressionStatement" }] },
-        { code: "function foo() { var x = 1; while (x) { if (x) break; else continue; x = 2; } }", errors: [{ messageId: "unreachableCode", type: "ExpressionStatement" }] },
+        {
+            code: "function foo() { var x = 1; while (x) { if (x) break; else continue; x = 2; } }",
+            errors: [{ messageId: "unreachableCode", type: "ExpressionStatement" }]
+        },
         { code: "function foo() { var x = 1; for (;;) { if (x) continue; } x = 2; }", errors: [{ messageId: "unreachableCode", type: "ExpressionStatement" }] },
         { code: "function foo() { var x = 1; while (true) { } x = 2; }", errors: [{ messageId: "unreachableCode", type: "ExpressionStatement" }] },
         {
@@ -365,16 +371,12 @@ ruleTester.run("no-unreachable", rule, {
         {
             code: "class B extends A { x; constructor() { class C extends D { [super().x]; constructor() {} } } }",
             parserOptions: { ecmaVersion: 2022 },
-            errors: [
-                { messageId: "unreachableCode", column: 60, endColumn: 72 }
-            ]
+            errors: [{ messageId: "unreachableCode", column: 60, endColumn: 72 }]
         },
         {
             code: "class B extends A { x; constructor() { class C extends super().x { y; constructor() {} } } }",
             parserOptions: { ecmaVersion: 2022 },
-            errors: [
-                { messageId: "unreachableCode", column: 68, endColumn: 70 }
-            ]
+            errors: [{ messageId: "unreachableCode", column: 68, endColumn: 70 }]
         },
         {
             code: "class B extends A { x; static y; z; static q; constructor() {} }",

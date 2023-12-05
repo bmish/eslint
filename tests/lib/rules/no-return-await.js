@@ -11,7 +11,6 @@
 const rule = require("../../../lib/rules/no-return-await");
 const { RuleTester } = require("../../../lib/rule-tester");
 
-
 //------------------------------------------------------------------------------
 // Tests
 //------------------------------------------------------------------------------
@@ -23,22 +22,26 @@ const { RuleTester } = require("../../../lib/rule-tester");
  * @returns {Array} the list of errors
  */
 function createErrorList({ suggestionOutput: output } = {}) {
-
     // pending https://github.com/eslint/espree/issues/304, the type should be "Keyword"
-    return [{
-        messageId: "redundantUseOfAwait",
-        type: "Identifier",
-        suggestions: output ? [{
-            messageId: "removeAwait", output
-        }] : []
-    }];
+    return [
+        {
+            messageId: "redundantUseOfAwait",
+            type: "Identifier",
+            suggestions: output
+                ? [
+                      {
+                          messageId: "removeAwait",
+                          output
+                      }
+                  ]
+                : []
+        }
+    ];
 }
-
 
 const ruleTester = new RuleTester({ parserOptions: { ecmaVersion: 2017 } });
 
 ruleTester.run("no-return-await", rule, {
-
     valid: [
         "\nasync function foo() {\n\tawait bar(); return;\n}\n",
         "\nasync function foo() {\n\tconst x = await bar(); return x;\n}\n",

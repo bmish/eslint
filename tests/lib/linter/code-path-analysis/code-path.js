@@ -68,7 +68,6 @@ function getOrderOfTraversing(codePath, options, callback) {
 //------------------------------------------------------------------------------
 
 describe("CodePathAnalyzer", () => {
-
     /*
      * If you need to output the code paths and DOT graph information for a
      * particular piece of code, update and uncomment the following test and
@@ -84,7 +83,6 @@ describe("CodePathAnalyzer", () => {
      */
 
     describe("CodePath#origin", () => {
-
         it("should be 'program' when code path starts at root node", () => {
             const codePath = parseCodePaths("foo(); bar(); baz();")[0];
 
@@ -117,7 +115,6 @@ describe("CodePathAnalyzer", () => {
     });
 
     describe(".traverseSegments()", () => {
-
         describe("should traverse segments from the first to the end:", () => {
             /* eslint-disable internal-rules/multiline-comment-style -- Commenting out */
             it("simple", () => {

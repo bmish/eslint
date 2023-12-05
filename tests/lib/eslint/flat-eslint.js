@@ -106,8 +106,7 @@ describe("FlatESLint", () => {
     }
 
     // copy into clean area so as not to get "infected" by this project's .eslintrc files
-    before(function() {
-
+    before(function () {
         /*
          * GitHub Actions Windows and macOS runners occasionally exhibit
          * extremely slow filesystem operations, during which copying fixtures
@@ -175,64 +174,76 @@ describe("FlatESLint", () => {
 
         it("should throw readable messages if removed options are present", () => {
             assert.throws(
-                () => new FlatESLint({
-                    cacheFile: "",
-                    configFile: "",
-                    envs: [],
-                    globals: [],
-                    ignorePath: ".gitignore",
-                    ignorePattern: [],
-                    parser: "",
-                    parserOptions: {},
-                    rules: {},
-                    plugins: []
-                }),
-                new RegExp(escapeStringRegExp([
-                    "Invalid Options:",
-                    "- Unknown options: cacheFile, configFile, envs, globals, ignorePath, ignorePattern, parser, parserOptions, rules"
-                ].join("\n")), "u")
+                () =>
+                    new FlatESLint({
+                        cacheFile: "",
+                        configFile: "",
+                        envs: [],
+                        globals: [],
+                        ignorePath: ".gitignore",
+                        ignorePattern: [],
+                        parser: "",
+                        parserOptions: {},
+                        rules: {},
+                        plugins: []
+                    }),
+                new RegExp(
+                    escapeStringRegExp(
+                        [
+                            "Invalid Options:",
+                            "- Unknown options: cacheFile, configFile, envs, globals, ignorePath, ignorePattern, parser, parserOptions, rules"
+                        ].join("\n")
+                    ),
+                    "u"
+                )
             );
         });
 
         it("should throw readable messages if wrong type values are given to options", () => {
             assert.throws(
-                () => new FlatESLint({
-                    allowInlineConfig: "",
-                    baseConfig: "",
-                    cache: "",
-                    cacheLocation: "",
-                    cwd: "foo",
-                    errorOnUnmatchedPattern: "",
-                    fix: "",
-                    fixTypes: ["xyz"],
-                    globInputPaths: "",
-                    ignore: "",
-                    ignorePatterns: "",
-                    overrideConfig: "",
-                    overrideConfigFile: "",
-                    plugins: "",
-                    reportUnusedDisableDirectives: "",
-                    warnIgnored: ""
-                }),
-                new RegExp(escapeStringRegExp([
-                    "Invalid Options:",
-                    "- 'allowInlineConfig' must be a boolean.",
-                    "- 'baseConfig' must be an object or null.",
-                    "- 'cache' must be a boolean.",
-                    "- 'cacheLocation' must be a non-empty string.",
-                    "- 'cwd' must be an absolute path.",
-                    "- 'errorOnUnmatchedPattern' must be a boolean.",
-                    "- 'fix' must be a boolean or a function.",
-                    "- 'fixTypes' must be an array of any of \"directive\", \"problem\", \"suggestion\", and \"layout\".",
-                    "- 'globInputPaths' must be a boolean.",
-                    "- 'ignore' must be a boolean.",
-                    "- 'ignorePatterns' must be an array of non-empty strings or null.",
-                    "- 'overrideConfig' must be an object or null.",
-                    "- 'overrideConfigFile' must be a non-empty string, null, or true.",
-                    "- 'plugins' must be an object or null.",
-                    "- 'reportUnusedDisableDirectives' must be any of \"error\", \"warn\", \"off\", and null.",
-                    "- 'warnIgnored' must be a boolean."
-                ].join("\n")), "u")
+                () =>
+                    new FlatESLint({
+                        allowInlineConfig: "",
+                        baseConfig: "",
+                        cache: "",
+                        cacheLocation: "",
+                        cwd: "foo",
+                        errorOnUnmatchedPattern: "",
+                        fix: "",
+                        fixTypes: ["xyz"],
+                        globInputPaths: "",
+                        ignore: "",
+                        ignorePatterns: "",
+                        overrideConfig: "",
+                        overrideConfigFile: "",
+                        plugins: "",
+                        reportUnusedDisableDirectives: "",
+                        warnIgnored: ""
+                    }),
+                new RegExp(
+                    escapeStringRegExp(
+                        [
+                            "Invalid Options:",
+                            "- 'allowInlineConfig' must be a boolean.",
+                            "- 'baseConfig' must be an object or null.",
+                            "- 'cache' must be a boolean.",
+                            "- 'cacheLocation' must be a non-empty string.",
+                            "- 'cwd' must be an absolute path.",
+                            "- 'errorOnUnmatchedPattern' must be a boolean.",
+                            "- 'fix' must be a boolean or a function.",
+                            '- \'fixTypes\' must be an array of any of "directive", "problem", "suggestion", and "layout".',
+                            "- 'globInputPaths' must be a boolean.",
+                            "- 'ignore' must be a boolean.",
+                            "- 'ignorePatterns' must be an array of non-empty strings or null.",
+                            "- 'overrideConfig' must be an object or null.",
+                            "- 'overrideConfigFile' must be a non-empty string, null, or true.",
+                            "- 'plugins' must be an object or null.",
+                            '- \'reportUnusedDisableDirectives\' must be any of "error", "warn", "off", and null.',
+                            "- 'warnIgnored' must be a boolean."
+                        ].join("\n")
+                    ),
+                    "u"
+                )
             );
         });
 
@@ -256,27 +267,22 @@ describe("FlatESLint", () => {
             invalidIgnorePatterns.forEach(ignorePatterns => {
                 assert.throws(
                     () => new FlatESLint({ ignorePatterns }),
-                    new RegExp(escapeStringRegExp([
-                        "Invalid Options:",
-                        "- 'ignorePatterns' must be an array of non-empty strings or null."
-                    ].join("\n")), "u")
+                    new RegExp(escapeStringRegExp(["Invalid Options:", "- 'ignorePatterns' must be an array of non-empty strings or null."].join("\n")), "u")
                 );
             });
         });
 
         it("should throw readable messages if 'plugins' option contains empty key", () => {
             assert.throws(
-                () => new FlatESLint({
-                    plugins: {
-                        "eslint-plugin-foo": {},
-                        "eslint-plugin-bar": {},
-                        "": {}
-                    }
-                }),
-                new RegExp(escapeStringRegExp([
-                    "Invalid Options:",
-                    "- 'plugins' must not include an empty string."
-                ].join("\n")), "u")
+                () =>
+                    new FlatESLint({
+                        plugins: {
+                            "eslint-plugin-foo": {},
+                            "eslint-plugin-bar": {},
+                            "": {}
+                        }
+                    }),
+                new RegExp(escapeStringRegExp(["Invalid Options:", "- 'plugins' must not include an empty string."].join("\n")), "u")
             );
         });
     });
@@ -376,7 +382,10 @@ describe("FlatESLint", () => {
             assert.strictEqual(results.length, 1);
             assert.strictEqual(results[0].filePath, getFixturePath("passing.js"));
             assert.strictEqual(results[0].messages[0].severity, 1);
-            assert.strictEqual(results[0].messages[0].message, "File ignored because of a matching ignore pattern. Use \"--no-ignore\" to disable file ignore settings or use \"--no-warn-ignored\" to suppress this warning.");
+            assert.strictEqual(
+                results[0].messages[0].message,
+                'File ignored because of a matching ignore pattern. Use "--no-ignore" to disable file ignore settings or use "--no-warn-ignored" to suppress this warning.'
+            );
             assert.strictEqual(results[0].messages[0].output, void 0);
             assert.strictEqual(results[0].errorCount, 0);
             assert.strictEqual(results[0].warningCount, 1);
@@ -400,7 +409,10 @@ describe("FlatESLint", () => {
             assert.strictEqual(results.length, 1);
             assert.strictEqual(results[0].filePath, getFixturePath("passing.js"));
             assert.strictEqual(results[0].messages[0].severity, 1);
-            assert.strictEqual(results[0].messages[0].message, "File ignored because of a matching ignore pattern. Use \"--no-ignore\" to disable file ignore settings or use \"--no-warn-ignored\" to suppress this warning.");
+            assert.strictEqual(
+                results[0].messages[0].message,
+                'File ignored because of a matching ignore pattern. Use "--no-ignore" to disable file ignore settings or use "--no-warn-ignored" to suppress this warning.'
+            );
             assert.strictEqual(results[0].messages[0].output, void 0);
             assert.strictEqual(results[0].errorCount, 0);
             assert.strictEqual(results[0].warningCount, 1);
@@ -450,7 +462,10 @@ describe("FlatESLint", () => {
             const results = await eslint.lintText("var bar = foo;", options);
 
             assert.strictEqual(results.length, 1);
-            assert.strictEqual(results[0].messages[0].message, "File ignored because of a matching ignore pattern. Use \"--no-ignore\" to disable file ignore settings or use \"--no-warn-ignored\" to suppress this warning.");
+            assert.strictEqual(
+                results[0].messages[0].message,
+                'File ignored because of a matching ignore pattern. Use "--no-ignore" to disable file ignore settings or use "--no-warn-ignored" to suppress this warning.'
+            );
         });
 
         it("should return a message when given a filename by --stdin-filename in excluded files list and ignore is off", async () => {
@@ -660,7 +675,6 @@ describe("FlatESLint", () => {
             assert.strictEqual(results[0].source, "var foo = 'bar'");
         });
 
-
         it("should not return a `source` property when no errors or warnings are present", async () => {
             eslint = new FlatESLint({
                 overrideConfigFile: true,
@@ -734,7 +748,8 @@ describe("FlatESLint", () => {
                 ignore: false
             });
             const results = await eslint.lintText("var bar = foo;", { filePath: "node_modules/passing.js", warnIgnored: true });
-            const expectedMsg = "File ignored by default because it is located under the node_modules directory. Use ignore pattern \"!**/node_modules/\" to disable file ignore settings or use \"--no-warn-ignored\" to suppress this warning.";
+            const expectedMsg =
+                'File ignored by default because it is located under the node_modules directory. Use ignore pattern "!**/node_modules/" to disable file ignore settings or use "--no-warn-ignored" to suppress this warning.';
 
             assert.strictEqual(results.length, 1);
             assert.strictEqual(results[0].filePath, getFixturePath("node_modules/passing.js"));
@@ -749,10 +764,7 @@ describe("FlatESLint", () => {
             });
             const [result] = await eslint.lintText("foo");
 
-            assert.deepStrictEqual(
-                result.usedDeprecatedRules,
-                [{ ruleId: "indent-legacy", replacedBy: ["indent"] }]
-            );
+            assert.deepStrictEqual(result.usedDeprecatedRules, [{ ruleId: "indent-legacy", replacedBy: ["indent"] }]);
         });
 
         it("should throw if eslint.config.js file is not present", async () => {
@@ -825,7 +837,6 @@ describe("FlatESLint", () => {
     });
 
     describe("lintFiles()", () => {
-
         /** @type {InstanceType<import("../../../lib/eslint").ESLint>} */
         let eslint;
 
@@ -1020,7 +1031,6 @@ describe("FlatESLint", () => {
             assert.strictEqual(results[0].suppressedMessages.length, 0);
         });
 
-
         // https://github.com/eslint/eslint/issues/16299
         it("should only find files in the subdir1 directory when given a directory name", async () => {
             eslint = new FlatESLint({
@@ -1045,10 +1055,7 @@ describe("FlatESLint", () => {
             assert.strictEqual(results.length, 1);
             assert.strictEqual(results[0].messages.length, 1);
             assert.strictEqual(results[0].messages[0].ruleId, "no-console");
-            assert.strictEqual(
-                results[0].filePath,
-                getFixturePath("{curly-path}/server/src/two.js")
-            );
+            assert.strictEqual(results[0].filePath, getFixturePath("{curly-path}/server/src/two.js"));
             assert.strictEqual(results[0].suppressedMessages.length, 0);
         });
 
@@ -1067,7 +1074,6 @@ describe("FlatESLint", () => {
 
         // https://github.com/eslint/eslint/issues/16265
         describe("Dot files in searches", () => {
-
             it("should find dot files in current directory when a . pattern is used", async () => {
                 eslint = new FlatESLint({
                     cwd: getFixturePath("dot-files")
@@ -1119,7 +1125,6 @@ describe("FlatESLint", () => {
 
         // https://github.com/eslint/eslint/issues/16275
         describe("Glob patterns without matches", () => {
-
             it("should throw an error for a missing pattern when combined with a found pattern", async () => {
                 eslint = new FlatESLint({
                     ignore: false,
@@ -1282,7 +1287,6 @@ describe("FlatESLint", () => {
                 cwd: path.join(fixtureDir, ".."),
                 overrideConfig: { files: ["**/*.js", "**/*.js2"] },
                 overrideConfigFile: getFixturePath("eslint.config.js")
-
             });
             const results = await eslint.lintFiles(["fixtures/files/*"]);
 
@@ -1301,7 +1305,6 @@ describe("FlatESLint", () => {
                 cwd: getFixturePath(".."),
                 overrideConfig: { files: ["**/*.js", "**/*.js2"] },
                 overrideConfigFile: getFixturePath("eslint.config.js")
-
             });
             const results = await eslint.lintFiles(["fixtures/files/*"]);
 
@@ -1316,14 +1319,12 @@ describe("FlatESLint", () => {
 
         // only works on a Windows machine
         if (os.platform() === "win32") {
-
             it("should resolve globs with Windows slashes when 'globInputPaths' option is true", async () => {
                 eslint = new FlatESLint({
                     ignore: false,
                     cwd: getFixturePath(".."),
                     overrideConfig: { files: ["**/*.js", "**/*.js2"] },
                     overrideConfigFile: getFixturePath("eslint.config.js")
-
                 });
                 const results = await eslint.lintFiles(["fixtures\\files\\*"]);
 
@@ -1335,9 +1336,7 @@ describe("FlatESLint", () => {
                 assert.strictEqual(results[1].suppressedMessages.length, 0);
                 assert.strictEqual(results[2].suppressedMessages.length, 0);
             });
-
         }
-
 
         it("should not resolve globs when 'globInputPaths' option is false", async () => {
             eslint = new FlatESLint({
@@ -1354,13 +1353,13 @@ describe("FlatESLint", () => {
         });
 
         describe("Ignoring Files", () => {
-
             it("should report on a file in the node_modules folder passed explicitly, even if ignored by default", async () => {
                 eslint = new FlatESLint({
                     cwd: getFixturePath("cli-engine")
                 });
                 const results = await eslint.lintFiles(["node_modules/foo.js"]);
-                const expectedMsg = "File ignored by default because it is located under the node_modules directory. Use ignore pattern \"!**/node_modules/\" to disable file ignore settings or use \"--no-warn-ignored\" to suppress this warning.";
+                const expectedMsg =
+                    'File ignored by default because it is located under the node_modules directory. Use ignore pattern "!**/node_modules/" to disable file ignore settings or use "--no-warn-ignored" to suppress this warning.';
 
                 assert.strictEqual(results.length, 1);
                 assert.strictEqual(results[0].errorCount, 0);
@@ -1378,7 +1377,8 @@ describe("FlatESLint", () => {
                     cwd: getFixturePath("cli-engine")
                 });
                 const results = await eslint.lintFiles(["nested_node_modules/subdir/node_modules/text.js"]);
-                const expectedMsg = "File ignored by default because it is located under the node_modules directory. Use ignore pattern \"!**/node_modules/\" to disable file ignore settings or use \"--no-warn-ignored\" to suppress this warning.";
+                const expectedMsg =
+                    'File ignored by default because it is located under the node_modules directory. Use ignore pattern "!**/node_modules/" to disable file ignore settings or use "--no-warn-ignored" to suppress this warning.';
 
                 assert.strictEqual(results.length, 1);
                 assert.strictEqual(results[0].errorCount, 0);
@@ -1391,13 +1391,14 @@ describe("FlatESLint", () => {
                 assert.strictEqual(results[0].suppressedMessages.length, 0);
             });
 
-            it("should report on an ignored file with \"node_modules\" in its name", async () => {
+            it('should report on an ignored file with "node_modules" in its name', async () => {
                 eslint = new FlatESLint({
                     cwd: getFixturePath("cli-engine"),
                     ignorePatterns: ["*.js"]
                 });
                 const results = await eslint.lintFiles(["node_modules_cleaner.js"]);
-                const expectedMsg = "File ignored because of a matching ignore pattern. Use \"--no-ignore\" to disable file ignore settings or use \"--no-warn-ignored\" to suppress this warning.";
+                const expectedMsg =
+                    'File ignored because of a matching ignore pattern. Use "--no-ignore" to disable file ignore settings or use "--no-warn-ignored" to suppress this warning.';
 
                 assert.strictEqual(results.length, 1);
                 assert.strictEqual(results[0].errorCount, 0);
@@ -1542,7 +1543,10 @@ describe("FlatESLint", () => {
                 assert.strictEqual(results.length, 1);
                 assert.strictEqual(results[0].filePath, filePath);
                 assert.strictEqual(results[0].messages[0].severity, 1);
-                assert.strictEqual(results[0].messages[0].message, "File ignored because of a matching ignore pattern. Use \"--no-ignore\" to disable file ignore settings or use \"--no-warn-ignored\" to suppress this warning.");
+                assert.strictEqual(
+                    results[0].messages[0].message,
+                    'File ignored because of a matching ignore pattern. Use "--no-ignore" to disable file ignore settings or use "--no-warn-ignored" to suppress this warning.'
+                );
                 assert.strictEqual(results[0].errorCount, 0);
                 assert.strictEqual(results[0].warningCount, 1);
                 assert.strictEqual(results[0].fatalErrorCount, 0);
@@ -1574,7 +1578,10 @@ describe("FlatESLint", () => {
                 assert.strictEqual(results.length, 1);
                 assert.strictEqual(results[0].filePath, filePath);
                 assert.strictEqual(results[0].messages[0].severity, 1);
-                assert.strictEqual(results[0].messages[0].message, "File ignored because of a matching ignore pattern. Use \"--no-ignore\" to disable file ignore settings or use \"--no-warn-ignored\" to suppress this warning.");
+                assert.strictEqual(
+                    results[0].messages[0].message,
+                    'File ignored because of a matching ignore pattern. Use "--no-ignore" to disable file ignore settings or use "--no-warn-ignored" to suppress this warning.'
+                );
                 assert.strictEqual(results[0].errorCount, 0);
                 assert.strictEqual(results[0].warningCount, 1);
                 assert.strictEqual(results[0].fatalErrorCount, 0);
@@ -1637,7 +1644,6 @@ describe("FlatESLint", () => {
                 assert.strictEqual(results[0].filePath, getFixturePath("ignores-directory/subdir/subsubdir/a.js"));
                 assert.strictEqual(results[0].warningCount, 1);
                 assert(results[0].messages[0].message.startsWith("File ignored"), "Should contain file ignored warning");
-
             });
 
             // https://github.com/eslint/eslint/issues/16414
@@ -1664,8 +1670,6 @@ describe("FlatESLint", () => {
                 await assert.rejects(async () => {
                     await eslint.lintFiles(["subsubdir/**/*.js"]);
                 }, /All files matched by 'subsubdir\/\*\*\/\*\.js' are ignored\./u);
-
-
             });
 
             // https://github.com/eslint/eslint/issues/16340
@@ -1680,7 +1684,6 @@ describe("FlatESLint", () => {
                 assert.strictEqual(results[0].filePath, getFixturePath("ignores-self/eslint.config.js"));
                 assert.strictEqual(results[0].errorCount, 0);
                 assert.strictEqual(results[0].warningCount, 0);
-
             });
 
             // https://github.com/eslint/eslint/issues/16416
@@ -1689,11 +1692,7 @@ describe("FlatESLint", () => {
                     cwd: getFixturePath("ignores-relative"),
                     overrideConfigFile: true,
                     overrideConfig: {
-                        ignores: [
-                            "*.js",
-                            "!a*.js",
-                            "a.js"
-                        ]
+                        ignores: ["*.js", "!a*.js", "a.js"]
                     }
                 });
                 const results = await eslint.lintFiles(["a.js"]);
@@ -1710,10 +1709,7 @@ describe("FlatESLint", () => {
                     cwd: getFixturePath("ignores-directory"),
                     overrideConfigFile: true,
                     overrideConfig: {
-                        ignores: [
-                            "subdir/*",
-                            "!subdir/subsubdir"
-                        ]
+                        ignores: ["subdir/*", "!subdir/subsubdir"]
                     }
                 });
                 const results = await eslint.lintFiles(["subdir/**/*.js"]);
@@ -1723,10 +1719,7 @@ describe("FlatESLint", () => {
                 assert.strictEqual(results[0].warningCount, 0);
                 assert.strictEqual(results[0].filePath, getFixturePath("ignores-directory/subdir/subsubdir/a.js"));
             });
-
-
         });
-
 
         it("should report zero messages when given a pattern with a .js and a .js2 file", async () => {
             eslint = new FlatESLint({
@@ -1936,7 +1929,6 @@ describe("FlatESLint", () => {
 
         // working
         describe("Deprecated Rules", () => {
-
             it("should warn when deprecated rules are configured", async () => {
                 eslint = new FlatESLint({
                     cwd: originalDir,
@@ -1951,14 +1943,11 @@ describe("FlatESLint", () => {
                 });
                 const results = await eslint.lintFiles(["lib/cli*.js"]);
 
-                assert.deepStrictEqual(
-                    results[0].usedDeprecatedRules,
-                    [
-                        { ruleId: "indent-legacy", replacedBy: ["indent"] },
-                        { ruleId: "require-jsdoc", replacedBy: [] },
-                        { ruleId: "valid-jsdoc", replacedBy: [] }
-                    ]
-                );
+                assert.deepStrictEqual(results[0].usedDeprecatedRules, [
+                    { ruleId: "indent-legacy", replacedBy: ["indent"] },
+                    { ruleId: "require-jsdoc", replacedBy: [] },
+                    { ruleId: "valid-jsdoc", replacedBy: [] }
+                ]);
             });
 
             it("should not warn when deprecated rules are not configured", async () => {
@@ -1981,16 +1970,12 @@ describe("FlatESLint", () => {
                 });
                 const results = await eslint.lintFiles(["lib/cli*.js"]);
 
-                assert.deepStrictEqual(
-                    results[0].usedDeprecatedRules,
-                    [{ ruleId: "indent-legacy", replacedBy: ["indent"] }]
-                );
+                assert.deepStrictEqual(results[0].usedDeprecatedRules, [{ ruleId: "indent-legacy", replacedBy: ["indent"] }]);
             });
         });
 
         // working
         describe("Fix Mode", () => {
-
             it("correctly autofixes semicolon-conflicting-fixes", async () => {
                 eslint = new FlatESLint({
                     cwd: path.join(fixtureDir, ".."),
@@ -2020,7 +2005,6 @@ describe("FlatESLint", () => {
             });
 
             it("should return fixed text on multiple files when in fix mode", async () => {
-
                 /**
                  * Converts CRLF to LF in output.
                  * This is a workaround for git's autocrlf option on Windows.
@@ -2060,7 +2044,7 @@ describe("FlatESLint", () => {
                         fatalErrorCount: 0,
                         fixableErrorCount: 0,
                         fixableWarningCount: 0,
-                        output: "true ? \"yes\" : \"no\";\n",
+                        output: 'true ? "yes" : "no";\n',
                         usedDeprecatedRules: [
                             {
                                 replacedBy: [],
@@ -2121,7 +2105,7 @@ describe("FlatESLint", () => {
                         fatalErrorCount: 0,
                         fixableErrorCount: 0,
                         fixableWarningCount: 0,
-                        output: "var msg = \"hi\";\nif (msg == \"hi\") {\n\n}\n",
+                        output: 'var msg = "hi";\nif (msg == "hi") {\n\n}\n',
                         usedDeprecatedRules: [
                             {
                                 replacedBy: [],
@@ -2158,7 +2142,7 @@ describe("FlatESLint", () => {
                         fatalErrorCount: 0,
                         fixableErrorCount: 0,
                         fixableWarningCount: 0,
-                        output: "var msg = \"hi\" + foo;\n",
+                        output: 'var msg = "hi" + foo;\n',
                         usedDeprecatedRules: [
                             {
                                 replacedBy: [],
@@ -2217,7 +2201,6 @@ describe("FlatESLint", () => {
                 assert.strictEqual(results[0].messages.length, 2, "Expected two messages.");
                 assert.strictEqual(results[0].messages[0].ruleId, "example/example-rule");
                 assert.strictEqual(results[0].suppressedMessages.length, 0);
-
             });
 
             it("should return two messages when executing with cli option that specifies a plugin", async () => {
@@ -2234,7 +2217,6 @@ describe("FlatESLint", () => {
                 assert.strictEqual(results[0].messages.length, 2);
                 assert.strictEqual(results[0].messages[0].ruleId, "example/example-rule");
                 assert.strictEqual(results[0].suppressedMessages.length, 0);
-
             });
 
             it("should return two messages when executing with cli option that specifies preloaded plugin", async () => {
@@ -2254,12 +2236,10 @@ describe("FlatESLint", () => {
                 assert.strictEqual(results[0].messages.length, 2);
                 assert.strictEqual(results[0].messages[0].ruleId, "test/example-rule");
                 assert.strictEqual(results[0].suppressedMessages.length, 0);
-
             });
         });
 
         describe("cache", () => {
-
             /**
              * helper method to delete a file without caring about exceptions
              * @param {string} filePath The file path
@@ -2269,7 +2249,6 @@ describe("FlatESLint", () => {
                 try {
                     fs.unlinkSync(filePath);
                 } catch {
-
                     /*
                      * we don't care if the file didn't exist, since our
                      * intention was to remove the file
@@ -2291,7 +2270,6 @@ describe("FlatESLint", () => {
             });
 
             describe("when cacheLocation is a directory or looks like a directory", () => {
-
                 const cwd = getFixturePath();
 
                 /**
@@ -2300,7 +2278,6 @@ describe("FlatESLint", () => {
                  */
                 function deleteCacheDir() {
                     try {
-
                         /*
                          * `fs.rmdir(path, { recursive: true })` is deprecated and will be removed.
                          * Use `fs.rm(path, { recursive: true })` instead.
@@ -2308,15 +2285,12 @@ describe("FlatESLint", () => {
                          */
                         // eslint-disable-next-line n/no-unsupported-features/node-builtins -- just checking if it exists
                         if (typeof fs.rm === "function") {
-
                             // eslint-disable-next-line n/no-unsupported-features/node-builtins -- conditionally used
                             fs.rmSync(path.resolve(cwd, "tmp/.cacheFileDir/"), { recursive: true, force: true });
                         } else {
                             fs.rmdirSync(path.resolve(cwd, "tmp/.cacheFileDir/"), { recursive: true, force: true });
                         }
-
                     } catch {
-
                         /*
                          * we don't care if the file didn't exist, since our
                          * intention was to remove the file
@@ -2496,7 +2470,11 @@ describe("FlatESLint", () => {
                 const [newResult] = await eslint.lintFiles([file]);
 
                 assert(spy.calledWith(file), "ESLint should have read the file again because it's considered changed because the config changed");
-                assert.strictEqual(newResult.errorCount, 1, "since configuration changed the cache should have not been used and one error should have been reported");
+                assert.strictEqual(
+                    newResult.errorCount,
+                    1,
+                    "since configuration changed the cache should have not been used and one error should have been reported"
+                );
                 assert.strictEqual(newResult.messages[0].ruleId, "no-console");
                 assert(shell.test("-f", cacheFilePath), "The cache for ESLint should still exist");
             });
@@ -2626,7 +2604,11 @@ describe("FlatESLint", () => {
                 const [badFileResult, goodFileResult] = result;
 
                 assert.notStrictEqual(badFileResult.errorCount + badFileResult.warningCount, 0, "the bad file should have some lint errors or warnings");
-                assert.strictEqual(goodFileResult.errorCount + badFileResult.warningCount, 0, "the good file should have passed linting without errors or warnings");
+                assert.strictEqual(
+                    goodFileResult.errorCount + badFileResult.warningCount,
+                    0,
+                    "the good file should have passed linting without errors or warnings"
+                );
 
                 assert(shell.test("-f", cacheFilePath), "the cache for eslint should have been created");
 
@@ -2924,7 +2906,6 @@ describe("FlatESLint", () => {
                     assert(typeof descriptor.meta.results === "object", "lint result for the file should have been in its cache entry in the cache file");
                     assert(typeof descriptor.meta.results.usedDeprecatedRules === "undefined", "lint result in the cache file contains `usedDeprecatedRules`");
                 }
-
             });
 
             // https://github.com/eslint/eslint/issues/13507
@@ -2972,7 +2953,6 @@ describe("FlatESLint", () => {
                     // if the lint result contains `source`, it should be stored as `null` in the cache file
                     assert.strictEqual(descriptor.meta.results.source, null, "lint result in the cache file contains non-null `source`");
                 }
-
             });
 
             describe("cacheStrategy", () => {
@@ -2995,7 +2975,6 @@ describe("FlatESLint", () => {
                                 "no-unused-vars": 2
                             }
                         }
-
                     });
                     const badFile = fs.realpathSync(getFixturePath("cache/src", "fail-file.js"));
                     const goodFile = fs.realpathSync(getFixturePath("cache/src", "test-file.js"));
@@ -3034,7 +3013,6 @@ describe("FlatESLint", () => {
                                 "no-unused-vars": 2
                             }
                         }
-
                     });
                     const badFile = fs.realpathSync(getFixturePath("cache/src", "fail-file.js"));
                     const goodFile = fs.realpathSync(getFixturePath("cache/src", "test-file.js"));
@@ -3075,7 +3053,6 @@ describe("FlatESLint", () => {
                                 "no-unused-vars": 2
                             }
                         }
-
                     });
                     const badFile = fs.realpathSync(getFixturePath("cache/src", "fail-file.js"));
                     const goodFile = fs.realpathSync(getFixturePath("cache/src", "test-file.js"));
@@ -3101,7 +3078,6 @@ describe("FlatESLint", () => {
         });
 
         describe("processors", () => {
-
             it("should return two messages when executing with config file that specifies preloaded processor", async () => {
                 eslint = new FlatESLint({
                     overrideConfigFile: true,
@@ -3138,7 +3114,6 @@ describe("FlatESLint", () => {
                 assert.strictEqual(results.length, 1);
                 assert.strictEqual(results[0].messages.length, 2);
                 assert.strictEqual(results[0].suppressedMessages.length, 0);
-
             });
 
             it("should run processors when calling lintFiles with config file that specifies preloaded processor", async () => {
@@ -3178,7 +3153,6 @@ describe("FlatESLint", () => {
                 assert.strictEqual(results[0].messages[0].message, "'b' is defined but never used.");
                 assert.strictEqual(results[0].messages[0].ruleId, "post-processed");
                 assert.strictEqual(results[0].suppressedMessages.length, 0);
-
             });
 
             it("should run processors when calling lintText with config file that specifies preloaded processor", async () => {
@@ -3213,7 +3187,7 @@ describe("FlatESLint", () => {
                     ],
                     ignore: false
                 });
-                const results = await eslint.lintText("function a() {console.log(\"Test\");}", { filePath: "tests/fixtures/processors/test/test-processor.txt" });
+                const results = await eslint.lintText('function a() {console.log("Test");}', { filePath: "tests/fixtures/processors/test/test-processor.txt" });
 
                 assert.strictEqual(results[0].messages[0].message, "'b' is defined but never used.");
                 assert.strictEqual(results[0].messages[0].ruleId, "post-processed");
@@ -3235,7 +3209,6 @@ describe("FlatESLint", () => {
                                                 count++;
                                                 return [
                                                     {
-
                                                         // it will be run twice, and text will be as-is at the second time, then it will not run third time
                                                         text: text.replace("a()", "b()"),
                                                         filename: ".txt"
@@ -3265,13 +3238,12 @@ describe("FlatESLint", () => {
                     ],
                     ignore: false
                 });
-                const results = await eslint.lintText("function a() {console.log(\"Test\");}", { filePath: "tests/fixtures/processors/test/test-processor.txt" });
+                const results = await eslint.lintText('function a() {console.log("Test");}', { filePath: "tests/fixtures/processors/test/test-processor.txt" });
 
                 assert.strictEqual(count, 2);
                 assert.strictEqual(results[0].messages[0].message, "'b' is defined but never used.");
                 assert.strictEqual(results[0].messages[0].ruleId, "post-processed");
                 assert.strictEqual(results[0].suppressedMessages.length, 0);
-
             });
 
             describe("autofixing with processors", () => {
@@ -3292,7 +3264,6 @@ describe("FlatESLint", () => {
                         });
                     }
                 });
-
 
                 it("should run in autofix mode when using a processor that supports autofixing", async () => {
                     eslint = new FlatESLint({
@@ -3424,10 +3395,7 @@ describe("FlatESLint", () => {
         describe("multiple processors", () => {
             const root = path.join(os.tmpdir(), "eslint/eslint/multiple-processors");
             const commonFiles = {
-                "node_modules/pattern-processor/index.js": fs.readFileSync(
-                    require.resolve("../../fixtures/processors/pattern-processor"),
-                    "utf8"
-                ),
+                "node_modules/pattern-processor/index.js": fs.readFileSync(require.resolve("../../fixtures/processors/pattern-processor"), "utf8"),
                 "node_modules/eslint-plugin-markdown/index.js": `
                     const { defineProcessor } = require("pattern-processor");
                     const processor = defineProcessor(${/```(\w+)\n([\s\S]+?)\n```/gu});
@@ -3511,7 +3479,6 @@ describe("FlatESLint", () => {
                 assert.strictEqual(results[0].messages[0].ruleId, "semi");
                 assert.strictEqual(results[0].messages[0].line, 2, "Message should be on line 2.");
                 assert.strictEqual(results[0].suppressedMessages.length, 0);
-
             });
 
             it("should lint HTML blocks as well with multiple processors if represented in config.", async () => {
@@ -3590,20 +3557,23 @@ describe("FlatESLint", () => {
                 assert.strictEqual(results.length, 1);
                 assert.strictEqual(results[0].messages.length, 0);
                 assert.strictEqual(results[0].suppressedMessages.length, 0);
-                assert.strictEqual(results[0].output, unIndent`
+                assert.strictEqual(
+                    results[0].output,
+                    unIndent`
                     \`\`\`js
-                    console.log("hello");${/* ← fixed */""}
+                    console.log("hello");${/* ← fixed */ ""}
                     \`\`\`
                     \`\`\`html
                     <div>Hello</div>
                     <script lang="js">
-                        console.log("hello");${/* ← fixed */""}
+                        console.log("hello");${/* ← fixed */ ""}
                     </script>
                     <script lang="ts">
-                        console.log("hello")${/* ← ignored */""}
+                        console.log("hello")${/* ← ignored */ ""}
                     </script>
                     \`\`\`
-                `);
+                `
+                );
             });
 
             it("should use the config '**/*.html/*.js' to lint JavaScript blocks in HTML.", async () => {
@@ -3639,7 +3609,6 @@ describe("FlatESLint", () => {
                             }
 
                         ];`
-
                     }
                 });
 
@@ -3654,7 +3623,6 @@ describe("FlatESLint", () => {
                 assert.strictEqual(results[0].messages[1].ruleId, "no-console");
                 assert.strictEqual(results[0].messages[1].line, 7);
                 assert.strictEqual(results[0].suppressedMessages.length, 0);
-
             });
 
             it("should use the same config as one which has 'processor' property in order to lint blocks in HTML if the processor was legacy style.", async () => {
@@ -3737,7 +3705,6 @@ describe("FlatESLint", () => {
                     await eslint.lintFiles(["test.md"]);
                 }, /Key "processor": Could not find "unknown" in plugin "markdown"/u);
             });
-
         });
 
         describe("glob pattern '[ab].js'", () => {
@@ -3746,13 +3713,12 @@ describe("FlatESLint", () => {
             let cleanup;
 
             beforeEach(() => {
-                cleanup = () => { };
+                cleanup = () => {};
             });
 
             afterEach(() => cleanup());
 
             it("should match '[ab].js' if existed.", async () => {
-
                 const teardown = createCustomTeardown({
                     cwd: root,
                     files: {
@@ -3801,7 +3767,7 @@ describe("FlatESLint", () => {
             let cleanup;
 
             beforeEach(() => {
-                cleanup = () => { };
+                cleanup = () => {};
             });
 
             afterEach(() => cleanup());
@@ -3825,7 +3791,6 @@ describe("FlatESLint", () => {
                 assert.strictEqual(messages.length, 1);
                 assert.strictEqual(messages[0].message, "'/* globals foo */' has no effect because you have 'noInlineConfig' setting in your config.");
             });
-
         });
 
         describe("with 'reportUnusedDisableDirectives' setting", () => {
@@ -3834,7 +3799,7 @@ describe("FlatESLint", () => {
             let cleanup;
 
             beforeEach(() => {
-                cleanup = () => { };
+                cleanup = () => {};
             });
 
             afterEach(() => cleanup());
@@ -3847,7 +3812,6 @@ describe("FlatESLint", () => {
                         "eslint.config.js": "module.exports = { linterOptions: { reportUnusedDisableDirectives: true } }"
                     }
                 });
-
 
                 await teardown.prepare();
                 cleanup = teardown.cleanup;
@@ -3922,7 +3886,6 @@ describe("FlatESLint", () => {
     });
 
     describe("Fix Types", () => {
-
         let eslint;
 
         it("should throw an error when an invalid fix type is specified", () => {
@@ -3993,7 +3956,6 @@ describe("FlatESLint", () => {
 
             assert.strictEqual(results[0].output, expectedOutput);
         });
-
     });
 
     describe("isPathIgnored", () => {
@@ -4004,7 +3966,7 @@ describe("FlatESLint", () => {
             });
 
             assert(await engine.isPathIgnored("undef.js"));
-            assert(!await engine.isPathIgnored("passing.js"));
+            assert(!(await engine.isPathIgnored("passing.js")));
         });
 
         it("should return false if ignoring is disabled", async () => {
@@ -4014,7 +3976,7 @@ describe("FlatESLint", () => {
                 cwd: getFixturePath()
             });
 
-            assert(!await engine.isPathIgnored("undef.js"));
+            assert(!(await engine.isPathIgnored("undef.js")));
         });
 
         // https://github.com/eslint/eslint/issues/5547
@@ -4067,7 +4029,7 @@ describe("FlatESLint", () => {
                     }
                 });
 
-                assert(!await engine.isPathIgnored(getFixturePath("ignored-paths", "node_modules", "package", "file.js")));
+                assert(!(await engine.isPathIgnored(getFixturePath("ignored-paths", "node_modules", "package", "file.js"))));
             });
 
             it("should ignore .git directory", async () => {
@@ -4088,7 +4050,7 @@ describe("FlatESLint", () => {
                 const cwd = getFixturePath("ignored-paths");
                 const engine = new FlatESLint({ cwd });
 
-                assert(!await engine.isPathIgnored(`${getFixturePath("ignored-paths", "foo")}/../unignored.js`));
+                assert(!(await engine.isPathIgnored(`${getFixturePath("ignored-paths", "foo")}/../unignored.js`)));
             });
 
             it("should ignore /node_modules/ relative to cwd without any configured ignore patterns", async () => {
@@ -4102,7 +4064,7 @@ describe("FlatESLint", () => {
             it("should not inadvertently ignore all files in parent directories", async () => {
                 const engine = new FlatESLint({ cwd: getFixturePath("ignored-paths", "no-ignore-file") });
 
-                assert(!await engine.isPathIgnored(getFixturePath("ignored-paths", "undef.js")));
+                assert(!(await engine.isPathIgnored(getFixturePath("ignored-paths", "undef.js"))));
             });
         });
 
@@ -4125,7 +4087,7 @@ describe("FlatESLint", () => {
 
                 assert(await engine.isPathIgnored("a.js"), "a.js should be ignored");
                 assert(await engine.isPathIgnored("b.js"), "b.js should be ignored");
-                assert(!await engine.isPathIgnored("c.js"), "c.js should not be ignored");
+                assert(!(await engine.isPathIgnored("c.js")), "c.js should not be ignored");
             });
 
             it("should return true for files which match an ignorePattern even if they do not exist on the filesystem", async () => {
@@ -4158,7 +4120,7 @@ describe("FlatESLint", () => {
                     cwd
                 });
 
-                assert(!await engine.isPathIgnored(filePath));
+                assert(!(await engine.isPathIgnored(filePath)));
             });
 
             it("should return true for file matching a child of an ignore pattern", async () => {
@@ -4179,7 +4141,7 @@ describe("FlatESLint", () => {
                 const cwd = getFixturePath("ignored-paths");
                 const engine = new FlatESLint({ ignorePatterns: ["failing.js"], cwd });
 
-                assert(!await engine.isPathIgnored(getFixturePath("ignored-paths", "unignored.js")));
+                assert(!(await engine.isPathIgnored(getFixturePath("ignored-paths", "unignored.js"))));
             });
 
             it("two globstar '**' ignore pattern should ignore files in nested directories", async () => {
@@ -4193,9 +4155,9 @@ describe("FlatESLint", () => {
                 assert(await engine.isPathIgnored(getFixturePath("ignored-paths", "foo.js")), "foo.js should be ignored");
                 assert(await engine.isPathIgnored(getFixturePath("ignored-paths", "foo/bar.js")), "foo/bar.js should be ignored");
                 assert(await engine.isPathIgnored(getFixturePath("ignored-paths", "foo/bar/baz.js")), "foo/bar/baz.js");
-                assert(!await engine.isPathIgnored(getFixturePath("ignored-paths", "foo.cjs")), "foo.cjs should not be ignored");
-                assert(!await engine.isPathIgnored(getFixturePath("ignored-paths", "foo/bar.cjs")), "foo/bar.cjs should not be ignored");
-                assert(!await engine.isPathIgnored(getFixturePath("ignored-paths", "foo/bar/baz.cjs")), "foo/bar/baz.cjs should not be ignored");
+                assert(!(await engine.isPathIgnored(getFixturePath("ignored-paths", "foo.cjs"))), "foo.cjs should not be ignored");
+                assert(!(await engine.isPathIgnored(getFixturePath("ignored-paths", "foo/bar.cjs"))), "foo/bar.cjs should not be ignored");
+                assert(!(await engine.isPathIgnored(getFixturePath("ignored-paths", "foo/bar/baz.cjs"))), "foo/bar/baz.cjs should not be ignored");
             });
         });
 
@@ -4208,7 +4170,7 @@ describe("FlatESLint", () => {
                     cwd
                 });
 
-                assert(!await engine.isPathIgnored(getFixturePath("ignored-paths", "undef.js")));
+                assert(!(await engine.isPathIgnored(getFixturePath("ignored-paths", "undef.js"))));
             });
         });
 
@@ -4299,29 +4261,44 @@ describe("FlatESLint", () => {
             const formatterPath = getFixturePath("formatters", "doesntexist.js");
             const fullFormatterPath = path.resolve(formatterPath);
 
-            await assert.rejects(async () => {
-                await engine.loadFormatter(formatterPath);
-            }, new RegExp(escapeStringRegExp(`There was a problem loading formatter: ${fullFormatterPath}\nError: Cannot find module '${fullFormatterPath}'`), "u"));
+            await assert.rejects(
+                async () => {
+                    await engine.loadFormatter(formatterPath);
+                },
+                new RegExp(
+                    escapeStringRegExp(`There was a problem loading formatter: ${fullFormatterPath}\nError: Cannot find module '${fullFormatterPath}'`),
+                    "u"
+                )
+            );
         });
 
         it("should throw if a built-in formatter doesn't exist", async () => {
             const engine = new FlatESLint();
             const fullFormatterPath = path.resolve(__dirname, "../../../lib/cli-engine/formatters/special");
 
-            await assert.rejects(async () => {
-                await engine.loadFormatter("special");
-            }, new RegExp(escapeStringRegExp(`There was a problem loading formatter: ${fullFormatterPath}.js\nError: Cannot find module '${fullFormatterPath}.js'`), "u"));
+            await assert.rejects(
+                async () => {
+                    await engine.loadFormatter("special");
+                },
+                new RegExp(
+                    escapeStringRegExp(`There was a problem loading formatter: ${fullFormatterPath}.js\nError: Cannot find module '${fullFormatterPath}.js'`),
+                    "u"
+                )
+            );
         });
 
         it("should throw if the required formatter exists but has an error", async () => {
             const engine = new FlatESLint();
             const formatterPath = getFixturePath("formatters", "broken.js");
 
-            await assert.rejects(async () => {
-                await engine.loadFormatter(formatterPath);
+            await assert.rejects(
+                async () => {
+                    await engine.loadFormatter(formatterPath);
 
-                // for some reason, the error here contains multiple "there was a problem loading formatter" lines, so omitting
-            }, new RegExp(escapeStringRegExp("Error: Cannot find module 'this-module-does-not-exist'"), "u"));
+                    // for some reason, the error here contains multiple "there was a problem loading formatter" lines, so omitting
+                },
+                new RegExp(escapeStringRegExp("Error: Cannot find module 'this-module-does-not-exist'"), "u")
+            );
         });
 
         it("should throw if a non-string formatter name is passed", async () => {
@@ -4334,7 +4311,6 @@ describe("FlatESLint", () => {
     });
 
     describe("getErrorResults()", () => {
-
         it("should report 5 error messages when looking for errors only", async () => {
             process.chdir(originalDir);
             const engine = new FlatESLint({
@@ -4455,7 +4431,6 @@ describe("FlatESLint", () => {
     });
 
     describe("findConfigFile()", () => {
-
         it("should return undefined when overrideConfigFile is true", async () => {
             const engine = new FlatESLint({
                 overrideConfigFile: true
@@ -4496,52 +4471,52 @@ describe("FlatESLint", () => {
 
             assert.strictEqual(await engine.findConfigFile(), configFilePath);
         });
-
     });
 
     describe("getRulesMetaForResults()", () => {
-
         it("should throw an error when this instance did not lint any files", async () => {
             const engine = new FlatESLint({
                 overrideConfigFile: true
             });
 
-            assert.throws(() => {
-                engine.getRulesMetaForResults([
-                    {
-                        filePath: "path/to/file.js",
-                        messages: [
-                            {
-                                ruleId: "curly",
-                                severity: 2,
-                                message: "Expected { after 'if' condition.",
-                                line: 2,
-                                column: 1,
-                                nodeType: "IfStatement"
-                            },
-                            {
-                                ruleId: "no-process-exit",
-                                severity: 2,
-                                message: "Don't use process.exit(); throw an error instead.",
-                                line: 3,
-                                column: 1,
-                                nodeType: "CallExpression"
-                            }
-                        ],
-                        suppressedMessages: [],
-                        errorCount: 2,
-                        warningCount: 0,
-                        fatalErrorCount: 0,
-                        fixableErrorCount: 0,
-                        fixableWarningCount: 0,
-                        source:
-                            "var err = doStuff();\nif (err) console.log('failed tests: ' + err);\nprocess.exit(1);\n"
-                    }
-                ]);
-            }, {
-                constructor: TypeError,
-                message: "Results object was not created from this ESLint instance."
-            });
+            assert.throws(
+                () => {
+                    engine.getRulesMetaForResults([
+                        {
+                            filePath: "path/to/file.js",
+                            messages: [
+                                {
+                                    ruleId: "curly",
+                                    severity: 2,
+                                    message: "Expected { after 'if' condition.",
+                                    line: 2,
+                                    column: 1,
+                                    nodeType: "IfStatement"
+                                },
+                                {
+                                    ruleId: "no-process-exit",
+                                    severity: 2,
+                                    message: "Don't use process.exit(); throw an error instead.",
+                                    line: 3,
+                                    column: 1,
+                                    nodeType: "CallExpression"
+                                }
+                            ],
+                            suppressedMessages: [],
+                            errorCount: 2,
+                            warningCount: 0,
+                            fatalErrorCount: 0,
+                            fixableErrorCount: 0,
+                            fixableWarningCount: 0,
+                            source: "var err = doStuff();\nif (err) console.log('failed tests: ' + err);\nprocess.exit(1);\n"
+                        }
+                    ]);
+                },
+                {
+                    constructor: TypeError,
+                    message: "Results object was not created from this ESLint instance."
+                }
+            );
         });
 
         it("should throw an error when results were created from a different instance", async () => {
@@ -4568,12 +4543,15 @@ describe("FlatESLint", () => {
             const results2 = await engine2.lintText("2", { filePath: "file.js" });
 
             engine1.getRulesMetaForResults(results1); // should not throw an error
-            assert.throws(() => {
-                engine1.getRulesMetaForResults(results2);
-            }, {
-                constructor: TypeError,
-                message: "Results object was not created from this ESLint instance."
-            });
+            assert.throws(
+                () => {
+                    engine1.getRulesMetaForResults(results2);
+                },
+                {
+                    constructor: TypeError,
+                    message: "Results object was not created from this ESLint instance."
+                }
+            );
         });
 
         it("should treat a result without `filePath` as if the file was located in `cwd`", async () => {
@@ -4720,10 +4698,7 @@ describe("FlatESLint", () => {
 
             assert.strictEqual(rulesMeta.semi, coreRules.get("semi").meta);
             assert.strictEqual(rulesMeta.quotes, coreRules.get("quotes").meta);
-            assert.strictEqual(
-                rulesMeta["custom-plugin/no-var"],
-                customPlugin.rules["no-var"].meta
-            );
+            assert.strictEqual(rulesMeta["custom-plugin/no-var"], customPlugin.rules["no-var"].meta);
         });
 
         it("should ignore messages not related to a rule", async () => {
@@ -4881,9 +4856,7 @@ describe("FlatESLint", () => {
 
     describe("when evaluating code with comments to change config when allowInlineConfig is disabled", () => {
         it("should report a violation for disabling rules", async () => {
-            const code = [
-                "alert('test'); // eslint-disable-line no-alert"
-            ].join("\n");
+            const code = ["alert('test'); // eslint-disable-line no-alert"].join("\n");
             const config = {
                 ignore: true,
                 overrideConfigFile: true,
@@ -4908,9 +4881,7 @@ describe("FlatESLint", () => {
         });
 
         it("should not report a violation by default", async () => {
-            const code = [
-                "alert('test'); // eslint-disable-line no-alert"
-            ].join("\n");
+            const code = ["alert('test'); // eslint-disable-line no-alert"].join("\n");
             const config = {
                 ignore: true,
                 overrideConfigFile: true,
@@ -4939,36 +4910,33 @@ describe("FlatESLint", () => {
         it("should report problems for unused eslint-disable directives", async () => {
             const eslint = new FlatESLint({ overrideConfigFile: true, reportUnusedDisableDirectives: "error" });
 
-            assert.deepStrictEqual(
-                await eslint.lintText("/* eslint-disable */"),
-                [
-                    {
-                        filePath: "<text>",
-                        messages: [
-                            {
-                                ruleId: null,
-                                message: "Unused eslint-disable directive (no problems were reported).",
-                                line: 1,
-                                column: 1,
-                                fix: {
-                                    range: [0, 20],
-                                    text: " "
-                                },
-                                severity: 2,
-                                nodeType: null
-                            }
-                        ],
-                        suppressedMessages: [],
-                        errorCount: 1,
-                        warningCount: 0,
-                        fatalErrorCount: 0,
-                        fixableErrorCount: 1,
-                        fixableWarningCount: 0,
-                        source: "/* eslint-disable */",
-                        usedDeprecatedRules: []
-                    }
-                ]
-            );
+            assert.deepStrictEqual(await eslint.lintText("/* eslint-disable */"), [
+                {
+                    filePath: "<text>",
+                    messages: [
+                        {
+                            ruleId: null,
+                            message: "Unused eslint-disable directive (no problems were reported).",
+                            line: 1,
+                            column: 1,
+                            fix: {
+                                range: [0, 20],
+                                text: " "
+                            },
+                            severity: 2,
+                            nodeType: null
+                        }
+                    ],
+                    suppressedMessages: [],
+                    errorCount: 1,
+                    warningCount: 0,
+                    fatalErrorCount: 0,
+                    fixableErrorCount: 1,
+                    fixableWarningCount: 0,
+                    source: "/* eslint-disable */",
+                    usedDeprecatedRules: []
+                }
+            ]);
         });
     });
 
@@ -4983,7 +4951,6 @@ describe("FlatESLint", () => {
     });
 
     describe("mutability", () => {
-
         describe("rules", () => {
             it("Loading rules in one instance doesn't mutate to another instance", async () => {
                 const filePath = getFixturePath("single-quoted.js");
@@ -5018,7 +4985,6 @@ describe("FlatESLint", () => {
     });
 
     describe("configs with 'ignores' and without 'files'", () => {
-
         // https://github.com/eslint/eslint/issues/17103
         describe("config with ignores: ['error.js']", () => {
             const cwd = getFixturePath("config-with-ignores-without-files");
@@ -5107,7 +5073,6 @@ describe("FlatESLint", () => {
                 assert.strictEqual(results[0].filePath, path.join(getPath(), "foo.js"));
             });
         });
-
     });
 
     describe("with ignores config", () => {
@@ -5146,15 +5111,9 @@ describe("FlatESLint", () => {
 
             it("'lintFiles()' should not verify 'foo.js'.", async () => {
                 const engine = new FlatESLint({ cwd: getPath() });
-                const filePaths = (await engine.lintFiles("**/*.js"))
-                    .map(r => r.filePath)
-                    .sort();
+                const filePaths = (await engine.lintFiles("**/*.js")).map(r => r.filePath).sort();
 
-                assert.deepStrictEqual(filePaths, [
-                    path.join(root, "bar.js"),
-                    path.join(root, "eslint.config.js"),
-                    path.join(root, "subdir/bar.js")
-                ]);
+                assert.deepStrictEqual(filePaths, [path.join(root, "bar.js"), path.join(root, "eslint.config.js"), path.join(root, "subdir/bar.js")]);
             });
         });
 
@@ -5193,9 +5152,7 @@ describe("FlatESLint", () => {
 
             it("'lintFiles()' should not verify 'foo.js' and '/bar.js'.", async () => {
                 const engine = new FlatESLint({ cwd: getPath() });
-                const filePaths = (await engine.lintFiles("**/*.js"))
-                    .map(r => r.filePath)
-                    .sort();
+                const filePaths = (await engine.lintFiles("**/*.js")).map(r => r.filePath).sort();
 
                 assert.deepStrictEqual(filePaths, [
                     path.join(getPath(), "baz.js"),
@@ -5206,9 +5163,7 @@ describe("FlatESLint", () => {
             });
         });
 
-
         describe("ignores can unignore '/node_modules/foo' with patterns ['!node_modules/', 'node_modules/*', '!node_modules/foo/'].", () => {
-
             const { prepare, cleanup, getPath } = createCustomTeardown({
                 cwd: `${root}-unignores`,
                 files: {
@@ -5245,9 +5200,7 @@ describe("FlatESLint", () => {
 
             it("'lintFiles()' should verify 'node_modules/foo/index.js'.", async () => {
                 const engine = new FlatESLint({ cwd: getPath() });
-                const filePaths = (await engine.lintFiles("**/*.js"))
-                    .map(r => r.filePath)
-                    .sort();
+                const filePaths = (await engine.lintFiles("**/*.js")).map(r => r.filePath).sort();
 
                 assert.deepStrictEqual(filePaths, [
                     path.join(getPath(), "eslint.config.js"),
@@ -5259,7 +5212,6 @@ describe("FlatESLint", () => {
         });
 
         describe("ignores can unignore '/node_modules/foo' with patterns ['!node_modules/', 'node_modules/*', '!node_modules/foo/**'].", () => {
-
             const { prepare, cleanup, getPath } = createCustomTeardown({
                 cwd: `${root}-unignores`,
                 files: {
@@ -5296,11 +5248,9 @@ describe("FlatESLint", () => {
 
             it("'lintFiles()' should verify 'node_modules/foo/index.js'.", async () => {
                 const engine = new FlatESLint({ cwd: getPath() });
-                const result = (await engine.lintFiles("**/*.js"));
+                const result = await engine.lintFiles("**/*.js");
 
-                const filePaths = result
-                    .map(r => r.filePath)
-                    .sort();
+                const filePaths = result.map(r => r.filePath).sort();
 
                 assert.deepStrictEqual(filePaths, [
                     path.join(getPath(), "eslint.config.js"),
@@ -5340,14 +5290,9 @@ describe("FlatESLint", () => {
 
             it("'lintFiles()' should not lint re-ignored '.foo.js'.", async () => {
                 const engine = new FlatESLint({ cwd: getPath() });
-                const filePaths = (await engine.lintFiles("**/*.js"))
-                    .map(r => r.filePath)
-                    .sort();
+                const filePaths = (await engine.lintFiles("**/*.js")).map(r => r.filePath).sort();
 
-                assert.deepStrictEqual(filePaths, [
-                    path.join(getPath(), ".bar.js"),
-                    path.join(getPath(), "eslint.config.js")
-                ]);
+                assert.deepStrictEqual(filePaths, [path.join(getPath(), ".bar.js"), path.join(getPath(), "eslint.config.js")]);
             });
         });
 
@@ -5380,18 +5325,13 @@ describe("FlatESLint", () => {
 
             it("'lintFiles()' should verify unignored 'foo.js'.", async () => {
                 const engine = new FlatESLint({ cwd: getPath() });
-                const filePaths = (await engine.lintFiles("**/*.js"))
-                    .map(r => r.filePath)
-                    .sort();
+                const filePaths = (await engine.lintFiles("**/*.js")).map(r => r.filePath).sort();
 
-                assert.deepStrictEqual(filePaths, [
-                    path.join(getPath(), "foo.js")
-                ]);
+                assert.deepStrictEqual(filePaths, [path.join(getPath(), "foo.js")]);
             });
         });
 
         describe("ignores in a config file should not be used if ignore: false.", () => {
-
             const { prepare, cleanup, getPath } = createCustomTeardown({
                 cwd: root,
                 files: {
@@ -5413,22 +5353,15 @@ describe("FlatESLint", () => {
 
             it("'lintFiles()' should verify 'foo.js'.", async () => {
                 const engine = new FlatESLint({ cwd: getPath(), ignore: false });
-                const filePaths = (await engine.lintFiles("**/*.js"))
-                    .map(r => r.filePath)
-                    .sort();
+                const filePaths = (await engine.lintFiles("**/*.js")).map(r => r.filePath).sort();
 
-                assert.deepStrictEqual(filePaths, [
-                    path.join(root, "eslint.config.js"),
-                    path.join(root, "foo.js")
-                ]);
+                assert.deepStrictEqual(filePaths, [path.join(root, "eslint.config.js"), path.join(root, "foo.js")]);
             });
         });
-
     });
 
     describe("config.files adds lint targets", () => {
         const root = getFixturePath("cli-engine/additional-lint-targets");
-
 
         describe("if { files: 'foo/*.txt', ignores: '**/ignore.txt' } is present,", () => {
             const { prepare, cleanup, getPath } = createCustomTeardown({
@@ -5456,9 +5389,7 @@ describe("FlatESLint", () => {
 
             it("'lintFiles()' with a directory path should contain 'foo/test.txt'.", async () => {
                 const engine = new FlatESLint({ cwd: getPath() });
-                const filePaths = (await engine.lintFiles("."))
-                    .map(r => r.filePath)
-                    .sort();
+                const filePaths = (await engine.lintFiles(".")).map(r => r.filePath).sort();
 
                 assert.deepStrictEqual(filePaths, [
                     path.join(getPath(), "bar/test.js"),
@@ -5471,9 +5402,7 @@ describe("FlatESLint", () => {
 
             it("'lintFiles()' with a glob pattern '*.js' should not contain 'foo/test.txt'.", async () => {
                 const engine = new FlatESLint({ cwd: getPath() });
-                const filePaths = (await engine.lintFiles("**/*.js"))
-                    .map(r => r.filePath)
-                    .sort();
+                const filePaths = (await engine.lintFiles("**/*.js")).map(r => r.filePath).sort();
 
                 assert.deepStrictEqual(filePaths, [
                     path.join(getPath(), "bar/test.js"),
@@ -5510,30 +5439,20 @@ describe("FlatESLint", () => {
 
             it("'lintFiles()' with a directory path should contain 'foo/test.txt'.", async () => {
                 const engine = new FlatESLint({ cwd: getPath() });
-                const filePaths = (await engine.lintFiles("foo"))
-                    .map(r => r.filePath)
-                    .sort();
+                const filePaths = (await engine.lintFiles("foo")).map(r => r.filePath).sort();
 
-                assert.deepStrictEqual(filePaths, [
-                    path.join(getPath(), "foo/test.js"),
-                    path.join(getPath(), "foo/test.txt")
-                ]);
+                assert.deepStrictEqual(filePaths, [path.join(getPath(), "foo/test.js"), path.join(getPath(), "foo/test.txt")]);
             });
 
             it("'lintFiles()' with a glob pattern '*.js' should not contain 'foo/test.txt'.", async () => {
                 const engine = new FlatESLint({ cwd: getPath() });
-                const filePaths = (await engine.lintFiles("foo/*.js"))
-                    .map(r => r.filePath)
-                    .sort();
+                const filePaths = (await engine.lintFiles("foo/*.js")).map(r => r.filePath).sort();
 
-                assert.deepStrictEqual(filePaths, [
-                    path.join(getPath(), "foo/test.js")
-                ]);
+                assert.deepStrictEqual(filePaths, [path.join(getPath(), "foo/test.js")]);
             });
         });
 
         describe("if { files: 'foo/**/*.txt' } is present,", () => {
-
             const { prepare, cleanup, getPath } = createCustomTeardown({
                 cwd: root + 3,
                 files: {
@@ -5557,9 +5476,7 @@ describe("FlatESLint", () => {
 
             it("'lintFiles()' with a directory path should contain 'foo/test.txt' and 'foo/nested/test.txt'.", async () => {
                 const engine = new FlatESLint({ cwd: getPath() });
-                const filePaths = (await engine.lintFiles("."))
-                    .map(r => r.filePath)
-                    .sort();
+                const filePaths = (await engine.lintFiles(".")).map(r => r.filePath).sort();
 
                 assert.deepStrictEqual(filePaths, [
                     path.join(getPath(), "bar/test.js"),
@@ -5573,7 +5490,6 @@ describe("FlatESLint", () => {
         });
 
         describe("if { files: 'foo/**/*' } is present,", () => {
-
             const { prepare, cleanup, getPath } = createCustomTeardown({
                 cwd: root + 4,
                 files: {
@@ -5597,9 +5513,7 @@ describe("FlatESLint", () => {
 
             it("'lintFiles()' with a directory path should NOT contain 'foo/test.txt' and 'foo/nested/test.txt'.", async () => {
                 const engine = new FlatESLint({ cwd: getPath() });
-                const filePaths = (await engine.lintFiles("."))
-                    .map(r => r.filePath)
-                    .sort();
+                const filePaths = (await engine.lintFiles(".")).map(r => r.filePath).sort();
 
                 assert.deepStrictEqual(filePaths, [
                     path.join(getPath(), "bar/test.js"),
@@ -5609,7 +5523,6 @@ describe("FlatESLint", () => {
                 ]);
             });
         });
-
     });
 
     describe("'ignores', 'files' of the configuration that the '--config' option provided should be resolved from CWD.", () => {
@@ -5692,7 +5605,8 @@ describe("FlatESLint", () => {
                             {
                                 ruleId: null,
                                 fatal: false,
-                                message: "File ignored by default because it is located under the node_modules directory. Use ignore pattern \"!**/node_modules/\" to disable file ignore settings or use \"--no-warn-ignored\" to suppress this warning.",
+                                message:
+                                    'File ignored by default because it is located under the node_modules directory. Use ignore pattern "!**/node_modules/" to disable file ignore settings or use "--no-warn-ignored" to suppress this warning.',
                                 severity: 1,
                                 nodeType: null
                             }
@@ -5812,9 +5726,7 @@ describe("FlatESLint", () => {
                     overrideConfigFile: "node_modules/myconf/eslint.config.js",
                     cwd: getPath()
                 });
-                const files = (await engine.lintFiles("**/*.js"))
-                    .map(r => r.filePath)
-                    .sort();
+                const files = (await engine.lintFiles("**/*.js")).map(r => r.filePath).sort();
 
                 assert.deepStrictEqual(files, [
                     path.join(getPath(), "node_modules/myconf/eslint.config.js"),
@@ -5968,7 +5880,6 @@ describe("FlatESLint", () => {
         });
 
         it("when it has 'files' they should be interpreted as relative to the config file", async () => {
-
             /*
              * `fixtures/plugins` directory does not have a config file.
              * It's parent directory `fixtures` does have a config file, so
@@ -5991,7 +5902,6 @@ describe("FlatESLint", () => {
         });
 
         it("when it has 'ignores' they should be interpreted as relative to the config file", async () => {
-
             /*
              * `fixtures/plugins` directory does not have a config file.
              * It's parent directory `fixtures` does have a config file, so
@@ -6013,7 +5923,6 @@ describe("FlatESLint", () => {
     });
 
     describe("config file", () => {
-
         it("new instance of FlatESLint should use the latest version of the config file (ESM)", async () => {
             const cwd = path.join(getFixturePath(), `config_file_${Date.now()}`);
             const configFileContent = "export default [{ rules: { semi: ['error', 'always'] } }];";
@@ -6084,7 +5993,6 @@ describe("FlatESLint", () => {
 
     // only works on a Windows machine
     if (os.platform() === "win32") {
-
         // https://github.com/eslint/eslint/issues/17042
         describe("with cwd that is using forward slash on Windows", () => {
             const cwd = getFixturePath("example-app3");
@@ -6129,11 +6037,9 @@ describe("FlatESLint", () => {
             });
         });
     }
-
 });
 
 describe("shouldUseFlatConfig", () => {
-
     /**
      * Check that `shouldUseFlatConfig` returns the expected value from a CWD
      * with a flat config and one without a flat config.

@@ -15,7 +15,6 @@ const ruleTester = new RuleTester();
 
 ruleTester.run("function-call-argument-newline", rule, {
     valid: [
-
         /* early return */
         "fn()",
         "fn(a)",
@@ -73,7 +72,6 @@ ruleTester.run("function-call-argument-newline", rule, {
         { code: "fn(`\n`,\n\tb,\n\tc)", options: ["consistent"], parserOptions: { ecmaVersion: 6 } }
     ],
     invalid: [
-
         /* default ("always") */
         {
             code: "fn(a, b)",

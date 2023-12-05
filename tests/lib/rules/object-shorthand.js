@@ -795,7 +795,6 @@ ruleTester.run("object-shorthand", rule, {
             errors: [METHOD_ERROR]
         },
         {
-
             // https://github.com/eslint/eslint/issues/11595
             code: "var x = {_y: function() {}}",
             output: "var x = {_y() {}}",
@@ -803,7 +802,6 @@ ruleTester.run("object-shorthand", rule, {
             errors: [METHOD_ERROR]
         },
         {
-
             // https://github.com/eslint/eslint/issues/11595
             code: "var x = {$y: function() {}}",
             output: "var x = {$y() {}}",
@@ -811,7 +809,6 @@ ruleTester.run("object-shorthand", rule, {
             errors: [METHOD_ERROR]
         },
         {
-
             // https://github.com/eslint/eslint/issues/11595
             code: "var x = {__y: function() {}}",
             output: "var x = {__y() {}}",
@@ -819,7 +816,6 @@ ruleTester.run("object-shorthand", rule, {
             errors: [METHOD_ERROR]
         },
         {
-
             // https://github.com/eslint/eslint/issues/11595
             code: "var x = {_0y: function() {}}",
             output: "var x = {_0y() {}}",
@@ -936,7 +932,6 @@ ruleTester.run("object-shorthand", rule, {
             output: null,
             options: ["consistent-as-needed"],
             errors: [MIXED_SHORTHAND_ERROR]
-
         },
         {
             code: "var x = {foo: function() {}}",
@@ -1095,7 +1090,6 @@ ruleTester.run("object-shorthand", rule, {
             errors: [METHOD_ERROR]
         },
         {
-
             // https://github.com/eslint/eslint/issues/11305
             code: "({ key: (arg = () => {}) => {} })",
             output: "({ key(arg = () => {}) {} })",

@@ -143,9 +143,23 @@ ruleTester.run("no-redeclare", rule, {
         { code: "function a() {} function a() {}", errors: [{ message: "'a' is already defined.", type: "Identifier" }] },
         { code: "var a = function() { }; var a = function() { }", errors: [{ message: "'a' is already defined.", type: "Identifier" }] },
         { code: "var a = function() { }; var a = new Date();", errors: [{ message: "'a' is already defined.", type: "Identifier" }] },
-        { code: "var a = 3; var a = 10; var a = 15;", errors: [{ message: "'a' is already defined.", type: "Identifier" }, { message: "'a' is already defined.", type: "Identifier" }] },
-        { code: "var a; var a;", parserOptions: { ecmaVersion: 6, sourceType: "module" }, errors: [{ message: "'a' is already defined.", type: "Identifier" }] },
-        { code: "export var a; var a;", parserOptions: { ecmaVersion: 6, sourceType: "module" }, errors: [{ message: "'a' is already defined.", type: "Identifier" }] },
+        {
+            code: "var a = 3; var a = 10; var a = 15;",
+            errors: [
+                { message: "'a' is already defined.", type: "Identifier" },
+                { message: "'a' is already defined.", type: "Identifier" }
+            ]
+        },
+        {
+            code: "var a; var a;",
+            parserOptions: { ecmaVersion: 6, sourceType: "module" },
+            errors: [{ message: "'a' is already defined.", type: "Identifier" }]
+        },
+        {
+            code: "export var a; var a;",
+            parserOptions: { ecmaVersion: 6, sourceType: "module" },
+            errors: [{ message: "'a' is already defined.", type: "Identifier" }]
+        },
 
         // `var` redeclaration in class static blocks. Redeclaration of functions is not allowed in class static blocks.
         {
@@ -201,25 +215,19 @@ ruleTester.run("no-redeclare", rule, {
             code: "var a; var {a = 0, b: Object = 0} = {};",
             options: [{ builtinGlobals: true }],
             parserOptions: { ecmaVersion: 6, sourceType: "module" },
-            errors: [
-                { message: "'a' is already defined.", type: "Identifier" }
-            ]
+            errors: [{ message: "'a' is already defined.", type: "Identifier" }]
         },
         {
             code: "var a; var {a = 0, b: Object = 0} = {};",
             options: [{ builtinGlobals: true }],
             parserOptions: { ecmaVersion: 6, ecmaFeatures: { globalReturn: true } },
-            errors: [
-                { message: "'a' is already defined.", type: "Identifier" }
-            ]
+            errors: [{ message: "'a' is already defined.", type: "Identifier" }]
         },
         {
             code: "var a; var {a = 0, b: Object = 0} = {};",
             options: [{ builtinGlobals: false }],
             parserOptions: { ecmaVersion: 6 },
-            errors: [
-                { message: "'a' is already defined.", type: "Identifier" }
-            ]
+            errors: [{ message: "'a' is already defined.", type: "Identifier" }]
         },
         {
             code: "var globalThis = 0;",
@@ -240,247 +248,269 @@ ruleTester.run("no-redeclare", rule, {
         {
             code: "/*global b:false*/ var b = 1;",
             options: [{ builtinGlobals: true }],
-            errors: [{
-                message: "'b' is already defined by a variable declaration.",
-                type: "Block",
-                line: 1,
-                column: 10,
-                endLine: 1,
-                endColumn: 11
-            }]
+            errors: [
+                {
+                    message: "'b' is already defined by a variable declaration.",
+                    type: "Block",
+                    line: 1,
+                    column: 10,
+                    endLine: 1,
+                    endColumn: 11
+                }
+            ]
         },
         {
             code: "/*global b:true*/ var b = 1;",
             options: [{ builtinGlobals: true }],
-            errors: [{
-                message: "'b' is already defined by a variable declaration.",
-                type: "Block",
-                line: 1,
-                column: 10,
-                endLine: 1,
-                endColumn: 11
-            }]
+            errors: [
+                {
+                    message: "'b' is already defined by a variable declaration.",
+                    type: "Block",
+                    line: 1,
+                    column: 10,
+                    endLine: 1,
+                    endColumn: 11
+                }
+            ]
         },
         {
             code: "function f() { var a; var a; }",
-            errors: [
-                { message: "'a' is already defined.", type: "Identifier" }
-            ]
+            errors: [{ message: "'a' is already defined.", type: "Identifier" }]
         },
         {
             code: "function f(a) { var a; }",
-            errors: [
-                { message: "'a' is already defined.", type: "Identifier" }
-            ]
+            errors: [{ message: "'a' is already defined.", type: "Identifier" }]
         },
         {
             code: "function f() { var a; if (test) { var a; } }",
-            errors: [
-                { message: "'a' is already defined.", type: "Identifier" }
-            ]
+            errors: [{ message: "'a' is already defined.", type: "Identifier" }]
         },
         {
             code: "for (var a, a;;);",
-            errors: [
-                { message: "'a' is already defined.", type: "Identifier" }
-            ]
+            errors: [{ message: "'a' is already defined.", type: "Identifier" }]
         },
 
         {
             code: "var Object = 0;",
-            errors: [
-                { message: "'Object' is already defined as a built-in global variable.", type: "Identifier" }
-            ]
+            errors: [{ message: "'Object' is already defined as a built-in global variable.", type: "Identifier" }]
         },
         {
             code: "var top = 0;",
             env: { browser: true },
-            errors: [
-                { message: "'top' is already defined as a built-in global variable.", type: "Identifier" }
-            ]
+            errors: [{ message: "'top' is already defined as a built-in global variable.", type: "Identifier" }]
         },
 
         // Comments and built-ins.
         {
             code: "/*globals Array */",
             options: [{ builtinGlobals: true }],
-            errors: [{
-                message: "'Array' is already defined as a built-in global variable.",
-                type: "Block",
-                line: 1,
-                column: 11,
-                endLine: 1,
-                endColumn: 16
-            }]
+            errors: [
+                {
+                    message: "'Array' is already defined as a built-in global variable.",
+                    type: "Block",
+                    line: 1,
+                    column: 11,
+                    endLine: 1,
+                    endColumn: 16
+                }
+            ]
         },
         {
             code: "/*globals parseInt */",
             options: [{ builtinGlobals: true }],
-            errors: [{
-                message: "'parseInt' is already defined as a built-in global variable.",
-                type: "Block",
-                line: 1,
-                column: 11,
-                endLine: 1,
-                endColumn: 19
-            }]
+            errors: [
+                {
+                    message: "'parseInt' is already defined as a built-in global variable.",
+                    type: "Block",
+                    line: 1,
+                    column: 11,
+                    endLine: 1,
+                    endColumn: 19
+                }
+            ]
         },
         {
             code: "/*globals foo, Array */",
             options: [{ builtinGlobals: true }],
-            errors: [{
-                message: "'Array' is already defined as a built-in global variable.",
-                type: "Block",
-                line: 1,
-                column: 16,
-                endLine: 1,
-                endColumn: 21
-            }]
+            errors: [
+                {
+                    message: "'Array' is already defined as a built-in global variable.",
+                    type: "Block",
+                    line: 1,
+                    column: 16,
+                    endLine: 1,
+                    endColumn: 21
+                }
+            ]
         },
         {
             code: "/* globals foo, Array, baz */",
             options: [{ builtinGlobals: true }],
-            errors: [{
-                message: "'Array' is already defined as a built-in global variable.",
-                type: "Block",
-                line: 1,
-                column: 17,
-                endLine: 1,
-                endColumn: 22
-            }]
+            errors: [
+                {
+                    message: "'Array' is already defined as a built-in global variable.",
+                    type: "Block",
+                    line: 1,
+                    column: 17,
+                    endLine: 1,
+                    endColumn: 22
+                }
+            ]
         },
         {
             code: "/*global foo, Array, baz*/",
             options: [{ builtinGlobals: true }],
-            errors: [{
-                message: "'Array' is already defined as a built-in global variable.",
-                type: "Block",
-                line: 1,
-                column: 15,
-                endLine: 1,
-                endColumn: 20
-            }]
+            errors: [
+                {
+                    message: "'Array' is already defined as a built-in global variable.",
+                    type: "Block",
+                    line: 1,
+                    column: 15,
+                    endLine: 1,
+                    endColumn: 20
+                }
+            ]
         },
         {
             code: "/*global array, Array*/",
             options: [{ builtinGlobals: true }],
-            errors: [{
-                message: "'Array' is already defined as a built-in global variable.",
-                type: "Block",
-                line: 1,
-                column: 17,
-                endLine: 1,
-                endColumn: 22
-            }]
+            errors: [
+                {
+                    message: "'Array' is already defined as a built-in global variable.",
+                    type: "Block",
+                    line: 1,
+                    column: 17,
+                    endLine: 1,
+                    endColumn: 22
+                }
+            ]
         },
         {
             code: "/*globals a,Array*/",
             options: [{ builtinGlobals: true }],
-            errors: [{
-                message: "'Array' is already defined as a built-in global variable.",
-                type: "Block",
-                line: 1,
-                column: 13,
-                endLine: 1,
-                endColumn: 18
-            }]
+            errors: [
+                {
+                    message: "'Array' is already defined as a built-in global variable.",
+                    type: "Block",
+                    line: 1,
+                    column: 13,
+                    endLine: 1,
+                    endColumn: 18
+                }
+            ]
         },
         {
             code: "/*globals a:readonly, Array:writable */",
             options: [{ builtinGlobals: true }],
-            errors: [{
-                message: "'Array' is already defined as a built-in global variable.",
-                type: "Block",
-                line: 1,
-                column: 23,
-                endLine: 1,
-                endColumn: 28
-            }]
+            errors: [
+                {
+                    message: "'Array' is already defined as a built-in global variable.",
+                    type: "Block",
+                    line: 1,
+                    column: 23,
+                    endLine: 1,
+                    endColumn: 28
+                }
+            ]
         },
         {
             code: "\n/*globals Array */",
             options: [{ builtinGlobals: true }],
-            errors: [{
-                message: "'Array' is already defined as a built-in global variable.",
-                type: "Block",
-                line: 2,
-                column: 11,
-                endLine: 2,
-                endColumn: 16
-            }]
+            errors: [
+                {
+                    message: "'Array' is already defined as a built-in global variable.",
+                    type: "Block",
+                    line: 2,
+                    column: 11,
+                    endLine: 2,
+                    endColumn: 16
+                }
+            ]
         },
         {
             code: "/*globals\nArray */",
             options: [{ builtinGlobals: true }],
-            errors: [{
-                message: "'Array' is already defined as a built-in global variable.",
-                type: "Block",
-                line: 2,
-                column: 1,
-                endLine: 2,
-                endColumn: 6
-            }]
+            errors: [
+                {
+                    message: "'Array' is already defined as a built-in global variable.",
+                    type: "Block",
+                    line: 2,
+                    column: 1,
+                    endLine: 2,
+                    endColumn: 6
+                }
+            ]
         },
         {
             code: "\n/*globals\n\nArray*/",
             options: [{ builtinGlobals: true }],
-            errors: [{
-                message: "'Array' is already defined as a built-in global variable.",
-                type: "Block",
-                line: 4,
-                column: 1,
-                endLine: 4,
-                endColumn: 6
-            }]
+            errors: [
+                {
+                    message: "'Array' is already defined as a built-in global variable.",
+                    type: "Block",
+                    line: 4,
+                    column: 1,
+                    endLine: 4,
+                    endColumn: 6
+                }
+            ]
         },
         {
             code: "/*globals foo,\n    Array */",
             options: [{ builtinGlobals: true }],
-            errors: [{
-                message: "'Array' is already defined as a built-in global variable.",
-                type: "Block",
-                line: 2,
-                column: 5,
-                endLine: 2,
-                endColumn: 10
-            }]
+            errors: [
+                {
+                    message: "'Array' is already defined as a built-in global variable.",
+                    type: "Block",
+                    line: 2,
+                    column: 5,
+                    endLine: 2,
+                    endColumn: 10
+                }
+            ]
         },
         {
             code: "/*globals a */",
             options: [{ builtinGlobals: true }],
             globals: { a: "readonly" },
-            errors: [{
-                message: "'a' is already defined as a built-in global variable.",
-                type: "Block",
-                line: 1,
-                column: 11,
-                endLine: 1,
-                endColumn: 12
-            }]
+            errors: [
+                {
+                    message: "'a' is already defined as a built-in global variable.",
+                    type: "Block",
+                    line: 1,
+                    column: 11,
+                    endLine: 1,
+                    endColumn: 12
+                }
+            ]
         },
         {
             code: "/*globals a */",
             options: [{ builtinGlobals: true }],
             globals: { a: "writable" },
-            errors: [{
-                message: "'a' is already defined as a built-in global variable.",
-                type: "Block",
-                line: 1,
-                column: 11,
-                endLine: 1,
-                endColumn: 12
-            }]
+            errors: [
+                {
+                    message: "'a' is already defined as a built-in global variable.",
+                    type: "Block",
+                    line: 1,
+                    column: 11,
+                    endLine: 1,
+                    endColumn: 12
+                }
+            ]
         },
         {
             code: "/*globals a */ /*globals a */",
-            errors: [{
-                message: "'a' is already defined.",
-                type: "Block",
-                line: 1,
-                column: 26,
-                endLine: 1,
-                endColumn: 27
-            }]
+            errors: [
+                {
+                    message: "'a' is already defined.",
+                    type: "Block",
+                    line: 1,
+                    column: 26,
+                    endLine: 1,
+                    endColumn: 27
+                }
+            ]
         },
         {
             code: "/*globals a */ /*globals a */ var a = 0",

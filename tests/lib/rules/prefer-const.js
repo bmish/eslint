@@ -133,7 +133,6 @@ ruleTester.run("prefer-const", rule, {
             parserOptions: { ecmaVersion: 2018 }
         },
         {
-
             // intentionally testing empty slot in destructuring assignment
             code: "let predicate; [typeNode.returnType,, predicate] = foo();",
             parserOptions: { ecmaVersion: 2018 }
@@ -305,32 +304,14 @@ ruleTester.run("prefer-const", rule, {
             ]
         },
         {
-            code: [
-                "var foo = function() {",
-                "    for (const b of c) {",
-                "       let a;",
-                "       a = 1;",
-                "   }",
-                "};"
-            ].join("\n"),
+            code: ["var foo = function() {", "    for (const b of c) {", "       let a;", "       a = 1;", "   }", "};"].join("\n"),
             output: null,
-            errors: [
-                { messageId: "useConst", data: { name: "a" }, type: "Identifier" }
-            ]
+            errors: [{ messageId: "useConst", data: { name: "a" }, type: "Identifier" }]
         },
         {
-            code: [
-                "var foo = function() {",
-                "    for (const b of c) {",
-                "       let a;",
-                "       ({a} = 1);",
-                "   }",
-                "};"
-            ].join("\n"),
+            code: ["var foo = function() {", "    for (const b of c) {", "       let a;", "       ({a} = 1);", "   }", "};"].join("\n"),
             output: null,
-            errors: [
-                { messageId: "useConst", data: { name: "a" }, type: "Identifier" }
-            ]
+            errors: [{ messageId: "useConst", data: { name: "a" }, type: "Identifier" }]
         },
 
         {
@@ -389,17 +370,13 @@ ruleTester.run("prefer-const", rule, {
             code: "let [a] = [1]",
             output: "const [a] = [1]",
             options: [],
-            errors: [
-                { messageId: "useConst", data: { name: "a" }, type: "Identifier" }
-            ]
+            errors: [{ messageId: "useConst", data: { name: "a" }, type: "Identifier" }]
         },
         {
             code: "let {a} = obj",
             output: "const {a} = obj",
             options: [],
-            errors: [
-                { messageId: "useConst", data: { name: "a" }, type: "Identifier" }
-            ]
+            errors: [{ messageId: "useConst", data: { name: "a" }, type: "Identifier" }]
         },
         {
             code: "let a, b; ({a = 0, b} = obj); foo(a, b);",
@@ -490,25 +467,19 @@ ruleTester.run("prefer-const", rule, {
             code: "let predicate; [, {foo:returnType, predicate}] = foo();",
             output: null,
             parserOptions: { ecmaVersion: 2018 },
-            errors: [
-                { message: "'predicate' is never reassigned. Use 'const' instead.", type: "Identifier" }
-            ]
+            errors: [{ message: "'predicate' is never reassigned. Use 'const' instead.", type: "Identifier" }]
         },
         {
             code: "let predicate; [, {foo:returnType, predicate}, ...bar ] = foo();",
             output: null,
             parserOptions: { ecmaVersion: 2018 },
-            errors: [
-                { message: "'predicate' is never reassigned. Use 'const' instead.", type: "Identifier" }
-            ]
+            errors: [{ message: "'predicate' is never reassigned. Use 'const' instead.", type: "Identifier" }]
         },
         {
             code: "let predicate; [, {foo:returnType, ...predicate} ] = foo();",
             output: null,
             parserOptions: { ecmaVersion: 2018 },
-            errors: [
-                { message: "'predicate' is never reassigned. Use 'const' instead.", type: "Identifier" }
-            ]
+            errors: [{ message: "'predicate' is never reassigned. Use 'const' instead.", type: "Identifier" }]
         },
         {
             code: "let x = 'x', y = 'y';",
@@ -521,9 +492,7 @@ ruleTester.run("prefer-const", rule, {
         {
             code: "let x = 'x', y = 'y'; x = 1",
             output: null,
-            errors: [
-                { message: "'y' is never reassigned. Use 'const' instead.", type: "Identifier" }
-            ]
+            errors: [{ message: "'y' is never reassigned. Use 'const' instead.", type: "Identifier" }]
         },
         {
             code: "let x = 1, y = 'y'; let z = 1;",
@@ -586,18 +555,7 @@ ruleTester.run("prefer-const", rule, {
             ]
         },
         {
-            code: [
-                "function a() {",
-                "let foo = 0,",
-                "  bar = 1;",
-                "foo = 1;",
-                "}",
-                "function b() {",
-                "let foo = 0,",
-                "  bar = 2;",
-                "foo = 2;",
-                "}"
-            ].join("\n"),
+            code: ["function a() {", "let foo = 0,", "  bar = 1;", "foo = 1;", "}", "function b() {", "let foo = 0,", "  bar = 2;", "foo = 2;", "}"].join("\n"),
             output: null,
             errors: [
                 { message: "'bar' is never reassigned. Use 'const' instead.", type: "Identifier" },
@@ -619,7 +577,6 @@ ruleTester.run("prefer-const", rule, {
             errors: [{ messageId: "useConst", data: { name: "a" }, type: "Identifier" }]
         },
         {
-
             // this is a TDZ error with either `let` or `const`, but that isn't a concern of this rule
             code: "class C { static { a; } } let a = 1;",
             output: "class C { static { a; } } const a = 1;",
@@ -687,9 +644,7 @@ ruleTester.run("prefer-const", rule, {
             code: "class C { static { let a; a = 0; console.log(a); } }",
             output: null,
             parserOptions: { ecmaVersion: 2022 },
-            errors: [
-                { messageId: "useConst", data: { name: "a" }, type: "Identifier" }
-            ]
+            errors: [{ messageId: "useConst", data: { name: "a" }, type: "Identifier" }]
         },
 
         // https://github.com/eslint/eslint/issues/16266

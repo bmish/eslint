@@ -19,31 +19,34 @@ const rule = require("../../../lib/rules/no-label-var"),
 const ruleTester = new RuleTester();
 
 ruleTester.run("no-label-var", rule, {
-    valid: [
-        "function bar() { q: for(;;) { break q; } } function foo () { var q = t; }",
-        "function bar() { var x = foo; q: for(;;) { break q; } }"
-    ],
+    valid: ["function bar() { q: for(;;) { break q; } } function foo () { var q = t; }", "function bar() { var x = foo; q: for(;;) { break q; } }"],
     invalid: [
         {
             code: "var x = foo; function bar() { x: for(;;) { break x; } }",
-            errors: [{
-                messageId: "identifierClashWithLabel",
-                type: "LabeledStatement"
-            }]
+            errors: [
+                {
+                    messageId: "identifierClashWithLabel",
+                    type: "LabeledStatement"
+                }
+            ]
         },
         {
             code: "function bar() { var x = foo; x: for(;;) { break x; } }",
-            errors: [{
-                messageId: "identifierClashWithLabel",
-                type: "LabeledStatement"
-            }]
+            errors: [
+                {
+                    messageId: "identifierClashWithLabel",
+                    type: "LabeledStatement"
+                }
+            ]
         },
         {
             code: "function bar(x) { x: for(;;) { break x; } }",
-            errors: [{
-                messageId: "identifierClashWithLabel",
-                type: "LabeledStatement"
-            }]
+            errors: [
+                {
+                    messageId: "identifierClashWithLabel",
+                    type: "LabeledStatement"
+                }
+            ]
         }
     ]
 });

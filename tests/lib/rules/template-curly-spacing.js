@@ -312,25 +312,19 @@ ruleTester.run("template-curly-spacing", rule, {
         {
             code: "`${ // comment\n foo} ${bar // comment \n}`",
             output: "`${// comment\n foo} ${bar // comment \n}`",
-            errors: [
-                { messageId: "unexpectedAfter", line: 1, column: 4, endLine: 1, endColumn: 5 }
-            ]
+            errors: [{ messageId: "unexpectedAfter", line: 1, column: 4, endLine: 1, endColumn: 5 }]
         },
         {
             code: "`${ // comment\n foo} ${bar // comment \n}`",
             output: "`${// comment\n foo} ${bar // comment \n}`",
             options: ["never"],
-            errors: [
-                { messageId: "unexpectedAfter", line: 1, column: 4, endLine: 1, endColumn: 5 }
-            ]
+            errors: [{ messageId: "unexpectedAfter", line: 1, column: 4, endLine: 1, endColumn: 5 }]
         },
         {
             code: "`${// comment\n foo } ${ bar // comment \n}`",
             output: "`${ // comment\n foo } ${ bar // comment \n}`",
             options: ["always"],
-            errors: [
-                { messageId: "expectedAfter", line: 1, column: 2, endLine: 1, endColumn: 4 }
-            ]
+            errors: [{ messageId: "expectedAfter", line: 1, column: 2, endLine: 1, endColumn: 4 }]
         },
         {
             code: "`\n${ foo }\n`",

@@ -21,7 +21,7 @@ const ruleTester = new RuleTester();
 ruleTester.run("no-empty-character-class", rule, {
     valid: [
         "var foo = /^abc[a-zA-Z]/;",
-        "var regExp = new RegExp(\"^abc[]\");",
+        'var regExp = new RegExp("^abc[]");',
         "var foo = /^abc/;",
         "var foo = /[\\[]/;",
         "var foo = /[\\]]/;",

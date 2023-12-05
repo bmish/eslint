@@ -18,9 +18,7 @@ const rule = require("../../../lib/rules/capitalized-comments"),
 const ruleTester = new RuleTester();
 
 ruleTester.run("capitalized-comments", rule, {
-
     valid: [
-
         // No options: capitalization required
         "//Uppercase",
         "// Uppercase",
@@ -275,97 +273,116 @@ ruleTester.run("capitalized-comments", rule, {
     ],
 
     invalid: [
-
         // No options: capitalization required
         {
             code: "//lowercase",
             output: "//Lowercase",
-            errors: [{
-                messageId: "unexpectedLowercaseComment",
-                line: 1,
-                column: 1
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedLowercaseComment",
+                    line: 1,
+                    column: 1
+                }
+            ]
         },
         {
             code: "// lowercase",
             output: "// Lowercase",
-            errors: [{
-                messageId: "unexpectedLowercaseComment",
-                line: 1,
-                column: 1
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedLowercaseComment",
+                    line: 1,
+                    column: 1
+                }
+            ]
         },
         {
             code: "/*lowercase */",
             output: "/*Lowercase */",
-            errors: [{
-                messageId: "unexpectedLowercaseComment",
-                line: 1,
-                column: 1
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedLowercaseComment",
+                    line: 1,
+                    column: 1
+                }
+            ]
         },
         {
             code: "/* lowercase */",
             output: "/* Lowercase */",
-            errors: [{
-                messageId: "unexpectedLowercaseComment",
-                line: 1,
-                column: 1
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedLowercaseComment",
+                    line: 1,
+                    column: 1
+                }
+            ]
         },
         {
             code: "/** lowercase */",
             output: "/** Lowercase */",
-            errors: [{
-                messageId: "unexpectedLowercaseComment",
-                line: 1,
-                column: 1
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedLowercaseComment",
+                    line: 1,
+                    column: 1
+                }
+            ]
         },
         {
             code: "/*\nlowercase */",
             output: "/*\nLowercase */",
-            errors: [{
-                messageId: "unexpectedLowercaseComment",
-                line: 1,
-                column: 1
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedLowercaseComment",
+                    line: 1,
+                    column: 1
+                }
+            ]
         },
         {
             code: "/**\nlowercase */",
             output: "/**\nLowercase */",
-            errors: [{
-                messageId: "unexpectedLowercaseComment",
-                line: 1,
-                column: 1
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedLowercaseComment",
+                    line: 1,
+                    column: 1
+                }
+            ]
         },
         {
             code: "//über",
             output: "//Über",
-            errors: [{
-                messageId: "unexpectedLowercaseComment",
-                line: 1,
-                column: 1
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedLowercaseComment",
+                    line: 1,
+                    column: 1
+                }
+            ]
         },
         {
             code: "//π",
             output: "//Π",
-            errors: [{
-                messageId: "unexpectedLowercaseComment",
-                line: 1,
-                column: 1
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedLowercaseComment",
+                    line: 1,
+                    column: 1
+                }
+            ]
         },
         {
             code: "/* lowercase\nSecond line need not be lowercase */",
             output: "/* Lowercase\nSecond line need not be lowercase */",
-            errors: [{
-                messageId: "unexpectedLowercaseComment",
-                line: 1,
-                column: 1
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedLowercaseComment",
+                    line: 1,
+                    column: 1
+                }
+            ]
         },
 
         // Using "always" string option
@@ -373,91 +390,109 @@ ruleTester.run("capitalized-comments", rule, {
             code: "//lowercase",
             output: "//Lowercase",
             options: ["always"],
-            errors: [{
-                messageId: "unexpectedLowercaseComment",
-                line: 1,
-                column: 1
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedLowercaseComment",
+                    line: 1,
+                    column: 1
+                }
+            ]
         },
         {
             code: "// lowercase",
             output: "// Lowercase",
             options: ["always"],
-            errors: [{
-                messageId: "unexpectedLowercaseComment",
-                line: 1,
-                column: 1
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedLowercaseComment",
+                    line: 1,
+                    column: 1
+                }
+            ]
         },
         {
             code: "/*lowercase */",
             output: "/*Lowercase */",
             options: ["always"],
-            errors: [{
-                messageId: "unexpectedLowercaseComment",
-                line: 1,
-                column: 1
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedLowercaseComment",
+                    line: 1,
+                    column: 1
+                }
+            ]
         },
         {
             code: "/* lowercase */",
             output: "/* Lowercase */",
             options: ["always"],
-            errors: [{
-                messageId: "unexpectedLowercaseComment",
-                line: 1,
-                column: 1
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedLowercaseComment",
+                    line: 1,
+                    column: 1
+                }
+            ]
         },
         {
             code: "/** lowercase */",
             output: "/** Lowercase */",
             options: ["always"],
-            errors: [{
-                messageId: "unexpectedLowercaseComment",
-                line: 1,
-                column: 1
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedLowercaseComment",
+                    line: 1,
+                    column: 1
+                }
+            ]
         },
         {
             code: "/**\nlowercase */",
             output: "/**\nLowercase */",
             options: ["always"],
-            errors: [{
-                messageId: "unexpectedLowercaseComment",
-                line: 1,
-                column: 1
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedLowercaseComment",
+                    line: 1,
+                    column: 1
+                }
+            ]
         },
         {
             code: "//über",
             output: "//Über",
             options: ["always"],
-            errors: [{
-                messageId: "unexpectedLowercaseComment",
-                line: 1,
-                column: 1
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedLowercaseComment",
+                    line: 1,
+                    column: 1
+                }
+            ]
         },
         {
             code: "//π",
             output: "//Π",
             options: ["always"],
-            errors: [{
-                messageId: "unexpectedLowercaseComment",
-                line: 1,
-                column: 1
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedLowercaseComment",
+                    line: 1,
+                    column: 1
+                }
+            ]
         },
         {
             code: "/* lowercase\nSecond line need not be lowercase */",
             output: "/* Lowercase\nSecond line need not be lowercase */",
             options: ["always"],
-            errors: [{
-                messageId: "unexpectedLowercaseComment",
-                line: 1,
-                column: 1
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedLowercaseComment",
+                    line: 1,
+                    column: 1
+                }
+            ]
         },
 
         // Using "never" string option
@@ -465,81 +500,97 @@ ruleTester.run("capitalized-comments", rule, {
             code: "//Uppercase",
             output: "//uppercase",
             options: ["never"],
-            errors: [{
-                messageId: "unexpectedUppercaseComment",
-                line: 1,
-                column: 1
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedUppercaseComment",
+                    line: 1,
+                    column: 1
+                }
+            ]
         },
         {
             code: "// Uppercase",
             output: "// uppercase",
             options: ["never"],
-            errors: [{
-                messageId: "unexpectedUppercaseComment",
-                line: 1,
-                column: 1
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedUppercaseComment",
+                    line: 1,
+                    column: 1
+                }
+            ]
         },
         {
             code: "/*Uppercase */",
             output: "/*uppercase */",
             options: ["never"],
-            errors: [{
-                messageId: "unexpectedUppercaseComment",
-                line: 1,
-                column: 1
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedUppercaseComment",
+                    line: 1,
+                    column: 1
+                }
+            ]
         },
         {
             code: "/* Uppercase */",
             output: "/* uppercase */",
             options: ["never"],
-            errors: [{
-                messageId: "unexpectedUppercaseComment",
-                line: 1,
-                column: 1
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedUppercaseComment",
+                    line: 1,
+                    column: 1
+                }
+            ]
         },
         {
             code: "/*\nUppercase */",
             output: "/*\nuppercase */",
             options: ["never"],
-            errors: [{
-                messageId: "unexpectedUppercaseComment",
-                line: 1,
-                column: 1
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedUppercaseComment",
+                    line: 1,
+                    column: 1
+                }
+            ]
         },
         {
             code: "//Über",
             output: "//über",
             options: ["never"],
-            errors: [{
-                messageId: "unexpectedUppercaseComment",
-                line: 1,
-                column: 1
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedUppercaseComment",
+                    line: 1,
+                    column: 1
+                }
+            ]
         },
         {
             code: "//Π",
             output: "//π",
             options: ["never"],
-            errors: [{
-                messageId: "unexpectedUppercaseComment",
-                line: 1,
-                column: 1
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedUppercaseComment",
+                    line: 1,
+                    column: 1
+                }
+            ]
         },
         {
             code: "/* Uppercase\nsecond line need not be uppercase */",
             output: "/* uppercase\nsecond line need not be uppercase */",
             options: ["never"],
-            errors: [{
-                messageId: "unexpectedUppercaseComment",
-                line: 1,
-                column: 1
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedUppercaseComment",
+                    line: 1,
+                    column: 1
+                }
+            ]
         },
 
         // Default ignore words should be warned if there are non-whitespace characters in the way
@@ -547,141 +598,169 @@ ruleTester.run("capitalized-comments", rule, {
             code: "//* jscs: enable",
             output: "//* Jscs: enable",
             options: ["always"],
-            errors: [{
-                messageId: "unexpectedLowercaseComment",
-                line: 1,
-                column: 1
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedLowercaseComment",
+                    line: 1,
+                    column: 1
+                }
+            ]
         },
         {
             code: "//* jscs:disable",
             output: "//* Jscs:disable",
             options: ["always"],
-            errors: [{
-                messageId: "unexpectedLowercaseComment",
-                line: 1,
-                column: 1
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedLowercaseComment",
+                    line: 1,
+                    column: 1
+                }
+            ]
         },
         {
             code: "//* eslint-disable-line",
             output: "//* Eslint-disable-line",
             options: ["always"],
-            errors: [{
-                messageId: "unexpectedLowercaseComment",
-                line: 1,
-                column: 1
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedLowercaseComment",
+                    line: 1,
+                    column: 1
+                }
+            ]
         },
         {
             code: "//* eslint-disable-next-line",
             output: "//* Eslint-disable-next-line",
             options: ["always"],
-            errors: [{
-                messageId: "unexpectedLowercaseComment",
-                line: 1,
-                column: 1
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedLowercaseComment",
+                    line: 1,
+                    column: 1
+                }
+            ]
         },
         {
             code: "/*\n * eslint semi:off */",
             output: "/*\n * Eslint semi:off */",
             options: ["always"],
-            errors: [{
-                messageId: "unexpectedLowercaseComment",
-                line: 1,
-                column: 1
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedLowercaseComment",
+                    line: 1,
+                    column: 1
+                }
+            ]
         },
         {
             code: "/*\n * eslint-env node */",
             output: "/*\n * Eslint-env node */",
             options: ["always"],
-            errors: [{
-                messageId: "unexpectedLowercaseComment",
-                line: 1,
-                column: 1
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedLowercaseComment",
+                    line: 1,
+                    column: 1
+                }
+            ]
         },
         {
             code: "/*\n *  istanbul ignore next */",
             output: "/*\n *  Istanbul ignore next */",
             options: ["always"],
-            errors: [{
-                messageId: "unexpectedLowercaseComment",
-                line: 1,
-                column: 1
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedLowercaseComment",
+                    line: 1,
+                    column: 1
+                }
+            ]
         },
         {
             code: "/*\n *  jshint asi:true */",
             output: "/*\n *  Jshint asi:true */",
             options: ["always"],
-            errors: [{
-                messageId: "unexpectedLowercaseComment",
-                line: 1,
-                column: 1
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedLowercaseComment",
+                    line: 1,
+                    column: 1
+                }
+            ]
         },
         {
             code: "/*\n *  jscs: enable */",
             output: "/*\n *  Jscs: enable */",
             options: ["always"],
-            errors: [{
-                messageId: "unexpectedLowercaseComment",
-                line: 1,
-                column: 1
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedLowercaseComment",
+                    line: 1,
+                    column: 1
+                }
+            ]
         },
         {
             code: "/*\n *  global var1, var2 */",
             output: "/*\n *  Global var1, var2 */",
             options: ["always"],
-            errors: [{
-                messageId: "unexpectedLowercaseComment",
-                line: 1,
-                column: 1
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedLowercaseComment",
+                    line: 1,
+                    column: 1
+                }
+            ]
         },
         {
             code: "/*\n *  global var1:true, var2 */",
             output: "/*\n *  Global var1:true, var2 */",
             options: ["always"],
-            errors: [{
-                messageId: "unexpectedLowercaseComment",
-                line: 1,
-                column: 1
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedLowercaseComment",
+                    line: 1,
+                    column: 1
+                }
+            ]
         },
         {
             code: "/*\n *  globals var1, var2 */",
             output: "/*\n *  Globals var1, var2 */",
             options: ["always"],
-            errors: [{
-                messageId: "unexpectedLowercaseComment",
-                line: 1,
-                column: 1
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedLowercaseComment",
+                    line: 1,
+                    column: 1
+                }
+            ]
         },
         {
             code: "/*\n *  globals var1:true, var2 */",
             output: "/*\n *  Globals var1:true, var2 */",
             options: ["always"],
-            errors: [{
-                messageId: "unexpectedLowercaseComment",
-                line: 1,
-                column: 1
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedLowercaseComment",
+                    line: 1,
+                    column: 1
+                }
+            ]
         },
         {
             code: "/*\n *  exported myVar */",
             output: "/*\n *  Exported myVar */",
             options: ["always"],
-            errors: [{
-                messageId: "unexpectedLowercaseComment",
-                line: 1,
-                column: 1
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedLowercaseComment",
+                    line: 1,
+                    column: 1
+                }
+            ]
         },
 
         // Inline comments should be warned if ignoreInlineComments is omitted or false
@@ -689,21 +768,25 @@ ruleTester.run("capitalized-comments", rule, {
             code: "foo(/* invalid */a);",
             output: "foo(/* Invalid */a);",
             options: ["always"],
-            errors: [{
-                messageId: "unexpectedLowercaseComment",
-                line: 1,
-                column: 5
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedLowercaseComment",
+                    line: 1,
+                    column: 5
+                }
+            ]
         },
         {
             code: "foo(/* invalid */a);",
             output: "foo(/* Invalid */a);",
             options: ["always", { ignoreInlineComments: false }],
-            errors: [{
-                messageId: "unexpectedLowercaseComment",
-                line: 1,
-                column: 5
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedLowercaseComment",
+                    line: 1,
+                    column: 5
+                }
+            ]
         },
 
         // ignoreInlineComments should only allow inline comments to pass
@@ -711,81 +794,97 @@ ruleTester.run("capitalized-comments", rule, {
             code: "foo(a, // not an inline comment\nb);",
             output: "foo(a, // Not an inline comment\nb);",
             options: ["always", { ignoreInlineComments: true }],
-            errors: [{
-                messageId: "unexpectedLowercaseComment",
-                line: 1,
-                column: 8
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedLowercaseComment",
+                    line: 1,
+                    column: 8
+                }
+            ]
         },
         {
             code: "foo(a, /* not an inline comment */\nb);",
             output: "foo(a, /* Not an inline comment */\nb);",
             options: ["always", { ignoreInlineComments: true }],
-            errors: [{
-                messageId: "unexpectedLowercaseComment",
-                line: 1,
-                column: 8
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedLowercaseComment",
+                    line: 1,
+                    column: 8
+                }
+            ]
         },
         {
             code: "foo(a,\n/* not an inline comment */b);",
             output: "foo(a,\n/* Not an inline comment */b);",
             options: ["always", { ignoreInlineComments: true }],
-            errors: [{
-                messageId: "unexpectedLowercaseComment",
-                line: 2,
-                column: 1
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedLowercaseComment",
+                    line: 2,
+                    column: 1
+                }
+            ]
         },
         {
             code: "foo(a,\n/* not an inline comment */\nb);",
             output: "foo(a,\n/* Not an inline comment */\nb);",
             options: ["always", { ignoreInlineComments: true }],
-            errors: [{
-                messageId: "unexpectedLowercaseComment",
-                line: 2,
-                column: 1
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedLowercaseComment",
+                    line: 2,
+                    column: 1
+                }
+            ]
         },
         {
             code: "foo(a, // Not an inline comment\nb);",
             output: "foo(a, // not an inline comment\nb);",
             options: ["never", { ignoreInlineComments: true }],
-            errors: [{
-                messageId: "unexpectedUppercaseComment",
-                line: 1,
-                column: 8
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedUppercaseComment",
+                    line: 1,
+                    column: 8
+                }
+            ]
         },
         {
             code: "foo(a, /* Not an inline comment */\nb);",
             output: "foo(a, /* not an inline comment */\nb);",
             options: ["never", { ignoreInlineComments: true }],
-            errors: [{
-                messageId: "unexpectedUppercaseComment",
-                line: 1,
-                column: 8
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedUppercaseComment",
+                    line: 1,
+                    column: 8
+                }
+            ]
         },
         {
             code: "foo(a,\n/* Not an inline comment */b);",
             output: "foo(a,\n/* not an inline comment */b);",
             options: ["never", { ignoreInlineComments: true }],
-            errors: [{
-                messageId: "unexpectedUppercaseComment",
-                line: 2,
-                column: 1
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedUppercaseComment",
+                    line: 2,
+                    column: 1
+                }
+            ]
         },
         {
             code: "foo(a,\n/* Not an inline comment */\nb);",
             output: "foo(a,\n/* not an inline comment */\nb);",
             options: ["never", { ignoreInlineComments: true }],
-            errors: [{
-                messageId: "unexpectedUppercaseComment",
-                line: 2,
-                column: 1
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedUppercaseComment",
+                    line: 2,
+                    column: 1
+                }
+            ]
         },
 
         // Comments which do not match ignorePattern are still warned
@@ -793,21 +892,25 @@ ruleTester.run("capitalized-comments", rule, {
             code: "// not matching",
             output: "// Not matching",
             options: ["always", { ignorePattern: "ignored?" }],
-            errors: [{
-                messageId: "unexpectedLowercaseComment",
-                line: 1,
-                column: 1
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedLowercaseComment",
+                    line: 1,
+                    column: 1
+                }
+            ]
         },
         {
             code: "// Not matching",
             output: "// not matching",
             options: ["never", { ignorePattern: "ignored?" }],
-            errors: [{
-                messageId: "unexpectedUppercaseComment",
-                line: 1,
-                column: 1
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedUppercaseComment",
+                    line: 1,
+                    column: 1
+                }
+            ]
         },
 
         // ignoreConsecutiveComments only applies to comments with no tokens between them
@@ -825,63 +928,53 @@ ruleTester.run("capitalized-comments", rule, {
                 "// This comment is now invalid."
             ].join("\n"),
             options: ["always", { ignoreConsecutiveComments: true }],
-            errors: [{
-                messageId: "unexpectedLowercaseComment",
-                line: 4,
-                column: 1
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedLowercaseComment",
+                    line: 4,
+                    column: 1
+                }
+            ]
         },
 
         // Only the initial comment should warn if ignoreConsecutiveComments:true
         {
-            code: [
-                "// this comment is invalid since it is not capitalized,",
-                "// but this one is ignored since it is consecutive."
-            ].join("\n"),
-            output: [
-                "// This comment is invalid since it is not capitalized,",
-                "// but this one is ignored since it is consecutive."
-            ].join("\n"),
+            code: ["// this comment is invalid since it is not capitalized,", "// but this one is ignored since it is consecutive."].join("\n"),
+            output: ["// This comment is invalid since it is not capitalized,", "// but this one is ignored since it is consecutive."].join("\n"),
             options: ["always", { ignoreConsecutiveComments: true }],
-            errors: [{
-                messageId: "unexpectedLowercaseComment",
-                line: 1,
-                column: 1
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedLowercaseComment",
+                    line: 1,
+                    column: 1
+                }
+            ]
         },
         {
-            code: [
-                "// This comment is invalid since it is not capitalized,",
-                "// But this one is ignored since it is consecutive."
-            ].join("\n"),
-            output: [
-                "// this comment is invalid since it is not capitalized,",
-                "// But this one is ignored since it is consecutive."
-            ].join("\n"),
+            code: ["// This comment is invalid since it is not capitalized,", "// But this one is ignored since it is consecutive."].join("\n"),
+            output: ["// this comment is invalid since it is not capitalized,", "// But this one is ignored since it is consecutive."].join("\n"),
             options: ["never", { ignoreConsecutiveComments: true }],
-            errors: [{
-                messageId: "unexpectedUppercaseComment",
-                line: 1,
-                column: 1
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedUppercaseComment",
+                    line: 1,
+                    column: 1
+                }
+            ]
         },
 
         // Consecutive comments should warn if ignoreConsecutiveComments:false
         {
-            code: [
-                "// This comment is valid since it is capitalized,",
-                "// but this one is invalid even if it follows a valid one."
-            ].join("\n"),
-            output: [
-                "// This comment is valid since it is capitalized,",
-                "// But this one is invalid even if it follows a valid one."
-            ].join("\n"),
+            code: ["// This comment is valid since it is capitalized,", "// but this one is invalid even if it follows a valid one."].join("\n"),
+            output: ["// This comment is valid since it is capitalized,", "// But this one is invalid even if it follows a valid one."].join("\n"),
             options: ["always", { ignoreConsecutiveComments: false }],
-            errors: [{
-                messageId: "unexpectedLowercaseComment",
-                line: 2,
-                column: 1
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedLowercaseComment",
+                    line: 2,
+                    column: 1
+                }
+            ]
         },
 
         // Comments are warned if URL is not at the start of the comment
@@ -889,21 +982,25 @@ ruleTester.run("capitalized-comments", rule, {
             code: "// should fail. https://github.com",
             output: "// Should fail. https://github.com",
             options: ["always"],
-            errors: [{
-                messageId: "unexpectedLowercaseComment",
-                line: 1,
-                column: 1
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedLowercaseComment",
+                    line: 1,
+                    column: 1
+                }
+            ]
         },
         {
             code: "// Should fail. https://github.com",
             output: "// should fail. https://github.com",
             options: ["never"],
-            errors: [{
-                messageId: "unexpectedUppercaseComment",
-                line: 1,
-                column: 1
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedUppercaseComment",
+                    line: 1,
+                    column: 1
+                }
+            ]
         }
     ]
 });

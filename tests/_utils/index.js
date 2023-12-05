@@ -8,9 +8,7 @@
 // Requirements
 //-----------------------------------------------------------------------------
 
-const {
-    defineInMemoryFs
-} = require("./in-memory-fs");
+const { defineInMemoryFs } = require("./in-memory-fs");
 
 const { createTeardown, addFile } = require("fs-teardown");
 
@@ -25,10 +23,11 @@ const { createTeardown, addFile } = require("fs-teardown");
  * @returns {string} The template literal, with spaces removed from all lines
  */
 function unIndent(strings, ...values) {
-    const text = strings
-        .map((s, i) => (i === 0 ? s : values[i - 1] + s))
-        .join("");
-    const lines = text.replace(/^\n/u, "").replace(/\n\s*$/u, "").split("\n");
+    const text = strings.map((s, i) => (i === 0 ? s : values[i - 1] + s)).join("");
+    const lines = text
+        .replace(/^\n/u, "")
+        .replace(/\n\s*$/u, "")
+        .split("\n");
     const lineIndents = lines.filter(line => line.trim()).map(line => line.match(/ */u)[0].length);
     const minLineIndent = Math.min(...lineIndents);
 
@@ -44,10 +43,7 @@ function unIndent(strings, ...values) {
  *      methods.
  */
 function createCustomTeardown({ cwd, files }) {
-    const { prepare, cleanup, getPath } = createTeardown(
-        cwd,
-        ...Object.keys(files).map(filename => addFile(filename, files[filename]))
-    );
+    const { prepare, cleanup, getPath } = createTeardown(cwd, ...Object.keys(files).map(filename => addFile(filename, files[filename])));
 
     return { prepare, cleanup, getPath };
 }

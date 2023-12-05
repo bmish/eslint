@@ -149,7 +149,7 @@ ruleTester.run("comma-spacing", rule, {
         { code: "var arr = [1,,3];", options: [{ before: false, after: false }] },
         { code: "var arr = [1,2,3];", options: [{ before: false, after: false }] },
         { code: "var a = (1 + 2,2)", options: [{ before: false, after: false }] },
-        { code: "var a; console.log(`${a}`, \"a\");", parserOptions: { ecmaVersion: 6 } },
+        { code: 'var a; console.log(`${a}`, "a");', parserOptions: { ecmaVersion: 6 } },
         { code: "var [a, b] = [1, 2];", parserOptions: { ecmaVersion: 6 } },
         { code: "var [a, b, ] = [1, 2];", parserOptions: { ecmaVersion: 6 } },
         { code: "var [a, b,] = [1, 2];", parserOptions: { ecmaVersion: 6 } },

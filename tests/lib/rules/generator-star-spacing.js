@@ -24,9 +24,7 @@ const unexpectedBeforeError = { messageId: "unexpectedBefore", type: "Punctuator
 const unexpectedAfterError = { messageId: "unexpectedAfter", type: "Punctuator" };
 
 ruleTester.run("generator-star-spacing", rule, {
-
     valid: [
-
         // Default ("before")
         "function foo(){}",
         "function *foo(){}",
@@ -487,7 +485,6 @@ ruleTester.run("generator-star-spacing", rule, {
     ],
 
     invalid: [
-
         // Default ("before")
         {
             code: "function*foo(){}",
@@ -1020,7 +1017,5 @@ ruleTester.run("generator-star-spacing", rule, {
             options: [{ before: true, after: true }],
             errors: [missingBeforeError, missingAfterError]
         }
-
     ]
-
 });

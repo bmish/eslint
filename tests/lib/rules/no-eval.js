@@ -87,42 +87,94 @@ ruleTester.run("no-eval", rule, {
     ],
 
     invalid: [
-
         // Direct eval
         { code: "eval(foo)", errors: [{ messageId: "unexpected", type: "CallExpression", column: 1, endColumn: 5 }] },
         { code: "eval('foo')", errors: [{ messageId: "unexpected", type: "CallExpression", column: 1, endColumn: 5 }] },
         { code: "function foo(eval) { eval('foo') }", errors: [{ messageId: "unexpected", type: "CallExpression", column: 22, endColumn: 26 }] },
         { code: "eval(foo)", options: [{ allowIndirect: true }], errors: [{ messageId: "unexpected", type: "CallExpression", column: 1, endColumn: 5 }] },
         { code: "eval('foo')", options: [{ allowIndirect: true }], errors: [{ messageId: "unexpected", type: "CallExpression", column: 1, endColumn: 5 }] },
-        { code: "function foo(eval) { eval('foo') }", options: [{ allowIndirect: true }], errors: [{ messageId: "unexpected", type: "CallExpression", column: 22, endColumn: 26 }] },
+        {
+            code: "function foo(eval) { eval('foo') }",
+            options: [{ allowIndirect: true }],
+            errors: [{ messageId: "unexpected", type: "CallExpression", column: 22, endColumn: 26 }]
+        },
 
         // Indirect eval
         { code: "(0, eval)('foo')", errors: [{ messageId: "unexpected", type: "Identifier", column: 5, endColumn: 9 }] },
         { code: "(0, window.eval)('foo')", env: { browser: true }, errors: [{ messageId: "unexpected", type: "MemberExpression", column: 12, endColumn: 16 }] },
-        { code: "(0, window['eval'])('foo')", env: { browser: true }, errors: [{ messageId: "unexpected", type: "MemberExpression", column: 12, endColumn: 18 }] },
+        {
+            code: "(0, window['eval'])('foo')",
+            env: { browser: true },
+            errors: [{ messageId: "unexpected", type: "MemberExpression", column: 12, endColumn: 18 }]
+        },
         { code: "var EVAL = eval; EVAL('foo')", errors: [{ messageId: "unexpected", type: "Identifier", column: 12, endColumn: 16 }] },
         { code: "var EVAL = this.eval; EVAL('foo')", errors: [{ messageId: "unexpected", type: "MemberExpression", column: 17, endColumn: 21 }] },
         { code: "'use strict'; var EVAL = this.eval; EVAL('foo')", errors: [{ messageId: "unexpected", type: "MemberExpression", column: 31, endColumn: 35 }] },
-        { code: "() => { this.eval('foo'); }", parserOptions: { ecmaVersion: 6 }, errors: [{ messageId: "unexpected", type: "CallExpression", column: 14, endColumn: 18 }] },
-        { code: "() => { 'use strict'; this.eval('foo'); }", parserOptions: { ecmaVersion: 6 }, errors: [{ messageId: "unexpected", type: "CallExpression", column: 28, endColumn: 32 }] },
-        { code: "'use strict'; () => { this.eval('foo'); }", parserOptions: { ecmaVersion: 6 }, errors: [{ messageId: "unexpected", type: "CallExpression", column: 28, endColumn: 32 }] },
-        { code: "() => { 'use strict'; () => { this.eval('foo'); } }", parserOptions: { ecmaVersion: 6 }, errors: [{ messageId: "unexpected", type: "CallExpression", column: 36, endColumn: 40 }] },
+        {
+            code: "() => { this.eval('foo'); }",
+            parserOptions: { ecmaVersion: 6 },
+            errors: [{ messageId: "unexpected", type: "CallExpression", column: 14, endColumn: 18 }]
+        },
+        {
+            code: "() => { 'use strict'; this.eval('foo'); }",
+            parserOptions: { ecmaVersion: 6 },
+            errors: [{ messageId: "unexpected", type: "CallExpression", column: 28, endColumn: 32 }]
+        },
+        {
+            code: "'use strict'; () => { this.eval('foo'); }",
+            parserOptions: { ecmaVersion: 6 },
+            errors: [{ messageId: "unexpected", type: "CallExpression", column: 28, endColumn: 32 }]
+        },
+        {
+            code: "() => { 'use strict'; () => { this.eval('foo'); } }",
+            parserOptions: { ecmaVersion: 6 },
+            errors: [{ messageId: "unexpected", type: "CallExpression", column: 36, endColumn: 40 }]
+        },
         { code: "(function(exe){ exe('foo') })(eval);", errors: [{ messageId: "unexpected", type: "Identifier", column: 31, endColumn: 35 }] },
         { code: "window.eval('foo')", env: { browser: true }, errors: [{ messageId: "unexpected", type: "CallExpression", column: 8, endColumn: 12 }] },
         { code: "window.window.eval('foo')", env: { browser: true }, errors: [{ messageId: "unexpected", type: "CallExpression", column: 15, endColumn: 19 }] },
-        { code: "window.window['eval']('foo')", env: { browser: true }, errors: [{ messageId: "unexpected", type: "CallExpression", column: 15, endColumn: 21 }] },
+        {
+            code: "window.window['eval']('foo')",
+            env: { browser: true },
+            errors: [{ messageId: "unexpected", type: "CallExpression", column: 15, endColumn: 21 }]
+        },
         { code: "global.eval('foo')", env: { node: true }, errors: [{ messageId: "unexpected", type: "CallExpression", column: 8, endColumn: 12 }] },
         { code: "global.global.eval('foo')", env: { node: true }, errors: [{ messageId: "unexpected", type: "CallExpression", column: 15, endColumn: 19 }] },
-        { code: "global.global[`eval`]('foo')", parserOptions: { ecmaVersion: 6 }, env: { node: true }, errors: [{ messageId: "unexpected", type: "CallExpression", column: 15, endColumn: 21 }] },
+        {
+            code: "global.global[`eval`]('foo')",
+            parserOptions: { ecmaVersion: 6 },
+            env: { node: true },
+            errors: [{ messageId: "unexpected", type: "CallExpression", column: 15, endColumn: 21 }]
+        },
         { code: "this.eval('foo')", errors: [{ messageId: "unexpected", type: "CallExpression", column: 6, endColumn: 10 }] },
         { code: "'use strict'; this.eval('foo')", errors: [{ messageId: "unexpected", type: "CallExpression", column: 20, endColumn: 24 }] },
         { code: "function foo() { this.eval('foo') }", errors: [{ messageId: "unexpected", type: "CallExpression", column: 23, endColumn: 27 }] },
-        { code: "var EVAL = globalThis.eval; EVAL('foo')", env: { es2020: true }, errors: [{ messageId: "unexpected", type: "MemberExpression", column: 23, endColumn: 27 }] },
+        {
+            code: "var EVAL = globalThis.eval; EVAL('foo')",
+            env: { es2020: true },
+            errors: [{ messageId: "unexpected", type: "MemberExpression", column: 23, endColumn: 27 }]
+        },
         { code: "globalThis.eval('foo')", env: { es2020: true }, errors: [{ messageId: "unexpected", type: "CallExpression", column: 12, endColumn: 16 }] },
-        { code: "globalThis.globalThis.eval('foo')", env: { es2020: true }, errors: [{ messageId: "unexpected", type: "CallExpression", column: 23, endColumn: 27 }] },
-        { code: "globalThis.globalThis['eval']('foo')", env: { es2020: true }, errors: [{ messageId: "unexpected", type: "CallExpression", column: 23, endColumn: 29 }] },
-        { code: "(0, globalThis.eval)('foo')", env: { es2020: true }, errors: [{ messageId: "unexpected", type: "MemberExpression", column: 16, endColumn: 20 }] },
-        { code: "(0, globalThis['eval'])('foo')", env: { es2020: true }, errors: [{ messageId: "unexpected", type: "MemberExpression", column: 16, endColumn: 22 }] },
+        {
+            code: "globalThis.globalThis.eval('foo')",
+            env: { es2020: true },
+            errors: [{ messageId: "unexpected", type: "CallExpression", column: 23, endColumn: 27 }]
+        },
+        {
+            code: "globalThis.globalThis['eval']('foo')",
+            env: { es2020: true },
+            errors: [{ messageId: "unexpected", type: "CallExpression", column: 23, endColumn: 29 }]
+        },
+        {
+            code: "(0, globalThis.eval)('foo')",
+            env: { es2020: true },
+            errors: [{ messageId: "unexpected", type: "MemberExpression", column: 16, endColumn: 20 }]
+        },
+        {
+            code: "(0, globalThis['eval'])('foo')",
+            env: { es2020: true },
+            errors: [{ messageId: "unexpected", type: "MemberExpression", column: 16, endColumn: 22 }]
+        },
 
         // Optional chaining
         {

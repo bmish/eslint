@@ -20,11 +20,6 @@ const rule = require("../../../lib/rules/no-negated-in-lhs"),
 const ruleTester = new RuleTester();
 
 ruleTester.run("no-negated-in-lhs", rule, {
-    valid: [
-        "a in b",
-        "!(a in b)"
-    ],
-    invalid: [
-        { code: "!a in b", errors: [{ messageId: "negatedLHS", type: "BinaryExpression" }] }
-    ]
+    valid: ["a in b", "!(a in b)"],
+    invalid: [{ code: "!a in b", errors: [{ messageId: "negatedLHS", type: "BinaryExpression" }] }]
 });

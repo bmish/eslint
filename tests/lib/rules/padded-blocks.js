@@ -36,7 +36,6 @@ ruleTester.run("padded-blocks", rule, {
         { code: "{\n\na();\n\n/* comment */ }", options: ["always"] },
         { code: "{\n\na();\n\n/* comment */ }", options: [{ blocks: "always" }] },
 
-
         { code: "switch (a) {}", options: [{ switches: "always" }] },
         { code: "switch (a) {\n\ncase 0: foo();\ncase 1: bar();\n\n}", options: ["always"] },
         { code: "switch (a) {\n\ncase 0: foo();\ncase 1: bar();\n\n}", options: [{ switches: "always" }] },
@@ -70,7 +69,6 @@ ruleTester.run("padded-blocks", rule, {
         { code: "switch (a) {\ncase 0: foo();\n}", options: ["never"] },
         { code: "switch (a) {\ncase 0: foo();\n}", options: [{ switches: "never" }] },
 
-
         { code: "class A{\nfoo(){}\n}", options: ["never"], parserOptions: { ecmaVersion: 6 } },
         { code: "class A{\nfoo(){}\n}", options: [{ classes: "never" }], parserOptions: { ecmaVersion: 6 } },
 
@@ -84,7 +82,6 @@ ruleTester.run("padded-blocks", rule, {
         // Ignore switch statements if not configured
         { code: "switch (a) {\ncase 0: foo();\ncase 1: bar();\n}", options: [{ blocks: "always", classes: "always" }] },
         { code: "switch (a) {\n\ncase 0: foo();\ncase 1: bar();\n\n}", options: [{ blocks: "never", classes: "never" }] },
-
 
         // Ignore class statements if not configured
         { code: "class A{\nfoo(){}\n}", options: [{ blocks: "always" }], parserOptions: { ecmaVersion: 6 } },
@@ -191,7 +188,6 @@ ruleTester.run("padded-blocks", rule, {
             options: [{ classes: "never" }], // if there's no "blocks" in the object option, static blocks are ignored
             parserOptions: { ecmaVersion: 2022 }
         }
-
     ],
     invalid: [
         {
@@ -902,60 +898,42 @@ ruleTester.run("padded-blocks", rule, {
             output: "class C {\n\n static {\nfoo;\n} \n\n}", // this is still not padded, the subsequent fix below will add another pair of `\n`.
             options: ["always"],
             parserOptions: { ecmaVersion: 2022 },
-            errors: [
-                { messageId: "alwaysPadBlock" },
-                { messageId: "alwaysPadBlock" }
-            ]
+            errors: [{ messageId: "alwaysPadBlock" }, { messageId: "alwaysPadBlock" }]
         },
         {
             code: "class C {\n\n static {\nfoo;\n} \n\n}",
             output: "class C {\n\n static {\n\nfoo;\n\n} \n\n}",
             options: ["always"],
             parserOptions: { ecmaVersion: 2022 },
-            errors: [
-                { messageId: "alwaysPadBlock" },
-                { messageId: "alwaysPadBlock" }
-            ]
+            errors: [{ messageId: "alwaysPadBlock" }, { messageId: "alwaysPadBlock" }]
         },
         {
             code: "class C {\n\n static {// comment\nfoo;\n/* comment */} \n\n}",
             output: "class C {\n\n static {// comment\n\nfoo;\n\n/* comment */} \n\n}",
             options: ["always"],
             parserOptions: { ecmaVersion: 2022 },
-            errors: [
-                { messageId: "alwaysPadBlock" },
-                { messageId: "alwaysPadBlock" }
-            ]
+            errors: [{ messageId: "alwaysPadBlock" }, { messageId: "alwaysPadBlock" }]
         },
         {
             code: "class C {\n\n static {\n// comment\nfoo;\n// comment\n} \n\n}",
             output: "class C {\n\n static {\n\n// comment\nfoo;\n// comment\n\n} \n\n}",
             options: ["always"],
             parserOptions: { ecmaVersion: 2022 },
-            errors: [
-                { messageId: "alwaysPadBlock" },
-                { messageId: "alwaysPadBlock" }
-            ]
+            errors: [{ messageId: "alwaysPadBlock" }, { messageId: "alwaysPadBlock" }]
         },
         {
             code: "class C {\n\n static {\n// comment\n\nfoo;\n\n// comment\n} \n\n}",
             output: "class C {\n\n static {\n\n// comment\n\nfoo;\n\n// comment\n\n} \n\n}",
             options: ["always"],
             parserOptions: { ecmaVersion: 2022 },
-            errors: [
-                { messageId: "alwaysPadBlock" },
-                { messageId: "alwaysPadBlock" }
-            ]
+            errors: [{ messageId: "alwaysPadBlock" }, { messageId: "alwaysPadBlock" }]
         },
         {
             code: "class C {\n static {\nfoo;\n} \n}",
             output: "class C {\n static {\n\nfoo;\n\n} \n}",
             options: [{ blocks: "always", classes: "never" }], // "blocks" applies to static blocks
             parserOptions: { ecmaVersion: 2022 },
-            errors: [
-                { messageId: "alwaysPadBlock" },
-                { messageId: "alwaysPadBlock" }
-            ]
+            errors: [{ messageId: "alwaysPadBlock" }, { messageId: "alwaysPadBlock" }]
         },
         {
             code: "class C {\n static {\n\nfoo;\n} \n}",
@@ -990,40 +968,28 @@ ruleTester.run("padded-blocks", rule, {
             output: "class C {\n static {\nfoo;\n} \n}",
             options: ["never"],
             parserOptions: { ecmaVersion: 2022 },
-            errors: [
-                { messageId: "neverPadBlock" },
-                { messageId: "neverPadBlock" }
-            ]
+            errors: [{ messageId: "neverPadBlock" }, { messageId: "neverPadBlock" }]
         },
         {
             code: "class C {\n static {// comment\n\nfoo;\n\n/* comment */} \n}",
             output: "class C {\n static {// comment\nfoo;\n/* comment */} \n}",
             options: ["never"],
             parserOptions: { ecmaVersion: 2022 },
-            errors: [
-                { messageId: "neverPadBlock" },
-                { messageId: "neverPadBlock" }
-            ]
+            errors: [{ messageId: "neverPadBlock" }, { messageId: "neverPadBlock" }]
         },
         {
             code: "class C {\n static {\n\n// comment\nfoo;\n// comment\n\n} \n}",
             output: "class C {\n static {\n// comment\nfoo;\n// comment\n} \n}",
             options: ["never"],
             parserOptions: { ecmaVersion: 2022 },
-            errors: [
-                { messageId: "neverPadBlock" },
-                { messageId: "neverPadBlock" }
-            ]
+            errors: [{ messageId: "neverPadBlock" }, { messageId: "neverPadBlock" }]
         },
         {
             code: "class C {\n\n static {\n\nfoo;\n\n} \n\n}",
             output: "class C {\n\n static {\nfoo;\n} \n\n}",
             options: [{ blocks: "never", classes: "always" }], // "blocks" applies to static blocks
             parserOptions: { ecmaVersion: 2022 },
-            errors: [
-                { messageId: "neverPadBlock" },
-                { messageId: "neverPadBlock" }
-            ]
+            errors: [{ messageId: "neverPadBlock" }, { messageId: "neverPadBlock" }]
         }
     ]
 });

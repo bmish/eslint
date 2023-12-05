@@ -32,9 +32,7 @@ function setupSpawnSyncStubReturnVals(stub, returnVals) {
     let stubChain = stub;
 
     for (const [i, val] of returnVals.entries()) {
-        const returnVal = val instanceof Error
-            ? { error: val }
-            : { stdout: val };
+        const returnVal = val instanceof Error ? { error: val } : { stdout: val };
 
         stubChain = stubChain.onCall(i).returns(returnVal);
     }
@@ -103,7 +101,6 @@ describe("RuntimeInfo", () => {
             os.release = originalOsRelease;
         });
 
-
         it("should return a string containing environment information when running local installation", () => {
             setupSpawnSyncStubReturnVals(spawnSyncStub, spawnSyncStubArgs);
 
@@ -140,12 +137,16 @@ describe("RuntimeInfo", () => {
         });
 
         it("should return a string containing environment information when not installed locally", () => {
-            spawnSyncStubArgs.splice(2, 2, unIndent`
+            spawnSyncStubArgs.splice(
+                2,
+                2,
+                unIndent`
                 {
                     "name": "project",
                     "version": "1.0.0"
                 }
-            `);
+            `
+            );
             spawnSyncStubArgs.push(NPM_BIN_PATH);
             setupSpawnSyncStubReturnVals(spawnSyncStub, spawnSyncStubArgs);
             process.argv[1] = GLOBAL_ESLINT_BIN_PATH;

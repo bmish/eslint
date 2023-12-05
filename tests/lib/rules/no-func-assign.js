@@ -31,71 +31,87 @@ ruleTester.run("no-func-assign", rule, {
     invalid: [
         {
             code: "function foo() {}; foo = bar;",
-            errors: [{
-                messageId: "isAFunction",
-                data: { name: "foo" },
-                type: "Identifier"
-            }]
+            errors: [
+                {
+                    messageId: "isAFunction",
+                    data: { name: "foo" },
+                    type: "Identifier"
+                }
+            ]
         },
         {
             code: "function foo() { foo = bar; }",
-            errors: [{
-                messageId: "isAFunction",
-                data: { name: "foo" },
-                type: "Identifier"
-            }]
+            errors: [
+                {
+                    messageId: "isAFunction",
+                    data: { name: "foo" },
+                    type: "Identifier"
+                }
+            ]
         },
         {
             code: "foo = bar; function foo() { };",
-            errors: [{
-                messageId: "isAFunction",
-                data: { name: "foo" },
-                type: "Identifier"
-            }]
+            errors: [
+                {
+                    messageId: "isAFunction",
+                    data: { name: "foo" },
+                    type: "Identifier"
+                }
+            ]
         },
         {
             code: "[foo] = bar; function foo() { };",
             parserOptions: { ecmaVersion: 6 },
-            errors: [{
-                messageId: "isAFunction",
-                data: { name: "foo" },
-                type: "Identifier"
-            }]
+            errors: [
+                {
+                    messageId: "isAFunction",
+                    data: { name: "foo" },
+                    type: "Identifier"
+                }
+            ]
         },
         {
             code: "({x: foo = 0} = bar); function foo() { };",
             parserOptions: { ecmaVersion: 6 },
-            errors: [{
-                messageId: "isAFunction",
-                data: { name: "foo" },
-                type: "Identifier"
-            }]
+            errors: [
+                {
+                    messageId: "isAFunction",
+                    data: { name: "foo" },
+                    type: "Identifier"
+                }
+            ]
         },
         {
             code: "function foo() { [foo] = bar; }",
             parserOptions: { ecmaVersion: 6 },
-            errors: [{
-                messageId: "isAFunction",
-                data: { name: "foo" },
-                type: "Identifier"
-            }]
+            errors: [
+                {
+                    messageId: "isAFunction",
+                    data: { name: "foo" },
+                    type: "Identifier"
+                }
+            ]
         },
         {
             code: "(function() { ({x: foo = 0} = bar); function foo() { }; })();",
             parserOptions: { ecmaVersion: 6 },
-            errors: [{
-                messageId: "isAFunction",
-                data: { name: "foo" },
-                type: "Identifier"
-            }]
+            errors: [
+                {
+                    messageId: "isAFunction",
+                    data: { name: "foo" },
+                    type: "Identifier"
+                }
+            ]
         },
         {
             code: "var a = function foo() { foo = 123; };",
-            errors: [{
-                messageId: "isAFunction",
-                data: { name: "foo" },
-                type: "Identifier"
-            }]
+            errors: [
+                {
+                    messageId: "isAFunction",
+                    data: { name: "foo" },
+                    type: "Identifier"
+                }
+            ]
         }
     ]
 });

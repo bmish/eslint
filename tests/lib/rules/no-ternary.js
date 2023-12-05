@@ -19,9 +19,7 @@ const rule = require("../../../lib/rules/no-ternary"),
 const ruleTester = new RuleTester();
 
 ruleTester.run("no-ternary", rule, {
-    valid: [
-        "\"x ? y\";"
-    ],
+    valid: ['"x ? y";'],
     invalid: [
         { code: "var foo = true ? thing : stuff;", errors: [{ messageId: "noTernaryOperator", type: "ConditionalExpression" }] },
         { code: "true ? thing() : stuff();", errors: [{ messageId: "noTernaryOperator", type: "ConditionalExpression" }] },

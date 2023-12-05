@@ -20,7 +20,6 @@ const ruleTester = new RuleTester({ parserOptions: { ecmaVersion: 2021, ecmaFeat
 
 ruleTester.run("no-constant-binary-expression", rule, {
     valid: [
-
         // While this _would_ be a constant condition in React, ESLint has a policy of not attributing any specific behavior to JSX.
         "<p /> && foo",
         "<></> && foo",
@@ -66,7 +65,6 @@ ruleTester.run("no-constant-binary-expression", rule, {
         "a ?? (something = null) ?? b"
     ],
     invalid: [
-
         // Error messages
         { code: "[] && greeting", errors: [{ message: "Unexpected constant truthiness on the left-hand side of a `&&` expression." }] },
         { code: "[] || greeting", errors: [{ message: "Unexpected constant truthiness on the left-hand side of a `||` expression." }] },

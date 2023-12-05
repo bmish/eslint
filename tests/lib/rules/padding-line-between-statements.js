@@ -20,22 +20,17 @@ const ruleTester = new RuleTester({ parserOptions: { ecmaVersion: 2017 } });
 
 ruleTester.run("padding-line-between-statements", rule, {
     valid: [
-
         // do nothing if no options.
         "'use strict'; foo(); if (a) { bar(); }",
 
         // do nothing for single statement.
         {
             code: "foo()",
-            options: [
-                { blankLine: "never", prev: "*", next: "*" }
-            ]
+            options: [{ blankLine: "never", prev: "*", next: "*" }]
         },
         {
             code: "foo()",
-            options: [
-                { blankLine: "always", prev: "*", next: "*" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "*" }]
         },
 
         //----------------------------------------------------------------------
@@ -44,51 +39,35 @@ ruleTester.run("padding-line-between-statements", rule, {
 
         {
             code: "foo();bar();",
-            options: [
-                { blankLine: "never", prev: "*", next: "*" }
-            ]
+            options: [{ blankLine: "never", prev: "*", next: "*" }]
         },
         {
             code: "foo();\nbar();",
-            options: [
-                { blankLine: "never", prev: "*", next: "*" }
-            ]
+            options: [{ blankLine: "never", prev: "*", next: "*" }]
         },
         {
             code: "foo();\n//comment\nbar();",
-            options: [
-                { blankLine: "never", prev: "*", next: "*" }
-            ]
+            options: [{ blankLine: "never", prev: "*", next: "*" }]
         },
         {
             code: "foo();\n/*comment*/\nbar();",
-            options: [
-                { blankLine: "never", prev: "*", next: "*" }
-            ]
+            options: [{ blankLine: "never", prev: "*", next: "*" }]
         },
         {
             code: "foo();\n\nbar();",
-            options: [
-                { blankLine: "always", prev: "*", next: "*" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "*" }]
         },
         {
             code: "foo();\n\n//comment\nbar();",
-            options: [
-                { blankLine: "always", prev: "*", next: "*" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "*" }]
         },
         {
             code: "foo();\n//comment\n\nbar();",
-            options: [
-                { blankLine: "always", prev: "*", next: "*" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "*" }]
         },
         {
             code: "foo();\n//comment\n\n//comment\nbar();",
-            options: [
-                { blankLine: "always", prev: "*", next: "*" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "*" }]
         },
         {
             code: "if(a){}\n\n;[].map(b)",
@@ -97,7 +76,6 @@ ruleTester.run("padding-line-between-statements", rule, {
                 { blankLine: "never", prev: "empty", next: "*" }
             ]
         },
-
 
         //----------------------------------------------------------------------
         // block-like
@@ -247,14 +225,14 @@ ruleTester.run("padding-line-between-statements", rule, {
         //----------------------------------------------------------------------
 
         {
-            code: "foo=require(\"foo\")\nfoo()",
+            code: 'foo=require("foo")\nfoo()',
             options: [
                 { blankLine: "never", prev: "*", next: "*" },
                 { blankLine: "always", prev: "cjs-import", next: "*" }
             ]
         },
         {
-            code: "const foo=a.require(\"foo\")\nfoo()",
+            code: 'const foo=a.require("foo")\nfoo()',
             options: [
                 { blankLine: "never", prev: "*", next: "*" },
                 { blankLine: "always", prev: "cjs-import", next: "*" }
@@ -266,28 +244,28 @@ ruleTester.run("padding-line-between-statements", rule, {
         //----------------------------------------------------------------------
 
         {
-            code: "\"use strict\"\n\nfoo()",
+            code: '"use strict"\n\nfoo()',
             options: [
                 { blankLine: "never", prev: "*", next: "*" },
                 { blankLine: "always", prev: "directive", next: "*" }
             ]
         },
         {
-            code: "function foo(){\"use strict\"\n\nfoo()}",
+            code: 'function foo(){"use strict"\n\nfoo()}',
             options: [
                 { blankLine: "never", prev: "*", next: "*" },
                 { blankLine: "always", prev: "directive", next: "*" }
             ]
         },
         {
-            code: "(function foo(){\"use strict\"\n\nfoo()})",
+            code: '(function foo(){"use strict"\n\nfoo()})',
             options: [
                 { blankLine: "never", prev: "*", next: "*" },
                 { blankLine: "always", prev: "directive", next: "*" }
             ]
         },
         {
-            code: "(()=>{\"use strict\"\n\nfoo()})",
+            code: '(()=>{"use strict"\n\nfoo()})',
             options: [
                 { blankLine: "never", prev: "*", next: "*" },
                 { blankLine: "always", prev: "directive", next: "*" }
@@ -301,7 +279,7 @@ ruleTester.run("padding-line-between-statements", rule, {
             ]
         },
         {
-            code: "foo(\"use strict\")\nfoo()",
+            code: 'foo("use strict")\nfoo()',
             options: [
                 { blankLine: "never", prev: "*", next: "*" },
                 { blankLine: "always", prev: "directive", next: "*" }
@@ -315,7 +293,7 @@ ruleTester.run("padding-line-between-statements", rule, {
             ]
         },
         {
-            code: "(\"use strict\")\nfoo()",
+            code: '("use strict")\nfoo()',
             options: [
                 { blankLine: "never", prev: "*", next: "*" },
                 { blankLine: "always", prev: "directive", next: "*" }
@@ -329,14 +307,14 @@ ruleTester.run("padding-line-between-statements", rule, {
             ]
         },
         {
-            code: "foo()\n\"use strict\"\nfoo()",
+            code: 'foo()\n"use strict"\nfoo()',
             options: [
                 { blankLine: "never", prev: "*", next: "*" },
                 { blankLine: "always", prev: "directive", next: "*" }
             ]
         },
         {
-            code: "{\"use strict\"\nfoo()}",
+            code: '{"use strict"\nfoo()}',
             options: [
                 { blankLine: "never", prev: "*", next: "*" },
                 { blankLine: "always", prev: "directive", next: "*" }
@@ -537,27 +515,19 @@ ruleTester.run("padding-line-between-statements", rule, {
 
         {
             code: "foo()\n\nfoo(\n\tx,\n\ty\n)",
-            options: [
-                { blankLine: "always", prev: "*", next: "multiline-expression" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "multiline-expression" }]
         },
         {
             code: "foo()\nfoo()",
-            options: [
-                { blankLine: "always", prev: "*", next: "multiline-expression" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "multiline-expression" }]
         },
         {
             code: "() => {\n\tsomeArray.forEach(x => doSomething(x));\n\treturn theThing;\n}",
-            options: [
-                { blankLine: "always", prev: "multiline-expression", next: "return" }
-            ]
+            options: [{ blankLine: "always", prev: "multiline-expression", next: "return" }]
         },
         {
             code: "() => {\n\tsomeArray.forEach(\n\t\tx => doSomething(x)\n\t);\n\n\treturn theThing;\n}",
-            options: [
-                { blankLine: "always", prev: "multiline-expression", next: "return" }
-            ]
+            options: [{ blankLine: "always", prev: "multiline-expression", next: "return" }]
         },
 
         //----------------------------------------------------------------------
@@ -855,27 +825,19 @@ ruleTester.run("padding-line-between-statements", rule, {
 
         {
             code: "(function(){\n})()\n\nvar a = 2;",
-            options: [
-                { blankLine: "always", prev: "iife", next: "*" }
-            ]
+            options: [{ blankLine: "always", prev: "iife", next: "*" }]
         },
         {
             code: "+(function(){\n})()\n\nvar a = 2;",
-            options: [
-                { blankLine: "always", prev: "iife", next: "*" }
-            ]
+            options: [{ blankLine: "always", prev: "iife", next: "*" }]
         },
         {
             code: "(function(){\n})()\nvar a = 2;",
-            options: [
-                { blankLine: "never", prev: "iife", next: "*" }
-            ]
+            options: [{ blankLine: "never", prev: "iife", next: "*" }]
         },
         {
             code: "+(function(){\n})()\nvar a = 2;",
-            options: [
-                { blankLine: "never", prev: "iife", next: "*" }
-            ]
+            options: [{ blankLine: "never", prev: "iife", next: "*" }]
         },
 
         //----------------------------------------------------------------------
@@ -1905,373 +1867,251 @@ ruleTester.run("padding-line-between-statements", rule, {
 
         {
             code: "function a() {\nreturn;\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "return" }]
         },
         {
             code: "function a() {\n\nreturn;\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "return" }]
         },
         {
             code: "function a() {\nvar b;\n\nreturn;\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "return" }]
         },
         {
             code: "function a() {\nif (b) return;\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "return" }]
         },
         {
             code: "function a() {\nif (b) { return; }\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "return" }]
         },
         {
             code: "function a() {\nif (b) {\nreturn;\n}\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "return" }]
         },
         {
             code: "function a() {\nif (b) {\n\nreturn;\n}\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "return" }]
         },
         {
             code: "function a() {\nif (b) {\nreturn;\n}\n\nreturn c;\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "return" }]
         },
         {
             code: "function a() {\nif (b) {\n\nreturn;\n}\n\nreturn c;\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "return" }]
         },
         {
             code: "function a() {\nif (!b) {\nreturn;\n} else {\nreturn b;\n}\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "return" }]
         },
         {
             code: "function a() {\nif (!b) {\nreturn;\n} else {\n\nreturn b;\n}\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "return" }]
         },
         {
             code: "function a() {\nif (b) {\nreturn b;\n} else if (c) {\nreturn c;\n}\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "return" }]
         },
         {
             code: "function a() {\nif (b) {\nreturn b;\n} else if (c) {\nreturn c;\n} else {\nreturn d;\n}\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "return" }]
         },
         {
             code: "function a() {\nif (b) {\nreturn b;\n} else if (c) {\nreturn c;\n} else {\nreturn d;\n}\n\nreturn a;\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "return" }]
         },
         {
             code: "function a() {\nif (b) return b;\nelse if (c) return c;\nelse return d;\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "return" }]
         },
         {
             code: "function a() {\nif (b) return b;\nelse if (c) return c;\nelse {\nreturn d;\n}\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "return" }]
         },
         {
             code: "function a() {\nif (b) return b;\nelse if (c) return c;\nelse {\ne();\n\nreturn d;\n}\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "return" }]
         },
         {
             code: "function a() {\nwhile (b) return;\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "return" }]
         },
         {
             code: "function a() {\n while (b) \nreturn;\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "return" }]
         },
         {
             code: "function a() {\n while (b) { return; }\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "return" }]
         },
         {
             code: "function a() {\n while (b) {\nreturn;\n}\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "return" }]
         },
         {
             code: "function a() {\n while (b) {\nc();\n\nreturn;\n}\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "return" }]
         },
         {
             code: "function a() {\nvar c;\nwhile (b) {\n c = d; //comment\n}\n\nreturn c;\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "return" }]
         },
         {
             code: "function a() {\ndo return;\nwhile (b);\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "return" }]
         },
         {
             code: "function a() {\ndo \nreturn;\nwhile (b);\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "return" }]
         },
         {
             code: "function a() {\ndo { return; } while (b);\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "return" }]
         },
         {
             code: "function a() {\ndo { return; }\nwhile (b);\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "return" }]
         },
         {
             code: "function a() {\ndo {\nreturn;\n} while (b);\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "return" }]
         },
         {
             code: "function a() {\ndo {\nc();\n\nreturn;\n} while (b);\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "return" }]
         },
         {
             code: "function a() {\nfor (var b; b < c; b++) return;\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "return" }]
         },
         {
             code: "function a() {\nfor (var b; b < c; b++)\nreturn;\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "return" }]
         },
         {
             code: "function a() {\nfor (var b; b < c; b++) {\nreturn;\n}\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "return" }]
         },
         {
             code: "function a() {\nfor (var b; b < c; b++) {\nc();\n\nreturn;\n}\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "return" }]
         },
         {
             code: "function a() {\nfor (var b; b < c; b++) {\nif (d) {\nbreak; //comment\n}\n\nreturn;\n}\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "return" }]
         },
         {
             code: "function a() {\nfor (b in c)\nreturn;\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "return" }]
         },
         {
             code: "function a() {\nfor (b in c) { return; }\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "return" }]
         },
         {
             code: "function a() {\nfor (b in c) {\nreturn;\n}\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "return" }]
         },
         {
             code: "function a() {\nfor (b in c) {\nd();\n\nreturn;\n}\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "return" }]
         },
         {
             code: "function a() {\nfor (b of c) return;\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "return" }]
         },
         {
             code: "function a() {\nfor (b of c)\nreturn;\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "return" }]
         },
         {
             code: "function a() {\nfor (b of c) {\nreturn;\n}\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "return" }]
         },
         {
             code: "function a() {\nfor (b of c) {\nd();\n\nreturn;\n}\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "return" }]
         },
         {
             code: "function a() {\nswitch (b) {\ncase 'b': return;\n}\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "return" }]
         },
         {
             code: "function a() {\nswitch (b) {\ncase 'b':\nreturn;\n}\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "return" }]
         },
         {
             code: "function a() {\nswitch (b) {\ncase 'b': {\nreturn;\n}\n}\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "return" }]
         },
         {
             code: "function a() {\n//comment\nreturn b;\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "return" }]
         },
         {
             code: "function a() {\n{\n//comment\n}\n\nreturn\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "return" }]
         },
         {
             code: "function a() {\nvar b = {\n//comment\n};\n\nreturn;\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "return" }]
         },
         {
             code: "function a() {/*multi-line\ncomment*/return b;\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "return" }]
         },
         {
             code: "function a() {\n/*comment\ncomment*/\n//comment\nreturn b;\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "return" }]
         },
         {
             code: "function a() {\n/*comment\ncomment*/\n//comment\nif (b) return;\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "return" }]
         },
         {
             code: "function a() {\n/*comment\ncomment*/\n//comment\nif (b) {\nc();\n\nreturn b;\n} else {\n//comment\nreturn d;\n}\n\n/*multi-line\ncomment*/\nreturn e;\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "return" }]
         },
         {
             code: "function a() {\nif (b) { //comment\nreturn;\n}\n\nreturn c;\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "return" }]
         },
         {
             code: "function a() {\nif (b) { return; } //comment\n\nreturn c;\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "return" }]
         },
         {
             code: "function a() {\nif (b) { return; } /*multi-line\ncomment*/\n\nreturn c;\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "return" }]
         },
         {
             code: "function a() {\nif (b) { return; }\n\n/*multi-line\ncomment*/ return c;\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "return" }]
         },
         {
             code: "return;",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ],
+            options: [{ blankLine: "always", prev: "*", next: "return" }],
             parserOptions: { ecmaFeatures: { globalReturn: true } }
         },
         {
             code: "var a;\n\nreturn;",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ],
+            options: [{ blankLine: "always", prev: "*", next: "return" }],
             parserOptions: { ecmaFeatures: { globalReturn: true } }
         },
         {
             code: "// comment\nreturn;",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ],
+            options: [{ blankLine: "always", prev: "*", next: "return" }],
             parserOptions: { ecmaFeatures: { globalReturn: true } }
         },
         {
             code: "/* comment */\nreturn;",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ],
+            options: [{ blankLine: "always", prev: "*", next: "return" }],
             parserOptions: { ecmaFeatures: { globalReturn: true } }
         },
         {
             code: "/* multi-line\ncomment */\nreturn;",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ],
+            options: [{ blankLine: "always", prev: "*", next: "return" }],
             parserOptions: { ecmaFeatures: { globalReturn: true } }
         },
 
@@ -2282,87 +2122,59 @@ ruleTester.run("padding-line-between-statements", rule, {
 
         {
             code: "if(true){}",
-            options: [
-                { blankLine: "never", prev: "block-like", next: "*" }
-            ]
+            options: [{ blankLine: "never", prev: "block-like", next: "*" }]
         },
         {
             code: "if(true){}\n",
-            options: [
-                { blankLine: "never", prev: "block-like", next: "*" }
-            ]
+            options: [{ blankLine: "never", prev: "block-like", next: "*" }]
         },
         {
             code: "if(true){}\nvar a = 2;",
-            options: [
-                { blankLine: "never", prev: "block-like", next: "*" }
-            ]
+            options: [{ blankLine: "never", prev: "block-like", next: "*" }]
         },
         {
             code: "if(true){\nif(true) {}\n}",
-            options: [
-                { blankLine: "never", prev: "block-like", next: "*" }
-            ]
+            options: [{ blankLine: "never", prev: "block-like", next: "*" }]
         },
         {
             code: "var a = {\nfoo: function() {\n},\nbar: function() {\n}}",
-            options: [
-                { blankLine: "never", prev: "block-like", next: "*" }
-            ]
+            options: [{ blankLine: "never", prev: "block-like", next: "*" }]
         },
         {
             code: "(function(){\n})()\nvar a = 2;",
-            options: [
-                { blankLine: "never", prev: "block-like", next: "*" }
-            ]
+            options: [{ blankLine: "never", prev: "block-like", next: "*" }]
         },
         {
             code: "if(true) {\n}\nelse\n{\n}",
-            options: [
-                { blankLine: "never", prev: "block-like", next: "*" }
-            ]
+            options: [{ blankLine: "never", prev: "block-like", next: "*" }]
         },
         {
             code: "if(true) {\n} else {\n var a = 2; }",
-            options: [
-                { blankLine: "never", prev: "block-like", next: "*" }
-            ]
+            options: [{ blankLine: "never", prev: "block-like", next: "*" }]
         },
         {
             code: "if(true) {\n}\nelse if(true)\n{\n}\nelse {\n}",
-            options: [
-                { blankLine: "never", prev: "block-like", next: "*" }
-            ]
+            options: [{ blankLine: "never", prev: "block-like", next: "*" }]
         },
         {
             code: "do{\n}\nwhile(true)",
-            options: [
-                { blankLine: "never", prev: "block-like", next: "*" }
-            ]
+            options: [{ blankLine: "never", prev: "block-like", next: "*" }]
         },
         {
             code: "try{\n}\ncatch(e) {}",
-            options: [
-                { blankLine: "never", prev: "block-like", next: "*" }
-            ]
+            options: [{ blankLine: "never", prev: "block-like", next: "*" }]
         },
         {
             code: "try{\n}\nfinally {}",
-            options: [
-                { blankLine: "never", prev: "block-like", next: "*" }
-            ]
+            options: [{ blankLine: "never", prev: "block-like", next: "*" }]
         },
         {
             code: "try{\n}\ncatch(e) {\n}\nfinally {\n}",
-            options: [
-                { blankLine: "never", prev: "block-like", next: "*" }
-            ]
+            options: [{ blankLine: "never", prev: "block-like", next: "*" }]
         },
         {
             code: "[].map(function() {})\n.filter(function(){})",
-            options: [
-                { blankLine: "never", prev: "block-like", next: "*" }
-            ]
+            options: [{ blankLine: "never", prev: "block-like", next: "*" }]
         },
 
         //----------------------------------------------------------------------
@@ -2372,21 +2184,15 @@ ruleTester.run("padding-line-between-statements", rule, {
 
         {
             code: "var a = 2;\nmodule.exports = a;",
-            options: [
-                { blankLine: "never", prev: "*", next: "cjs-export" }
-            ]
+            options: [{ blankLine: "never", prev: "*", next: "cjs-export" }]
         },
         {
             code: "module.exports = 2;",
-            options: [
-                { blankLine: "never", prev: "*", next: "cjs-export" }
-            ]
+            options: [{ blankLine: "never", prev: "*", next: "cjs-export" }]
         },
         {
             code: "var a = 2;\n// foo\nmodule.exports = a;",
-            options: [
-                { blankLine: "never", prev: "*", next: "cjs-export" }
-            ]
+            options: [{ blankLine: "never", prev: "*", next: "cjs-export" }]
         },
 
         /*
@@ -2400,21 +2206,15 @@ ruleTester.run("padding-line-between-statements", rule, {
          */
         {
             code: "var a = 2;\n\nfoo.exports = a;",
-            options: [
-                { blankLine: "never", prev: "*", next: "cjs-export" }
-            ]
+            options: [{ blankLine: "never", prev: "*", next: "cjs-export" }]
         },
         {
             code: "var a = 2;\n\nmodule.foo = a;",
-            options: [
-                { blankLine: "never", prev: "*", next: "cjs-export" }
-            ]
+            options: [{ blankLine: "never", prev: "*", next: "cjs-export" }]
         },
         {
             code: "var a = 2;\n\nfoo = a;",
-            options: [
-                { blankLine: "never", prev: "*", next: "cjs-export" }
-            ]
+            options: [{ blankLine: "never", prev: "*", next: "cjs-export" }]
         },
 
         //----------------------------------------------------------------------
@@ -2424,136 +2224,92 @@ ruleTester.run("padding-line-between-statements", rule, {
 
         {
             code: "{}",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "*" }
-            ]
+            options: [{ blankLine: "always", prev: "block-like", next: "*" }]
         },
         {
             code: "if(true){}",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "*" }
-            ]
+            options: [{ blankLine: "always", prev: "block-like", next: "*" }]
         },
         {
             code: "if(true){}\n",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "*" }
-            ]
+            options: [{ blankLine: "always", prev: "block-like", next: "*" }]
         },
         {
             code: "if(true){}\n\nvar a = 2;",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "*" }
-            ]
+            options: [{ blankLine: "always", prev: "block-like", next: "*" }]
         },
         {
             code: "if(true){}\n\n\nvar a = 2;",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "*" }
-            ]
+            options: [{ blankLine: "always", prev: "block-like", next: "*" }]
         },
         {
             code: "if(true){\nif(true) {}\n}",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "*" }
-            ]
+            options: [{ blankLine: "always", prev: "block-like", next: "*" }]
         },
         {
             code: "var a = {\nfoo: function() {\n},\n\nbar: function() {\n}}",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "*" }
-            ]
+            options: [{ blankLine: "always", prev: "block-like", next: "*" }]
         },
         {
             code: "(function(){\n})()\n\nvar a = 2;",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "*" }
-            ]
+            options: [{ blankLine: "always", prev: "block-like", next: "*" }]
         },
         {
             code: "if(true) {\n}\nelse\n{\n}",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "*" }
-            ]
+            options: [{ blankLine: "always", prev: "block-like", next: "*" }]
         },
         {
             code: "if(true) {\n} else {\n var a = 2; }",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "*" }
-            ]
+            options: [{ blankLine: "always", prev: "block-like", next: "*" }]
         },
         {
             code: "if(true) {\n}\nelse if(true)\n{\n}\nelse {\n}",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "*" }
-            ]
+            options: [{ blankLine: "always", prev: "block-like", next: "*" }]
         },
         {
             code: "do{\n}\nwhile(true)",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "*" }
-            ]
+            options: [{ blankLine: "always", prev: "block-like", next: "*" }]
         },
         {
             code: "try{\n}\ncatch(e) {}",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "*" }
-            ]
+            options: [{ blankLine: "always", prev: "block-like", next: "*" }]
         },
         {
             code: "try{\n}\nfinally {}",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "*" }
-            ]
+            options: [{ blankLine: "always", prev: "block-like", next: "*" }]
         },
         {
             code: "try{\n}\ncatch(e) {\n}\nfinally {\n}",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "*" }
-            ]
+            options: [{ blankLine: "always", prev: "block-like", next: "*" }]
         },
         {
             code: "[].map(function() {})\n.filter(function(){})",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "*" }
-            ]
+            options: [{ blankLine: "always", prev: "block-like", next: "*" }]
         },
         {
             code: "func(\n2,\n3,\nfunction() {\n}\n)",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "*" }
-            ]
+            options: [{ blankLine: "always", prev: "block-like", next: "*" }]
         },
         {
             code: "[\n2,\n3,\nfunction() {\n}\n]",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "*" }
-            ]
+            options: [{ blankLine: "always", prev: "block-like", next: "*" }]
         },
         {
             code: "a(res => {\n})\n.b();",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "*" }
-            ]
+            options: [{ blankLine: "always", prev: "block-like", next: "*" }]
         },
         {
             code: "var foo = (\n<div\nref={function() {\n}}\n>\nfoo\n</div>\n);",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "block-like", next: "*" }],
             parserOptions: { ecmaFeatures: { jsx: true } }
         },
         {
             code: "var i = 0;\nwhile (i < 100) {\nif(i % 2 === 0) {continue;}\n++i;\n}",
-            options: [
-                { blankLine: "always", prev: "multiline-block-like", next: "*" }
-            ]
+            options: [{ blankLine: "always", prev: "multiline-block-like", next: "*" }]
         },
         {
             code: "var i = 0;\nwhile (i < 100) {\nif(i % 2 === 0) {if(i === 4) {continue;}}\n++i;\n}",
-            options: [
-                { blankLine: "always", prev: "multiline-block-like", next: "*" }
-            ]
+            options: [{ blankLine: "always", prev: "multiline-block-like", next: "*" }]
         },
 
         //----------------------------------------------------------------------
@@ -2563,33 +2319,23 @@ ruleTester.run("padding-line-between-statements", rule, {
 
         {
             code: "module.exports = 2;",
-            options: [
-                { blankLine: "always", prev: "*", next: "cjs-export" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "cjs-export" }]
         },
         {
             code: "var a = 2;\n\nmodule.exports = a;",
-            options: [
-                { blankLine: "always", prev: "*", next: "cjs-export" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "cjs-export" }]
         },
         {
             code: "var a = 2;\nfoo.exports = a;",
-            options: [
-                { blankLine: "always", prev: "*", next: "cjs-export" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "cjs-export" }]
         },
         {
             code: "var a = 2;\nmodule.foo = a;",
-            options: [
-                { blankLine: "always", prev: "*", next: "cjs-export" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "cjs-export" }]
         },
         {
             code: "if (true) {\nmodule.exports = a;\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "cjs-export" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: "cjs-export" }]
         },
 
         //----------------------------------------------------------------------
@@ -2599,76 +2345,54 @@ ruleTester.run("padding-line-between-statements", rule, {
 
         {
             code: "function x() { return; }",
-            options: [
-                { blankLine: "always", prev: "*", next: ["if", "for", "return", "switch", "case", "break", "throw", "while", "default"] }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: ["if", "for", "return", "switch", "case", "break", "throw", "while", "default"] }]
         },
         {
             code: "if (true) {} else if (false) {}",
-            options: [
-                { blankLine: "always", prev: "*", next: ["if", "for", "return", "switch", "case", "break", "throw", "while", "default"] }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: ["if", "for", "return", "switch", "case", "break", "throw", "while", "default"] }]
         },
         {
             code: "function x() { var a = true; do { a = !a; } while (a); }",
-            options: [
-                { blankLine: "always", prev: "*", next: ["if", "for", "return", "switch", "case", "break", "throw", "while", "default"] }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: ["if", "for", "return", "switch", "case", "break", "throw", "while", "default"] }]
         },
         {
             code: "function x() { if (true) return; }",
-            options: [
-                { blankLine: "always", prev: "*", next: ["if", "for", "return", "switch", "case", "break", "throw", "while", "default"] }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: ["if", "for", "return", "switch", "case", "break", "throw", "while", "default"] }]
         },
         {
             code: "function test() {};",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "block-like" }
-            ]
+            options: [{ blankLine: "always", prev: "block-like", next: "block-like" }]
         },
 
         // class static blocks
         {
             code: "class C {\n static {\n let x;\n\n foo();\n }\n }",
-            options: [
-                { blankLine: "always", prev: "let", next: "expression" }
-            ],
+            options: [{ blankLine: "always", prev: "let", next: "expression" }],
             parserOptions: { ecmaVersion: 2022 }
         },
         {
             code: "class C {\n static {\n let x;\n foo();\n }\n }",
-            options: [
-                { blankLine: "never", prev: "let", next: "expression" }
-            ],
+            options: [{ blankLine: "never", prev: "let", next: "expression" }],
             parserOptions: { ecmaVersion: 2022 }
         },
         {
             code: "class C {\n static {\n let x;\n foo();\n\n const y = 1;\n }\n }",
-            options: [
-                { blankLine: "always", prev: "expression", next: "const" }
-            ],
+            options: [{ blankLine: "always", prev: "expression", next: "const" }],
             parserOptions: { ecmaVersion: 2022 }
         },
         {
             code: "class C {\n static {\n let x;\n foo();\n const y = 1;\n }\n }",
-            options: [
-                { blankLine: "never", prev: "expression", next: "const" }
-            ],
+            options: [{ blankLine: "never", prev: "expression", next: "const" }],
             parserOptions: { ecmaVersion: 2022 }
         },
         {
             code: "class C {\n static {\n let x;\n foo();\n\n const y = 1;\n const z = 1;\n }\n }",
-            options: [
-                { blankLine: "always", prev: "expression", next: "const" }
-            ],
+            options: [{ blankLine: "always", prev: "expression", next: "const" }],
             parserOptions: { ecmaVersion: 2022 }
         },
         {
             code: "class C {\n static {\n let x;\n foo();\n const y = 1;\n const z = 1;\n }\n }",
-            options: [
-                { blankLine: "never", prev: "expression", next: "const" }
-            ],
+            options: [{ blankLine: "never", prev: "expression", next: "const" }],
             parserOptions: { ecmaVersion: 2022 }
         },
         {
@@ -2681,63 +2405,46 @@ ruleTester.run("padding-line-between-statements", rule, {
         },
         {
             code: "class C { static { let x; { let y; } let z; } }",
-            options: [
-                { blankLine: "always", prev: "let", next: "let" }
-            ],
+            options: [{ blankLine: "always", prev: "let", next: "let" }],
             parserOptions: { ecmaVersion: 2022 }
         },
         {
             code: "class C { method() { let x; } static { let y; } }",
-            options: [
-                { blankLine: "always", prev: "let", next: "let" }
-            ],
+            options: [{ blankLine: "always", prev: "let", next: "let" }],
             parserOptions: { ecmaVersion: 2022 }
         },
         {
             code: "class C { static { let y; } method() { let x; } }",
-            options: [
-                { blankLine: "always", prev: "let", next: "let" }
-            ],
+            options: [{ blankLine: "always", prev: "let", next: "let" }],
             parserOptions: { ecmaVersion: 2022 }
         },
         {
             code: "class C { static { let x; } static { let y; } }",
-            options: [
-                { blankLine: "always", prev: "let", next: "let" }
-            ],
+            options: [{ blankLine: "always", prev: "let", next: "let" }],
             parserOptions: { ecmaVersion: 2022 }
         },
         {
             code: "let x; class C { static { let y; } }",
-            options: [
-                { blankLine: "always", prev: "let", next: "let" }
-            ],
+            options: [{ blankLine: "always", prev: "let", next: "let" }],
             parserOptions: { ecmaVersion: 2022 }
         },
         {
             code: "class C { static { let x; } } let y;",
-            options: [
-                { blankLine: "always", prev: "let", next: "let" }
-            ],
+            options: [{ blankLine: "always", prev: "let", next: "let" }],
             parserOptions: { ecmaVersion: 2022 }
         },
         {
             code: "class C { static { let x; } }",
-            options: [
-                { blankLine: "always", prev: "class", next: "let" }
-            ],
+            options: [{ blankLine: "always", prev: "class", next: "let" }],
             parserOptions: { ecmaVersion: 2022 }
         },
         {
             code: "class C { static { 'use strict'; let x; } }", // 'use strict'; is "expression", because class static blocks don't have directives
-            options: [
-                { blankLine: "always", prev: "directive", next: "let" }
-            ],
+            options: [{ blankLine: "always", prev: "directive", next: "let" }],
             parserOptions: { ecmaVersion: 2022 }
         }
     ],
     invalid: [
-
         //----------------------------------------------------------------------
         // wildcard
         //----------------------------------------------------------------------
@@ -2745,57 +2452,43 @@ ruleTester.run("padding-line-between-statements", rule, {
         {
             code: "foo();\n\nfoo();",
             output: "foo();\nfoo();",
-            options: [
-                { blankLine: "never", prev: "*", next: "*" }
-            ],
+            options: [{ blankLine: "never", prev: "*", next: "*" }],
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "foo();\n\n//comment\nfoo();",
             output: "foo();\n//comment\nfoo();",
-            options: [
-                { blankLine: "never", prev: "*", next: "*" }
-            ],
+            options: [{ blankLine: "never", prev: "*", next: "*" }],
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "    foo();\n    \n    //comment\n    foo();",
             output: "    foo();\n    //comment\n    foo();",
-            options: [
-                { blankLine: "never", prev: "*", next: "*" }
-            ],
+            options: [{ blankLine: "never", prev: "*", next: "*" }],
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "if (a) {}\n\nfor (;;) {}",
             output: "if (a) {}\nfor (;;) {}",
-            options: [
-                { blankLine: "never", prev: "*", next: "*" }
-            ],
+            options: [{ blankLine: "never", prev: "*", next: "*" }],
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "foo();\nfoo();",
             output: "foo();\n\nfoo();",
-            options: [
-                { blankLine: "always", prev: "*", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "*", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "    function a() {}\n    do {} while (a)",
             output: "    function a() {}\n\n    do {} while (a)",
-            options: [
-                { blankLine: "always", prev: "*", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "*", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "foo();//trailing-comment\n//comment\n//comment\nfoo();",
             output: "foo();//trailing-comment\n\n//comment\n//comment\nfoo();",
-            options: [
-                { blankLine: "always", prev: "*", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "*", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
 
@@ -2806,161 +2499,121 @@ ruleTester.run("padding-line-between-statements", rule, {
         {
             code: "{}\n\nfoo()",
             output: "{}\nfoo()",
-            options: [
-                { blankLine: "never", prev: "block-like", next: "*" }
-            ],
+            options: [{ blankLine: "never", prev: "block-like", next: "*" }],
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "{}\nfoo()",
             output: "{}\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "block-like", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "if(a){}\nfoo()",
             output: "if(a){}\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "block-like", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "if(a){}else{}\nfoo()",
             output: "if(a){}else{}\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "block-like", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "if(a){}else if(b){}\nfoo()",
             output: "if(a){}else if(b){}\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "block-like", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "if(a){}else if(b){}else{}\nfoo()",
             output: "if(a){}else if(b){}else{}\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "block-like", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "switch(a){}\nfoo()",
             output: "switch(a){}\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "block-like", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "switch(a){case 0:}\nfoo()",
             output: "switch(a){case 0:}\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "block-like", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "try{}catch(e){}\nfoo()",
             output: "try{}catch(e){}\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "block-like", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "try{}finally{}\nfoo()",
             output: "try{}finally{}\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "block-like", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "try{}catch(e){}finally{}\nfoo()",
             output: "try{}catch(e){}finally{}\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "block-like", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "while(a){}\nfoo()",
             output: "while(a){}\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "block-like", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "do{}while(a)\nfoo()",
             output: "do{}while(a)\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "block-like", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "for(;;){}\nfoo()",
             output: "for(;;){}\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "block-like", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "for(a in b){}\nfoo()",
             output: "for(a in b){}\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "block-like", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "for(a of b){}\nfoo()",
             output: "for(a of b){}\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "block-like", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "a=function(){}\nfoo()",
             output: "a=function(){}\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "block-like", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "a=()=>{}\nfoo()",
             output: "a=()=>{}\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "block-like", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "function a(){}\nfoo()",
             output: "function a(){}\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "block-like", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "let a=function(){}\nfoo()",
             output: "let a=function(){}\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "block-like", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
 
@@ -2971,49 +2624,37 @@ ruleTester.run("padding-line-between-statements", rule, {
         {
             code: "module.exports=1\n\nfoo()",
             output: "module.exports=1\nfoo()",
-            options: [
-                { blankLine: "never", prev: "cjs-export", next: "*" }
-            ],
+            options: [{ blankLine: "never", prev: "cjs-export", next: "*" }],
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "module.exports=1\nfoo()",
             output: "module.exports=1\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "cjs-export", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "cjs-export", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "module.exports.foo=1\nfoo()",
             output: "module.exports.foo=1\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "cjs-export", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "cjs-export", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "module.exports[foo]=1\nfoo()",
             output: "module.exports[foo]=1\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "cjs-export", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "cjs-export", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "exports.foo=1\nfoo()",
             output: "exports.foo=1\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "cjs-export", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "cjs-export", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "exports[foo]=1\nfoo()",
             output: "exports[foo]=1\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "cjs-export", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "cjs-export", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
 
@@ -3022,35 +2663,27 @@ ruleTester.run("padding-line-between-statements", rule, {
         //----------------------------------------------------------------------
 
         {
-            code: "const foo=require(\"foo\")\n\nfoo()",
-            output: "const foo=require(\"foo\")\nfoo()",
-            options: [
-                { blankLine: "never", prev: "cjs-import", next: "*" }
-            ],
+            code: 'const foo=require("foo")\n\nfoo()',
+            output: 'const foo=require("foo")\nfoo()',
+            options: [{ blankLine: "never", prev: "cjs-import", next: "*" }],
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
-            code: "const foo=require(\"foo\")\nfoo()",
-            output: "const foo=require(\"foo\")\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "cjs-import", next: "*" }
-            ],
+            code: 'const foo=require("foo")\nfoo()',
+            output: 'const foo=require("foo")\n\nfoo()',
+            options: [{ blankLine: "always", prev: "cjs-import", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
-            code: "const foo=require(\"foo\").Foo\nfoo()",
-            output: "const foo=require(\"foo\").Foo\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "cjs-import", next: "*" }
-            ],
+            code: 'const foo=require("foo").Foo\nfoo()',
+            output: 'const foo=require("foo").Foo\n\nfoo()',
+            options: [{ blankLine: "always", prev: "cjs-import", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
-            code: "const foo=require(\"foo\")[a]\nfoo()",
-            output: "const foo=require(\"foo\")[a]\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "cjs-import", next: "*" }
-            ],
+            code: 'const foo=require("foo")[a]\nfoo()',
+            output: 'const foo=require("foo")[a]\n\nfoo()',
+            options: [{ blankLine: "always", prev: "cjs-import", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
 
@@ -3059,35 +2692,27 @@ ruleTester.run("padding-line-between-statements", rule, {
         //----------------------------------------------------------------------
 
         {
-            code: "\"use strict\"\n\nfoo()",
-            output: "\"use strict\"\nfoo()",
-            options: [
-                { blankLine: "never", prev: "directive", next: "*" }
-            ],
+            code: '"use strict"\n\nfoo()',
+            output: '"use strict"\nfoo()',
+            options: [{ blankLine: "never", prev: "directive", next: "*" }],
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
-            code: "\"use strict\"\nfoo()",
-            output: "\"use strict\"\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "directive", next: "*" }
-            ],
+            code: '"use strict"\nfoo()',
+            output: '"use strict"\n\nfoo()',
+            options: [{ blankLine: "always", prev: "directive", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "'use strict'\nfoo()",
             output: "'use strict'\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "directive", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "directive", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "'use asm'\nfoo()",
             output: "'use asm'\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "directive", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "directive", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
 
@@ -3098,153 +2723,115 @@ ruleTester.run("padding-line-between-statements", rule, {
         {
             code: "{\n}\n\nfoo()",
             output: "{\n}\nfoo()",
-            options: [
-                { blankLine: "never", prev: "block-like", next: "*" }
-            ],
+            options: [{ blankLine: "never", prev: "block-like", next: "*" }],
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "{\n}\nfoo()",
             output: "{\n}\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "block-like", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "if(a){\n}\nfoo()",
             output: "if(a){\n}\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "block-like", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "if(a){\n}else{\n}\nfoo()",
             output: "if(a){\n}else{\n}\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "block-like", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "if(a){\n}else if(b){\n}\nfoo()",
             output: "if(a){\n}else if(b){\n}\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "block-like", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "if(a){\n}else if(b){\n}else{\n}\nfoo()",
             output: "if(a){\n}else if(b){\n}else{\n}\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "block-like", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "switch(a){\n}\nfoo()",
             output: "switch(a){\n}\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "block-like", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "try{\n}catch(e){\n}\nfoo()",
             output: "try{\n}catch(e){\n}\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "block-like", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "try{\n}finally{\n}\nfoo()",
             output: "try{\n}finally{\n}\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "block-like", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "try{\n}catch(e){\n}finally{\n}\nfoo()",
             output: "try{\n}catch(e){\n}finally{\n}\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "block-like", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "while(a){\n}\nfoo()",
             output: "while(a){\n}\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "block-like", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "do{\n}while(a)\nfoo()",
             output: "do{\n}while(a)\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "block-like", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "for(;;){\n}\nfoo()",
             output: "for(;;){\n}\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "block-like", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "for(a in b){\n}\nfoo()",
             output: "for(a in b){\n}\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "block-like", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "for(a of b){\n}\nfoo()",
             output: "for(a of b){\n}\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "block-like", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "a=function(){\n}\nfoo()",
             output: "a=function(){\n}\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "block-like", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "a=()=>{\n}\nfoo()",
             output: "a=()=>{\n}\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "block-like", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "function a(){\n}\nfoo()",
             output: "function a(){\n}\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "block-like", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "let a=function(){\n}\nfoo()",
             output: "let a=function(){\n}\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "block-like", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
 
@@ -3255,17 +2842,13 @@ ruleTester.run("padding-line-between-statements", rule, {
         {
             code: "{}\n\nfoo()",
             output: "{}\nfoo()",
-            options: [
-                { blankLine: "never", prev: "block", next: "*" }
-            ],
+            options: [{ blankLine: "never", prev: "block", next: "*" }],
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "{}\nfoo()",
             output: "{}\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "block", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "block", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
 
@@ -3276,17 +2859,13 @@ ruleTester.run("padding-line-between-statements", rule, {
         {
             code: ";\n\nfoo()",
             output: ";\nfoo()",
-            options: [
-                { blankLine: "never", prev: "empty", next: "*" }
-            ],
+            options: [{ blankLine: "never", prev: "empty", next: "*" }],
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: ";\nfoo()",
             output: ";\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "empty", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "empty", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
 
@@ -3297,17 +2876,13 @@ ruleTester.run("padding-line-between-statements", rule, {
         {
             code: "foo()\n\nfoo()",
             output: "foo()\nfoo()",
-            options: [
-                { blankLine: "never", prev: "expression", next: "*" }
-            ],
+            options: [{ blankLine: "never", prev: "expression", next: "*" }],
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "foo()\nfoo()",
             output: "foo()\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "expression", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "expression", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
 
@@ -3318,25 +2893,19 @@ ruleTester.run("padding-line-between-statements", rule, {
         {
             code: "foo()\n\nfoo(\n\tx,\n\ty\n)",
             output: "foo()\nfoo(\n\tx,\n\ty\n)",
-            options: [
-                { blankLine: "never", prev: "*", next: "multiline-expression" }
-            ],
+            options: [{ blankLine: "never", prev: "*", next: "multiline-expression" }],
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "foo()\nfoo(\n\tx,\n\ty\n)",
             output: "foo()\n\nfoo(\n\tx,\n\ty\n)",
-            options: [
-                { blankLine: "always", prev: "*", next: "multiline-expression" }
-            ],
+            options: [{ blankLine: "always", prev: "*", next: "multiline-expression" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "() => {\n\tsomeArray.forEach(\n\t\tx => doSomething(x)\n\t);\n\treturn theThing;\n}",
             output: "() => {\n\tsomeArray.forEach(\n\t\tx => doSomething(x)\n\t);\n\n\treturn theThing;\n}",
-            options: [
-                { blankLine: "always", prev: "multiline-expression", next: "return" }
-            ],
+            options: [{ blankLine: "always", prev: "multiline-expression", next: "return" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
 
@@ -3347,33 +2916,25 @@ ruleTester.run("padding-line-between-statements", rule, {
         {
             code: "while(a){break\n\nfoo()}",
             output: "while(a){break\nfoo()}",
-            options: [
-                { blankLine: "never", prev: "break", next: "*" }
-            ],
+            options: [{ blankLine: "never", prev: "break", next: "*" }],
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "switch(a){case 0:break\n\nfoo()}",
             output: "switch(a){case 0:break\nfoo()}",
-            options: [
-                { blankLine: "never", prev: "break", next: "*" }
-            ],
+            options: [{ blankLine: "never", prev: "break", next: "*" }],
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "while(a){break\nfoo()}",
             output: "while(a){break\n\nfoo()}",
-            options: [
-                { blankLine: "always", prev: "break", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "break", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "switch(a){case 0:break\nfoo()}",
             output: "switch(a){case 0:break\n\nfoo()}",
-            options: [
-                { blankLine: "always", prev: "break", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "break", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
 
@@ -3384,17 +2945,13 @@ ruleTester.run("padding-line-between-statements", rule, {
         {
             code: "switch(a){case 0:\nfoo()\n\ndefault:}",
             output: "switch(a){case 0:\nfoo()\ndefault:}",
-            options: [
-                { blankLine: "never", prev: "case", next: "*" }
-            ],
+            options: [{ blankLine: "never", prev: "case", next: "*" }],
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "switch(a){case 0:\nfoo()\ndefault:}",
             output: "switch(a){case 0:\nfoo()\n\ndefault:}",
-            options: [
-                { blankLine: "always", prev: "case", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "case", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
 
@@ -3405,17 +2962,13 @@ ruleTester.run("padding-line-between-statements", rule, {
         {
             code: "class A{}\n\nfoo()",
             output: "class A{}\nfoo()",
-            options: [
-                { blankLine: "never", prev: "class", next: "*" }
-            ],
+            options: [{ blankLine: "never", prev: "class", next: "*" }],
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "class A{}\nfoo()",
             output: "class A{}\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "class", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "class", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
 
@@ -3426,17 +2979,13 @@ ruleTester.run("padding-line-between-statements", rule, {
         {
             code: "const a=1\n\nfoo()",
             output: "const a=1\nfoo()",
-            options: [
-                { blankLine: "never", prev: "const", next: "*" }
-            ],
+            options: [{ blankLine: "never", prev: "const", next: "*" }],
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "const a=1\nfoo()",
             output: "const a=1\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "const", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "const", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
 
@@ -3447,17 +2996,13 @@ ruleTester.run("padding-line-between-statements", rule, {
         {
             code: "while(a){continue\n\nfoo()}",
             output: "while(a){continue\nfoo()}",
-            options: [
-                { blankLine: "never", prev: "continue", next: "*" }
-            ],
+            options: [{ blankLine: "never", prev: "continue", next: "*" }],
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "while(a){continue\nfoo()}",
             output: "while(a){continue\n\nfoo()}",
-            options: [
-                { blankLine: "always", prev: "continue", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "continue", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
 
@@ -3468,17 +3013,13 @@ ruleTester.run("padding-line-between-statements", rule, {
         {
             code: "debugger\n\nfoo()",
             output: "debugger\nfoo()",
-            options: [
-                { blankLine: "never", prev: "debugger", next: "*" }
-            ],
+            options: [{ blankLine: "never", prev: "debugger", next: "*" }],
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "debugger\nfoo()",
             output: "debugger\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "debugger", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "debugger", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
 
@@ -3489,17 +3030,13 @@ ruleTester.run("padding-line-between-statements", rule, {
         {
             code: "switch(a){default:\nfoo()\n\ncase 0:}",
             output: "switch(a){default:\nfoo()\ncase 0:}",
-            options: [
-                { blankLine: "never", prev: "default", next: "*" }
-            ],
+            options: [{ blankLine: "never", prev: "default", next: "*" }],
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "switch(a){default:\nfoo()\ncase 0:}",
             output: "switch(a){default:\nfoo()\n\ncase 0:}",
-            options: [
-                { blankLine: "always", prev: "default", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "default", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
 
@@ -3510,17 +3047,13 @@ ruleTester.run("padding-line-between-statements", rule, {
         {
             code: "do;while(a)\n\nfoo()",
             output: "do;while(a)\nfoo()",
-            options: [
-                { blankLine: "never", prev: "do", next: "*" }
-            ],
+            options: [{ blankLine: "never", prev: "do", next: "*" }],
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "do;while(a)\nfoo()",
             output: "do;while(a)\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "do", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "do", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
 
@@ -3531,54 +3064,42 @@ ruleTester.run("padding-line-between-statements", rule, {
         {
             code: "export default 1\n\nfoo()",
             output: "export default 1\nfoo()",
-            options: [
-                { blankLine: "never", prev: "export", next: "*" }
-            ],
+            options: [{ blankLine: "never", prev: "export", next: "*" }],
             parserOptions: { ecmaVersion: 6, sourceType: "module" },
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "export let a=1\n\nfoo()",
             output: "export let a=1\nfoo()",
-            options: [
-                { blankLine: "never", prev: "export", next: "*" }
-            ],
+            options: [{ blankLine: "never", prev: "export", next: "*" }],
             parserOptions: { ecmaVersion: 6, sourceType: "module" },
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "var a = 0;export {a}\n\nfoo()",
             output: "var a = 0;export {a}\nfoo()",
-            options: [
-                { blankLine: "never", prev: "export", next: "*" }
-            ],
+            options: [{ blankLine: "never", prev: "export", next: "*" }],
             parserOptions: { ecmaVersion: 6, sourceType: "module" },
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "export default 1\nfoo()",
             output: "export default 1\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "export", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "export", next: "*" }],
             parserOptions: { ecmaVersion: 6, sourceType: "module" },
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "export let a=1\nfoo()",
             output: "export let a=1\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "export", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "export", next: "*" }],
             parserOptions: { ecmaVersion: 6, sourceType: "module" },
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "var a = 0;export {a}\nfoo()",
             output: "var a = 0;export {a}\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "export", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "export", next: "*" }],
             parserOptions: { ecmaVersion: 6, sourceType: "module" },
             errors: [{ messageId: "expectedBlankLine" }]
         },
@@ -3590,49 +3111,37 @@ ruleTester.run("padding-line-between-statements", rule, {
         {
             code: "for(;;);\n\nfoo()",
             output: "for(;;);\nfoo()",
-            options: [
-                { blankLine: "never", prev: "for", next: "*" }
-            ],
+            options: [{ blankLine: "never", prev: "for", next: "*" }],
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "for(a in b);\n\nfoo()",
             output: "for(a in b);\nfoo()",
-            options: [
-                { blankLine: "never", prev: "for", next: "*" }
-            ],
+            options: [{ blankLine: "never", prev: "for", next: "*" }],
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "for(a of b);\n\nfoo()",
             output: "for(a of b);\nfoo()",
-            options: [
-                { blankLine: "never", prev: "for", next: "*" }
-            ],
+            options: [{ blankLine: "never", prev: "for", next: "*" }],
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "for(;;);\nfoo()",
             output: "for(;;);\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "for", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "for", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "for(a in b);\nfoo()",
             output: "for(a in b);\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "for", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "for", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "for(a of b);\nfoo()",
             output: "for(a of b);\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "for", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "for", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
 
@@ -3643,17 +3152,13 @@ ruleTester.run("padding-line-between-statements", rule, {
         {
             code: "function foo(){}\n\nfoo()",
             output: "function foo(){}\nfoo()",
-            options: [
-                { blankLine: "never", prev: "function", next: "*" }
-            ],
+            options: [{ blankLine: "never", prev: "function", next: "*" }],
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "function foo(){}\nfoo()",
             output: "function foo(){}\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "function", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "function", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
@@ -3673,33 +3178,25 @@ ruleTester.run("padding-line-between-statements", rule, {
         {
             code: "if(a);\n\nfoo()",
             output: "if(a);\nfoo()",
-            options: [
-                { blankLine: "never", prev: "if", next: "*" }
-            ],
+            options: [{ blankLine: "never", prev: "if", next: "*" }],
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "if(a);else;\n\nfoo()",
             output: "if(a);else;\nfoo()",
-            options: [
-                { blankLine: "never", prev: "if", next: "*" }
-            ],
+            options: [{ blankLine: "never", prev: "if", next: "*" }],
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "if(a);\nfoo()",
             output: "if(a);\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "if", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "if", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "if(a);else;\nfoo()",
             output: "if(a);else;\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "if", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "if", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
 
@@ -3710,33 +3207,25 @@ ruleTester.run("padding-line-between-statements", rule, {
         {
             code: "(function(){\n})()\n\nvar a = 2;",
             output: "(function(){\n})()\nvar a = 2;",
-            options: [
-                { blankLine: "never", prev: "iife", next: "*" }
-            ],
+            options: [{ blankLine: "never", prev: "iife", next: "*" }],
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "+(function(){\n})()\n\nvar a = 2;",
             output: "+(function(){\n})()\nvar a = 2;",
-            options: [
-                { blankLine: "never", prev: "iife", next: "*" }
-            ],
+            options: [{ blankLine: "never", prev: "iife", next: "*" }],
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "(function(){\n})()\nvar a = 2;",
             output: "(function(){\n})()\n\nvar a = 2;",
-            options: [
-                { blankLine: "always", prev: "iife", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "iife", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "+(function(){\n})()\nvar a = 2;",
             output: "+(function(){\n})()\n\nvar a = 2;",
-            options: [
-                { blankLine: "always", prev: "iife", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "iife", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
 
@@ -3763,54 +3252,42 @@ ruleTester.run("padding-line-between-statements", rule, {
         {
             code: "import a from 'a'\n\nfoo()",
             output: "import a from 'a'\nfoo()",
-            options: [
-                { blankLine: "never", prev: "import", next: "*" }
-            ],
+            options: [{ blankLine: "never", prev: "import", next: "*" }],
             parserOptions: { ecmaVersion: 6, sourceType: "module" },
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "import * as a from 'a'\n\nfoo()",
             output: "import * as a from 'a'\nfoo()",
-            options: [
-                { blankLine: "never", prev: "import", next: "*" }
-            ],
+            options: [{ blankLine: "never", prev: "import", next: "*" }],
             parserOptions: { ecmaVersion: 6, sourceType: "module" },
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "import {a} from 'a'\n\nfoo()",
             output: "import {a} from 'a'\nfoo()",
-            options: [
-                { blankLine: "never", prev: "import", next: "*" }
-            ],
+            options: [{ blankLine: "never", prev: "import", next: "*" }],
             parserOptions: { ecmaVersion: 6, sourceType: "module" },
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "import a from 'a'\nfoo()",
             output: "import a from 'a'\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "import", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "import", next: "*" }],
             parserOptions: { ecmaVersion: 6, sourceType: "module" },
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "import * as a from 'a'\nfoo()",
             output: "import * as a from 'a'\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "import", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "import", next: "*" }],
             parserOptions: { ecmaVersion: 6, sourceType: "module" },
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "import {a} from 'a'\nfoo()",
             output: "import {a} from 'a'\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "import", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "import", next: "*" }],
             parserOptions: { ecmaVersion: 6, sourceType: "module" },
             errors: [{ messageId: "expectedBlankLine" }]
         },
@@ -3822,17 +3299,13 @@ ruleTester.run("padding-line-between-statements", rule, {
         {
             code: "let a\n\nfoo()",
             output: "let a\nfoo()",
-            options: [
-                { blankLine: "never", prev: "let", next: "*" }
-            ],
+            options: [{ blankLine: "never", prev: "let", next: "*" }],
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "let a\nfoo()",
             output: "let a\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "let", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "let", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
 
@@ -3843,17 +3316,13 @@ ruleTester.run("padding-line-between-statements", rule, {
         {
             code: "function foo(){return\n\nfoo()}",
             output: "function foo(){return\nfoo()}",
-            options: [
-                { blankLine: "never", prev: "return", next: "*" }
-            ],
+            options: [{ blankLine: "never", prev: "return", next: "*" }],
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "function foo(){return\nfoo()}",
             output: "function foo(){return\n\nfoo()}",
-            options: [
-                { blankLine: "always", prev: "return", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "return", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
 
@@ -3864,17 +3333,13 @@ ruleTester.run("padding-line-between-statements", rule, {
         {
             code: "switch(a){}\n\nfoo()",
             output: "switch(a){}\nfoo()",
-            options: [
-                { blankLine: "never", prev: "switch", next: "*" }
-            ],
+            options: [{ blankLine: "never", prev: "switch", next: "*" }],
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "switch(a){}\nfoo()",
             output: "switch(a){}\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "switch", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "switch", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
 
@@ -3885,17 +3350,13 @@ ruleTester.run("padding-line-between-statements", rule, {
         {
             code: "throw a\n\nfoo()",
             output: "throw a\nfoo()",
-            options: [
-                { blankLine: "never", prev: "throw", next: "*" }
-            ],
+            options: [{ blankLine: "never", prev: "throw", next: "*" }],
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "throw a\nfoo()",
             output: "throw a\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "throw", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "throw", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
 
@@ -3906,49 +3367,37 @@ ruleTester.run("padding-line-between-statements", rule, {
         {
             code: "try{}catch(e){}\n\nfoo()",
             output: "try{}catch(e){}\nfoo()",
-            options: [
-                { blankLine: "never", prev: "try", next: "*" }
-            ],
+            options: [{ blankLine: "never", prev: "try", next: "*" }],
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "try{}finally{}\n\nfoo()",
             output: "try{}finally{}\nfoo()",
-            options: [
-                { blankLine: "never", prev: "try", next: "*" }
-            ],
+            options: [{ blankLine: "never", prev: "try", next: "*" }],
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "try{}catch(e){}finally{}\n\nfoo()",
             output: "try{}catch(e){}finally{}\nfoo()",
-            options: [
-                { blankLine: "never", prev: "try", next: "*" }
-            ],
+            options: [{ blankLine: "never", prev: "try", next: "*" }],
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "try{}catch(e){}\nfoo()",
             output: "try{}catch(e){}\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "try", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "try", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "try{}finally{}\nfoo()",
             output: "try{}finally{}\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "try", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "try", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "try{}catch(e){}finally{}\nfoo()",
             output: "try{}catch(e){}finally{}\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "try", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "try", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
 
@@ -3959,17 +3408,13 @@ ruleTester.run("padding-line-between-statements", rule, {
         {
             code: "var a\n\nfoo()",
             output: "var a\nfoo()",
-            options: [
-                { blankLine: "never", prev: "var", next: "*" }
-            ],
+            options: [{ blankLine: "never", prev: "var", next: "*" }],
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "var a\nfoo()",
             output: "var a\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "var", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "var", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
 
@@ -3980,17 +3425,13 @@ ruleTester.run("padding-line-between-statements", rule, {
         {
             code: "while(a);\n\nfoo()",
             output: "while(a);\nfoo()",
-            options: [
-                { blankLine: "never", prev: "while", next: "*" }
-            ],
+            options: [{ blankLine: "never", prev: "while", next: "*" }],
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "while(a);\nfoo()",
             output: "while(a);\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "while", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "while", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
 
@@ -4001,17 +3442,13 @@ ruleTester.run("padding-line-between-statements", rule, {
         {
             code: "with(a);\n\nfoo()",
             output: "with(a);\nfoo()",
-            options: [
-                { blankLine: "never", prev: "with", next: "*" }
-            ],
+            options: [{ blankLine: "never", prev: "with", next: "*" }],
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "with(a);\nfoo()",
             output: "with(a);\n\nfoo()",
-            options: [
-                { blankLine: "always", prev: "with", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "with", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
 
@@ -4022,33 +3459,25 @@ ruleTester.run("padding-line-between-statements", rule, {
         {
             code: "const a={\nb:1,\nc:2\n}\n\nconst d=3",
             output: "const a={\nb:1,\nc:2\n}\nconst d=3",
-            options: [
-                { blankLine: "never", prev: "multiline-const", next: "*" }
-            ],
+            options: [{ blankLine: "never", prev: "multiline-const", next: "*" }],
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "const a={\nb:1,\nc:2\n}\nconst d=3",
             output: "const a={\nb:1,\nc:2\n}\n\nconst d=3",
-            options: [
-                { blankLine: "always", prev: "multiline-const", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "multiline-const", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "const a=1\n\nconst b={\nc:2,\nd:3\n}",
             output: "const a=1\nconst b={\nc:2,\nd:3\n}",
-            options: [
-                { blankLine: "never", prev: "*", next: "multiline-const" }
-            ],
+            options: [{ blankLine: "never", prev: "*", next: "multiline-const" }],
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "const a=1\nconst b={\nc:2,\nd:3\n}",
             output: "const a=1\n\nconst b={\nc:2,\nd:3\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "multiline-const" }
-            ],
+            options: [{ blankLine: "always", prev: "*", next: "multiline-const" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
 
@@ -4059,33 +3488,25 @@ ruleTester.run("padding-line-between-statements", rule, {
         {
             code: "let a={\nb:1,\nc:2\n}\n\nlet d=3",
             output: "let a={\nb:1,\nc:2\n}\nlet d=3",
-            options: [
-                { blankLine: "never", prev: "multiline-let", next: "*" }
-            ],
+            options: [{ blankLine: "never", prev: "multiline-let", next: "*" }],
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "let a={\nb:1,\nc:2\n}\nlet d=3",
             output: "let a={\nb:1,\nc:2\n}\n\nlet d=3",
-            options: [
-                { blankLine: "always", prev: "multiline-let", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "multiline-let", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "let a=1\n\nlet b={\nc:2,\nd:3\n}",
             output: "let a=1\nlet b={\nc:2,\nd:3\n}",
-            options: [
-                { blankLine: "never", prev: "*", next: "multiline-let" }
-            ],
+            options: [{ blankLine: "never", prev: "*", next: "multiline-let" }],
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "let a=1\nlet b={\nc:2,\nd:3\n}",
             output: "let a=1\n\nlet b={\nc:2,\nd:3\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "multiline-let" }
-            ],
+            options: [{ blankLine: "always", prev: "*", next: "multiline-let" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
 
@@ -4096,33 +3517,25 @@ ruleTester.run("padding-line-between-statements", rule, {
         {
             code: "var a={\nb:1,\nc:2\n}\n\nvar d=3",
             output: "var a={\nb:1,\nc:2\n}\nvar d=3",
-            options: [
-                { blankLine: "never", prev: "multiline-var", next: "*" }
-            ],
+            options: [{ blankLine: "never", prev: "multiline-var", next: "*" }],
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "var a={\nb:1,\nc:2\n}\nvar d=3",
             output: "var a={\nb:1,\nc:2\n}\n\nvar d=3",
-            options: [
-                { blankLine: "always", prev: "multiline-var", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "multiline-var", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "var a=1\n\nvar b={\nc:2,\nd:3\n}",
             output: "var a=1\nvar b={\nc:2,\nd:3\n}",
-            options: [
-                { blankLine: "never", prev: "*", next: "multiline-var" }
-            ],
+            options: [{ blankLine: "never", prev: "*", next: "multiline-var" }],
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "var a=1\nvar b={\nc:2,\nd:3\n}",
             output: "var a=1\n\nvar b={\nc:2,\nd:3\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "multiline-var" }
-            ],
+            options: [{ blankLine: "always", prev: "*", next: "multiline-var" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
 
@@ -4133,33 +3546,25 @@ ruleTester.run("padding-line-between-statements", rule, {
         {
             code: "const a=1\n\nconst b=2",
             output: "const a=1\nconst b=2",
-            options: [
-                { blankLine: "never", prev: "singleline-const", next: "*" }
-            ],
+            options: [{ blankLine: "never", prev: "singleline-const", next: "*" }],
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "const a=1\nconst b=2",
             output: "const a=1\n\nconst b=2",
-            options: [
-                { blankLine: "always", prev: "singleline-const", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "singleline-const", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "const a=1\n\nconst b=2",
             output: "const a=1\nconst b=2",
-            options: [
-                { blankLine: "never", prev: "*", next: "singleline-const" }
-            ],
+            options: [{ blankLine: "never", prev: "*", next: "singleline-const" }],
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "const a=1\nconst b=2",
             output: "const a=1\n\nconst b=2",
-            options: [
-                { blankLine: "always", prev: "*", next: "singleline-const" }
-            ],
+            options: [{ blankLine: "always", prev: "*", next: "singleline-const" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
 
@@ -4170,33 +3575,25 @@ ruleTester.run("padding-line-between-statements", rule, {
         {
             code: "let a=1\n\nlet b=2",
             output: "let a=1\nlet b=2",
-            options: [
-                { blankLine: "never", prev: "singleline-let", next: "*" }
-            ],
+            options: [{ blankLine: "never", prev: "singleline-let", next: "*" }],
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "let a=1\nlet b=2",
             output: "let a=1\n\nlet b=2",
-            options: [
-                { blankLine: "always", prev: "singleline-let", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "singleline-let", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "let a=1\n\nlet b=2",
             output: "let a=1\nlet b=2",
-            options: [
-                { blankLine: "never", prev: "*", next: "singleline-let" }
-            ],
+            options: [{ blankLine: "never", prev: "*", next: "singleline-let" }],
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "let a=1\nlet b=2",
             output: "let a=1\n\nlet b=2",
-            options: [
-                { blankLine: "always", prev: "*", next: "singleline-let" }
-            ],
+            options: [{ blankLine: "always", prev: "*", next: "singleline-let" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
 
@@ -4207,33 +3604,25 @@ ruleTester.run("padding-line-between-statements", rule, {
         {
             code: "var a=1\n\nvar b=2",
             output: "var a=1\nvar b=2",
-            options: [
-                { blankLine: "never", prev: "singleline-var", next: "*" }
-            ],
+            options: [{ blankLine: "never", prev: "singleline-var", next: "*" }],
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "var a=1\nvar b=2",
             output: "var a=1\n\nvar b=2",
-            options: [
-                { blankLine: "always", prev: "singleline-var", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "singleline-var", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "var a=1\n\nvar b=2",
             output: "var a=1\nvar b=2",
-            options: [
-                { blankLine: "never", prev: "*", next: "singleline-var" }
-            ],
+            options: [{ blankLine: "never", prev: "*", next: "singleline-var" }],
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "var a=1\nvar b=2",
             output: "var a=1\n\nvar b=2",
-            options: [
-                { blankLine: "always", prev: "*", next: "singleline-var" }
-            ],
+            options: [{ blankLine: "always", prev: "*", next: "singleline-var" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
 
@@ -4569,259 +3958,195 @@ ruleTester.run("padding-line-between-statements", rule, {
         {
             code: "function a() {\nvar b; return;\n}",
             output: "function a() {\nvar b;\n\n return;\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ],
+            options: [{ blankLine: "always", prev: "*", next: "return" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "function a() {\nvar b;\nreturn;\n}",
             output: "function a() {\nvar b;\n\nreturn;\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ],
+            options: [{ blankLine: "always", prev: "*", next: "return" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "function a() {\nif (b) return b;\nelse if (c) return c;\nelse {\ne();\nreturn d;\n}\n}",
             output: "function a() {\nif (b) return b;\nelse if (c) return c;\nelse {\ne();\n\nreturn d;\n}\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ],
+            options: [{ blankLine: "always", prev: "*", next: "return" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "function a() {\nif (b) return b;\nelse if (c) return c;\nelse {\ne(); return d;\n}\n}",
             output: "function a() {\nif (b) return b;\nelse if (c) return c;\nelse {\ne();\n\n return d;\n}\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ],
+            options: [{ blankLine: "always", prev: "*", next: "return" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "function a() {\n while (b) {\nc();\nreturn;\n}\n}",
             output: "function a() {\n while (b) {\nc();\n\nreturn;\n}\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ],
+            options: [{ blankLine: "always", prev: "*", next: "return" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "function a() {\ndo {\nc();\nreturn;\n} while (b);\n}",
             output: "function a() {\ndo {\nc();\n\nreturn;\n} while (b);\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ],
+            options: [{ blankLine: "always", prev: "*", next: "return" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "function a() {\nfor (var b; b < c; b++) {\nc();\nreturn;\n}\n}",
             output: "function a() {\nfor (var b; b < c; b++) {\nc();\n\nreturn;\n}\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ],
+            options: [{ blankLine: "always", prev: "*", next: "return" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "function a() {\nfor (b in c) {\nd();\nreturn;\n}\n}",
             output: "function a() {\nfor (b in c) {\nd();\n\nreturn;\n}\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ],
+            options: [{ blankLine: "always", prev: "*", next: "return" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "function a() {\nfor (b of c) {\nd();\nreturn;\n}\n}",
             output: "function a() {\nfor (b of c) {\nd();\n\nreturn;\n}\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ],
+            options: [{ blankLine: "always", prev: "*", next: "return" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "function a() {\nif (b) {\nc();\n}\n//comment\nreturn b;\n}",
             output: "function a() {\nif (b) {\nc();\n}\n\n//comment\nreturn b;\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ],
+            options: [{ blankLine: "always", prev: "*", next: "return" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "function a() {\n/*comment\ncomment*/\nif (b) {\nc();\nreturn b;\n} else {\n//comment\n\nreturn d;\n}\n/*multi-line\ncomment*/\nreturn e;\n}",
             output: "function a() {\n/*comment\ncomment*/\nif (b) {\nc();\n\nreturn b;\n} else {\n//comment\n\nreturn d;\n}\n\n/*multi-line\ncomment*/\nreturn e;\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ],
+            options: [{ blankLine: "always", prev: "*", next: "return" }],
             errors: [{ messageId: "expectedBlankLine" }, { messageId: "expectedBlankLine" }]
         },
         {
             code: "function a() {\nif (b) { return; } //comment\nreturn c;\n}",
             output: "function a() {\nif (b) { return; } //comment\n\nreturn c;\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ],
+            options: [{ blankLine: "always", prev: "*", next: "return" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "function a() {\nif (b) { return; } /*multi-line\ncomment*/\nreturn c;\n}",
             output: "function a() {\nif (b) { return; } /*multi-line\ncomment*/\n\nreturn c;\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ],
+            options: [{ blankLine: "always", prev: "*", next: "return" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "function a() {\nif (b) { return; }\n/*multi-line\ncomment*/ return c;\n}",
             output: "function a() {\nif (b) { return; }\n\n/*multi-line\ncomment*/ return c;\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ],
+            options: [{ blankLine: "always", prev: "*", next: "return" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "function a() {\nif (b) { return; } /*multi-line\ncomment*/ return c;\n}",
             output: "function a() {\nif (b) { return; } /*multi-line\ncomment*/\n\n return c;\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ],
+            options: [{ blankLine: "always", prev: "*", next: "return" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "var a;\nreturn;",
             output: "var a;\n\nreturn;",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ],
+            options: [{ blankLine: "always", prev: "*", next: "return" }],
             parserOptions: { ecmaFeatures: { globalReturn: true } },
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "var a; return;",
             output: "var a;\n\n return;",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ],
+            options: [{ blankLine: "always", prev: "*", next: "return" }],
             parserOptions: { ecmaFeatures: { globalReturn: true } },
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "function a() {\n{\n//comment\n}\nreturn\n}",
             output: "function a() {\n{\n//comment\n}\n\nreturn\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ],
+            options: [{ blankLine: "always", prev: "*", next: "return" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "function a() {\n{\n//comment\n} return\n}",
             output: "function a() {\n{\n//comment\n}\n\n return\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ],
+            options: [{ blankLine: "always", prev: "*", next: "return" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "function a() {\nvar c;\nwhile (b) {\n c = d; //comment\n}\nreturn c;\n}",
             output: "function a() {\nvar c;\nwhile (b) {\n c = d; //comment\n}\n\nreturn c;\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ],
+            options: [{ blankLine: "always", prev: "*", next: "return" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "function a() {\nfor (var b; b < c; b++) {\nif (d) {\nbreak; //comment\n}\nreturn;\n}\n}",
             output: "function a() {\nfor (var b; b < c; b++) {\nif (d) {\nbreak; //comment\n}\n\nreturn;\n}\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ],
+            options: [{ blankLine: "always", prev: "*", next: "return" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "function a() {\nvar b; /*multi-line\ncomment*/\nreturn c;\n}",
             output: "function a() {\nvar b; /*multi-line\ncomment*/\n\nreturn c;\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ],
+            options: [{ blankLine: "always", prev: "*", next: "return" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "function a() {\nvar b;\n/*multi-line\ncomment*/ return c;\n}",
             output: "function a() {\nvar b;\n\n/*multi-line\ncomment*/ return c;\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ],
+            options: [{ blankLine: "always", prev: "*", next: "return" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "function a() {\nvar b; /*multi-line\ncomment*/ return c;\n}",
             output: "function a() {\nvar b; /*multi-line\ncomment*/\n\n return c;\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ],
+            options: [{ blankLine: "always", prev: "*", next: "return" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "function a() {\nvar b;\n//comment\nreturn;\n}",
             output: "function a() {\nvar b;\n\n//comment\nreturn;\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ],
+            options: [{ blankLine: "always", prev: "*", next: "return" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "function a() {\nvar b; //comment\nreturn;\n}",
             output: "function a() {\nvar b; //comment\n\nreturn;\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ],
+            options: [{ blankLine: "always", prev: "*", next: "return" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "function a() {\nvar b;\n/* comment */ return;\n}",
             output: "function a() {\nvar b;\n\n/* comment */ return;\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ],
+            options: [{ blankLine: "always", prev: "*", next: "return" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "function a() {\nvar b;\n//comment\n/* comment */ return;\n}",
             output: "function a() {\nvar b;\n\n//comment\n/* comment */ return;\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ],
+            options: [{ blankLine: "always", prev: "*", next: "return" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "function a() {\nvar b; /* comment */ return;\n}",
             output: "function a() {\nvar b; /* comment */\n\n return;\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ],
+            options: [{ blankLine: "always", prev: "*", next: "return" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "function a() {\nvar b; /* comment */\nreturn;\n}",
             output: "function a() {\nvar b; /* comment */\n\nreturn;\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ],
+            options: [{ blankLine: "always", prev: "*", next: "return" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "function a() {\nvar b;\nreturn; //comment\n}",
             output: "function a() {\nvar b;\n\nreturn; //comment\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ],
+            options: [{ blankLine: "always", prev: "*", next: "return" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "function a() {\nvar b; return; //comment\n}",
             output: "function a() {\nvar b;\n\n return; //comment\n}",
-            options: [
-                { blankLine: "always", prev: "*", next: "return" }
-            ],
+            options: [{ blankLine: "always", prev: "*", next: "return" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
 
@@ -4833,41 +4158,31 @@ ruleTester.run("padding-line-between-statements", rule, {
         {
             code: "if(true){}\n\nvar a = 2;",
             output: "if(true){}\nvar a = 2;",
-            options: [
-                { blankLine: "never", prev: "block-like", next: "*" }
-            ],
+            options: [{ blankLine: "never", prev: "block-like", next: "*" }],
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "if(true){\nif(true) {}\n\nvar a = 2;}",
             output: "if(true){\nif(true) {}\nvar a = 2;}",
-            options: [
-                { blankLine: "never", prev: "block-like", next: "*" }
-            ],
+            options: [{ blankLine: "never", prev: "block-like", next: "*" }],
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "(function(){\n})()\n\nvar a = 2;",
             output: "(function(){\n})()\nvar a = 2;",
-            options: [
-                { blankLine: "never", prev: "block-like", next: "*" }
-            ],
+            options: [{ blankLine: "never", prev: "block-like", next: "*" }],
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "+(function(){\n})()\n\nvar a = 2;",
             output: "+(function(){\n})()\nvar a = 2;",
-            options: [
-                { blankLine: "never", prev: "block-like", next: "*" }
-            ],
+            options: [{ blankLine: "never", prev: "block-like", next: "*" }],
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "var a = function() {};\n\nvar b = 2;",
             output: "var a = function() {};\nvar b = 2;",
-            options: [
-                { blankLine: "never", prev: "block-like", next: "*" }
-            ],
+            options: [{ blankLine: "never", prev: "block-like", next: "*" }],
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
 
@@ -4879,9 +4194,7 @@ ruleTester.run("padding-line-between-statements", rule, {
         {
             code: "var a = 2;\n\nmodule.exports = a;",
             output: "var a = 2;\nmodule.exports = a;",
-            options: [
-                { blankLine: "never", prev: "*", next: "cjs-export" }
-            ],
+            options: [{ blankLine: "never", prev: "*", next: "cjs-export" }],
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
 
@@ -4893,33 +4206,25 @@ ruleTester.run("padding-line-between-statements", rule, {
         {
             code: "function x() { var a;\n\nreturn; }",
             output: "function x() { var a;\nreturn; }",
-            options: [
-                { blankLine: "never", prev: "*", next: ["if", "for", "return", "switch", "case", "break", "throw"] }
-            ],
+            options: [{ blankLine: "never", prev: "*", next: ["if", "for", "return", "switch", "case", "break", "throw"] }],
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "function x() { var a = true;\n\nif (a) { a = !a; }; }",
             output: "function x() { var a = true;\nif (a) { a = !a; }; }",
-            options: [
-                { blankLine: "never", prev: "*", next: ["if", "for", "return", "switch", "case", "break", "throw"] }
-            ],
+            options: [{ blankLine: "never", prev: "*", next: ["if", "for", "return", "switch", "case", "break", "throw"] }],
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "function x() { var a = true;\n\nfor (var i = 0; i < 10; i++) { a = !a; }; }",
             output: "function x() { var a = true;\nfor (var i = 0; i < 10; i++) { a = !a; }; }",
-            options: [
-                { blankLine: "never", prev: "*", next: ["if", "for", "return", "switch", "case", "break", "throw"] }
-            ],
+            options: [{ blankLine: "never", prev: "*", next: ["if", "for", "return", "switch", "case", "break", "throw"] }],
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
-            code: "function x() { var y = true;\n\nswitch (\"Oranges\") { case \"Oranges\": y = !y;\n\nbreak;\n\ncase \"Apples\": y = !y;\n\nbreak; default: y = !y; } }",
-            output: "function x() { var y = true;\nswitch (\"Oranges\") { case \"Oranges\": y = !y;\nbreak;\ncase \"Apples\": y = !y;\nbreak; default: y = !y; } }",
-            options: [
-                { blankLine: "never", prev: "*", next: ["if", "for", "return", "switch", "case", "break", "throw"] }
-            ],
+            code: 'function x() { var y = true;\n\nswitch ("Oranges") { case "Oranges": y = !y;\n\nbreak;\n\ncase "Apples": y = !y;\n\nbreak; default: y = !y; } }',
+            output: 'function x() { var y = true;\nswitch ("Oranges") { case "Oranges": y = !y;\nbreak;\ncase "Apples": y = !y;\nbreak; default: y = !y; } }',
+            options: [{ blankLine: "never", prev: "*", next: ["if", "for", "return", "switch", "case", "break", "throw"] }],
             errors: [
                 { messageId: "unexpectedBlankLine" },
                 { messageId: "unexpectedBlankLine" },
@@ -4930,25 +4235,14 @@ ruleTester.run("padding-line-between-statements", rule, {
         {
             code: "function x() {try { var a;\n\nthrow 0; } catch (e) { var b = 0;\n\nthrow e; } }",
             output: "function x() {try { var a;\nthrow 0; } catch (e) { var b = 0;\nthrow e; } }",
-            options: [
-                { blankLine: "never", prev: "*", next: ["if", "for", "return", "switch", "case", "break", "throw"] }
-            ],
-            errors: [
-                { messageId: "unexpectedBlankLine" },
-                { messageId: "unexpectedBlankLine" }
-            ]
+            options: [{ blankLine: "never", prev: "*", next: ["if", "for", "return", "switch", "case", "break", "throw"] }],
+            errors: [{ messageId: "unexpectedBlankLine" }, { messageId: "unexpectedBlankLine" }]
         },
         {
             code: "function x(a) { var b = 0;\n\nif (!a) { return false; };\n\nfor (var i = 0; i < b; i++) { if (!a[i]) return false; }\n\nreturn true; }",
             output: "function x(a) { var b = 0;\nif (!a) { return false; };\nfor (var i = 0; i < b; i++) { if (!a[i]) return false; }\nreturn true; }",
-            options: [
-                { blankLine: "never", prev: "*", next: ["if", "for", "return", "switch", "case", "break", "throw"] }
-            ],
-            errors: [
-                { messageId: "unexpectedBlankLine" },
-                { messageId: "unexpectedBlankLine" },
-                { messageId: "unexpectedBlankLine" }
-            ]
+            options: [{ blankLine: "never", prev: "*", next: ["if", "for", "return", "switch", "case", "break", "throw"] }],
+            errors: [{ messageId: "unexpectedBlankLine" }, { messageId: "unexpectedBlankLine" }, { messageId: "unexpectedBlankLine" }]
         },
 
         //----------------------------------------------------------------------
@@ -4959,49 +4253,37 @@ ruleTester.run("padding-line-between-statements", rule, {
         {
             code: "if(true){}\nvar a = 2;",
             output: "if(true){}\n\nvar a = 2;",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "block-like", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "var a = function() {\n};\nvar b = 2;",
             output: "var a = function() {\n};\n\nvar b = 2;",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "block-like", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "if(true){\nif(true) {}\nvar a = 2;}",
             output: "if(true){\nif(true) {}\n\nvar a = 2;}",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "block-like", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "(function(){\n})()\nvar a = 2;",
             output: "(function(){\n})()\n\nvar a = 2;",
-            options: [
-                { blankLine: "always", prev: "block-like", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "block-like", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "var a = function() {\n};\nvar b = 2;",
             output: "var a = function() {\n};\n\nvar b = 2;",
-            options: [
-                { blankLine: "always", prev: "multiline-block-like", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "multiline-block-like", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "(function(){\n})()\nvar a = 2;",
             output: "(function(){\n})()\n\nvar a = 2;",
-            options: [
-                { blankLine: "always", prev: "multiline-block-like", next: "*" }
-            ],
+            options: [{ blankLine: "always", prev: "multiline-block-like", next: "*" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
 
@@ -5013,9 +4295,7 @@ ruleTester.run("padding-line-between-statements", rule, {
         {
             code: "var a = 2;\nmodule.exports = a;",
             output: "var a = 2;\n\nmodule.exports = a;",
-            options: [
-                { blankLine: "always", prev: "*", next: "cjs-export" }
-            ],
+            options: [{ blankLine: "always", prev: "*", next: "cjs-export" }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
 
@@ -5027,25 +4307,19 @@ ruleTester.run("padding-line-between-statements", rule, {
         {
             code: "function x() { var a; return; }",
             output: "function x() { var a;\n\n return; }",
-            options: [
-                { blankLine: "always", prev: "*", next: ["if", "for", "return", "switch", "case", "break", "throw", "while", "default"] }
-            ],
+            options: [{ blankLine: "always", prev: "*", next: ["if", "for", "return", "switch", "case", "break", "throw", "while", "default"] }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "function x() { var a = true; for (var i = 0; i < 10; i++) { a = !a; }; }",
             output: "function x() { var a = true;\n\n for (var i = 0; i < 10; i++) { a = !a; }; }",
-            options: [
-                { blankLine: "always", prev: "*", next: ["if", "for", "return", "switch", "case", "break", "throw", "while", "default"] }
-            ],
+            options: [{ blankLine: "always", prev: "*", next: ["if", "for", "return", "switch", "case", "break", "throw", "while", "default"] }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
-            code: "function x() { var y = true; switch (\"Oranges\") { case \"Oranges\": y = !y; break; case \"Apples\": y = !y; break; default: y = !y; } }",
-            output: "function x() { var y = true;\n\n switch (\"Oranges\") { case \"Oranges\": y = !y;\n\n break;\n\n case \"Apples\": y = !y;\n\n break;\n\n default: y = !y; } }",
-            options: [
-                { blankLine: "always", prev: "*", next: ["if", "for", "return", "switch", "case", "break", "throw", "while", "default"] }
-            ],
+            code: 'function x() { var y = true; switch ("Oranges") { case "Oranges": y = !y; break; case "Apples": y = !y; break; default: y = !y; } }',
+            output: 'function x() { var y = true;\n\n switch ("Oranges") { case "Oranges": y = !y;\n\n break;\n\n case "Apples": y = !y;\n\n break;\n\n default: y = !y; } }',
+            options: [{ blankLine: "always", prev: "*", next: ["if", "for", "return", "switch", "case", "break", "throw", "while", "default"] }],
             errors: [
                 { messageId: "expectedBlankLine" },
                 { messageId: "expectedBlankLine" },
@@ -5057,87 +4331,62 @@ ruleTester.run("padding-line-between-statements", rule, {
         {
             code: "function x() { var a = true; while (!a) { a = !a; }; }",
             output: "function x() { var a = true;\n\n while (!a) { a = !a; }; }",
-            options: [
-                { blankLine: "always", prev: "*", next: ["if", "for", "return", "switch", "case", "break", "throw", "while", "default"] }
-            ],
+            options: [{ blankLine: "always", prev: "*", next: ["if", "for", "return", "switch", "case", "break", "throw", "while", "default"] }],
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "function x() {try { var a; throw 0; } catch (e) { var b = 0; throw e; } }",
             output: "function x() {try { var a;\n\n throw 0; } catch (e) { var b = 0;\n\n throw e; } }",
-            options: [
-                { blankLine: "always", prev: "*", next: ["if", "for", "return", "switch", "case", "break", "throw", "while", "default"] }
-            ],
-            errors: [
-                { messageId: "expectedBlankLine" },
-                { messageId: "expectedBlankLine" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: ["if", "for", "return", "switch", "case", "break", "throw", "while", "default"] }],
+            errors: [{ messageId: "expectedBlankLine" }, { messageId: "expectedBlankLine" }]
         },
         {
             code: "function x(a) { var b = 0; if (!a) { return false; }; for (var i = 0; i < b; i++) { if (!a[i]) return false; } return true; }",
             output: "function x(a) { var b = 0;\n\n if (!a) { return false; };\n\n for (var i = 0; i < b; i++) { if (!a[i]) return false; }\n\n return true; }",
-            options: [
-                { blankLine: "always", prev: "*", next: ["if", "for", "return", "switch", "case", "break", "throw", "while", "default"] }
-            ],
-            errors: [
-                { messageId: "expectedBlankLine" },
-                { messageId: "expectedBlankLine" },
-                { messageId: "expectedBlankLine" }
-            ]
+            options: [{ blankLine: "always", prev: "*", next: ["if", "for", "return", "switch", "case", "break", "throw", "while", "default"] }],
+            errors: [{ messageId: "expectedBlankLine" }, { messageId: "expectedBlankLine" }, { messageId: "expectedBlankLine" }]
         },
 
         // class static blocks
         {
             code: "class C {\n static {\n let x;\n foo();\n }\n }",
             output: "class C {\n static {\n let x;\n\n foo();\n }\n }",
-            options: [
-                { blankLine: "always", prev: "let", next: "expression" }
-            ],
+            options: [{ blankLine: "always", prev: "let", next: "expression" }],
             parserOptions: { ecmaVersion: 2022 },
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "class C {\n static {\n let x;\n\n foo();\n }\n }",
             output: "class C {\n static {\n let x;\n foo();\n }\n }",
-            options: [
-                { blankLine: "never", prev: "let", next: "expression" }
-            ],
+            options: [{ blankLine: "never", prev: "let", next: "expression" }],
             parserOptions: { ecmaVersion: 2022 },
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "class C {\n static {\n let x;\n foo();\n const y = 1;\n }\n }",
             output: "class C {\n static {\n let x;\n foo();\n\n const y = 1;\n }\n }",
-            options: [
-                { blankLine: "always", prev: "expression", next: "const" }
-            ],
+            options: [{ blankLine: "always", prev: "expression", next: "const" }],
             parserOptions: { ecmaVersion: 2022 },
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "class C {\n static {\n let x;\n foo();\n\n const y = 1;\n }\n }",
             output: "class C {\n static {\n let x;\n foo();\n const y = 1;\n }\n }",
-            options: [
-                { blankLine: "never", prev: "expression", next: "const" }
-            ],
+            options: [{ blankLine: "never", prev: "expression", next: "const" }],
             parserOptions: { ecmaVersion: 2022 },
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
         {
             code: "class C {\n static {\n let x;\n foo();\n const y = 1;\n const z = 1;\n }\n }",
             output: "class C {\n static {\n let x;\n foo();\n\n const y = 1;\n const z = 1;\n }\n }",
-            options: [
-                { blankLine: "always", prev: "expression", next: "const" }
-            ],
+            options: [{ blankLine: "always", prev: "expression", next: "const" }],
             parserOptions: { ecmaVersion: 2022 },
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "class C {\n static {\n let x;\n foo();\n\n const y = 1;\n const z = 1;\n }\n }",
             output: "class C {\n static {\n let x;\n foo();\n const y = 1;\n const z = 1;\n }\n }",
-            options: [
-                { blankLine: "never", prev: "expression", next: "const" }
-            ],
+            options: [{ blankLine: "never", prev: "expression", next: "const" }],
             parserOptions: { ecmaVersion: 2022 },
             errors: [{ messageId: "unexpectedBlankLine" }]
         },
@@ -5154,45 +4403,35 @@ ruleTester.run("padding-line-between-statements", rule, {
         {
             code: "class C { static { let x; { let y; let z; } let q; } }",
             output: "class C { static { let x; { let y;\n\n let z; } let q; } }",
-            options: [
-                { blankLine: "always", prev: "let", next: "let" }
-            ],
+            options: [{ blankLine: "always", prev: "let", next: "let" }],
             parserOptions: { ecmaVersion: 2022 },
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "class C { static { { let x; } let y; let z; } }",
             output: "class C { static { { let x; } let y;\n\n let z; } }",
-            options: [
-                { blankLine: "always", prev: "let", next: "let" }
-            ],
+            options: [{ blankLine: "always", prev: "let", next: "let" }],
             parserOptions: { ecmaVersion: 2022 },
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "class C { static { foo(); if (bar) {} } }",
             output: "class C { static { foo();\n\n if (bar) {} } }",
-            options: [
-                { blankLine: "always", prev: "expression", next: "block-like" }
-            ],
+            options: [{ blankLine: "always", prev: "expression", next: "block-like" }],
             parserOptions: { ecmaVersion: 2022 },
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "class C { static { let x; } } let y;",
             output: "class C { static { let x; } }\n\n let y;",
-            options: [
-                { blankLine: "always", prev: "class", next: "let" }
-            ],
+            options: [{ blankLine: "always", prev: "class", next: "let" }],
             parserOptions: { ecmaVersion: 2022 },
             errors: [{ messageId: "expectedBlankLine" }]
         },
         {
             code: "class C { static { 'use strict'; let x; } }", // 'use strict'; is "expression", because class static blocks don't have directives
             output: "class C { static { 'use strict';\n\n let x; } }",
-            options: [
-                { blankLine: "always", prev: "expression", next: "let" }
-            ],
+            options: [{ blankLine: "always", prev: "expression", next: "let" }],
             parserOptions: { ecmaVersion: 2022 },
             errors: [{ messageId: "expectedBlankLine" }]
         }

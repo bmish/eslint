@@ -249,65 +249,47 @@ ruleTester.run("id-length", rule, {
         {
             code: "var _$xt_$ = Foo(42)",
             options: [{ min: 2, max: 4 }],
-            errors: [
-                tooLongError
-            ]
+            errors: [tooLongError]
         },
         {
             code: "var _$x$_t$ = Foo(42)",
             options: [{ min: 2, max: 4 }],
-            errors: [
-                tooLongError
-            ]
+            errors: [tooLongError]
         },
         {
             code: "var toString;",
             options: [{ max: 5 }],
-            errors: [
-                tooLongError
-            ]
+            errors: [tooLongError]
         },
         {
             code: "(a) => { a * a };",
             parserOptions: { ecmaVersion: 6 },
-            errors: [
-                tooShortError
-            ]
+            errors: [tooShortError]
         },
         {
             code: "function foo(x = 0) { }",
             parserOptions: { ecmaVersion: 6 },
-            errors: [
-                tooShortError
-            ]
+            errors: [tooShortError]
         },
         {
             code: "class x { }",
             parserOptions: { ecmaVersion: 6 },
-            errors: [
-                tooShortError
-            ]
+            errors: [tooShortError]
         },
         {
             code: "class Foo { x() {} }",
             parserOptions: { ecmaVersion: 6 },
-            errors: [
-                tooShortError
-            ]
+            errors: [tooShortError]
         },
         {
             code: "function foo(...x) { }",
             parserOptions: { ecmaVersion: 6 },
-            errors: [
-                tooShortError
-            ]
+            errors: [tooShortError]
         },
         {
             code: "function foo({x}) { }",
             parserOptions: { ecmaVersion: 6 },
-            errors: [
-                tooShortError
-            ]
+            errors: [tooShortError]
         },
         {
             code: "function foo({x: a}) { }",
@@ -323,25 +305,19 @@ ruleTester.run("id-length", rule, {
         {
             code: "function foo({x: a, longName}) { }",
             parserOptions: { ecmaVersion: 6 },
-            errors: [
-                tooShortError
-            ]
+            errors: [tooShortError]
         },
         {
             code: "function foo({ longName: a }) {}",
             options: [{ min: 3, max: 5 }],
             parserOptions: { ecmaVersion: 6 },
-            errors: [
-                tooShortError
-            ]
+            errors: [tooShortError]
         },
         {
             code: "function foo({ prop: longName }) {};",
             options: [{ min: 3, max: 5 }],
             parserOptions: { ecmaVersion: 6 },
-            errors: [
-                tooLongError
-            ]
+            errors: [tooLongError]
         },
         {
             code: "function foo({ a: b }) {};",
@@ -393,9 +369,7 @@ ruleTester.run("id-length", rule, {
         {
             code: "var { x} = {};",
             parserOptions: { ecmaVersion: 6 },
-            errors: [
-                tooShortError
-            ]
+            errors: [tooShortError]
         },
         {
             code: "var { x: a} = {};",
@@ -411,38 +385,28 @@ ruleTester.run("id-length", rule, {
         {
             code: "var { a: a} = {};",
             parserOptions: { ecmaVersion: 6 },
-            errors: [
-                tooShortError
-            ]
+            errors: [tooShortError]
         },
         {
             code: "var { prop: a } = {};",
             parserOptions: { ecmaVersion: 6 },
-            errors: [
-                tooShortError
-            ]
+            errors: [tooShortError]
         },
         {
             code: "var { longName: a } = {};",
             options: [{ min: 3, max: 5 }],
             parserOptions: { ecmaVersion: 6 },
-            errors: [
-                tooShortError
-            ]
+            errors: [tooShortError]
         },
         {
             code: "var { prop: [x] } = {};",
             parserOptions: { ecmaVersion: 6 },
-            errors: [
-                tooShortError
-            ]
+            errors: [tooShortError]
         },
         {
             code: "var { prop: [[x]] } = {};",
             parserOptions: { ecmaVersion: 6 },
-            errors: [
-                tooShortError
-            ]
+            errors: [tooShortError]
         },
         {
             code: "var { prop: longName } = {};",
@@ -554,16 +518,12 @@ ruleTester.run("id-length", rule, {
         {
             code: "import x from 'y';",
             parserOptions: { ecmaVersion: 6, sourceType: "module" },
-            errors: [
-                tooShortError
-            ]
+            errors: [tooShortError]
         },
         {
             code: "export var x = 0;",
             parserOptions: { ecmaVersion: 6, sourceType: "module" },
-            errors: [
-                tooShortError
-            ]
+            errors: [tooShortError]
         },
         {
             code: "({ a: obj.x.y.z } = {});",
@@ -610,228 +570,174 @@ ruleTester.run("id-length", rule, {
             code: "var foo = {x: prop};",
             options: [{ properties: "always" }],
             parserOptions: { ecmaVersion: 6 },
-            errors: [
-                tooShortError
-            ]
+            errors: [tooShortError]
         },
         {
             code: "function BEFORE_send() {};",
             options: [{ min: 3, max: 5 }],
-            errors: [
-                tooLongError
-            ]
+            errors: [tooLongError]
         },
         {
             code: "function NOTMATCHED_send() {};",
             options: [{ min: 3, max: 5, exceptionPatterns: ["^BEFORE_"] }],
-            errors: [
-                tooLongError
-            ]
+            errors: [tooLongError]
         },
         {
             code: "function N() {};",
             options: [{ min: 3, max: 5, exceptionPatterns: ["^BEFORE_"] }],
-            errors: [
-                tooShortError
-            ]
+            errors: [tooShortError]
         },
 
         // Class Fields
         {
             code: "class Foo { #x() {} }",
             parserOptions: { ecmaVersion: 2022 },
-            errors: [
-                tooShortErrorPrivate
-            ]
+            errors: [tooShortErrorPrivate]
         },
         {
             code: "class Foo { x = 1 }",
             parserOptions: { ecmaVersion: 2022 },
-            errors: [
-                tooShortError
-            ]
+            errors: [tooShortError]
         },
         {
             code: "class Foo { #x = 1 }",
             parserOptions: { ecmaVersion: 2022 },
-            errors: [
-                tooShortErrorPrivate
-            ]
+            errors: [tooShortErrorPrivate]
         },
         {
             code: "class Foo { #abcdefg() {} }",
             options: [{ max: 3 }],
             parserOptions: { ecmaVersion: 2022 },
-            errors: [
-                tooLongErrorPrivate
-            ]
+            errors: [tooLongErrorPrivate]
         },
         {
             code: "class Foo { abcdefg = 1 }",
             options: [{ max: 3 }],
             parserOptions: { ecmaVersion: 2022 },
-            errors: [
-                tooLongError
-            ]
+            errors: [tooLongError]
         },
         {
             code: "class Foo { #abcdefg = 1 }",
             options: [{ max: 3 }],
             parserOptions: { ecmaVersion: 2022 },
-            errors: [
-                tooLongErrorPrivate
-            ]
+            errors: [tooLongErrorPrivate]
         },
 
         // Identifier consisting of two code units
         {
             code: "var 𠮟 = 2",
             parserOptions: { ecmaVersion: 6 },
-            errors: [
-                tooShortError
-            ]
+            errors: [tooShortError]
         },
         {
             code: "var 葛󠄀 = 2", // 2 code points but only 1 grapheme
             parserOptions: { ecmaVersion: 6 },
-            errors: [
-                tooShortError
-            ]
+            errors: [tooShortError]
         },
         {
             code: "var myObj = { 𐌘: 1 };",
             parserOptions: {
                 ecmaVersion: 6
             },
-            errors: [
-                tooShortError
-            ]
+            errors: [tooShortError]
         },
         {
             code: "(𐌘) => { 𐌘 * 𐌘 };",
             parserOptions: {
                 ecmaVersion: 6
             },
-            errors: [
-                tooShortError
-            ]
+            errors: [tooShortError]
         },
         {
             code: "class 𠮟 { }",
             parserOptions: {
                 ecmaVersion: 6
             },
-            errors: [
-                tooShortError
-            ]
+            errors: [tooShortError]
         },
         {
             code: "class Foo { 𐌘() {} }",
             parserOptions: {
                 ecmaVersion: 6
             },
-            errors: [
-                tooShortError
-            ]
+            errors: [tooShortError]
         },
         {
             code: "class Foo1 { #𐌘() {} }",
             parserOptions: {
                 ecmaVersion: 2022
             },
-            errors: [
-                tooShortErrorPrivate
-            ]
+            errors: [tooShortErrorPrivate]
         },
         {
             code: "class Foo2 { 𐌘 = 1 }",
             parserOptions: {
                 ecmaVersion: 2022
             },
-            errors: [
-                tooShortError
-            ]
+            errors: [tooShortError]
         },
         {
             code: "class Foo3 { #𐌘 = 1 }",
             parserOptions: {
                 ecmaVersion: 2022
             },
-            errors: [
-                tooShortErrorPrivate
-            ]
+            errors: [tooShortErrorPrivate]
         },
         {
             code: "function foo1(...𐌘) { }",
             parserOptions: {
                 ecmaVersion: 6
             },
-            errors: [
-                tooShortError
-            ]
+            errors: [tooShortError]
         },
         {
             code: "function foo([𐌘]) { }",
             parserOptions: {
                 ecmaVersion: 6
             },
-            errors: [
-                tooShortError
-            ]
+            errors: [tooShortError]
         },
         {
             code: "var [ 𐌘 ] = arr;",
             parserOptions: {
                 ecmaVersion: 6
             },
-            errors: [
-                tooShortError
-            ]
+            errors: [tooShortError]
         },
         {
             code: "var { prop: [𐌘]} = {};",
             parserOptions: {
                 ecmaVersion: 6
             },
-            errors: [
-                tooShortError
-            ]
+            errors: [tooShortError]
         },
         {
             code: "function foo({𐌘}) { }",
             parserOptions: {
                 ecmaVersion: 6
             },
-            errors: [
-                tooShortError
-            ]
+            errors: [tooShortError]
         },
         {
             code: "var { 𐌘 } = {};",
             parserOptions: {
                 ecmaVersion: 6
             },
-            errors: [
-                tooShortError
-            ]
+            errors: [tooShortError]
         },
         {
             code: "var { prop: 𐌘} = {};",
             parserOptions: {
                 ecmaVersion: 6
             },
-            errors: [
-                tooShortError
-            ]
+            errors: [tooShortError]
         },
         {
             code: "({ prop: obj.𐌘 } = {});",
             parserOptions: {
                 ecmaVersion: 6
             },
-            errors: [
-                tooShortError
-            ]
+            errors: [tooShortError]
         }
     ]
 });

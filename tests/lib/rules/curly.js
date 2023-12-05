@@ -332,7 +332,6 @@ ruleTester.run("curly", rule, {
             options: ["multi", "consistent"]
         },
         {
-
             // https://github.com/feross/standard/issues/664
             code: "if (true) foo()\n;[1, 2, 3].bar()",
             options: ["multi-line"]
@@ -1468,20 +1467,8 @@ ruleTester.run("curly", rule, {
             errors: [{ messageId: "unexpectedCurlyAfterCondition", data: { name: "if" }, type: "IfStatement" }]
         },
         {
-            code:
-            "if (a) {\n" +
-            "  while (b) {\n" +
-            "    c();\n" +
-            "    d();\n" +
-            "  }\n" +
-            "} else e();",
-            output:
-            "if (a) \n" +
-            "  while (b) {\n" +
-            "    c();\n" +
-            "    d();\n" +
-            "  }\n" +
-            " else e();",
+            code: "if (a) {\n" + "  while (b) {\n" + "    c();\n" + "    d();\n" + "  }\n" + "} else e();",
+            output: "if (a) \n" + "  while (b) {\n" + "    c();\n" + "    d();\n" + "  }\n" + " else e();",
             options: ["multi"],
             errors: [{ messageId: "unexpectedCurlyAfterCondition", data: { name: "if" }, type: "IfStatement" }]
         },
@@ -1689,104 +1676,115 @@ ruleTester.run("curly", rule, {
         {
             code: "if (a) foo() \nelse\n bar();",
             output: "if (a) {foo()} \nelse\n {bar();}",
-            errors: [{
-                type: "IfStatement",
-                messageId: "missingCurlyAfterCondition",
-                line: 1,
-                column: 8,
-                endLine: 1,
-                endColumn: 13
-            },
-            {
-                type: "IfStatement",
-                messageId: "missingCurlyAfter",
-                line: 3,
-                column: 2,
-                endLine: 3,
-                endColumn: 8
-            }]
+            errors: [
+                {
+                    type: "IfStatement",
+                    messageId: "missingCurlyAfterCondition",
+                    line: 1,
+                    column: 8,
+                    endLine: 1,
+                    endColumn: 13
+                },
+                {
+                    type: "IfStatement",
+                    messageId: "missingCurlyAfter",
+                    line: 3,
+                    column: 2,
+                    endLine: 3,
+                    endColumn: 8
+                }
+            ]
         },
         {
             code: "if (a) { while (cond) if (b) foo() } ",
             output: "if (a)  while (cond) if (b) foo()  ",
             options: ["multi", "consistent"],
-            errors: [{
-                messageId: "unexpectedCurlyAfterCondition",
-                data: { name: "if" },
-                type: "IfStatement",
-                line: 1,
-                column: 8,
-                endLine: 1,
-                endColumn: 37
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedCurlyAfterCondition",
+                    data: { name: "if" },
+                    type: "IfStatement",
+                    line: 1,
+                    column: 8,
+                    endLine: 1,
+                    endColumn: 37
+                }
+            ]
         },
         {
             code: "if(a) { if (b) foo(); } if (c) bar(); else if(foo){bar();}",
             output: "if(a)  if (b) foo();  if (c) bar(); else if(foo)bar();",
             options: ["multi-or-nest"],
-            errors: [{
-                type: "IfStatement",
-                data: { name: "if" },
-                messageId: "unexpectedCurlyAfterCondition",
-                line: 1,
-                column: 7,
-                endLine: 1,
-                endColumn: 24
-            },
-            {
-                type: "IfStatement",
-                data: { name: "if" },
-                messageId: "unexpectedCurlyAfterCondition",
-                line: 1,
-                column: 51,
-                endLine: 1,
-                endColumn: 59
-            }]
+            errors: [
+                {
+                    type: "IfStatement",
+                    data: { name: "if" },
+                    messageId: "unexpectedCurlyAfterCondition",
+                    line: 1,
+                    column: 7,
+                    endLine: 1,
+                    endColumn: 24
+                },
+                {
+                    type: "IfStatement",
+                    data: { name: "if" },
+                    messageId: "unexpectedCurlyAfterCondition",
+                    line: 1,
+                    column: 51,
+                    endLine: 1,
+                    endColumn: 59
+                }
+            ]
         },
         {
             code: "if (true) [1, 2, 3]\n.bar()",
             output: "if (true) {[1, 2, 3]\n.bar()}",
             options: ["multi-line"],
-            errors: [{
-                data: { name: "if" },
-                type: "IfStatement",
-                messageId: "missingCurlyAfterCondition",
-                line: 1,
-                column: 11,
-                endLine: 2,
-                endColumn: 7
-            }]
+            errors: [
+                {
+                    data: { name: "if" },
+                    type: "IfStatement",
+                    messageId: "missingCurlyAfterCondition",
+                    line: 1,
+                    column: 11,
+                    endLine: 2,
+                    endColumn: 7
+                }
+            ]
         },
         {
             code: "for(\n;\n;\n) {foo()}",
             output: "for(\n;\n;\n) foo()",
             options: ["multi"],
-            errors: [{
-                data: { name: "for" },
-                type: "ForStatement",
-                messageId: "unexpectedCurlyAfterCondition",
-                line: 4,
-                column: 3,
-                endLine: 4,
-                endColumn: 10
-            }]
+            errors: [
+                {
+                    data: { name: "for" },
+                    type: "ForStatement",
+                    messageId: "unexpectedCurlyAfterCondition",
+                    line: 4,
+                    column: 3,
+                    endLine: 4,
+                    endColumn: 10
+                }
+            ]
         },
         {
             code: "for(\n;\n;\n) \nfoo()\n",
             output: "for(\n;\n;\n) \n{foo()}\n",
             options: ["multi-line"],
-            errors: [{
-                data: { name: "for" },
-                type: "ForStatement",
-                messageId: "missingCurlyAfterCondition",
-                line: 5,
-                column: 1,
-                endLine: 5,
-                endColumn: 6
-            }]
+            errors: [
+                {
+                    data: { name: "for" },
+                    type: "ForStatement",
+                    messageId: "missingCurlyAfterCondition",
+                    line: 5,
+                    column: 1,
+                    endLine: 5,
+                    endColumn: 6
+                }
+            ]
         },
         {
-
             /**
              * Reports 2 errors, but one pair of braces is necessary if the other pair gets removed.
              * Auto-fix will remove only outer braces in the first iteration.
@@ -1804,42 +1802,48 @@ ruleTester.run("curly", rule, {
         {
             code: "for(;;)foo()\n",
             output: "for(;;){foo()}\n",
-            errors: [{
-                data: { name: "for" },
-                type: "ForStatement",
-                messageId: "missingCurlyAfterCondition",
-                line: 1,
-                column: 8,
-                endLine: 1,
-                endColumn: 13
-            }]
+            errors: [
+                {
+                    data: { name: "for" },
+                    type: "ForStatement",
+                    messageId: "missingCurlyAfterCondition",
+                    line: 1,
+                    column: 8,
+                    endLine: 1,
+                    endColumn: 13
+                }
+            ]
         },
         {
             code: "for(var \ni \n in \n z)foo()\n",
             output: "for(var \ni \n in \n z){foo()}\n",
-            errors: [{
-                data: { name: "for-in" },
-                type: "ForInStatement",
-                messageId: "missingCurlyAfter",
-                line: 4,
-                column: 4,
-                endLine: 4,
-                endColumn: 9
-            }]
+            errors: [
+                {
+                    data: { name: "for-in" },
+                    type: "ForInStatement",
+                    messageId: "missingCurlyAfter",
+                    line: 4,
+                    column: 4,
+                    endLine: 4,
+                    endColumn: 9
+                }
+            ]
         },
         {
             code: "for(var i of \n z)\nfoo()\n",
             output: "for(var i of \n z)\n{foo()}\n",
             parserOptions: { ecmaVersion: 6 },
-            errors: [{
-                data: { name: "for-of" },
-                type: "ForOfStatement",
-                messageId: "missingCurlyAfter",
-                line: 3,
-                column: 1,
-                endLine: 3,
-                endColumn: 6
-            }]
+            errors: [
+                {
+                    data: { name: "for-of" },
+                    type: "ForOfStatement",
+                    messageId: "missingCurlyAfter",
+                    line: 3,
+                    column: 1,
+                    endLine: 3,
+                    endColumn: 6
+                }
+            ]
         }
     ]
 });

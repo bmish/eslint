@@ -96,7 +96,10 @@ ruleTester.run("no-extra-semi", rule, {
         {
             code: "if(true){;} else {;}",
             output: "if(true){} else {}",
-            errors: [{ messageId: "unexpected", type: "EmptyStatement" }, { messageId: "unexpected", type: "EmptyStatement" }]
+            errors: [
+                { messageId: "unexpected", type: "EmptyStatement" },
+                { messageId: "unexpected", type: "EmptyStatement" }
+            ]
         },
         {
             code: "foo:;;",
@@ -201,7 +204,10 @@ ruleTester.run("no-extra-semi", rule, {
         {
             code: "; ; 'use strict'",
             output: " ; 'use strict'",
-            errors: [{ messageId: "unexpected", type: "EmptyStatement" }, { messageId: "unexpected", type: "EmptyStatement" }]
+            errors: [
+                { messageId: "unexpected", type: "EmptyStatement" },
+                { messageId: "unexpected", type: "EmptyStatement" }
+            ]
         },
         {
             code: "debugger;\n;\n'use strict'",

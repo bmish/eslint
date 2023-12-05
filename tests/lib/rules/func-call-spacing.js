@@ -20,7 +20,6 @@ const ruleTester = new RuleTester();
 
 ruleTester.run("func-call-spacing", rule, {
     valid: [
-
         // default ("never")
         "f();",
         "f(a, b);",
@@ -243,7 +242,6 @@ ruleTester.run("func-call-spacing", rule, {
         }
     ],
     invalid: [
-
         // default ("never")
         {
             code: "f ();",
@@ -474,11 +472,7 @@ ruleTester.run("func-call-spacing", rule, {
             ]
         },
         {
-            code: [
-                "this.cancelled.add(request)",
-                "this.decrement(request)",
-                "(0, request.reject)(new api.Cancel())"
-            ].join("\n"),
+            code: ["this.cancelled.add(request)", "this.decrement(request)", "(0, request.reject)(new api.Cancel())"].join("\n"),
             output: null, // no change
             options: ["never"],
             errors: [
@@ -493,10 +487,7 @@ ruleTester.run("func-call-spacing", rule, {
             ]
         },
         {
-            code: [
-                "var a = foo",
-                "(function(global) {}(this));"
-            ].join("\n"),
+            code: ["var a = foo", "(function(global) {}(this));"].join("\n"),
             output: null, // no change
             options: ["never"],
             errors: [
@@ -511,10 +502,7 @@ ruleTester.run("func-call-spacing", rule, {
             ]
         },
         {
-            code: [
-                "var a = foo",
-                "(0, baz())"
-            ].join("\n"),
+            code: ["var a = foo", "(0, baz())"].join("\n"),
             output: null, // no change
             options: ["never"],
             errors: [
@@ -746,8 +734,7 @@ ruleTester.run("func-call-spacing", rule, {
             code: "f();",
             output: "f ();",
             options: ["always", { allowNewlines: true }],
-            errors: [
-                { messageId: "missing", type: "CallExpression" }]
+            errors: [{ messageId: "missing", type: "CallExpression" }]
         },
         {
             code: "f(a, b);",

@@ -28,40 +28,50 @@ ruleTester.run("no-iterator", rule, {
     invalid: [
         {
             code: "var a = test.__iterator__;",
-            errors: [{
-                messageId: "noIterator",
-                type: "MemberExpression"
-            }]
+            errors: [
+                {
+                    messageId: "noIterator",
+                    type: "MemberExpression"
+                }
+            ]
         },
         {
             code: "Foo.prototype.__iterator__ = function() {};",
-            errors: [{
-                messageId: "noIterator",
-                type: "MemberExpression"
-            }]
+            errors: [
+                {
+                    messageId: "noIterator",
+                    type: "MemberExpression"
+                }
+            ]
         },
         {
             code: "var a = test['__iterator__'];",
-            errors: [{
-                messageId: "noIterator",
-                type: "MemberExpression"
-            }]
+            errors: [
+                {
+                    messageId: "noIterator",
+                    type: "MemberExpression"
+                }
+            ]
         },
         {
             code: "var a = test[`__iterator__`];",
             parserOptions: { ecmaVersion: 6 },
-            errors: [{
-                messageId: "noIterator",
-                type: "MemberExpression"
-            }]
+            errors: [
+                {
+                    messageId: "noIterator",
+                    type: "MemberExpression"
+                }
+            ]
         },
         {
             code: "test[`__iterator__`] = function () {};",
             parserOptions: { ecmaVersion: 6 },
-            errors: [{
-                messageId: "noIterator",
-                type: "MemberExpression"
-            }]
+            errors: [
+                {
+                    messageId: "noIterator",
+                    type: "MemberExpression"
+                }
+            ]
         }
     ]
 });

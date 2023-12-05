@@ -30,10 +30,22 @@ ruleTester.run("no-dupe-args", rule, {
         { code: "function a(a, b, b) {}", errors: [{ messageId: "unexpected", data: { name: "b" } }] },
         { code: "function a(a, a, a) {}", errors: [{ messageId: "unexpected", data: { name: "a" } }] },
         { code: "function a(a, b, a) {}", errors: [{ messageId: "unexpected", data: { name: "a" } }] },
-        { code: "function a(a, b, a, b) {}", errors: [{ messageId: "unexpected", data: { name: "a" } }, { messageId: "unexpected", data: { name: "b" } }] },
+        {
+            code: "function a(a, b, a, b) {}",
+            errors: [
+                { messageId: "unexpected", data: { name: "a" } },
+                { messageId: "unexpected", data: { name: "b" } }
+            ]
+        },
         { code: "var a = function(a, b, b) {}", errors: [{ messageId: "unexpected", data: { name: "b" } }] },
         { code: "var a = function(a, a, a) {}", errors: [{ messageId: "unexpected", data: { name: "a" } }] },
         { code: "var a = function(a, b, a) {}", errors: [{ messageId: "unexpected", data: { name: "a" } }] },
-        { code: "var a = function(a, b, a, b) {}", errors: [{ messageId: "unexpected", data: { name: "a" } }, { messageId: "unexpected", data: { name: "b" } }] }
+        {
+            code: "var a = function(a, b, a, b) {}",
+            errors: [
+                { messageId: "unexpected", data: { name: "a" } },
+                { messageId: "unexpected", data: { name: "b" } }
+            ]
+        }
     ]
 });

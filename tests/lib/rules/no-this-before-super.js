@@ -20,7 +20,6 @@ const ruleTester = new RuleTester({ parserOptions: { ecmaVersion: 2022 } });
 
 ruleTester.run("no-this-before-super", rule, {
     valid: [
-
         /*
          * if the class has no extends or `extends null`, just ignore.
          * those classes cannot call `super()`.
@@ -69,15 +68,9 @@ ruleTester.run("no-this-before-super", rule, {
         "class A extends B { constructor(a) { super(); this.a = a && function(){} && this.foo; } }",
 
         // https://github.com/eslint/eslint/issues/5394
-        [
-            "class A extends Object {",
-            "    constructor() {",
-            "        super();",
-            "        for (let i = 0; i < 0; i++);",
-            "        this;",
-            "    }",
-            "}"
-        ].join("\n"),
+        ["class A extends Object {", "    constructor() {", "        super();", "        for (let i = 0; i < 0; i++);", "        this;", "    }", "}"].join(
+            "\n"
+        ),
 
         // https://github.com/eslint/eslint/issues/5894
         "class A { constructor() { return; this; } }",
@@ -106,7 +99,6 @@ ruleTester.run("no-this-before-super", rule, {
         "class C extends B { field = this.foo(); constructor() { } }" // < in this case, initializers are never evaluated.
     ],
     invalid: [
-
         // disallows all `this`/`super` if `super()` is missing.
         {
             code: "class A extends B { constructor() { this.c = 0; } }",

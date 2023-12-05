@@ -31,14 +31,14 @@ function invalid(code, output, type, line, config) {
     const result = {
         code,
         output,
-        parserOptions: config && config.parserOptions || {},
+        parserOptions: (config && config.parserOptions) || {},
         errors: [
             {
                 messageId: "unexpected",
                 type
             }
         ],
-        options: config && config.options || []
+        options: (config && config.options) || []
     };
 
     if (line) {
@@ -62,7 +62,6 @@ const ruleTester = new RuleTester({
 
 ruleTester.run("no-extra-parens", rule, {
     valid: [
-
         // all precedence boundaries
         "foo",
         "a = b, c = d",
@@ -265,7 +264,6 @@ ruleTester.run("no-extra-parens", rule, {
         // Object literals as arrow function bodies need parentheses
         "x => ({foo: 1})",
 
-
         // Exponentiation operator `**`
         "1 + 2 ** 3",
         "1 - 2 ** 3",
@@ -367,39 +365,11 @@ ruleTester.run("no-extra-parens", rule, {
         "function *a() { (yield b) + c; }",
 
         // https://github.com/eslint/eslint/issues/4229
-        [
-            "function a() {",
-            "    return (",
-            "        b",
-            "    );",
-            "}"
-        ].join("\n"),
-        [
-            "function a() {",
-            "    return (",
-            "        <JSX />",
-            "    );",
-            "}"
-        ].join("\n"),
-        [
-            "function a() {",
-            "    return (",
-            "        <></>",
-            "    );",
-            "}"
-        ].join("\n"),
-        [
-            "throw (",
-            "    a",
-            ");"
-        ].join("\n"),
-        [
-            "function *a() {",
-            "    yield (",
-            "        b",
-            "    );",
-            "}"
-        ].join("\n"),
+        ["function a() {", "    return (", "        b", "    );", "}"].join("\n"),
+        ["function a() {", "    return (", "        <JSX />", "    );", "}"].join("\n"),
+        ["function a() {", "    return (", "        <></>", "    );", "}"].join("\n"),
+        ["throw (", "    a", ");"].join("\n"),
+        ["function *a() {", "    yield (", "        b", "    );", "}"].join("\n"),
 
         // linebreaks before postfix update operators are not allowed
         "(a\n)++",
@@ -437,42 +407,23 @@ ruleTester.run("no-extra-parens", rule, {
         { code: "const Component = (<div />)", options: ["all", { ignoreJSX: "all" }] },
         { code: "const Component = ((<div />))", options: ["all", { ignoreJSX: "all" }] },
         {
-            code: [
-                "const Component = (<>",
-                "  <p />",
-                "</>);"
-            ].join("\n"),
+            code: ["const Component = (<>", "  <p />", "</>);"].join("\n"),
             options: ["all", { ignoreJSX: "all" }]
         },
         {
-            code: [
-                "const Component = ((<>",
-                "  <p />",
-                "</>));"
-            ].join("\n"),
+            code: ["const Component = ((<>", "  <p />", "</>));"].join("\n"),
             options: ["all", { ignoreJSX: "all" }]
         },
         {
-            code: [
-                "const Component = (<div>",
-                "  <p />",
-                "</div>);"
-            ].join("\n"),
+            code: ["const Component = (<div>", "  <p />", "</div>);"].join("\n"),
             options: ["all", { ignoreJSX: "all" }]
         },
         {
-            code: [
-                "const Component = (",
-                "  <div />",
-                ");"
-            ].join("\n"),
+            code: ["const Component = (", "  <div />", ");"].join("\n"),
             options: ["all", { ignoreJSX: "all" }]
         },
         {
-            code: [
-                "const Component =",
-                "  (<div />)"
-            ].join("\n"),
+            code: ["const Component =", "  (<div />)"].join("\n"),
             options: ["all", { ignoreJSX: "all" }]
         },
 
@@ -480,65 +431,33 @@ ruleTester.run("no-extra-parens", rule, {
         { code: "const Component = (<div />);", options: ["all", { ignoreJSX: "single-line" }] },
         { code: "const Component = ((<div />));", options: ["all", { ignoreJSX: "single-line" }] },
         {
-            code: [
-                "const Component = (",
-                "  <div />",
-                ");"
-            ].join("\n"),
+            code: ["const Component = (", "  <div />", ");"].join("\n"),
             options: ["all", { ignoreJSX: "single-line" }]
         },
         {
-            code: [
-                "const Component =",
-                "(<div />)"
-            ].join("\n"),
+            code: ["const Component =", "(<div />)"].join("\n"),
             options: ["all", { ignoreJSX: "single-line" }]
         },
 
         // ["all", { ignoreJSX: "multi-line" }]
         {
-            code: [
-                "const Component = (",
-                "<div>",
-                "  <p />",
-                "</div>",
-                ");"
-            ].join("\n"),
+            code: ["const Component = (", "<div>", "  <p />", "</div>", ");"].join("\n"),
             options: ["all", { ignoreJSX: "multi-line" }]
         },
         {
-            code: [
-                "const Component = ((",
-                "<div>",
-                "  <p />",
-                "</div>",
-                "));"
-            ].join("\n"),
+            code: ["const Component = ((", "<div>", "  <p />", "</div>", "));"].join("\n"),
             options: ["all", { ignoreJSX: "multi-line" }]
         },
         {
-            code: [
-                "const Component = (<div>",
-                "  <p />",
-                "</div>);"
-            ].join("\n"),
+            code: ["const Component = (<div>", "  <p />", "</div>);"].join("\n"),
             options: ["all", { ignoreJSX: "multi-line" }]
         },
         {
-            code: [
-                "const Component =",
-                "(<div>",
-                "  <p />",
-                "</div>);"
-            ].join("\n"),
+            code: ["const Component =", "(<div>", "  <p />", "</div>);"].join("\n"),
             options: ["all", { ignoreJSX: "multi-line" }]
         },
         {
-            code: [
-                "const Component = (<div",
-                "  prop={true}",
-                "/>)"
-            ].join("\n"),
+            code: ["const Component = (<div", "  prop={true}", "/>)"].join("\n"),
             options: ["all", { ignoreJSX: "multi-line" }]
         },
 
@@ -1019,7 +938,6 @@ ruleTester.run("no-extra-parens", rule, {
         invalid("(_ => 0), 0", "_ => 0, 0", "ArrowFunctionExpression", 1, { options: ["functions"] }),
         invalid("a = (_ => 0)", "a = _ => 0", "ArrowFunctionExpression", 1, { options: ["functions"] }),
 
-
         invalid("while ((foo = bar())) {}", "while (foo = bar()) {}", "AssignmentExpression"),
         invalid("while ((foo = bar())) {}", "while (foo = bar()) {}", "AssignmentExpression", 1, { options: ["all", { conditionalAssign: true }] }),
         invalid("if ((foo = bar())) {}", "if (foo = bar()) {}", "AssignmentExpression"),
@@ -1063,128 +981,42 @@ ruleTester.run("no-extra-parens", rule, {
         invalid("function *a() { yield (b + c); }", "function *a() { yield b + c; }", "BinaryExpression", null),
 
         // https://github.com/eslint/eslint/issues/4229
-        invalid([
-            "function a() {",
-            "    return (b);",
-            "}"
-        ].join("\n"), [
-            "function a() {",
-            "    return b;",
-            "}"
-        ].join("\n"), "Identifier"),
-        invalid([
-            "function a() {",
-            "    return",
-            "    (b);",
-            "}"
-        ].join("\n"), [
-            "function a() {",
-            "    return",
-            "    b;",
-            "}"
-        ].join("\n"), "Identifier"),
-        invalid([
-            "function a() {",
-            "    return ((",
-            "       b",
-            "    ));",
-            "}"
-        ].join("\n"), [
-            "function a() {",
-            "    return (",
-            "       b",
-            "    );",
-            "}"
-        ].join("\n"), "Identifier"),
-        invalid([
-            "function a() {",
-            "    return (<JSX />);",
-            "}"
-        ].join("\n"), [
-            "function a() {",
-            "    return <JSX />;",
-            "}"
-        ].join("\n"), "JSXElement", null),
-        invalid([
-            "function a() {",
-            "    return",
-            "    (<JSX />);",
-            "}"
-        ].join("\n"), [
-            "function a() {",
-            "    return",
-            "    <JSX />;",
-            "}"
-        ].join("\n"), "JSXElement", null),
-        invalid([
-            "function a() {",
-            "    return ((",
-            "       <JSX />",
-            "    ));",
-            "}"
-        ].join("\n"), [
-            "function a() {",
-            "    return (",
-            "       <JSX />",
-            "    );",
-            "}"
-        ].join("\n"), "JSXElement", null),
-        invalid([
-            "function a() {",
-            "    return ((",
-            "       <></>",
-            "    ));",
-            "}"
-        ].join("\n"), [
-            "function a() {",
-            "    return (",
-            "       <></>",
-            "    );",
-            "}"
-        ].join("\n"), "JSXFragment", null),
+        invalid(["function a() {", "    return (b);", "}"].join("\n"), ["function a() {", "    return b;", "}"].join("\n"), "Identifier"),
+        invalid(["function a() {", "    return", "    (b);", "}"].join("\n"), ["function a() {", "    return", "    b;", "}"].join("\n"), "Identifier"),
+        invalid(
+            ["function a() {", "    return ((", "       b", "    ));", "}"].join("\n"),
+            ["function a() {", "    return (", "       b", "    );", "}"].join("\n"),
+            "Identifier"
+        ),
+        invalid(["function a() {", "    return (<JSX />);", "}"].join("\n"), ["function a() {", "    return <JSX />;", "}"].join("\n"), "JSXElement", null),
+        invalid(
+            ["function a() {", "    return", "    (<JSX />);", "}"].join("\n"),
+            ["function a() {", "    return", "    <JSX />;", "}"].join("\n"),
+            "JSXElement",
+            null
+        ),
+        invalid(
+            ["function a() {", "    return ((", "       <JSX />", "    ));", "}"].join("\n"),
+            ["function a() {", "    return (", "       <JSX />", "    );", "}"].join("\n"),
+            "JSXElement",
+            null
+        ),
+        invalid(
+            ["function a() {", "    return ((", "       <></>", "    ));", "}"].join("\n"),
+            ["function a() {", "    return (", "       <></>", "    );", "}"].join("\n"),
+            "JSXFragment",
+            null
+        ),
         invalid("throw (a);", "throw a;", "Identifier"),
-        invalid([
-            "throw ((",
-            "   a",
-            "));"
-        ].join("\n"), [
-            "throw (",
-            "   a",
-            ");"
-        ].join("\n"), "Identifier"),
-        invalid([
-            "function *a() {",
-            "    yield (b);",
-            "}"
-        ].join("\n"), [
-            "function *a() {",
-            "    yield b;",
-            "}"
-        ].join("\n"), "Identifier", null),
-        invalid([
-            "function *a() {",
-            "    yield",
-            "    (b);",
-            "}"
-        ].join("\n"), [
-            "function *a() {",
-            "    yield",
-            "    b;",
-            "}"
-        ].join("\n"), "Identifier", null),
-        invalid([
-            "function *a() {",
-            "    yield ((",
-            "       b",
-            "    ));",
-            "}"
-        ].join("\n"), [
-            "function *a() {",
-            "    yield (",
-            "       b",
-            "    );",
-            "}"
-        ].join("\n"), "Identifier", null),
+        invalid(["throw ((", "   a", "));"].join("\n"), ["throw (", "   a", ");"].join("\n"), "Identifier"),
+        invalid(["function *a() {", "    yield (b);", "}"].join("\n"), ["function *a() {", "    yield b;", "}"].join("\n"), "Identifier", null),
+        invalid(["function *a() {", "    yield", "    (b);", "}"].join("\n"), ["function *a() {", "    yield", "    b;", "}"].join("\n"), "Identifier", null),
+        invalid(
+            ["function *a() {", "    yield ((", "       b", "    ));", "}"].join("\n"),
+            ["function *a() {", "    yield (", "       b", "    );", "}"].join("\n"),
+            "Identifier",
+            null
+        ),
 
         // returnAssign option
         {
@@ -1359,43 +1191,21 @@ ruleTester.run("no-extra-parens", rule, {
         invalid("const Component = (<div />);", "const Component = <div />;", "JSXElement", 1, {
             options: ["all", { ignoreJSX: "multi-line" }]
         }),
-        invalid([
-            "const Component = (",
-            "  <div />",
-            ");"
-        ].join("\n"), "const Component = \n  <div />\n;", "JSXElement", 1, {
+        invalid(["const Component = (", "  <div />", ");"].join("\n"), "const Component = \n  <div />\n;", "JSXElement", 1, {
             options: ["all", { ignoreJSX: "multi-line" }]
         }),
-        invalid([
-            "const Component = (",
-            "  <></>",
-            ");"
-        ].join("\n"), "const Component = \n  <></>\n;", "JSXFragment", 1, {
+        invalid(["const Component = (", "  <></>", ");"].join("\n"), "const Component = \n  <></>\n;", "JSXFragment", 1, {
             options: ["all", { ignoreJSX: "multi-line" }]
         }),
 
         // ["all", { ignoreJSX: "single-line" }]
-        invalid([
-            "const Component = (",
-            "<div>",
-            "  <p />",
-            "</div>",
-            ");"
-        ].join("\n"), "const Component = \n<div>\n  <p />\n</div>\n;", "JSXElement", 1, {
+        invalid(["const Component = (", "<div>", "  <p />", "</div>", ");"].join("\n"), "const Component = \n<div>\n  <p />\n</div>\n;", "JSXElement", 1, {
             options: ["all", { ignoreJSX: "single-line" }]
         }),
-        invalid([
-            "const Component = (<div>",
-            "  <p />",
-            "</div>);"
-        ].join("\n"), "const Component = <div>\n  <p />\n</div>;", "JSXElement", 1, {
+        invalid(["const Component = (<div>", "  <p />", "</div>);"].join("\n"), "const Component = <div>\n  <p />\n</div>;", "JSXElement", 1, {
             options: ["all", { ignoreJSX: "single-line" }]
         }),
-        invalid([
-            "const Component = (<div",
-            "  prop={true}",
-            "/>)"
-        ].join("\n"), "const Component = <div\n  prop={true}\n/>", "JSXElement", 1, {
+        invalid(["const Component = (<div", "  prop={true}", "/>)"].join("\n"), "const Component = <div\n  prop={true}\n/>", "JSXElement", 1, {
             options: ["all", { ignoreJSX: "single-line" }]
         }),
 
@@ -1403,11 +1213,7 @@ ruleTester.run("no-extra-parens", rule, {
         invalid("const Component = (<div />);", "const Component = <div />;", "JSXElement", 1, {
             options: ["all", { ignoreJSX: "none" }]
         }),
-        invalid([
-            "const Component = (<div>",
-            "<p />",
-            "</div>)"
-        ].join("\n"), "const Component = <div>\n<p />\n</div>", "JSXElement", 1, {
+        invalid(["const Component = (<div>", "<p />", "</div>)"].join("\n"), "const Component = <div>\n<p />\n</div>", "JSXElement", 1, {
             options: ["all", { ignoreJSX: "none" }]
         }),
 
@@ -1869,515 +1675,98 @@ ruleTester.run("no-extra-parens", rule, {
         },
 
         // https://github.com/eslint/eslint/issues/8175
-        invalid(
-            "let a = [...(b)]",
-            "let a = [...b]",
-            "Identifier",
-            1
-        ),
-        invalid(
-            "let a = {...(b)}",
-            "let a = {...b}",
-            "Identifier",
-            1
-        ),
-        invalid(
-            "let a = {...(b)}",
-            "let a = {...b}",
-            "Identifier",
-            1,
-            { parserOptions: { ecmaVersion: 2018 } }
-        ),
-        invalid(
-            "let a = [...((b, c))]",
-            "let a = [...(b, c)]",
-            "SequenceExpression",
-            1
-        ),
-        invalid(
-            "let a = {...((b, c))}",
-            "let a = {...(b, c)}",
-            "SequenceExpression",
-            1
-        ),
-        invalid(
-            "let a = {...((b, c))}",
-            "let a = {...(b, c)}",
-            "SequenceExpression",
-            1,
-            { parserOptions: { ecmaVersion: 2018 } }
-        ),
-        invalid(
-            "class A extends (B) {}",
-            "class A extends B {}",
-            "Identifier",
-            1
-        ),
-        invalid(
-            "const A = class extends (B) {}",
-            "const A = class extends B {}",
-            "Identifier",
-            1
-        ),
-        invalid(
-            "class A extends ((B=C)) {}",
-            "class A extends (B=C) {}",
-            "AssignmentExpression",
-            1
-        ),
-        invalid(
-            "const A = class extends ((B=C)) {}",
-            "const A = class extends (B=C) {}",
-            "AssignmentExpression",
-            1
-        ),
-        invalid(
-            "class A extends ((++foo)) {}",
-            "class A extends (++foo) {}",
-            "UpdateExpression",
-            1
-        ),
-        invalid(
-            "export default ((a, b))",
-            "export default (a, b)",
-            "SequenceExpression",
-            1,
-            { parserOptions: { sourceType: "module" } }
-        ),
-        invalid(
-            "export default (() => {})",
-            "export default () => {}",
-            "ArrowFunctionExpression",
-            1,
-            { parserOptions: { sourceType: "module" } }
-        ),
-        invalid(
-            "export default ((a, b) => a + b)",
-            "export default (a, b) => a + b",
-            "ArrowFunctionExpression",
-            1,
-            { parserOptions: { sourceType: "module" } }
-        ),
-        invalid(
-            "export default (a => a)",
-            "export default a => a",
-            "ArrowFunctionExpression",
-            1,
-            { parserOptions: { sourceType: "module" } }
-        ),
-        invalid(
-            "export default (a = b)",
-            "export default a = b",
-            "AssignmentExpression",
-            1,
-            { parserOptions: { sourceType: "module" } }
-        ),
-        invalid(
-            "export default (a ? b : c)",
-            "export default a ? b : c",
-            "ConditionalExpression",
-            1,
-            { parserOptions: { sourceType: "module" } }
-        ),
-        invalid(
-            "export default (a)",
-            "export default a",
-            "Identifier",
-            1,
-            { parserOptions: { sourceType: "module" } }
-        ),
-        invalid(
-            "for (foo of(bar));",
-            "for (foo of bar);",
-            "Identifier",
-            1
-        ),
-        invalid(
-            "for ((foo) of bar);",
-            "for (foo of bar);",
-            "Identifier",
-            1
-        ),
-        invalid(
-            "for (foo of (baz = bar));",
-            "for (foo of baz = bar);",
-            "AssignmentExpression",
-            1
-        ),
-        invalid(
-            "function* f() { for (foo of (yield bar)); }",
-            "function* f() { for (foo of yield bar); }",
-            "YieldExpression",
-            1
-        ),
-        invalid(
-            "for (foo of ((bar, baz)));",
-            "for (foo of (bar, baz));",
-            "SequenceExpression",
-            1
-        ),
-        invalid(
-            "for ((foo)in bar);",
-            "for (foo in bar);",
-            "Identifier",
-            1
-        ),
-        invalid(
-            "for ((foo['bar'])of baz);",
-            "for (foo['bar']of baz);",
-            "MemberExpression",
-            1
-        ),
-        invalid(
-            "() => (({ foo: 1 }).foo)",
-            "() => ({ foo: 1 }).foo",
-            "MemberExpression",
-            1
-        ),
-        invalid(
-            "(let).foo",
-            "let.foo",
-            "Identifier",
-            1
-        ),
+        invalid("let a = [...(b)]", "let a = [...b]", "Identifier", 1),
+        invalid("let a = {...(b)}", "let a = {...b}", "Identifier", 1),
+        invalid("let a = {...(b)}", "let a = {...b}", "Identifier", 1, { parserOptions: { ecmaVersion: 2018 } }),
+        invalid("let a = [...((b, c))]", "let a = [...(b, c)]", "SequenceExpression", 1),
+        invalid("let a = {...((b, c))}", "let a = {...(b, c)}", "SequenceExpression", 1),
+        invalid("let a = {...((b, c))}", "let a = {...(b, c)}", "SequenceExpression", 1, { parserOptions: { ecmaVersion: 2018 } }),
+        invalid("class A extends (B) {}", "class A extends B {}", "Identifier", 1),
+        invalid("const A = class extends (B) {}", "const A = class extends B {}", "Identifier", 1),
+        invalid("class A extends ((B=C)) {}", "class A extends (B=C) {}", "AssignmentExpression", 1),
+        invalid("const A = class extends ((B=C)) {}", "const A = class extends (B=C) {}", "AssignmentExpression", 1),
+        invalid("class A extends ((++foo)) {}", "class A extends (++foo) {}", "UpdateExpression", 1),
+        invalid("export default ((a, b))", "export default (a, b)", "SequenceExpression", 1, { parserOptions: { sourceType: "module" } }),
+        invalid("export default (() => {})", "export default () => {}", "ArrowFunctionExpression", 1, { parserOptions: { sourceType: "module" } }),
+        invalid("export default ((a, b) => a + b)", "export default (a, b) => a + b", "ArrowFunctionExpression", 1, {
+            parserOptions: { sourceType: "module" }
+        }),
+        invalid("export default (a => a)", "export default a => a", "ArrowFunctionExpression", 1, { parserOptions: { sourceType: "module" } }),
+        invalid("export default (a = b)", "export default a = b", "AssignmentExpression", 1, { parserOptions: { sourceType: "module" } }),
+        invalid("export default (a ? b : c)", "export default a ? b : c", "ConditionalExpression", 1, { parserOptions: { sourceType: "module" } }),
+        invalid("export default (a)", "export default a", "Identifier", 1, { parserOptions: { sourceType: "module" } }),
+        invalid("for (foo of(bar));", "for (foo of bar);", "Identifier", 1),
+        invalid("for ((foo) of bar);", "for (foo of bar);", "Identifier", 1),
+        invalid("for (foo of (baz = bar));", "for (foo of baz = bar);", "AssignmentExpression", 1),
+        invalid("function* f() { for (foo of (yield bar)); }", "function* f() { for (foo of yield bar); }", "YieldExpression", 1),
+        invalid("for (foo of ((bar, baz)));", "for (foo of (bar, baz));", "SequenceExpression", 1),
+        invalid("for ((foo)in bar);", "for (foo in bar);", "Identifier", 1),
+        invalid("for ((foo['bar'])of baz);", "for (foo['bar']of baz);", "MemberExpression", 1),
+        invalid("() => (({ foo: 1 }).foo)", "() => ({ foo: 1 }).foo", "MemberExpression", 1),
+        invalid("(let).foo", "let.foo", "Identifier", 1),
 
         // ForStatement#init expression cannot start with `let[`, but it can start with `let` if it isn't followed by `[`
-        invalid(
-            "for ((let);;);",
-            "for (let;;);",
-            "Identifier",
-            1
-        ),
-        invalid(
-            "for ((let = 1);;);",
-            "for (let = 1;;);",
-            "AssignmentExpression",
-            1
-        ),
-        invalid(
-            "for ((let) = 1;;);",
-            "for (let = 1;;);",
-            "Identifier",
-            1
-        ),
-        invalid(
-            "for ((let = []);;);",
-            "for (let = [];;);",
-            "AssignmentExpression",
-            1
-        ),
-        invalid(
-            "for ((let) = [];;);",
-            "for (let = [];;);",
-            "Identifier",
-            1
-        ),
-        invalid(
-            "for ((let());;);",
-            "for (let();;);",
-            "CallExpression",
-            1
-        ),
-        invalid(
-            "for ((let([]));;);",
-            "for (let([]);;);",
-            "CallExpression",
-            1
-        ),
-        invalid(
-            "for ((let())[a];;);",
-            "for (let()[a];;);",
-            "CallExpression",
-            1
-        ),
-        invalid(
-            "for ((let`[]`);;);",
-            "for (let`[]`;;);",
-            "TaggedTemplateExpression",
-            1
-        ),
-        invalid(
-            "for ((let.a);;);",
-            "for (let.a;;);",
-            "MemberExpression",
-            1
-        ),
-        invalid(
-            "for ((let).a;;);",
-            "for (let.a;;);",
-            "Identifier",
-            1
-        ),
-        invalid(
-            "for ((let).a = 1;;);",
-            "for (let.a = 1;;);",
-            "Identifier",
-            1
-        ),
-        invalid(
-            "for ((let).a[b];;);",
-            "for (let.a[b];;);",
-            "Identifier",
-            1
-        ),
-        invalid(
-            "for ((let.a)[b];;);",
-            "for (let.a[b];;);",
-            "MemberExpression",
-            1
-        ),
-        invalid(
-            "for ((let.a[b]);;);",
-            "for (let.a[b];;);",
-            "MemberExpression",
-            1
-        ),
-        invalid(
-            "for ((let);[];);",
-            "for (let;[];);",
-            "Identifier",
-            1
-        ),
-        invalid(
-            "for (((let[a]));;);",
-            "for ((let[a]);;);",
-            "MemberExpression",
-            1
-        ),
-        invalid(
-            "for (((let))[a];;);",
-            "for ((let)[a];;);",
-            "Identifier",
-            1
-        ),
-        invalid(
-            "for (((let[a])).b;;);",
-            "for ((let[a]).b;;);",
-            "MemberExpression",
-            1
-        ),
-        invalid(
-            "for (((let))[a].b;;);",
-            "for ((let)[a].b;;);",
-            "Identifier",
-            1
-        ),
-        invalid(
-            "for (((let)[a]).b;;);",
-            "for ((let)[a].b;;);",
-            "MemberExpression",
-            1
-        ),
-        invalid(
-            "for (((let[a]) = b);;);",
-            "for ((let[a]) = b;;);",
-            "AssignmentExpression",
-            1
-        ),
-        invalid(
-            "for (((let)[a]) = b;;);",
-            "for ((let)[a] = b;;);",
-            "MemberExpression",
-            1
-        ),
-        invalid(
-            "for (((let)[a] = b);;);",
-            "for ((let)[a] = b;;);",
-            "AssignmentExpression",
-            1
-        ),
-        invalid(
-            "for ((Let[a]);;);",
-            "for (Let[a];;);",
-            "MemberExpression",
-            1
-        ),
-        invalid(
-            "for ((lett)[a];;);",
-            "for (lett[a];;);",
-            "Identifier",
-            1
-        ),
+        invalid("for ((let);;);", "for (let;;);", "Identifier", 1),
+        invalid("for ((let = 1);;);", "for (let = 1;;);", "AssignmentExpression", 1),
+        invalid("for ((let) = 1;;);", "for (let = 1;;);", "Identifier", 1),
+        invalid("for ((let = []);;);", "for (let = [];;);", "AssignmentExpression", 1),
+        invalid("for ((let) = [];;);", "for (let = [];;);", "Identifier", 1),
+        invalid("for ((let());;);", "for (let();;);", "CallExpression", 1),
+        invalid("for ((let([]));;);", "for (let([]);;);", "CallExpression", 1),
+        invalid("for ((let())[a];;);", "for (let()[a];;);", "CallExpression", 1),
+        invalid("for ((let`[]`);;);", "for (let`[]`;;);", "TaggedTemplateExpression", 1),
+        invalid("for ((let.a);;);", "for (let.a;;);", "MemberExpression", 1),
+        invalid("for ((let).a;;);", "for (let.a;;);", "Identifier", 1),
+        invalid("for ((let).a = 1;;);", "for (let.a = 1;;);", "Identifier", 1),
+        invalid("for ((let).a[b];;);", "for (let.a[b];;);", "Identifier", 1),
+        invalid("for ((let.a)[b];;);", "for (let.a[b];;);", "MemberExpression", 1),
+        invalid("for ((let.a[b]);;);", "for (let.a[b];;);", "MemberExpression", 1),
+        invalid("for ((let);[];);", "for (let;[];);", "Identifier", 1),
+        invalid("for (((let[a]));;);", "for ((let[a]);;);", "MemberExpression", 1),
+        invalid("for (((let))[a];;);", "for ((let)[a];;);", "Identifier", 1),
+        invalid("for (((let[a])).b;;);", "for ((let[a]).b;;);", "MemberExpression", 1),
+        invalid("for (((let))[a].b;;);", "for ((let)[a].b;;);", "Identifier", 1),
+        invalid("for (((let)[a]).b;;);", "for ((let)[a].b;;);", "MemberExpression", 1),
+        invalid("for (((let[a]) = b);;);", "for ((let[a]) = b;;);", "AssignmentExpression", 1),
+        invalid("for (((let)[a]) = b;;);", "for ((let)[a] = b;;);", "MemberExpression", 1),
+        invalid("for (((let)[a] = b);;);", "for ((let)[a] = b;;);", "AssignmentExpression", 1),
+        invalid("for ((Let[a]);;);", "for (Let[a];;);", "MemberExpression", 1),
+        invalid("for ((lett)[a];;);", "for (lett[a];;);", "Identifier", 1),
 
         // ForInStatement#left expression cannot start with `let[`, but it can start with `let` if it isn't followed by `[`
-        invalid(
-            "for ((let) in foo);",
-            "for (let in foo);",
-            "Identifier",
-            1
-        ),
-        invalid(
-            "for ((let())[a] in foo);",
-            "for (let()[a] in foo);",
-            "CallExpression",
-            1
-        ),
-        invalid(
-            "for ((let.a) in foo);",
-            "for (let.a in foo);",
-            "MemberExpression",
-            1
-        ),
-        invalid(
-            "for ((let).a in foo);",
-            "for (let.a in foo);",
-            "Identifier",
-            1
-        ),
-        invalid(
-            "for ((let).a.b in foo);",
-            "for (let.a.b in foo);",
-            "Identifier",
-            1
-        ),
-        invalid(
-            "for ((let).a[b] in foo);",
-            "for (let.a[b] in foo);",
-            "Identifier",
-            1
-        ),
-        invalid(
-            "for ((let.a)[b] in foo);",
-            "for (let.a[b] in foo);",
-            "MemberExpression",
-            1
-        ),
-        invalid(
-            "for ((let.a[b]) in foo);",
-            "for (let.a[b] in foo);",
-            "MemberExpression",
-            1
-        ),
-        invalid(
-            "for (((let[a])) in foo);",
-            "for ((let[a]) in foo);",
-            "MemberExpression",
-            1
-        ),
-        invalid(
-            "for (((let))[a] in foo);",
-            "for ((let)[a] in foo);",
-            "Identifier",
-            1
-        ),
-        invalid(
-            "for (((let[a])).b in foo);",
-            "for ((let[a]).b in foo);",
-            "MemberExpression",
-            1
-        ),
-        invalid(
-            "for (((let))[a].b in foo);",
-            "for ((let)[a].b in foo);",
-            "Identifier",
-            1
-        ),
-        invalid(
-            "for (((let)[a]).b in foo);",
-            "for ((let)[a].b in foo);",
-            "MemberExpression",
-            1
-        ),
-        invalid(
-            "for (((let[a]).b) in foo);",
-            "for ((let[a]).b in foo);",
-            "MemberExpression",
-            1
-        ),
-        invalid(
-            "for ((Let[a]) in foo);",
-            "for (Let[a] in foo);",
-            "MemberExpression",
-            1
-        ),
-        invalid(
-            "for ((lett)[a] in foo);",
-            "for (lett[a] in foo);",
-            "Identifier",
-            1
-        ),
+        invalid("for ((let) in foo);", "for (let in foo);", "Identifier", 1),
+        invalid("for ((let())[a] in foo);", "for (let()[a] in foo);", "CallExpression", 1),
+        invalid("for ((let.a) in foo);", "for (let.a in foo);", "MemberExpression", 1),
+        invalid("for ((let).a in foo);", "for (let.a in foo);", "Identifier", 1),
+        invalid("for ((let).a.b in foo);", "for (let.a.b in foo);", "Identifier", 1),
+        invalid("for ((let).a[b] in foo);", "for (let.a[b] in foo);", "Identifier", 1),
+        invalid("for ((let.a)[b] in foo);", "for (let.a[b] in foo);", "MemberExpression", 1),
+        invalid("for ((let.a[b]) in foo);", "for (let.a[b] in foo);", "MemberExpression", 1),
+        invalid("for (((let[a])) in foo);", "for ((let[a]) in foo);", "MemberExpression", 1),
+        invalid("for (((let))[a] in foo);", "for ((let)[a] in foo);", "Identifier", 1),
+        invalid("for (((let[a])).b in foo);", "for ((let[a]).b in foo);", "MemberExpression", 1),
+        invalid("for (((let))[a].b in foo);", "for ((let)[a].b in foo);", "Identifier", 1),
+        invalid("for (((let)[a]).b in foo);", "for ((let)[a].b in foo);", "MemberExpression", 1),
+        invalid("for (((let[a]).b) in foo);", "for ((let[a]).b in foo);", "MemberExpression", 1),
+        invalid("for ((Let[a]) in foo);", "for (Let[a] in foo);", "MemberExpression", 1),
+        invalid("for ((lett)[a] in foo);", "for (lett[a] in foo);", "Identifier", 1),
 
         // ForOfStatement#left expression cannot start with `let`
-        invalid(
-            "for (((let)) of foo);",
-            "for ((let) of foo);",
-            "Identifier",
-            1
-        ),
-        invalid(
-            "for (((let)).a of foo);",
-            "for ((let).a of foo);",
-            "Identifier",
-            1
-        ),
-        invalid(
-            "for (((let))[a] of foo);",
-            "for ((let)[a] of foo);",
-            "Identifier",
-            1
-        ),
-        invalid(
-            "for (((let).a) of foo);",
-            "for ((let).a of foo);",
-            "MemberExpression",
-            1
-        ),
-        invalid(
-            "for (((let[a]).b) of foo);",
-            "for ((let[a]).b of foo);",
-            "MemberExpression",
-            1
-        ),
-        invalid(
-            "for (((let).a).b of foo);",
-            "for ((let).a.b of foo);",
-            "MemberExpression",
-            1
-        ),
-        invalid(
-            "for (((let).a.b) of foo);",
-            "for ((let).a.b of foo);",
-            "MemberExpression",
-            1
-        ),
-        invalid(
-            "for (((let.a).b) of foo);",
-            "for ((let.a).b of foo);",
-            "MemberExpression",
-            1
-        ),
-        invalid(
-            "for (((let()).a) of foo);",
-            "for ((let()).a of foo);",
-            "MemberExpression",
-            1
-        ),
-        invalid(
-            "for ((Let) of foo);",
-            "for (Let of foo);",
-            "Identifier",
-            1
-        ),
-        invalid(
-            "for ((lett) of foo);",
-            "for (lett of foo);",
-            "Identifier",
-            1
-        ),
+        invalid("for (((let)) of foo);", "for ((let) of foo);", "Identifier", 1),
+        invalid("for (((let)).a of foo);", "for ((let).a of foo);", "Identifier", 1),
+        invalid("for (((let))[a] of foo);", "for ((let)[a] of foo);", "Identifier", 1),
+        invalid("for (((let).a) of foo);", "for ((let).a of foo);", "MemberExpression", 1),
+        invalid("for (((let[a]).b) of foo);", "for ((let[a]).b of foo);", "MemberExpression", 1),
+        invalid("for (((let).a).b of foo);", "for ((let).a.b of foo);", "MemberExpression", 1),
+        invalid("for (((let).a.b) of foo);", "for ((let).a.b of foo);", "MemberExpression", 1),
+        invalid("for (((let.a).b) of foo);", "for ((let.a).b of foo);", "MemberExpression", 1),
+        invalid("for (((let()).a) of foo);", "for ((let()).a of foo);", "MemberExpression", 1),
+        invalid("for ((Let) of foo);", "for (Let of foo);", "Identifier", 1),
+        invalid("for ((lett) of foo);", "for (lett of foo);", "Identifier", 1),
 
         invalid("for (a in (b, c));", "for (a in b, c);", "SequenceExpression", null),
-        invalid(
-            "(let)",
-            "let",
-            "Identifier",
-            1
-        ),
-        invalid(
-            "((let))",
-            "(let)",
-            "Identifier",
-            1
-        ),
+        invalid("(let)", "let", "Identifier", 1),
+        invalid("((let))", "(let)", "Identifier", 1),
         invalid("let s = `${(v)}`", "let s = `${v}`", "Identifier"),
         invalid("let s = `${(a, b)}`", "let s = `${a, b}`", "SequenceExpression"),
         invalid("function foo(a = (b)) {}", "function foo(a = b) {}", "Identifier"),
@@ -2417,11 +1806,9 @@ ruleTester.run("no-extra-parens", rule, {
         {
             code: "for (let a = ((b in c) && (d in e)); ;);",
             output: "for (let a = (b in c && d in e); ;);",
-            errors: Array(2).fill(
-                {
-                    messageId: "unexpected"
-                }
-            )
+            errors: Array(2).fill({
+                messageId: "unexpected"
+            })
         },
         {
             code: "for (let a = ((b in c) in d); ;);",
@@ -2876,11 +2263,9 @@ ruleTester.run("no-extra-parens", rule, {
         {
             code: "for (let a = !((b in c) && (d in e)); ;);",
             output: "for (let a = !(b in c && d in e); ;);",
-            errors: Array(2).fill(
-                {
-                    messageId: "unexpected"
-                }
-            )
+            errors: Array(2).fill({
+                messageId: "unexpected"
+            })
         },
         {
             code: "for (let a = (x && (b in c)), d = () => { for ((e in f); ;); for ((g in h); ;); }; ;); for((i in j); ;);",
@@ -2921,163 +2306,115 @@ ruleTester.run("no-extra-parens", rule, {
         {
             code: "for (let a = (x && (b in c)), d = () => { for ((e in f); ;); for ((y && (g in h)); ;); }; ;); for((i in j); ;);",
             output: "for (let a = (x && b in c), d = () => { for ((e in f); ;); for ((y && g in h); ;); }; ;); for((i in j); ;);",
-            errors: Array(2).fill(
-                {
-                    messageId: "unexpected"
-                }
-            )
+            errors: Array(2).fill({
+                messageId: "unexpected"
+            })
         },
         {
             code: "for (let a = (x && (b in c)), d = () => { for ((y && (e in f)); ;); for ((z && (g in h)); ;); }; ;); for((w && (i in j)); ;);",
             output: "for (let a = (x && b in c), d = () => { for ((y && e in f); ;); for ((z && g in h); ;); }; ;); for((w && i in j); ;);",
-            errors: Array(4).fill(
-                {
-                    messageId: "unexpected"
-                }
-            )
+            errors: Array(4).fill({
+                messageId: "unexpected"
+            })
         },
 
         // https://github.com/eslint/eslint/issues/11706 regression tests (also in valid[])
         {
             code: "for (let a = (b); a > (b); a = (b)) a = (b); a = (b);",
             output: "for (let a = b; a > b; a = b) a = b; a = b;",
-            errors: Array(5).fill(
-                {
-                    messageId: "unexpected"
-                }
-            )
+            errors: Array(5).fill({
+                messageId: "unexpected"
+            })
         },
         {
             code: "for ((a = b); (a > b); (a = b)) (a = b); (a = b);",
             output: "for (a = b; a > b; a = b) a = b; a = b;",
-            errors: Array(5).fill(
-                {
-                    messageId: "unexpected"
-                }
-            )
+            errors: Array(5).fill({
+                messageId: "unexpected"
+            })
         },
         {
             code: "for (let a = b; a > (b); a = (b)) a = (b); a = (b);",
             output: "for (let a = b; a > b; a = b) a = b; a = b;",
-            errors: Array(4).fill(
-                {
-                    messageId: "unexpected"
-                }
-            )
+            errors: Array(4).fill({
+                messageId: "unexpected"
+            })
         },
         {
             code: "for (let a = b; (a > b); (a = b)) (a = b); (a = b);",
             output: "for (let a = b; a > b; a = b) a = b; a = b;",
-            errors: Array(4).fill(
-                {
-                    messageId: "unexpected"
-                }
-            )
+            errors: Array(4).fill({
+                messageId: "unexpected"
+            })
         },
         {
             code: "for (; a > (b); a = (b)) a = (b); a = (b);",
             output: "for (; a > b; a = b) a = b; a = b;",
-            errors: Array(4).fill(
-                {
-                    messageId: "unexpected"
-                }
-            )
+            errors: Array(4).fill({
+                messageId: "unexpected"
+            })
         },
         {
             code: "for (; (a > b); (a = b)) (a = b); (a = b);",
             output: "for (; a > b; a = b) a = b; a = b;",
-            errors: Array(4).fill(
-                {
-                    messageId: "unexpected"
-                }
-            )
+            errors: Array(4).fill({
+                messageId: "unexpected"
+            })
         },
         {
             code: "for (let a = (b); a = (b in c); a = (b in c)) a = (b in c); a = (b in c);",
             output: "for (let a = b; a = b in c; a = b in c) a = b in c; a = b in c;",
-            errors: Array(5).fill(
-                {
-                    messageId: "unexpected"
-                }
-            )
+            errors: Array(5).fill({
+                messageId: "unexpected"
+            })
         },
         {
             code: "for (let a = (b); (a in b); (a in b)) (a in b); (a in b);",
             output: "for (let a = b; a in b; a in b) a in b; a in b;",
-            errors: Array(5).fill(
-                {
-                    messageId: "unexpected"
-                }
-            )
+            errors: Array(5).fill({
+                messageId: "unexpected"
+            })
         },
         {
             code: "for (let a = b; a = (b in c); a = (b in c)) a = (b in c); a = (b in c);",
             output: "for (let a = b; a = b in c; a = b in c) a = b in c; a = b in c;",
-            errors: Array(4).fill(
-                {
-                    messageId: "unexpected"
-                }
-            )
+            errors: Array(4).fill({
+                messageId: "unexpected"
+            })
         },
         {
             code: "for (let a = b; (a in b); (a in b)) (a in b); (a in b);",
             output: "for (let a = b; a in b; a in b) a in b; a in b;",
-            errors: Array(4).fill(
-                {
-                    messageId: "unexpected"
-                }
-            )
+            errors: Array(4).fill({
+                messageId: "unexpected"
+            })
         },
         {
             code: "for (; a = (b in c); a = (b in c)) a = (b in c); a = (b in c);",
             output: "for (; a = b in c; a = b in c) a = b in c; a = b in c;",
-            errors: Array(4).fill(
-                {
-                    messageId: "unexpected"
-                }
-            )
+            errors: Array(4).fill({
+                messageId: "unexpected"
+            })
         },
         {
             code: "for (; (a in b); (a in b)) (a in b); (a in b);",
             output: "for (; a in b; a in b) a in b; a in b;",
-            errors: Array(4).fill(
-                {
-                    messageId: "unexpected"
-                }
-            )
+            errors: Array(4).fill({
+                messageId: "unexpected"
+            })
         },
         {
             code: "for (let a = (b + c), d = () => { for ((e + f); ;); for ((g + h); ;); }; ;); for((i + j); ;);",
             output: "for (let a = b + c, d = () => { for (e + f; ;); for (g + h; ;); }; ;); for(i + j; ;);",
-            errors: Array(4).fill(
-                {
-                    messageId: "unexpected"
-                }
-            )
+            errors: Array(4).fill({
+                messageId: "unexpected"
+            })
         },
 
         // import expressions
-        invalid(
-            "import((source))",
-            "import(source)",
-            "Identifier",
-            1,
-            { parserOptions: { ecmaVersion: 2020 } }
-        ),
-        invalid(
-            "import((source = 'foo.js'))",
-            "import(source = 'foo.js')",
-            "AssignmentExpression",
-            1,
-            { parserOptions: { ecmaVersion: 2020 } }
-        ),
-        invalid(
-            "import(((s,t)))",
-            "import((s,t))",
-            "SequenceExpression",
-            1,
-            { parserOptions: { ecmaVersion: 2020 } }
-        ),
+        invalid("import((source))", "import(source)", "Identifier", 1, { parserOptions: { ecmaVersion: 2020 } }),
+        invalid("import((source = 'foo.js'))", "import(source = 'foo.js')", "AssignmentExpression", 1, { parserOptions: { ecmaVersion: 2020 } }),
+        invalid("import(((s,t)))", "import((s,t))", "SequenceExpression", 1, { parserOptions: { ecmaVersion: 2020 } }),
 
         // https://github.com/eslint/eslint/issues/12127
         {
@@ -3184,7 +2521,6 @@ ruleTester.run("no-extra-parens", rule, {
         invalid("a/(/**/b)", "a/ /**/b", "Identifier"),
         invalid("a/(//\nb)", "a/ //\nb", "Identifier"),
         invalid("a/(/^b$/)", "a/ /^b$/", "Literal"),
-
 
         // Nullish coalescing
         {
@@ -3457,12 +2793,8 @@ ruleTester.run("no-extra-parens", rule, {
         },
         invalid("((a)) = () => {};", "(a) = () => {};", "Identifier"),
         invalid("(a) = (function () {})();", "a = (function () {})();", "Identifier"),
-        ...["**=", "*=", "/=", "%=", "+=", "-=", "<<=", ">>=", ">>>=", "&=", "^=", "|="].map(
-            operator => invalid(
-                `(a) ${operator} function () {};`,
-                `a ${operator} function () {};`,
-                "Identifier"
-            )
+        ...["**=", "*=", "/=", "%=", "+=", "-=", "<<=", ">>=", ">>>=", "&=", "^=", "|="].map(operator =>
+            invalid(`(a) ${operator} function () {};`, `a ${operator} function () {};`, "Identifier")
         ),
 
         // Potential directives (no autofix)
@@ -3472,7 +2804,7 @@ ruleTester.run("no-extra-parens", rule, {
         invalid("_ = () => { ('abc'); };", null),
         invalid("'use strict';(\"foobar\");", null),
         invalid("foo(); ('bar');", null),
-        invalid("foo = { bar() { ; (\"baz\"); } };", null),
+        invalid('foo = { bar() { ; ("baz"); } };', null),
 
         // Directive lookalikes
         invalid("(12345);", "12345;"),

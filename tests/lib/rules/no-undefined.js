@@ -83,13 +83,16 @@ ruleTester.run("no-undefined", rule, {
         { code: "(class { [undefined]() {} })", errors },
         {
             code: "var undefined = true; undefined = false;",
-            errors: [{
-                messageId: "unexpectedUndefined",
-                column: 5
-            }, {
-                messageId: "unexpectedUndefined",
-                column: 23
-            }]
+            errors: [
+                {
+                    messageId: "unexpectedUndefined",
+                    column: 5
+                },
+                {
+                    messageId: "unexpectedUndefined",
+                    column: 23
+                }
+            ]
         },
         {
             code: "import undefined from 'foo'",

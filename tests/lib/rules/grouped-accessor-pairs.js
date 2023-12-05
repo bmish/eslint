@@ -20,7 +20,6 @@ const ruleTester = new RuleTester({ parserOptions: { ecmaVersion: 2022 } });
 
 ruleTester.run("grouped-accessor-pairs", rule, {
     valid: [
-
         // no accessors
         "({})",
         "({ a })",
@@ -150,7 +149,6 @@ ruleTester.run("grouped-accessor-pairs", rule, {
     ],
 
     invalid: [
-
         // basic grouping tests with full messages
         {
             code: "({ get a(){}, b:1, set a(foo){} })",
@@ -174,11 +172,20 @@ ruleTester.run("grouped-accessor-pairs", rule, {
         },
         {
             code: "class A { static set a(foo){} b(){} static get a(){} }",
-            errors: [{ messageId: "notGrouped", data: { formerName: "static setter 'a'", latterName: "static getter 'a'" }, type: "MethodDefinition", column: 37 }]
+            errors: [
+                { messageId: "notGrouped", data: { formerName: "static setter 'a'", latterName: "static getter 'a'" }, type: "MethodDefinition", column: 37 }
+            ]
         },
         {
             code: "(class { static get 123(){} b(){} static set 123(foo){} })",
-            errors: [{ messageId: "notGrouped", data: { formerName: "static getter '123'", latterName: "static setter '123'" }, type: "MethodDefinition", column: 35 }]
+            errors: [
+                {
+                    messageId: "notGrouped",
+                    data: { formerName: "static getter '123'", latterName: "static setter '123'" },
+                    type: "MethodDefinition",
+                    column: 35
+                }
+            ]
         },
         {
             code: "class A { static get [a](){} b(){} static set [a](foo){} }",
@@ -190,7 +197,14 @@ ruleTester.run("grouped-accessor-pairs", rule, {
         },
         {
             code: "class A { get #abc(){} b(){} set #abc(foo){} }",
-            errors: [{ messageId: "notGrouped", data: { formerName: "private getter #abc", latterName: "private setter #abc" }, type: "MethodDefinition", column: 30 }]
+            errors: [
+                {
+                    messageId: "notGrouped",
+                    data: { formerName: "private getter #abc", latterName: "private setter #abc" },
+                    type: "MethodDefinition",
+                    column: 30
+                }
+            ]
         },
 
         // basic ordering tests with full messages
@@ -222,12 +236,21 @@ ruleTester.run("grouped-accessor-pairs", rule, {
         {
             code: "class A { static get a(){} static set a(foo){} }",
             options: ["setBeforeGet"],
-            errors: [{ messageId: "invalidOrder", data: { latterName: "static setter 'a'", formerName: "static getter 'a'" }, type: "MethodDefinition", column: 28 }]
+            errors: [
+                { messageId: "invalidOrder", data: { latterName: "static setter 'a'", formerName: "static getter 'a'" }, type: "MethodDefinition", column: 28 }
+            ]
         },
         {
             code: "(class { static set 'abc'(foo){} static get 'abc'(){} })",
             options: ["getBeforeSet"],
-            errors: [{ messageId: "invalidOrder", data: { latterName: "static getter 'abc'", formerName: "static setter 'abc'" }, type: "MethodDefinition", column: 34 }]
+            errors: [
+                {
+                    messageId: "invalidOrder",
+                    data: { latterName: "static getter 'abc'", formerName: "static setter 'abc'" },
+                    type: "MethodDefinition",
+                    column: 34
+                }
+            ]
         },
         {
             code: "class A { static set [abc](foo){} static get [abc](){} }",
@@ -242,7 +265,14 @@ ruleTester.run("grouped-accessor-pairs", rule, {
         {
             code: "class A { set #abc(foo){} get #abc(){} }",
             options: ["getBeforeSet"],
-            errors: [{ messageId: "invalidOrder", data: { latterName: "private getter #abc", formerName: "private setter #abc" }, type: "MethodDefinition", column: 27 }]
+            errors: [
+                {
+                    messageId: "invalidOrder",
+                    data: { latterName: "private getter #abc", formerName: "private setter #abc" },
+                    type: "MethodDefinition",
+                    column: 27
+                }
+            ]
         },
 
         // ordering option does not affect the grouping check
@@ -414,12 +444,16 @@ ruleTester.run("grouped-accessor-pairs", rule, {
         },
         {
             code: "(class { static get a(){} set a(foo){} static set a(bar){} })",
-            errors: [{ messageId: "notGrouped", data: { formerName: "static getter 'a'", latterName: "static setter 'a'" }, type: "MethodDefinition", column: 40 }]
+            errors: [
+                { messageId: "notGrouped", data: { formerName: "static getter 'a'", latterName: "static setter 'a'" }, type: "MethodDefinition", column: 40 }
+            ]
         },
         {
             code: "class A { set a(foo){} get a(){} static get a(){} static set a(bar){} }",
             options: ["setBeforeGet"],
-            errors: [{ messageId: "invalidOrder", data: { formerName: "static getter 'a'", latterName: "static setter 'a'" }, type: "MethodDefinition", column: 51 }]
+            errors: [
+                { messageId: "invalidOrder", data: { formerName: "static getter 'a'", latterName: "static setter 'a'" }, type: "MethodDefinition", column: 51 }
+            ]
         },
 
         // non-accessor duplicates do not affect this rule

@@ -168,9 +168,11 @@ ruleTester.run("no-unsafe-optional-chaining", rule, {
             }`
         ].map(code => ({
             code,
-            options: [{
-                disallowArithmeticOperators: true
-            }]
+            options: [
+                {
+                    disallowArithmeticOperators: true
+                }
+            ]
         })),
         {
             code: "obj?.foo - bar;",
@@ -178,9 +180,11 @@ ruleTester.run("no-unsafe-optional-chaining", rule, {
         },
         {
             code: "obj?.foo - bar;",
-            options: [{
-                disallowArithmeticOperators: false
-            }]
+            options: [
+                {
+                    disallowArithmeticOperators: false
+                }
+            ]
         }
     ],
 

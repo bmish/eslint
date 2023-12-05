@@ -84,7 +84,6 @@ function groupByProperty(objects) {
     return Object.keys(groupedObj).map(prop => groupedObj[prop]);
 }
 
-
 //------------------------------------------------------------------------------
 // Private
 //------------------------------------------------------------------------------
@@ -111,7 +110,6 @@ function groupByProperty(objects) {
  * }
  * @typedef rulesConfig
  */
-
 
 /**
  * Create valid rule configurations by combining two arrays,
@@ -173,12 +171,10 @@ function combinePropertyObjects(objArr1, objArr2) {
  * Rule configuration set class
  */
 class RuleConfigSet {
-
     /**
      * @param {ruleConfig[]} configs Valid rule configurations
      */
     constructor(configs) {
-
         /**
          * Stored valid rule configurations for this instance
          * @type {Array}
@@ -274,9 +270,8 @@ function generateConfigsFromSchema(schema) {
                     break;
                 }
 
-            // TODO (IanVS): support oneOf
+                // TODO (IanVS): support oneOf
             } else {
-
                 // If we don't know how to fill in this option, don't fill in any of the following options.
                 break;
             }
@@ -293,8 +288,8 @@ function generateConfigsFromSchema(schema) {
  */
 function createCoreRuleConfigs(noDeprecated = false) {
     return Array.from(builtInRules).reduce((accumulator, [id, rule]) => {
-        const schema = (typeof rule === "function") ? rule.schema : rule.meta.schema;
-        const isDeprecated = (typeof rule === "function") ? rule.deprecated : rule.meta.deprecated;
+        const schema = typeof rule === "function" ? rule.schema : rule.meta.schema;
+        const isDeprecated = typeof rule === "function" ? rule.deprecated : rule.meta.deprecated;
 
         if (noDeprecated && isDeprecated) {
             return accumulator;
@@ -304,7 +299,6 @@ function createCoreRuleConfigs(noDeprecated = false) {
         return accumulator;
     }, {});
 }
-
 
 //------------------------------------------------------------------------------
 // Public Interface
